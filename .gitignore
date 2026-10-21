@@ -1,0 +1,19 @@
+# Dependencias: se reinstalan con npm install
+node_modules/
+
+# Versión final generada por npm run build
+dist/
+
+# Variables de entorno con claves privadas
+.env
+.env.local
+
+# Lockfile (convención de este curso, ver nota)
+package-lock.json
+
+# Archivos del sistema y del editor
+.DS_Store
+Thumbs.db
+*.log
+.vscode/*
+!.vscode/extensions.json
