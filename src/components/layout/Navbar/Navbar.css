@@ -1,0 +1,173 @@
+/* ============================================================================
+   ARCHIVO: Navbar.css
+   RESPONSABILIDAD: Estilos visuales de la barra superior (colores, posiciones,
+   tamaños, efectos al pasar el mouse).
+   
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   ============================================================================ */
+
+/* =========================================
+   SECCIÓN: Barra completa
+   ========================================= */
+.navbar {
+  position: sticky;   /* Hace que la barra se quede pegada arriba al hacer scroll */
+  top: 0;
+  z-index: 10;        /* Hace que la barra siempre esté por encima del resto del contenido */
+  background: var(--color-superficie); 
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+}
+
+.navbar a { text-decoration: none; } /* Hace que los enlaces no tengan la línea de abajo */
+.navbar button, .navbar input { font: inherit; } /* Hace que los botones e inputs usen la misma tipografía */
+.navbar button { cursor: pointer; } /* Hace que el mouse se vuelva una manito sobre los botones */
+
+/* Hace que aparezca un borde visible al navegar con la tecla Tab */
+.navbar :focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   SECCIÓN: Contenedor interno
+   ========================================= */
+.navbar__contenedor {
+  display: flex;             /* Hace que los elementos se pongan uno al lado del otro */
+  align-items: center;       /* Hace que los elementos se centren verticalmente */
+  justify-content: space-between; /* Hace que un grupo se vaya a la izquierda y otro a la derecha */
+  flex-wrap: wrap;           /* Hace que si no caben, bajen a la siguiente línea */
+  gap: 12px 24px;            /* Hace que haya espacio entre los elementos */
+  max-width: 80rem;
+  min-height: 76px;          /* Hace que la barra tenga una altura mínima */
+  margin-inline: auto;       /* Hace que el contenido se centre en pantalla */
+  padding-inline: 24px;      /* Hace que haya espacio a los lados */
+}
+
+/* =========================================
+   SECCIÓN: Grupo Izquierdo (Logo y Enlaces)
+   ========================================= */
+.navbar__izquierda {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* Hace que haya espacio entre el logo y los enlaces */
+}
+
+/* --- El Logo --- */
+.navbar__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-texto);
+  font-size: 1.125rem;
+  font-weight: 700; /* Hace que el texto del logo sea negrita */
+}
+
+/* El recuadro del logo */
+.navbar__logo-icono {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px; /* Hace que el recuadro sea un cuadrado perfecto */
+  border-radius: 8px; /* Hace que las esquinas sean redondeadas */
+  color: var(--color-sobre-primario); /* Hace que el ícono de adentro sea blanco */
+  background: var(--color-primario); /* Hace que el fondo del recuadro sea negro */
+}
+
+/* --- Los Enlaces --- */
+.navbar__enlaces {
+  display: flex;
+  gap: 20px;
+  margin: 0; padding: 0;
+  list-style: none; /* Hace que desaparezcan los puntos de la lista */
+}
+
+.navbar__enlace {
+  display: flex;
+  align-items: center;
+  min-height: 44px; /* Hace que el área para hacer clic sea grande */
+  color: var(--color-texto-suave);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.navbar__enlace:hover { color: var(--color-texto); } /* Hace que se ponga negro al pasar el mouse */
+.navbar__enlace--activo { color: var(--color-texto); font-weight: 600; } /* Hace que el enlace actual esté en negrita */
+
+/* =========================================
+   SECCIÓN: Grupo Derecho (Buscador, Idioma, Botones)
+   ========================================= */
+.navbar__derecha {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* --- El Buscador --- */
+.navbar__buscador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 260px;
+  height: 44px;
+  padding-left: 16px;
+  border-radius: 999px; /* Hace que el buscador sea una píldora redondeada */
+  color: var(--color-texto);
+  background: var(--color-buscador);
+}
+.navbar__buscador:focus-within { box-shadow: 0 0 0 1px var(--color-primario); } /* Hace que se ilumine al escribir */
+.navbar__buscador-input { flex: 1; border: 0; background: transparent; } /* Hace que el input no tenga bordes y ocupe todo el espacio */
+.navbar__buscador-input:focus-visible { outline: none; } /* Quita el borde azul por defecto del navegador */
+
+/* --- Selector de Idioma --- */
+.navbar__idiomas {
+  display: inline-flex;
+  height: 44px;
+  padding: 5px;
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+}
+.navbar__idioma {
+  height: 32px; padding: 0 14px;
+  border: 0; border-radius: 999px;
+  background: transparent;
+}
+.navbar__idioma--activo {
+  color: var(--color-sobre-primario);
+  background: var(--color-primario); /* Hace que el idioma actual se vea como una píldora negra */
+}
+
+/* --- Botones de Sesión --- */
+.navbar__boton {
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  white-space: nowrap; /* Hace que el texto del botón no se parta en dos líneas */
+}
+.navbar__boton--borde {
+  border: 1px solid var(--color-borde);
+  background: var(--color-superficie); /* Hace que "Ingresar" tenga fondo blanco */
+}
+.navbar__boton--lleno {
+  color: var(--color-sobre-primario);
+  background: var(--color-primario); /* Hace que "Crear cuenta" tenga fondo negro */
+}
+
+/* =========================================
+   SECCIÓN: Grupo Móvil (Oculto en PC)
+   ========================================= */
+.navbar__movil {
+  display: none; /* Hace que este grupo se oculte por defecto en pantallas grandes */
+  align-items: center;
+  gap: 12px;
+}
+.navbar__movil-boton {
+  display: grid;
+  width: 44px; height: 44px;
+  border: 0; background: transparent;
+}
+
+/* Hace que si la pantalla mide 900px o menos (celulares), se oculte la derecha y aparezca el menú móvil */
+@media (max-width: 900px) {
+  .navbar__izquierda nav { display: none; }
+  .navbar__derecha { display: none; }
+  .navbar__movil { display: flex; }
+}

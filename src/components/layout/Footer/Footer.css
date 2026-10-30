@@ -1,0 +1,99 @@
+/* ============================================================================
+   ARCHIVO: Footer.css
+   RESPONSABILIDAD: Estilos visuales del pie de página.
+   
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   ============================================================================ */
+
+/* =========================================
+   SECCIÓN: Pie completo
+   ========================================= */
+.footer {
+  background: var(--color-footer); /* Hace que el fondo del pie sea negro */
+  color: var(--color-footer-texto); /* Hace que el texto general sea blanco */
+  font-family: var(--fuente-texto);
+}
+
+.footer__contenedor {
+  max-width: 80rem;
+  margin-inline: auto; /* Hace que el contenido se centre */
+  padding: 44px 24px 24px; /* Hace que haya espacio arriba, a los lados y abajo */
+}
+
+/* =========================================
+   SECCIÓN: Parte Superior (Marca y Columnas)
+   ========================================= */
+.footer__superior {
+  display: flex;
+  justify-content: space-between; /* Hace que la marca quede a la izquierda y las columnas a la derecha */
+  align-items: flex-start; 
+  flex-wrap: wrap; 
+  gap: 32px; 
+}
+
+/* --- La Marca (Logo y Descripción) --- */
+.footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-footer-texto);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer__logo-icono {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  color: var(--color-footer); /* Hace que el ícono sea negro */
+  background: var(--color-footer-texto); /* Hace que el recuadro sea blanco */
+}
+.footer__descripcion {
+  max-width: 320px; /* Hace que el lema se parta en varias líneas si es muy largo */
+  color: var(--color-footer-suave); /* Hace que el lema sea gris */
+  font-size: 0.8125rem;
+}
+
+/* --- Las Columnas de Enlaces --- */
+.footer__columnas {
+  display: flex;
+  gap: 60px; /* Hace que haya mucha separación entre una columna y otra */
+}
+.footer__titulo {
+  color: var(--color-footer-suave);
+  font-family: var(--fuente-texto);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.footer__lista {
+  display: flex;
+  flex-direction: column; /* Hace que los enlaces se apilen hacia abajo */
+  gap: 7px;
+  padding: 0;
+  list-style: none; /* Quita los puntos de la lista */
+}
+.footer__enlace {
+  color: var(--color-footer-texto);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.footer__enlace:hover {
+  text-decoration: underline; /* Hace que aparezca una línea debajo al pasar el mouse */
+}
+
+/* =========================================
+   SECCIÓN: Parte Inferior (Créditos)
+   ========================================= */
+.footer__inferior {
+  display: flex;
+  justify-content: space-between; /* Hace que un texto quede a la izquierda y otro a la derecha */
+  margin-top: 40px; 
+  padding-top: 20px;
+  border-top: 0.5px solid var(--color-footer-lineaDiv); /* Hace que aparezca la línea divisoria gris */
+  color: var(--color-footer-suave);
+  font-size: 0.75rem;
+}
+.footer__inferior p {
+  margin: 0; /* Hace que los textos no tengan margen extra por defecto */
+}
