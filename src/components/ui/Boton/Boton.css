@@ -1,0 +1,63 @@
+/* ============================================================================
+   ARCHIVO: Boton.css
+   RESPONSABILIDAD: Estilos visuales del componente Botón.
+   
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   ============================================================================ */
+
+/* =========================================
+   SECCIÓN: Estilos Base del Botón
+   ========================================= */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--radio);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease; /* Hace que los cambios de color sean suaves */
+}
+
+/* Hace que aparezca el borde morado cuando el usuario navega con la tecla Tab */
+.boton:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* Hace que el botón se vea transparente y bloquee el clic si está deshabilitado */
+.boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   SECCIÓN: Variantes de Color
+   ========================================= */
+
+/* --- Variante Primaria (Fondo negro) --- */
+.boton--primario {
+  background-color: var(--color-primario);
+  color: var(--color-sobre-primario);
+  border: 1px solid var(--color-primario);
+}
+
+/* Hace que el color de fondo cambie al pasar el mouse (solo si no está deshabilitado) */
+.boton--primario:hover:not(:disabled) {
+  background-color: var(--color-primario-hover);
+}
+
+/* --- Variante Secundaria (Fondo blanco, borde gris) --- */
+.boton--secundario {
+  background-color: var(--color-superficie);
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+}
+
+/* Hace que el fondo se vuelva un poco más gris al pasar el mouse */
+.boton--secundario:hover:not(:disabled) {
+  background-color: var(--color-fondo);
+}

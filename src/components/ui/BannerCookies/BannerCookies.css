@@ -1,0 +1,59 @@
+/* ============================================================================
+   ARCHIVO: BannerCookies.css
+   RESPONSABILIDAD: Estilos visuales del aviso de cookies.
+   
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   ============================================================================ */
+
+/* =========================================
+   SECCIÓN: Contenedor del Aviso
+   ========================================= */
+.banner-cookies {
+  position: fixed; /* Hace que el aviso flote sobre la página */
+  bottom: 24px; /* Hace que se pegue a la parte inferior */
+  left: 50%;
+  transform: translateX(-50%); /* Hace que quede perfectamente centrado */
+  background-color: var(--color-superficie, #fff);
+  border: 1px solid var(--color-borde, #ccc);
+  padding: 20px;
+  border-radius: var(--radio, 8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Hace que resalte con una sombra */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(90%, 500px); /* Hace que sea adaptable al celular */
+  z-index: 100; /* Hace que esté por encima de todo el contenido */
+}
+
+/* =========================================
+   SECCIÓN: Botones de Acción
+   ========================================= */
+.banner-cookies__acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end; /* Hace que los botones se alineen a la derecha */
+}
+
+.banner-cookies__btn {
+  padding: 10px 20px;
+  border: 1px solid var(--color-borde, #ccc);
+  background: transparent;
+  border-radius: var(--radio, 8px);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease; /* Hace que el cambio de color sea suave */
+}
+
+.banner-cookies__btn:hover {
+  background-color: var(--color-fondo, #f0f0f0); /* Hace que se ilumine al pasar el mouse */
+}
+
+.banner-cookies__btn--primario {
+  background-color: var(--color-primario, #000);
+  color: var(--color-sobre-primario, #fff);
+  border-color: var(--color-primario, #000);
+}
+
+.banner-cookies__btn--primario:hover {
+  background-color: var(--color-primario-hover, #333); /* Hace que cambie al pasar el mouse */
+}

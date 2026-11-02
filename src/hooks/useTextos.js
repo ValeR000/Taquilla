@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 
 // 1. CONFIGURACIÓN Y VALIDACIÓN
 // [API] Guarda la dirección exacta (endpoint) de donde sacaremos los textos.
-const API = "https://yanethm-taquilla-api.fly.dev/api/v1/textos";
+const API = `${import.meta.env.VITE_API_URL}/textos`; //PARA SUBIRLO A VERCEL CON LO DE .ENV
 
 // [LOCAL] Esta función revisa que la API no nos haya enviado datos vacíos o rotos.
 // Hace que la app explote de forma controlada si falta un texto importante, en vez de mostrar la pantalla en blanco.

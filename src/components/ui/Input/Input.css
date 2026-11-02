@@ -1,0 +1,80 @@
+/* ============================================================================
+   ARCHIVO: Input.css
+   RESPONSABILIDAD: Estilos visuales del componente Input.
+   
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   ============================================================================ */
+
+/* =========================================
+   SECCIÓN: Contenedor y Etiqueta
+   ========================================= */
+.campo {
+  display: flex;
+  flex-direction: column; /* Hace que el label, el input y el error se apilen verticalmente */
+  gap: 6px; /* Hace que haya un pequeño espacio entre ellos */
+}
+
+.campo__label {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
+/* =========================================
+   SECCIÓN: Input Base
+   ========================================= */
+.campo__input {
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Hace que el borde cambie suavemente */
+}
+
+.campo__input::placeholder {
+  color: var(--color-texto-suave);
+}
+
+/* =========================================
+   SECCIÓN: Estados de Interacción
+   ========================================= */
+
+/* Hace que el borde se oscurezca al pasar el mouse */
+.campo__input:hover:not(:disabled) {
+  border-color: var(--color-texto-suave);
+}
+
+/* Hace que aparezca un borde negro y una sombra suave cuando el usuario hace clic para escribir */
+.campo__input:focus-visible {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primario) 20%, transparent);
+}
+
+/* Hace que el input se vea grisáceo y bloqueado si está deshabilitado */
+.campo__input:disabled {
+  background-color: var(--color-fondo);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* =========================================
+   SECCIÓN: Estado de Error
+   ========================================= */
+
+/* Hace que el borde del input se vuelva rojo */
+.campo__input--error {
+  border-color: #dc2626; 
+}
+
+/* Hace que el mensaje de error sea pequeño y rojo */
+.campo__error-msg {
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin: 0;
+}

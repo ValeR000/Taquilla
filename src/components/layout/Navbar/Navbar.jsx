@@ -11,6 +11,7 @@
 
 import { useState } from 'react';
 import './Navbar.css';
+import Boton from '../../ui/Boton/Boton.jsx';
 
 // 1. CONFIGURACIÓN ESTÁTICA
 // [STATIC] Lista fija de los enlaces del menú. 
@@ -179,15 +180,16 @@ function Navbar({ idioma, cambiarIdioma, textos }) {
             ))}
           </div>
 
-          {/* [STATIC] Botones de sesión */}
-          <button type="button" className="navbar__boton navbar__boton--borde">
+          {/* [STATIC] Botones de sesión  que usab el componente boton creado*/}
+          <Boton variante="secundario">
             {/* [API] Hace que aparezca el texto "Ingresar" traducido desde la API. */}
             {t?.botones.ingresar}
-          </button>
-          <button type="button" className="navbar__boton navbar__boton--lleno">
+          </Boton>
+          
+          <Boton variante="primario">
             {/* [API] Hace que aparezca el texto "Crear cuenta" traducido desde la API. */}
             {t?.botones.crearCuenta}
-          </button>
+          </Boton>
         </div>
         
         {/* ========================================== */}
