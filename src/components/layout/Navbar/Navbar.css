@@ -13,7 +13,7 @@
   position: sticky;   /* Hace que la barra se quede pegada arriba al hacer scroll */
   top: 0;
   z-index: 10;        /* Hace que la barra siempre esté por encima del resto del contenido */
-  background: var(--color-superficie); 
+  background: var(--color-superficie);
   color: var(--color-texto);
   font-family: var(--fuente-texto);
 }
@@ -135,21 +135,8 @@
   background: var(--color-primario); /* Hace que el idioma actual se vea como una píldora negra */
 }
 
-/* --- Botones de Sesión --- */
-.navbar__boton {
-  height: 44px;
-  padding: 0 20px;
-  border-radius: 10px;
-  white-space: nowrap; /* Hace que el texto del botón no se parta en dos líneas */
-}
-.navbar__boton--borde {
-  border: 1px solid var(--color-borde);
-  background: var(--color-superficie); /* Hace que "Ingresar" tenga fondo blanco */
-}
-.navbar__boton--lleno {
-  color: var(--color-sobre-primario);
-  background: var(--color-primario); /* Hace que "Crear cuenta" tenga fondo negro */
-}
+/* NOTA: Las clases de los botones de sesión (ej. .navbar__boton--borde) 
+   se eliminaron porque ahora usamos el componente reutilizable <Boton /> */
 
 /* =========================================
    SECCIÓN: Grupo Móvil (Oculto en PC)
