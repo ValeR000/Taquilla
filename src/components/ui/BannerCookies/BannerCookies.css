@@ -1,59 +1,58 @@
 /* ============================================================================
    ARCHIVO: BannerCookies.css
-   RESPONSABILIDAD: Estilos visuales del aviso de cookies.
-   
-   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   RESPONSABILIDAD: Estilos del aviso de cookies.
+   CONVENCIÓN: [STATIC].
    ============================================================================ */
 
-/* =========================================
-   SECCIÓN: Contenedor del Aviso
-   ========================================= */
+/* [STATIC] Hace que el aviso flote en la parte inferior de la pantalla */
 .banner-cookies {
-  position: fixed; /* Hace que el aviso flote sobre la página */
-  bottom: 24px; /* Hace que se pegue a la parte inferior */
-  left: 50%;
-  transform: translateX(-50%); /* Hace que quede perfectamente centrado */
-  background-color: var(--color-superficie, #fff);
-  border: 1px solid var(--color-borde, #ccc);
-  padding: 20px;
-  border-radius: var(--radio, 8px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Hace que resalte con una sombra */
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: min(90%, 500px); /* Hace que sea adaptable al celular */
-  z-index: 100; /* Hace que esté por encima de todo el contenido */
+  position: fixed;
+  z-index: 20;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 24px;
+  border: 2px solid var(--color-primario);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
 }
 
-/* =========================================
-   SECCIÓN: Botones de Acción
-   ========================================= */
-.banner-cookies__acciones {
+.banner-cookies h2 {
+  font-size: 20px;
+  margin: 0 0 8px 0;
+}
+
+.banner-cookies p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+}
+
+.banner-cookies .grupo-botones {
   display: flex;
   gap: 12px;
-  justify-content: flex-end; /* Hace que los botones se alineen a la derecha */
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-.banner-cookies__btn {
-  padding: 10px 20px;
-  border: 1px solid var(--color-borde, #ccc);
-  background: transparent;
-  border-radius: var(--radio, 8px);
+.banner-cookies .enlace-home {
+  background: none;
+  border: none;
+  color: var(--color-texto);
+  text-decoration: underline;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s ease; /* Hace que el cambio de color sea suave */
+  font-size: 14px;
 }
 
-.banner-cookies__btn:hover {
-  background-color: var(--color-fondo, #f0f0f0); /* Hace que se ilumine al pasar el mouse */
-}
-
-.banner-cookies__btn--primario {
-  background-color: var(--color-primario, #000);
-  color: var(--color-sobre-primario, #fff);
-  border-color: var(--color-primario, #000);
-}
-
-.banner-cookies__btn--primario:hover {
-  background-color: var(--color-primario-hover, #333); /* Hace que cambie al pasar el mouse */
+@media (max-width: 640px) {
+  .banner-cookies {
+    padding: 16px;
+  }
+  .banner-cookies .grupo-botones {
+    gap: 8px;
+  }
 }

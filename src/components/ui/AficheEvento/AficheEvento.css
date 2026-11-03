@@ -1,12 +1,40 @@
 /* ============================================================================
    ARCHIVO: AficheEvento.css
-   RESPONSABILIDAD: Estilos del fondo del evento.
-   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   CONVENCIÓN: [STATIC].
    ============================================================================ */
 
-/* [STATIC] Hace que el afiche ocupe todo el ancho y tenga una altura fija. */
-.afiche-evento {
-  width: 100%;
-  height: 160px;
-  background-color: var(--color-fondo);
+/* [STATIC] Contenedor del afiche con los círculos decorativos. */
+.arte-evento {
+  position: relative;
+  height: 176px;
+  overflow: hidden;
+  background: #ccc; /* Color de fondo por si falla la API */
+}
+
+/* [STATIC] Círculo blanco semitransparente. */
+.arte-evento::before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 70%;
+  aspect-ratio: 1;
+  right: -20%;
+  top: -45%;
+  background: rgb(255 255 255 / 12%);
+}
+
+/* [STATIC] Círculo negro semitransparente. */
+.arte-evento::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 50%;
+  aspect-ratio: 1;
+  bottom: -60%;
+  left: -18%;
+  background: rgb(0 0 0 / 12%);
+}
+
+@media (max-width: 640px) {
+  .arte-evento { height: 190px; }
 }

@@ -1,0 +1,75 @@
+/* ============================================================================
+   ARCHIVO: CategoriasEventos.css
+   RESPONSABILIDAD: Estilos de la cuadrícula de categorías.
+   CONVENCIÓN: [STATIC].
+   ============================================================================ */
+
+/* [STATIC] Crea una cuadrícula de 6 columnas. */
+.categorias-eventos {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  padding: 48px 0 56px;
+}
+
+/* [STATIC] Estilo de cada botón de categoría. */
+.categorias-eventos button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* [STATIC] Hace que el botón cambie de color al pasar el mouse o si está activo. */
+.categorias-eventos button[aria-pressed="true"],
+.categorias-eventos button:hover {
+  border-color: var(--color-primario);
+  background: var(--color-fondo);
+}
+
+/* [STATIC] El recuadro del ícono. */
+.icono-categoria {
+  display: grid;
+  place-items: center;
+  background: #f0f0f0;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.categorias-eventos small {
+  display: block;
+  font-size: 12px;
+  color: var(--color-texto-suave);
+}
+
+@media (max-width: 1100px) {
+  .categorias-eventos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .categorias-eventos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding-block: 28px;
+  }
+  .categorias-eventos button {
+    padding: 10px;
+    gap: 8px;
+    font-size: 14px;
+  }
+  .icono-categoria {
+    width: 36px;
+    height: 36px;
+  }
+}

@@ -1,19 +1,20 @@
 // ============================================================================
 // ARCHIVO: AficheEvento.jsx
-// RESPONSABILIDAD: Crea el fondo visual (afiche) de cada evento.
+// RESPONSABILIDAD: Pinta el degradado de fondo del evento.
+// CONVENCIÓN: [API], [STATIC].
 // ============================================================================
 
-import './AficheEvento.css';
+import "./AficheEvento.css";
 
 export default function AficheEvento({ afiche }) {
-  // [API] Extrae los colores del afiche desde la API. Si falla, usa grises por defecto.
-  const color1 = afiche?.color1 || "#ccc";
-  const color2 = afiche?.color2 || "#999";
-  
+  // [API] Toma los colores de la API. Si falla, usa un gris por defecto.
+  const color1 = afiche?.color1 || "#a49086";
+  const color2 = afiche?.color2 || "#554650";
+
   return (
-    // [STATIC] Pinta un degradado con los colores de la API.
+    // [STATIC] Aplica la clase base de la profe y el degradado por estilo en línea.
     <div 
-      className="afiche-evento" 
+      className="arte-evento" 
       style={{ background: `linear-gradient(135deg, ${color1}, ${color2})` }}
       aria-hidden="true"
     ></div>

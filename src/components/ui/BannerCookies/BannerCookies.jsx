@@ -1,35 +1,34 @@
 // ============================================================================
 // ARCHIVO: BannerCookies.jsx
-// RESPONSABILIDAD: Muestra el aviso de cookies al entrar por primera vez.
-// 
-// CONVENCIÓN: 
-// [API] = Textos (vienen de useTextos).
-// [LOCAL] = Acciones de aceptar/rechazar.
-// [STATIC] = HTML/CSS.
+// RESPONSABILIDAD: Muestra el aviso de cookies.
+// CONVENCIÓN: [API] para textos, [LOCAL] para funciones, [STATIC] para HTML.
 // ============================================================================
 
-import './BannerCookies.css';
+import "./BannerCookies.css";
 
-// [LOCAL] Recibe los textos de la API y las funciones para los botones.
-export default function BannerCookies({ textos, onAceptar, onRechazar }) {
+export default function BannerCookies({ textos, onAceptar, onRechazar, onConfigurar }) {
   return (
-    // [STATIC] Contenedor con role="dialog" para accesibilidad.
-    <div className="banner-cookies" role="dialog" aria-label="Aviso de cookies">
+    <aside className="banner-cookies" aria-label={textos?.titulo || "Aviso de cookies"}>
+      {/* [API] Hace que aparezca el título desde la API. */}
+      <h2>{textos?.titulo || "Tu privacidad nos importa"}</h2>
       
-      {/* [API] Muestra el mensaje del banner traducido desde la API. */}
-      <p>{textos?.mensaje || "Usamos cookies para mejorar tu experiencia."}</p>
+      {/* [API] Hace que aparezca la descripción desde la API. */}
+      <p>{textos?.descripcion || "Usamos cookies para mejorar tu experiencia."}</p>
       
-      <div className="banner-cookies__acciones">
-        {/* [LOCAL] Botón de Rechazar. Ejecuta la función pasada por props. */}
-        <button type="button" className="banner-cookies__btn" onClick={onRechazar}>
-          {textos?.rechazar || "Rechazar"}
-        </button>
-        
-        {/* [LOCAL] Botón de Aceptar. Ejecuta la función pasada por props. */}
-        <button type="button" className="banner-cookies__btn banner-cookies__btn--primario" onClick={onAceptar}>
+      <div className="grupo-botones">
+        {/* [LOCAL] Botón de Aceptar. */}
+        <button className="boton-home primario" onClick={onAceptar}>
           {textos?.aceptar || "Aceptar"}
         </button>
+        {/* [LOCAL] Botón de Rechazar. */}
+        <button className="boton-home secundario" onClick={onRechazar}>
+          {textos?.rechazar || "Rechazar"}
+        </button>
+        {/* [LOCAL] Botón de Configurar (opcional según US). */}
+        <button className="enlace-home" onClick={onConfigurar}>
+          {textos?.configurar || "Configurar"}
+        </button>
       </div>
-    </div>
+    </aside>
   );
 }

@@ -14,12 +14,12 @@
   justify-content: center;
   height: 44px;
   padding: 0 20px;
-  border-radius: var(--radio);
+  border-radius: 8px; /* Hace que las esquinas sean de 8px (Figma) */
   font-family: var(--fuente-texto);
   font-size: var(--texto-pequeno);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease; /* Hace que los cambios de color sean suaves */
+  transition: all 0.2s ease;
 }
 
 /* Hace que aparezca el borde morado cuando el usuario navega con la tecla Tab */
@@ -45,7 +45,7 @@
   border: 1px solid var(--color-primario);
 }
 
-/* Hace que el color de fondo cambie al pasar el mouse (solo si no está deshabilitado) */
+/* Hace que el color de fondo cambie al pasar el mouse */
 .boton--primario:hover:not(:disabled) {
   background-color: var(--color-primario-hover);
 }

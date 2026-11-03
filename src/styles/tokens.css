@@ -73,5 +73,5 @@
      SECCIÓN: Estructura y Contenedores
      ========================================= */
   --radio: 0.75rem;               /* Hace que las esquinas redondeadas midan 12px (igual que la profe) */
-  --ancho-contenido: 72rem;       /* Hace que el contenido no se estire más de 1152px */
+  --ancho-contenido: 1280px;       /* Hace que el contenido no se estire más de 1152px */
 }
