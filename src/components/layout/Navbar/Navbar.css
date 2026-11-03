@@ -151,6 +151,32 @@
   width: 44px; height: 44px;
   border: 0; background: transparent;
 }
+/* =========================================
+   SECCIÓN: Botón de Accesibilidad
+   ========================================= */
+.navbar__accesibilidad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%; /* Hace que sea un círculo perfecto */
+  border: 1px solid var(--color-borde); /* Borde gris igual al de Figma */
+  background: var(--color-superficie);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navbar__accesibilidad:hover {
+  background-color: var(--color-fondo); /* Hace que se ilumine al pasar el mouse */
+}
+
+/* Hace que el fondo cambie cuando el modo de letra grande está activo */
+.navbar__accesibilidad[aria-pressed="true"] {
+  background-color: var(--color-fondo);
+  border-color: var(--color-primario);
+}
 
 /* Hace que si la pantalla mide 900px o menos (celulares), se oculte la derecha y aparezca el menú móvil */
 @media (max-width: 900px) {

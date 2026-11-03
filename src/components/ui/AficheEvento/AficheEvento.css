@@ -1,0 +1,12 @@
+/* ============================================================================
+   ARCHIVO: AficheEvento.css
+   RESPONSABILIDAD: Estilos del fondo del evento.
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   ============================================================================ */
+
+/* [STATIC] Hace que el afiche ocupe todo el ancho y tenga una altura fija. */
+.afiche-evento {
+  width: 100%;
+  height: 160px;
+  background-color: var(--color-fondo);
+}

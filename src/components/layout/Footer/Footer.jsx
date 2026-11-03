@@ -10,7 +10,7 @@
 // ============================================================================
 
 import './Footer.css';
-
+import logoFooter from '../../../assets/logo-taquilla-footer.svg';
 // 1. CONFIGURACIÓN ESTÁTICA
 // [STATIC] Arreglo fijo con la estructura de las columnas. 
 // Hace que, al recorrerlo con un .map, aparezcan los bloques de "Explora", "Tu cuenta" y "Legal".
@@ -53,14 +53,9 @@ function Footer({ textos }) {
           {/* [STATIC] Bloque izquierdo: Logo y descripción. */}
           <div className="footer__marca">
             <a href="/" className="footer__logo" aria-label="Taquilla, ir al inicio">
-              {/* [STATIC] Cuadro blanco con el dibujo SVG del ticket oscuro. */}
+              {/* [STATIC] Cuadro blanco con la imagen del logo */}
               <span className="footer__logo-icono">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-                  strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 7h14a2 2 0 0 1 2 2v1.5a1.5 1.5 0 0 0 0 3V15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1.5a1.5 1.5 0 0 0 0-3V9a2 2 0 0 1 2-2z" />
-                  <path d="M12 8.5v7" strokeDasharray="1.5 2" />
-                </svg>
+                <img src={logoFooter} alt="" width="24" height="24" />
               </span>
               {/* [STATIC] Hace que aparezca el texto fijo "taquilla" al lado del logo. */}
               <span>taquilla</span>

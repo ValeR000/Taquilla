@@ -1,7 +1,8 @@
 // ============================================================================
 // ARCHIVO: Navbar.jsx
 // RESPONSABILIDAD: Barra de navegación superior. Muestra el logo, los enlaces 
-// principales, el buscador, el selector de idioma (ES/EN) y los botones de sesión.
+// principales, el buscador, el selector de idioma (ES/EN), el botón de 
+// accesibilidad y los botones de sesión.
 // 
 // CONVENCIÓN DE ETIQUETAS (Origen del dato):
 // [API]    = Dato que viene de internet (peticiones al servidor).
@@ -12,6 +13,10 @@
 import { useState } from 'react';
 import './Navbar.css';
 import Boton from '../../ui/Boton/Boton.jsx';
+// [STATIC] Importa la imagen del ícono de accesibilidad desde la carpeta assets.
+import iconoAccesibilidad from '../../../assets/accesibilidad.svg';
+// [STATIC] Importa la imagen del logo de Taquilla desde la carpeta assets.
+import logo from '../../../assets/logo-taquilla.svg';
 
 // 1. CONFIGURACIÓN ESTÁTICA
 // [STATIC] Lista fija de los enlaces del menú. 
@@ -26,9 +31,9 @@ const ENLACES = [
 const IDIOMAS = ['es', 'en'];
 
 // 2. COMPONENTE PRINCIPAL
-// [LOCAL] Recibe 'idioma' y 'cambiarIdioma' desde App.jsx.
+// [LOCAL] Recibe 'idioma', 'cambiarIdioma', 'textoGrande' y 'alternarTexto' desde App.jsx.
 // [API] Recibe 'textos' (con toda la información de traducción) desde App.jsx.
-function Navbar({ idioma, cambiarIdioma, textos }) {
+function Navbar({ idioma, cambiarIdioma, textos, textoGrande, alternarTexto }) {
   
   // [API] Extrae los textos del navbar que vienen de la API. 
   // Hace que podamos usarlos de forma más corta (ej. t?.logo.texto).
@@ -87,14 +92,9 @@ function Navbar({ idioma, cambiarIdioma, textos }) {
 
           {/* [STATIC] Enlace del logo. */}
           <a href="/" className="navbar__logo" aria-label={t?.logo.aria}>
-            {/* [STATIC] Cuadro oscuro con el dibujo SVG del ticket. */}
+            {/* [STATIC] Cuadro oscuro con la imagen del logo de Taquilla. */}
             <span className="navbar__logo-icono">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                   strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z" />
-                <path d="M9 9h6M9 15h6" />
-              </svg>
+              <img src={logo} alt="" width="24" height="24" />
             </span>
             {/* [API] Hace que aparezca el nombre de la marca (Taquilla) traducido desde la API. */}
             <span className="navbar__logo-texto">{t?.logo.texto}</span>
@@ -180,12 +180,26 @@ function Navbar({ idioma, cambiarIdioma, textos }) {
             ))}
           </div>
 
-          {/* [STATIC] Botones de sesión  que usab el componente boton creado*/}
+          {/* [STATIC] Botón de accesibilidad (Aumentar tamaño de letra). */}
+          <button
+            type="button"
+            className="navbar__accesibilidad"
+            // [LOCAL] Hace que el lector de pantalla anuncie el botón en el idioma actual.
+            aria-label={idioma === 'en' ? "Toggle text size" : "Aumentar texto"}
+            // [LOCAL] Hace que el botón cambie su estado visual cuando la letra grande está activa.
+            aria-pressed={textoGrande}
+            // [LOCAL] Hace que al hacer clic se ejecute la función que viene desde App.jsx.
+            onClick={alternarTexto}
+          >
+            {/* [STATIC] Imagen del ícono de accesibilidad. */}
+            <img src={iconoAccesibilidad} alt="" width="24" height="24" />
+          </button>
+
+          {/* [STATIC] Botones de sesión que usan el componente Boton creado */}
           <Boton variante="secundario">
             {/* [API] Hace que aparezca el texto "Ingresar" traducido desde la API. */}
             {t?.botones.ingresar}
           </Boton>
-          
           <Boton variante="primario">
             {/* [API] Hace que aparezca el texto "Crear cuenta" traducido desde la API. */}
             {t?.botones.crearCuenta}
