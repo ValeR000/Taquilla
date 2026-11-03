@@ -3,12 +3,16 @@
    RESPONSABILIDAD: Guarda las variables globales de diseño (colores, fuentes, 
    espaciados). Sirve como el "manual de identidad" de Taquilla.
    
-   CONVENCIÓN: Todos los datos aquí son [STATIC] (código fijo de diseño).
+   CONVENCIÓN: 
+   [STATIC]        = Código fijo de diseño.
+   [ACCESIBILIDAD] = Variables para asegurar que el sitio sea usable con teclado.
+   NOTA: Las distancias específicas (width, gap, padding) se escriben directo 
+   en los componentes, no necesitan tokens.
    ============================================================================ */
 
 /* [STATIC] Importa la fuente "Instrument Sans" desde Google Fonts. 
    Hace que toda la página use una tipografía moderna. */
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap");
 
 :root {
   /* =========================================
@@ -22,8 +26,19 @@
   --color-primario-hover: #2B2B2B;/* Hace que el botón negro cambie de tono al pasar el mouse */
   --color-sobre-primario: #ffffff;/* Hace que el texto de los botones negros sea blanco */
   --color-borde: #8C8C8C;         /* Hace que los bordes de los botones sean grises */
-  --color-foco: #7c3aed;          /* Hace que aparezca un borde morado al navegar con teclado */
   --color-buscador: #F0F0F0;      /* Hace que la píldora del buscador sea gris claro */
+
+  /* [ACCESIBILIDAD] Color del borde de foco */
+  --color-foco: #713bfa;          /* Hace que aparezca un borde morado al navegar con teclado */
+
+  /* [STATIC] Alias (Creados para que los componentes de la profe funcionen sin cambios) */
+  --fondo: var(--color-fondo);            /* Alias para el fondo general */
+  --superficie: var(--color-superficie);  /* Alias para las superficies blancas */
+  --tinta: var(--color-texto);            /* Alias para el color del texto */
+  --suave: var(--color-texto-suave);      /* Alias para el texto secundario */
+  --acento: var(--color-primario);        /* Alias para el color principal/negro */
+  --sobre-acento: var(--color-sobre-primario); /* Alias para el texto sobre el color principal */
+  --borde: var(--color-borde);            /* Alias para los bordes */
 
   /* =========================================
      SECCIÓN: Colores del Footer (Pie de página)
@@ -57,6 +72,6 @@
   /* =========================================
      SECCIÓN: Estructura y Contenedores
      ========================================= */
-  --radio: 0.5rem;                /* Hace que las esquinas redondeadas midan 8px */
+  --radio: 0.75rem;               /* Hace que las esquinas redondeadas midan 12px (igual que la profe) */
   --ancho-contenido: 72rem;       /* Hace que el contenido no se estire más de 1152px */
 }

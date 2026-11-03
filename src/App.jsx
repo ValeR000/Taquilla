@@ -1,7 +1,8 @@
 // ============================================================================
 // ARCHIVO: App.jsx
-// RESPONSABILIDAD: Componente principal. Une el Navbar, el Footer, maneja la 
-// lógica de idiomas, el consentimiento de cookies y se conecta con la API.
+// RESPONSABILIDAD: Componente principal. Une el Navbar, el Footer, la vista de
+// inicio (categorías y eventos destacados), maneja la lógica de idiomas, 
+// cookies y conexión a la API.
 // 
 // CONVENCIÓN DE ETIQUETAS (Origen del dato):
 // [API]    = Dato que viene de internet (peticiones al servidor).
@@ -11,14 +12,17 @@
 
 // 1. IMPORTACIONES
 import { useTextos } from "./hooks/useTextos.js";
+import { useEventosDestacados } from "./hooks/useEventosDestacados.js";
+import { useCategorias } from "./hooks/useCategorias.js";
 import "./App.css";
 import Footer from "./components/layout/Footer/Footer.jsx";
 import Navbar from "./components/layout/Navbar/Navbar.jsx"; 
 import BannerCookies from "./components/ui/BannerCookies/BannerCookies.jsx";
+import TarjetaEvento from "./components/ui/TarjetaEvento/TarjetaEvento.jsx";
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { useEffect, useState } from "react";
 
-// 2. FUNCIONES AUXILIARES
+// 2. FUNCIONES AUXILIARES (Fuera del componente)
 // [LOCAL] Lee el numeral de la URL. Hace que la app sepa en qué sección está el usuario.
 function leerSeccion() {
   return window.location.hash.slice(1) || "inicio";
@@ -56,6 +60,13 @@ function App() {
   // [API] Llama al hook. Hace que la app obtenga todos los textos traducidos de la API.
   const datos = useTextos(idioma);
 
+  // [API] Llama al hook. Hace que la app obtenga la lista de eventos destacados.
+  // Se renombran las variables para evitar choques de nombres con las categorías.
+  const { eventos, cargando: cargandoEventos, error: errorEventos } = useEventosDestacados();
+
+  // [API] Llama al hook. Hace que la app obtenga la lista de categorías y su conteo.
+  const { categorias, cargando: cargandoCategorias } = useCategorias();
+
   // [API] Extrae el título según la sección. Hace que el <h1> muestre el nombre correcto del menú.
   const titulo =
     activo === "favoritos"
@@ -64,6 +75,12 @@ function App() {
 
   // [LOCAL] Verifica si es inglés. Hace que los textos de respaldo salgan en el idioma correcto.
   const ingles = idioma === "en";
+
+  // [LOCAL] Busca una categoría por su ID. Hace que podamos mostrar el nombre en la tarjeta en lugar del ID técnico.
+  const obtenerNombreCategoria = (idCategoria) => {
+    const categoriaEncontrada = categorias.find((cat) => cat.id === idCategoria);
+    return categoriaEncontrada ? categoriaEncontrada.nombre : idCategoria;
+  };
 
 
   // ==========================================
@@ -96,7 +113,7 @@ function App() {
 
 
   // ==========================================
-  // BLOQUE D: FUNCIONES DEL COMPONENTE
+  // BLOQUE D: FUNCIONES DEL COMPONENTE (Acciones del usuario)
   // ==========================================
 
   // [LOCAL] Recibe el texto buscado. Hace que la app cambie a "explorar" y guarde la búsqueda.
@@ -134,23 +151,78 @@ function App() {
   // ==========================================
   return (
     <>
-      {/* [STATIC] Componente Navbar. */}
+      {/* [STATIC] Componente Navbar. Hace que aparezca la barra superior. */}
       <Navbar
         {...datos} 
         idioma={idioma} 
-        cambiarIdioma={cambiarIdioma} // [LOCAL] Usa la nueva función con cookies.
+        cambiarIdioma={cambiarIdioma} 
         activo={activo} 
         onBuscar={buscar} 
         textoGrande={textoGrande} 
         alternarTexto={() => setTextoGrande((valor) => !valor)} 
       />
       
-      {/* [STATIC] Contenedor principal. */}
+      {/* [STATIC] Contenedor principal. Hace que el contenido se centre en la pantalla. */}
       <main className="contenedor demo-contenido">
+        
+        {/* [LOCAL] Hace que aparezca "English content" o "Contenido en español" según el estado. */}
         <p>{ingles ? "English content" : "Contenido en español"}</p>
+        
+        {/* [API] Hace que aparezca el título obtenido de la API, o uno por defecto si falla. */}
         <h1>{titulo ?? (ingles ? "Navigation" : "Navegación")}</h1>
         
-        <p role="status" style={{ marginTop: '2rem' }}>
+        {/* ========================================== */}
+        {/* SECCIÓN: CATEGORÍAS (Desde la API)         */}
+        {/* ========================================== */}
+        
+        {/* [LOCAL] Hace que aparezca un mensaje de carga mientras la API de categorías responde. */}
+        {cargandoCategorias && <p>Cargando categorías...</p>}
+        
+        {/* [STATIC] Si ya cargaron, dibuja la lista de categorías. */}
+        {!cargandoCategorias && (
+          <section style={{ marginTop: '2rem' }}>
+            <h2>Categorías</h2>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+              {/* [API] Recorre las categorías y las dibuja como píldoras grises. */}
+              {categorias.map((cat) => (
+                <div key={cat.id} style={{ padding: '8px 16px', border: '1px solid var(--color-borde)', borderRadius: '20px', fontSize: '14px' }}>
+                  {cat.nombre} ({cat.eventos})
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ========================================== */}
+        {/* SECCIÓN: EVENTOS DESTACADOS (Desde la API) */}
+        {/* ========================================== */}
+        
+        {/* [LOCAL] Hace que aparezca un mensaje de carga mientras la API de eventos responde. */}
+        {cargandoEventos && <p style={{ marginTop: '2rem' }}>Cargando eventos...</p>}
+        
+        {/* [LOCAL] Hace que aparezca un mensaje si falla la conexión con la API de eventos. */}
+        {errorEventos && <p style={{ marginTop: '2rem' }}>Hubo un error al cargar los eventos.</p>}
+        
+        {/* [STATIC] Si ya cargaron los eventos, dibuja la cuadrícula responsiva con las tarjetas. */}
+        {!cargandoEventos && !errorEventos && (
+          <section style={{ marginTop: '3rem' }}>
+            <h2>Destacados de la semana</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px', marginTop: '1.5rem' }}>
+              {/* [API] Recorre los eventos y le pasa los datos a cada tarjeta. */}
+              {eventos.map((evento) => (
+                <TarjetaEvento 
+                  key={evento.id} 
+                  evento={evento} 
+                  nombreCategoria={obtenerNombreCategoria(evento.categoria)} // [LOCAL] Pasa el nombre legible de la categoría.
+                  onAbrir={() => alert(`Abriendo: ${evento.titulo}`)} // [LOCAL] Temporal para probar clics.
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* [LOCAL] Hace que aparezca el resultado del buscador o el mensaje de "Selecciona un enlace". */}
+        <p role="status" style={{ marginTop: '3rem' }}>
           {consulta
             ? `${ingles ? "Search submitted: " : "Búsqueda enviada: "} ${consulta}`
             : ingles
@@ -158,6 +230,7 @@ function App() {
             : "Selecciona un enlace"}
         </p>
         
+        {/* [STATIC] Hace que aparezca el texto fijo de la plantilla de prueba. */}
         <p>
           {ingles
             ? "This example loads navigation labels from the API"
@@ -165,7 +238,7 @@ function App() {
         </p>
       </main>
 
-      {/* [STATIC] Componente Footer. */}
+      {/* [STATIC] Componente Footer. Hace que aparezca el pie de página. */}
       <Footer textos={datos.textos?.footer} />
 
       {/* [LOCAL] Hace que aparezca el banner de cookies SOLO si el usuario aún no ha decidido. */}

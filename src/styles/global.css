@@ -1,13 +1,15 @@
 /* ============================================================================
    ARCHIVO: global.css
    RESPONSABILIDAD: Aplica estilos base a toda la página (reseteo de márgenes,
-   fuentes por defecto, tamaños de títulos y enlaces).
+   fuentes por defecto, tamaños de títulos, enlaces y accesibilidad).
    
-   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   CONVENCIÓN: 
+   [STATIC]        = Código fijo de diseño.
+   [ACCESIBILIDAD] = Reglas para usuarios con discapacidades o preferencias del sistema.
    ============================================================================ */
 
 /* [STATIC] Hace que el tamaño de las cajas incluya los bordes y el padding, 
-   evitando que los elementos se desborden. */
+   evitando que los elementos se desborden de su contenedor. */
 * {
   box-sizing: border-box;
 }
@@ -18,19 +20,20 @@
 body {
     margin: 0; /* Hace que la página no tenga bordes blancos por defecto */
     font-family: var(--fuente-texto); /* Hace que todo el texto use la fuente de tokens.css */
-    font-size: var(--texto-base); 
-    line-height: var(--interlineado); 
-    color: var(--color-texto); 
-    background: var(--color-fondo); 
+    font-size: var(--texto-base); /* Hace que el texto base mida 16px aprox. */
+    line-height: var(--interlineado); /* Hace que el espacio entre líneas sea cómodo para leer */
+    color: var(--color-texto); /* Hace que el color de la letra sea casi negro */
+    background: var(--color-fondo); /* Hace que el fondo general sea un gris muy claro */
 }
 
 /* =========================================
    SECCIÓN: Títulos
    ========================================= */
 h1, h2, h3 {
-    font-family: var(--fuente-titulos);
+    font-family: var(--fuente-titulos); /* Hace que los títulos usen la misma fuente */
     line-height: 1.2; /* Hace que las líneas de los títulos estén más juntas */
     overflow-wrap: anywhere; /* Hace que las palabras largas se corten y no rompan el diseño */
+    text-wrap: balance; /* Hace que las líneas de los títulos queden visualmente parejas */
 }
 
 h1 { font-size: var(--texto-titulo); } /* Hace que el <h1> sea grande y adaptable */
@@ -49,4 +52,32 @@ a:hover { color: var(--color-primario-hover); } /* Hace que cambien de tono al p
     max-width: var(--ancho-contenido); /* Hace que el contenido se limite en pantallas gigantes */
     margin-inline: auto; /* Hace que el contenedor siempre esté centrado */
     width: calc(100% - 2rem); /* Hace que en celulares deje un pequeño margen a los lados */
+}
+
+/* =========================================
+   SECCIÓN: [ACCESIBILIDAD]
+   ========================================= */
+
+/* [ACCESIBILIDAD] Hace que un texto sea invisible para los ojos, 
+   pero los lectores de pantalla (para personas ciegas) sí lo puedan leer. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* [ACCESIBILIDAD] Hace que se apaguen las animaciones si el usuario 
+   configuró su sistema operativo para reducir el movimiento (por ejemplo, por vértigo). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
