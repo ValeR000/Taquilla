@@ -3,6 +3,7 @@
    CONVENCIÓN: [STATIC].
    ============================================================================ */
 
+/* [STATIC] Hace que la tarjeta mida 440px de alto y tenga los bordes redondeados. */
 .destacado-taquilla {
   position: relative;
   min-height: 440px;
@@ -10,15 +11,20 @@
   overflow: hidden;
 }
 
-/* [STATIC] Hace que el afiche ocupe todo el fondo. */
+/* [STATIC] Hace que el afiche ocupe todo el fondo de la tarjeta. */
 .destacado-taquilla > .arte-evento {
   position: absolute;
   inset: 0;
   height: 100%;
 }
 
-.destacado-taquilla .arte-evento::before { top: -15%; }
-.destacado-taquilla .arte-evento::after { bottom: -25%; }
+/* [STATIC] Ajusta la posición de los círculos decorativos para este tamaño. */
+.destacado-taquilla .arte-evento::before {
+  top: -15%;
+}
+.destacado-taquilla .arte-evento::after {
+  bottom: -25%;
+}
 
 /* [STATIC] La tarjeta blanca flotante. */
 .ficha-destacado {
@@ -32,6 +38,18 @@
   border-radius: 12px;
 }
 
+/* [STATIC] Etiqueta superior (fondo gris, bordes de 6px). */
+.etiqueta-destacado {
+  display: inline-block;
+  background-color: #F0F0F0;
+  color: #141414;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* [STATIC] Título del evento en la tarjeta. */
 .ficha-destacado h2 {
   font-size: 24px;
   margin: 12px 0;
@@ -39,11 +57,14 @@
   letter-spacing: -0.03em;
 }
 
+/* [STATIC] Texto de la fecha y lugar. */
 .ficha-destacado > p {
   color: #595959;
   font-size: 14px;
+  margin: 0 0 16px 0;
 }
 
+/* [STATIC] Alinea el precio y el botón a los extremos. */
 .ficha-destacado > div {
   display: flex;
   justify-content: space-between;
@@ -51,8 +72,33 @@
   gap: 12px;
 }
 
-.ficha-destacado strong { font-weight: 500; }
+.ficha-destacado strong {
+  font-weight: 500;
+}
 
+/* =========================================
+   SECCIÓN: Botón "Ver evento" (Negro)
+   ========================================= */
+.boton-destacado {
+  background-color: #141414;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-destacado:hover {
+  background-color: #333333; /* Hace que el botón se aclare un poco al pasar el mouse */
+}
+
+/* [STATIC] Oculta la tarjeta en celulares para que no se desborde. */
 @media (max-width: 640px) {
-  .destacado-taquilla { display: none; } /* [STATIC] Oculta en móvil como la profe. */
+  .destacado-taquilla {
+    display: none;
+  }
 }

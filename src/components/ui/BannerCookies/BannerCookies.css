@@ -1,58 +1,84 @@
 /* ============================================================================
    ARCHIVO: BannerCookies.css
-   RESPONSABILIDAD: Estilos del aviso de cookies.
-   CONVENCIÓN: [STATIC].
+   RESPONSABILIDAD: Estilos del banner de cookies (layout, colores y responsividad).
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
    ============================================================================ */
 
-/* [STATIC] Hace que el aviso flote en la parte inferior de la pantalla */
+/* =========================================
+   SECCIÓN: Contenedor Principal (Flotante)
+   ========================================= */
 .banner-cookies {
-  position: fixed;
-  z-index: 20;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  max-width: 760px;
-  margin-inline: auto;
-  padding: 24px;
-  border: 2px solid var(--color-primario);
-  border-radius: var(--radio);
-  background: var(--color-superficie);
-  color: var(--color-texto);
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
-}
-
-.banner-cookies h2 {
-  font-size: 20px;
-  margin: 0 0 8px 0;
-}
-
-.banner-cookies p {
-  margin: 0 0 16px 0;
-  font-size: 14px;
-}
-
-.banner-cookies .grupo-botones {
+  position: fixed; /* Hace que el banner flote sobre la página */
+  bottom: 24px; /* Hace que se separe 24px del fondo */
+  left: 50%;
+  transform: translateX(-50%); /* Hace que quede perfectamente centrado */
+  width: calc(100% - 48px);
+  max-width: 900px; /* Hace que no sea tan ancho como el monitor */
+  background-color: #ffffff;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  padding: 16px 24px;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  justify-content: space-between; /* Hace que el texto quede a la izquierda y los botones a la derecha */
   align-items: center;
+  gap: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Hace que resalte con una sombra suave */
+  z-index: 100; /* Hace que esté por encima de todo el contenido */
 }
 
-.banner-cookies .enlace-home {
-  background: none;
-  border: none;
-  color: var(--color-texto);
-  text-decoration: underline;
-  cursor: pointer;
+/* =========================================
+   SECCIÓN: Textos (Título y Descripción)
+   ========================================= */
+.banner-cookies__contenido {
+  display: flex;
+  flex-direction: column; /* Hace que el título y la descripción se apilen */
+  gap: 4px; /* Hace que haya poco espacio entre ellos */
+}
+
+.banner-cookies__contenido h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #141414;
+  margin: 0;
+}
+
+.banner-cookies__contenido p {
+  font-size: 14px;
+  color: #595959;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* =========================================
+   SECCIÓN: Botones de Acción
+   ========================================= */
+.banner-cookies__acciones {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0; /* Hace que los botones no se aplasten si el texto es largo */
+}
+
+/* [STATIC] Ajusta la altura de los botones para que no queden tan grandes dentro del banner. */
+.banner-cookies__acciones .boton {
+  height: 38px; 
+  padding: 0 16px;
   font-size: 14px;
 }
 
-@media (max-width: 640px) {
+/* =========================================
+   SECCIÓN: Responsividad (Móviles)
+   ========================================= */
+@media (max-width: 768px) {
   .banner-cookies {
-    padding: 16px;
+    flex-direction: column; /* Hace que el texto y los botones se apilen en vertical */
+    align-items: stretch;
+    padding: 20px;
+    bottom: 16px;
   }
-  .banner-cookies .grupo-botones {
-    gap: 8px;
+  
+  .banner-cookies__acciones {
+    justify-content: flex-end; /* Hace que los botones se alineen a la derecha en el celular */
+    margin-top: 8px;
   }
 }

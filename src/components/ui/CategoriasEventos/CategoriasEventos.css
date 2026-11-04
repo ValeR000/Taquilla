@@ -4,7 +4,7 @@
    CONVENCIÓN: [STATIC].
    ============================================================================ */
 
-/* [STATIC] Crea una cuadrícula de 6 columnas. */
+/* [STATIC] Crea una cuadrícula de 6 columnas para las categorías en PC. */
 .categorias-eventos {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -17,24 +17,24 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid var(--color-borde);
+  border: 1px solid #dedede;
   border-radius: 12px;
   padding: 16px;
-  background: var(--color-superficie);
-  color: var(--color-texto);
+  background: #fff;
+  color: #141414;
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-/* [STATIC] Hace que el botón cambie de color al pasar el mouse o si está activo. */
+/* [STATIC] Hace que el botón se ilumine al pasar el mouse o si está seleccionado. */
 .categorias-eventos button[aria-pressed="true"],
 .categorias-eventos button:hover {
-  border-color: var(--color-primario);
-  background: var(--color-fondo);
+  border-color: #141414;
+  background: #ededed;
 }
 
-/* [STATIC] El recuadro del ícono. */
+/* [STATIC] El recuadro gris donde va el ícono. */
 .icono-categoria {
   display: grid;
   place-items: center;
@@ -45,18 +45,21 @@
   flex-shrink: 0;
 }
 
+/* [STATIC] Texto pequeño con el conteo de eventos. */
 .categorias-eventos small {
   display: block;
   font-size: 12px;
-  color: var(--color-texto-suave);
+  color: #595959;
 }
 
+/* [STATIC] Adaptación a tablets. */
 @media (max-width: 1100px) {
   .categorias-eventos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
+/* [STATIC] Adaptación a celulares. */
 @media (max-width: 640px) {
   .categorias-eventos {
     grid-template-columns: repeat(2, minmax(0, 1fr));

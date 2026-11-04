@@ -3,19 +3,23 @@
    CONVENCIÓN: [STATIC].
    ============================================================================ */
 
-/* [STATIC] Contenedor del afiche con los círculos decorativos. */
+/* [STATIC] Contenedor base del afiche. */
 .arte-evento {
   position: relative;
   height: 176px;
   overflow: hidden;
-  background: #ccc; /* Color de fondo por si falla la API */
+  background: #ccc; /* Color de fondo por si la API falla */
 }
 
-/* [STATIC] Círculo blanco semitransparente. */
-.arte-evento::before {
+/* [STATIC] Círculo decorativo blanco. */
+.arte-evento::before,
+.arte-evento::after {
   content: "";
   position: absolute;
   border-radius: 50%;
+}
+
+.arte-evento::before {
   width: 70%;
   aspect-ratio: 1;
   right: -20%;
@@ -23,11 +27,8 @@
   background: rgb(255 255 255 / 12%);
 }
 
-/* [STATIC] Círculo negro semitransparente. */
+/* [STATIC] Círculo decorativo negro. */
 .arte-evento::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
   width: 50%;
   aspect-ratio: 1;
   bottom: -60%;
@@ -35,6 +36,9 @@
   background: rgb(0 0 0 / 12%);
 }
 
+/* [STATIC] Altura especial para la tarjeta de evento pequeño. */
 @media (max-width: 640px) {
-  .arte-evento { height: 190px; }
+  .tarjeta-evento .arte-evento {
+    height: 190px;
+  }
 }

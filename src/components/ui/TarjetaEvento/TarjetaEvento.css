@@ -1,7 +1,6 @@
 /* ============================================================================
    ARCHIVO: TarjetaEvento.css
-   RESPONSABILIDAD: Estilos visuales de la tarjeta del evento (idénticos a Figma).
-   CONVENCIÓN: Todos los datos aquí son [STATIC].
+   CONVENCIÓN: [STATIC].
    ============================================================================ */
 
 /* =========================================
@@ -9,9 +8,9 @@
    ========================================= */
 .tarjeta-evento {
   overflow: hidden;
-  border: 1px solid var(--color-borde); /* Borde gris sutil */
-  border-radius: 12px; /* Esquinas redondeadas como en Figma */
-  background: var(--color-superficie);
+  border: 1px solid #E5E5E5; /* Hace que el borde sea sutil según Figma */
+  border-radius: 12px;
+  background: #fff;
   display: flex;
   flex-direction: column;
 }
@@ -20,48 +19,49 @@
    SECCIÓN: Contenido de Texto
    ========================================= */
 .contenido-evento {
-  padding: 20px 16px; /* Espaciado interno de Figma */
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-/* Etiqueta de categoría (píldora gris) */
+/* [STATIC] Etiqueta con fondo gris y bordes de 6px. */
 .etiqueta-evento {
   display: inline-block;
-  background-color: var(--color-fondo); /* Fondo gris claro */
-  color: var(--color-texto);
+  background-color: #F0F0F0;
+  color: #141414;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 10px;
-  border-radius: 20px; /* Píldora redondeada */
-  align-self: flex-start; /* Para que no ocupe todo el ancho */
-  margin-bottom: 8px;
+  border-radius: 6px;
+  align-self: flex-start;
+  margin-bottom: 12px;
 }
 
 .contenido-evento h3 {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin: 0 0 16px 0;
   line-height: 1.3;
 }
 
-/* Párrafos de fecha y lugar */
+/* [STATIC] Párrafos de fecha y lugar con el color #525252. */
 .contenido-evento > p {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--color-texto-suave);
+  color: #525252; 
   margin: 6px 0;
 }
 
+/* [STATIC] Los íconos heredan el mismo color #525252. */
 .contenido-evento > p svg {
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  color: var(--color-texto-suave);
+  color: #525252;
 }
 
 /* =========================================
@@ -72,35 +72,35 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: auto;
+  padding-top: 24px;
 }
 
 .precio-evento small {
   display: block;
-  color: var(--color-texto-suave);
+  color: #525252;
   font-size: 12px;
   margin-bottom: 2px;
 }
 
 .precio-evento strong {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--color-texto);
+  font-size: 17px;
+  font-weight: 500;
 }
 
-/* Botón "Ver evento" idéntico al de Figma */
-.boton-evento {
+/* [STATIC] Botón "Ver evento" con el borde exacto #8C8C8C. */
+.precio-evento .boton-evento {
+  border: 1px solid #8C8C8C; /* <-- AQUÍ ESTÁ EL CAMBIO */
   background: transparent;
-  border: 1px solid var(--color-borde);
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-texto);
+  color: #141414;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.boton-evento:hover {
+.precio-evento .boton-evento:hover {
   background-color: var(--color-fondo);
 }

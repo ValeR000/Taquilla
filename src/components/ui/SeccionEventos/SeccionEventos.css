@@ -1,0 +1,96 @@
+/* ============================================================================
+   ARCHIVO: SeccionEventos.css
+   CONVENCIÓN: [STATIC].
+   ============================================================================ */
+
+.seccion-eventos {
+  margin-bottom: 48px;
+}
+
+/* [STATIC] Alinea el título a la izquierda y el botón a la derecha. */
+.seccion-eventos .titulo-seccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.seccion-eventos h2 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-bottom: 6px;
+}
+
+.seccion-eventos .titulo-seccion p {
+  color: #595959;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* [STATIC] Grid de 4 columnas. */
+.eventos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* [STATIC] Estilos del estado vacío. */
+.sin-resultados {
+  padding: 48px;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
+.sin-resultados p {
+  margin: 12px 0 24px;
+}
+
+@media (max-width: 1100px) {
+  .eventos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .eventos-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .seccion-eventos .titulo-seccion {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .seccion-eventos h2 {
+    font-size: 22px;
+  }
+  .seccion-eventos .titulo-seccion p {
+    font-size: 14px;
+  }
+  .sin-resultados {
+    padding: 24px;
+  }
+}
+/* =========================================
+   SECCIÓN: Botón "Ver todos" (Link)
+   ========================================= */
+.enlace-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none; /* Quita el fondo gris por defecto */
+  border: none;     /* Quita el borde por defecto */
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #141414;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.enlace-home:hover {
+  text-decoration: underline; /* Hace que se subraye al pasar el mouse */
+}

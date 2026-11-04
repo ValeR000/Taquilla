@@ -1,9 +1,9 @@
 // ============================================================================
 // ARCHIVO: App.jsx
 // RESPONSABILIDAD: Componente principal. Une el Navbar, el Footer, la vista de
-// inicio (Hero, categorías y eventos), maneja la lógica de idiomas, cookies, 
+// inicio (Hero, categorías y eventos), maneja la lógica de idiomas, cookies,
 // filtros y la conexión a la API.
-// 
+//
 // CONVENCIÓN DE ETIQUETAS (Origen del dato):
 // [API]    = Dato que viene de internet (peticiones al servidor).
 // [LOCAL]  = Dato o lógica que vive dentro de React (estados, eventos).
@@ -24,6 +24,7 @@ import TarjetaEvento from "./components/ui/TarjetaEvento/TarjetaEvento.jsx";
 import Hero from "./components/ui/Hero/Hero.jsx";
 import CategoriasEventos from "./components/ui/CategoriasEventos/CategoriasEventos.jsx";
 import BuscadorEventos from "./components/ui/BuscadorEventos/BuscadorEventos.jsx"; // [LOCAL] Importación necesaria
+import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { useEffect, useState } from "react";
@@ -74,7 +75,7 @@ function App() {
       ? datos.textos?.navbar.botones.favoritos
       : datos.textos?.navbar.enlaces[activo];
 
-  // [LOCAL] Verifica si es inglés. 
+  // [LOCAL] Verifica si es inglés.
   const ingles = idioma === "en";
 
   // [LOCAL] Variable auxiliar para pasársela al Hero (que espera una prop llamada 'en').
@@ -196,7 +197,7 @@ function App() {
       {/* ========================================== */}
       <main className="contenedor demo-contenido">
 
-        {/* SECCIÓN: CATEGORÍAS */}
+        {/* CATEGORÍAS */}
         {cargandoCategorias && <p>Cargando categorías...</p>}
 
         {!cargandoCategorias && (
@@ -204,55 +205,55 @@ function App() {
             categorias={categorias}
             filtros={filtroCategoria}
             filtrarCategoria={setFiltroCategoria}
+            en={en}
           />
         )}
 
-        {/* SECCIÓN: EVENTOS DESTACADOS */}
-        {cargandoEventos && (
-          <p style={{ marginTop: "3rem" }}>Cargando eventos...</p>
-        )}
+        {/* ========================================== */}
+        {/* SECCIÓN: EVENTOS (Cargando y Error)        */}
+        {/* ========================================== */}
+        {cargandoEventos && <p style={{ marginTop: "3rem" }}>Cargando eventos...</p>}
 
-        {errorEventos && (
-          <p style={{ marginTop: "3rem" }}>Hubo un error al cargar los eventos.</p>
-        )}
+        {errorEventos && <p style={{ marginTop: "3rem" }}>Hubo un error al cargar los eventos.</p>}
 
+        {/* ========================================== */}
+        {/* SECCIÓN: EVENTOS DESTACADOS                */}
+        {/* ========================================== */}
         {!cargandoEventos && !errorEventos && (
-          <section style={{ marginTop: "3rem" }}>
-            <h2>Destacados de la semana</h2>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                gap: "24px",
-                marginTop: "1.5rem"
+          <>
+            {/* 1. PRIMERA SECCIÓN (Primeros 4 eventos de la API) */}
+            <SeccionEventos
+              id="eventos"
+              titulo={en ? "This week's highlights" : "Destacados de la semana"}
+              descripcion={en ? "The events with the most tickets sold in the last 7 days" : "Los eventos con más entradas vendidas en los últimos 7 días"}
+              eventos={eventos.slice(0, 4)}
+              categorias={categorias}
+              en={en}
+              onAbrir={(evento) => alert(`Abriendo: ${evento.titulo}`)}
+              onVerTodos={() => {
+                setActivo("explorar");
+                window.history.replaceState(null, "", "#explorar");
               }}
-            >
-              {eventos.map((evento) => (
-                <TarjetaEvento
-                  key={evento.id}
-                  evento={evento}
-                  nombreCategoria={obtenerNombreCategoria(evento.categoria)}
-                  onAbrir={() => alert(`Abriendo: ${evento.titulo}`)}
-                />
-              ))}
-            </div>
-          </section>
+            />
+
+            {/* 2. SEGUNDA SECCIÓN (Siguientes 4 eventos de la API) */}
+            <SeccionEventos
+              id="proximos"
+              titulo={en ? "Upcoming in Manizales" : "Próximamente en Manizales"}
+              descripcion={en ? "Change the city from the search bar" : "Cambia la ciudad desde el buscador"}
+              eventos={eventos.slice(4, 8)} // Toma desde el 5to hasta el 8vo evento
+              categorias={categorias}
+              en={en}
+              onAbrir={(evento) => alert(`Abriendo: ${evento.titulo}`)}
+              onVerTodos={() => {
+                setActivo("explorar");
+                window.history.replaceState(null, "", "#explorar");
+              }}
+            />
+          </>
         )}
 
-        {/* RESULTADO DEL BUSCADOR */}
-        <p role="status" style={{ marginTop: "3rem" }}>
-          {consulta
-            ? `${ingles ? "Search submitted: " : "Búsqueda enviada: "} ${consulta}`
-            : ingles
-              ? "Select a link"
-              : "Selecciona un enlace"}
-        </p>
-
-        <p>
-          {ingles
-            ? "This example loads navigation labels from the API"
-            : "Este ejemplo carga los textos del menú desde la API"}
-        </p>
+        {/* NOTA: No se agregan eventos manualmente. Todos vienen de la API. */}
 
       </main>
 
