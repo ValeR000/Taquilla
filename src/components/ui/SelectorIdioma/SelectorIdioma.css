@@ -1,0 +1,29 @@
+/* RESPONSABILIDAD: Estilos visuales del selector de idioma. */
+
+.selector-idioma {
+  display: inline-flex;
+  height: 44px;
+  padding: 5px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pildora);
+}
+
+.selector-idioma__boton {
+  height: 32px; 
+  padding: 0 14px;
+  border: 0; 
+  border-radius: var(--radio-pildora);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color-texto);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hace que el idioma actual se vea como una píldora negra */
+.selector-idioma__boton--activo {
+  color: var(--color-sobre-primario);
+  background: var(--color-primario); 
+}

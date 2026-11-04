@@ -6,12 +6,12 @@
 
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
+import Etiqueta from "../Etiqueta/Etiqueta.jsx"; // <-- NUEVO IMPORT
 import { formatoDinero } from "../../../utils/formato.js";
 import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({ evento, onAbrir, nombreCategoria, en }) {
   
-  // [LOCAL] Formatea la fecha según el idioma (español o inglés).
   const fechaFormateada = new Date(evento.fecha).toLocaleDateString(
     en ? "en-US" : "es-CO",
     {
@@ -27,21 +27,18 @@ export default function TarjetaEvento({ evento, onAbrir, nombreCategoria, en }) 
       <AficheEvento afiche={evento.afiche} />
       
       <div className="contenido-evento">
-        {/* [API] Etiqueta de la categoría */}
-        <span className="etiqueta-evento">
+        {/* [API] Etiqueta de la categoría usando el nuevo componente */}
+        <Etiqueta>
           {nombreCategoria || evento.categoria}
-        </span>
+        </Etiqueta>
         
-        {/* [API] Título del evento */}
         <h3>{evento.titulo}</h3>
         
-        {/* [API] Fecha (traducida) */}
         <p>
           <IconoEvento tipo="fecha" />
           {fechaFormateada}
         </p>
         
-        {/* [API] Lugar del evento */}
         <p>
           <IconoEvento tipo="lugar" />
           {evento.recinto?.nombre}, {evento.recinto?.ciudad}

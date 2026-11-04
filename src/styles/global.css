@@ -81,3 +81,51 @@ a:hover { color: var(--color-primario-hover); } /* Hace que cambien de tono al p
     scroll-behavior: auto !important;
   }
 }
+/* ============================================================================
+   SECCIÓN: Clases de Accesibilidad (Se activan desde el Panel)
+   ============================================================================ */
+
+/* [ACCESIBILIDAD] Alto Contraste: Invierte colores y aumenta bordes */
+body.accesibilidad-alto-contraste {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+body.accesibilidad-alto-contraste * {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+body.accesibilidad-alto-contraste .navbar,
+body.accesibilidad-alto-contraste .footer,
+body.accesibilidad-alto-contraste .hero-taquilla {
+  background-color: #000 !important;
+}
+body.accesibilidad-alto-contraste .hero__buscador,
+body.accesibilidad-alto-contraste .buscador-eventos,
+body.accesibilidad-alto-contraste .ficha-destacado,
+body.accesibilidad-alto-contraste .tarjeta-evento {
+  background-color: #111 !important;
+  border: 1px solid #fff !important;
+}
+
+/* [ACCESIBILIDAD] Reducir movimiento: Desactiva transiciones y animaciones */
+body.accesibilidad-reducir-movimiento * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* [ACCESIBILIDAD] Subrayar enlaces */
+body.accesibilidad-subrayar-enlaces a {
+  text-decoration: underline !important;
+}
+
+/* [ACCESIBILIDAD] Espaciado de lectura: Aumenta interlineado y letras */
+body.accesibilidad-espaciado-lectura p,
+body.accesibilidad-espaciado-lectura h1,
+body.accesibilidad-espaciado-lectura h2,
+body.accesibilidad-espaciado-lectura h3,
+body.accesibilidad-espaciado-lectura a,
+body.accesibilidad-espaciado-lectura span {
+  line-height: 2 !important;
+  letter-spacing: 0.05em !important;
+}

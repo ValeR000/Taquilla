@@ -1,0 +1,193 @@
+/* RESPONSABILIDAD: Estilos del panel flotante y los interruptores (toggles). */
+
+.panel-accesibilidad__overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 90;
+}
+
+/* [STATIC] Contenedor principal del panel */
+.panel-accesibilidad {
+  position: fixed;
+  top: 90px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 340px;
+  background: var(--color-superficie); /* Reemplaza #ffffff */
+  border-radius: var(--radio); /* Reemplaza 12px */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--color-borde-suave); /* Reemplaza #E5E5E5 */
+  z-index: 100;
+  font-family: var(--fuente-texto);
+  color: var(--color-texto); /* Reemplaza #141414 */
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-accesibilidad__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-borde-suave); /* Reemplaza #E5E5E5 */
+}
+
+.panel-accesibilidad__header h2 {
+  font-size: var(--texto-base); /* Reemplaza 16px */
+  font-weight: 700;
+  margin: 0;
+}
+
+.panel-accesibilidad__cerrar {
+  background: transparent;
+  border: none;
+  font-size: var(--texto-base); /* Reemplaza 16px */
+  cursor: pointer;
+  color: var(--color-texto); /* Reemplaza #141414 */
+}
+
+.panel-accesibilidad__seccion {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-borde-suave); /* Reemplaza #E5E5E5 */
+}
+
+.panel-accesibilidad__seccion h3 {
+  font-size: var(--texto-pequeno); /* Reemplaza 14px */
+  font-weight: 500;
+  margin: 0 0 12px 0;
+}
+
+.panel-accesibilidad__tamano {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-borde-suave); /* Reemplaza #E5E5E5 */
+  border-radius: var(--radio-sm); /* Reemplaza 8px */
+  padding: 4px;
+}
+
+.panel-accesibilidad__tamano button {
+  width: 36px;
+  height: 36px;
+  background: var(--color-fondo-etiqueta); /* Reemplaza #F0F0F0 */
+  border: none;
+  border-radius: var(--radio-xs); /* Reemplaza 6px */
+  font-size: var(--texto-mediano); /* Reemplaza 18px */
+  cursor: pointer;
+}
+
+.panel-accesibilidad__tamano span {
+  font-size: var(--texto-pequeno); /* Reemplaza 14px */
+  font-weight: 500;
+}
+
+.panel-accesibilidad__toggles {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-bottom: 1px solid var(--color-borde-suave); /* Reemplaza #E5E5E5 */
+}
+
+.toggle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle-texto h4 {
+  font-size: var(--texto-pequeno); /* Reemplaza 14px */
+  font-weight: 500;
+  margin: 0 0 2px 0;
+}
+
+.toggle-texto p {
+  font-size: var(--texto-xs); /* Reemplaza 12px */
+  color: var(--color-texto-suave); /* Reemplaza #6B6B6B */
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* [STATIC] Estilos del Switch (Interruptor) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--color-borde); /* Reemplaza #8C8C8C */
+  transition: .4s;
+  border-radius: var(--radio-pildora); /* Reemplaza 24px */
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--color-superficie); /* Reemplaza white */
+  transition: .4s;
+  border-radius: 50%; /* Se mantiene porque es un círculo geométrico */
+}
+
+input:checked + .slider {
+  background-color: var(--color-primario); /* Reemplaza #141414 */
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* [STATIC] Footer */
+.panel-accesibilidad__footer {
+  padding: 16px 20px;
+  background: var(--color-fondo-panel); /* Reemplaza #F9F9F9 */
+  border-bottom-left-radius: var(--radio); /* Reemplaza 12px */
+  border-bottom-right-radius: var(--radio); /* Reemplaza 12px */
+}
+
+.panel-accesibilidad__footer p {
+  font-size: var(--texto-xxs); /* Reemplaza 11px */
+  color: var(--color-texto-suave); /* Reemplaza #6B6B6B */
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.panel-accesibilidad__footer-acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-accesibilidad__footer-acciones a {
+  font-size: var(--texto-xs); /* Reemplaza 12px */
+  color: var(--color-texto); /* Reemplaza #141414 */
+  text-decoration: underline;
+}
+
+/* [STATIC] Botón de restablecer */
+.panel-accesibilidad__footer-acciones button {
+  background: var(--color-superficie); /* Reemplaza #ffffff */
+  border: 1px solid var(--color-borde); /* Reemplaza #8C8C8C */
+  padding: 6px 12px;
+  border-radius: var(--radio-sm); /* Reemplaza 8px */
+  font-size: var(--texto-xs); /* Reemplaza 12px */
+  cursor: pointer;
+  font-weight: 500;
+}

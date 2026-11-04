@@ -29,6 +29,8 @@ import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { useEffect, useState } from "react";
 
+import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
+
 // 2. FUNCIONES AUXILIARES
 // [LOCAL] Lee el numeral de la URL.
 function leerSeccion() {
@@ -52,6 +54,28 @@ function App() {
   const [consulta, setConsulta] = useState("");
   const [textoGrande, setTextoGrande] = useState(false);
   const [filtroCategoria, setFiltroCategoria] = useState(null);
+
+  // Estados para el Panel de Accesibilidad
+  const [panelAbierto, setPanelAbierto] = useState(false);
+  const [tamanoTexto, setTamanoTexto] = useState(100); // 100%
+  const [altoContraste, setAltoContraste] = useState(false);
+  const [reducirMovimiento, setReducirMovimiento] = useState(false);
+  const [subrayarEnlaces, setSubrayarEnlaces] = useState(false);
+  const [espaciadoLectura, setEspaciadoLectura] = useState(false);
+
+  // Funciones para el panel
+  const abrirAccesibilidad = () => setPanelAbierto(!panelAbierto);
+  const cerrarAccesibilidad = () => setPanelAbierto(false);
+  const aumentarTexto = () => setTamanoTexto((prev) => Math.min(prev + 10, 150));
+  const reducirTexto = () => setTamanoTexto((prev) => Math.max(prev - 10, 80));
+
+  const restablecerAccesibilidad = () => {
+    setTamanoTexto(100);
+    setAltoContraste(false);
+    setReducirMovimiento(false);
+    setSubrayarEnlaces(false);
+    setEspaciadoLectura(false);
+  };
 
 
   // ==========================================
@@ -113,12 +137,32 @@ function App() {
     document.documentElement.lang = idioma;
   }, [idioma]);
 
+  // EFECTO: Aplicar las clases de accesibilidad al body
   useEffect(() => {
-    document.documentElement.style.fontSize = textoGrande ? "112%" : "";
+    document.documentElement.style.fontSize = `${tamanoTexto}%`;
+
+    if (altoContraste) document.body.classList.add("accesibilidad-alto-contraste");
+    else document.body.classList.remove("accesibilidad-alto-contraste");
+
+    if (reducirMovimiento) document.body.classList.add("accesibilidad-reducir-movimiento");
+    else document.body.classList.remove("accesibilidad-reducir-movimiento");
+
+    if (subrayarEnlaces) document.body.classList.add("accesibilidad-subrayar-enlaces");
+    else document.body.classList.remove("accesibilidad-subrayar-enlaces");
+
+    if (espaciadoLectura) document.body.classList.add("accesibilidad-espaciado-lectura");
+    else document.body.classList.remove("accesibilidad-espaciado-lectura");
+
     return () => {
       document.documentElement.style.fontSize = "";
+      document.body.classList.remove(
+        "accesibilidad-alto-contraste",
+        "accesibilidad-reducir-movimiento",
+        "accesibilidad-subrayar-enlaces",
+        "accesibilidad-espaciado-lectura"
+      );
     };
-  }, [textoGrande]);
+  }, [tamanoTexto, altoContraste, reducirMovimiento, subrayarEnlaces, espaciadoLectura]);
 
 
   // ==========================================
@@ -167,8 +211,8 @@ function App() {
         cambiarIdioma={cambiarIdioma}
         activo={activo}
         onBuscar={buscar}
-        textoGrande={textoGrande}
-        alternarTexto={() => setTextoGrande((valor) => !valor)}
+        abrirAccesibilidad={abrirAccesibilidad}
+        accesibilidadAbierta={panelAbierto}
       />
 
       {/* ========================================== */}
@@ -256,6 +300,25 @@ function App() {
         {/* NOTA: No se agregan eventos manualmente. Todos vienen de la API. */}
 
       </main>
+
+      {/* Panel de Accesibilidad */}
+      <PanelAccesibilidad
+        abierto={panelAbierto}
+        onCerrar={cerrarAccesibilidad}
+        en={en}
+        tamanoTexto={tamanoTexto}
+        aumentarTexto={aumentarTexto}
+        reducirTexto={reducirTexto}
+        altoContraste={altoContraste}
+        setAltoContraste={setAltoContraste}
+        reducirMovimiento={reducirMovimiento}
+        setReducirMovimiento={setReducirMovimiento}
+        subrayarEnlaces={subrayarEnlaces}
+        setSubrayarEnlaces={setSubrayarEnlaces}
+        espaciadoLectura={espaciadoLectura}
+        setEspaciadoLectura={setEspaciadoLectura}
+        restablecer={restablecerAccesibilidad}
+      />
 
       {/* [STATIC] Footer. */}
       <Footer textos={datos.textos?.footer} />

@@ -1,7 +1,4 @@
-/* ============================================================================
-   ARCHIVO: SeccionEventos.css
-   CONVENCIÓN: [STATIC].
-   ============================================================================ */
+/* RESPONSABILIDAD: Estilos de la sección de eventos (título, grid y estado vacío). */
 
 .seccion-eventos {
   margin-bottom: 48px;
@@ -16,15 +13,15 @@
 }
 
 .seccion-eventos h2 {
-  font-size: 24px;
+  font-size: var(--texto-subtitulo); /* Reemplaza 24px */
   font-weight: 600;
   letter-spacing: -0.025em;
   margin-bottom: 6px;
 }
 
 .seccion-eventos .titulo-seccion p {
-  color: #595959;
-  font-size: 16px;
+  color: var(--color-texto-gris); /* Reemplaza #595959 */
+  font-size: var(--texto-base); /* Reemplaza 16px */
   margin: 0;
 }
 
@@ -38,9 +35,9 @@
 /* [STATIC] Estilos del estado vacío. */
 .sin-resultados {
   padding: 48px;
-  border: 1px solid #dedede;
-  border-radius: 12px;
-  background: #fff;
+  border: 1px solid var(--color-borde-suave); /* Reemplaza #dedede */
+  border-radius: var(--radio); /* Reemplaza 12px */
+  background: var(--color-superficie); /* Reemplaza #fff */
   text-align: center;
 }
 .sin-resultados p {
@@ -64,15 +61,16 @@
     gap: 16px;
   }
   .seccion-eventos h2 {
-    font-size: 22px;
+    font-size: 22px; /* Se mantiene porque es un ajuste específico para celular */
   }
   .seccion-eventos .titulo-seccion p {
-    font-size: 14px;
+    font-size: var(--texto-pequeno); /* Reemplaza 14px */
   }
   .sin-resultados {
     padding: 24px;
   }
 }
+
 /* =========================================
    SECCIÓN: Botón "Ver todos" (Link)
    ========================================= */
@@ -80,17 +78,17 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: none; /* Quita el fondo gris por defecto */
-  border: none;     /* Quita el borde por defecto */
+  background: none; 
+  border: none;     
   padding: 0;
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--texto-pequeno); /* Reemplaza 14px */
   font-weight: 500;
-  color: #141414;
+  color: var(--color-texto); /* Reemplaza #141414 */
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
 
 .enlace-home:hover {
-  text-decoration: underline; /* Hace que se subraye al pasar el mouse */
+  text-decoration: underline; 
 }

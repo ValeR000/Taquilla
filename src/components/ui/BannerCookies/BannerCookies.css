@@ -1,29 +1,25 @@
-/* ============================================================================
-   ARCHIVO: BannerCookies.css
-   RESPONSABILIDAD: Estilos del banner de cookies (layout, colores y responsividad).
-   CONVENCIÓN: Todos los datos aquí son [STATIC].
-   ============================================================================ */
+/* RESPONSABILIDAD: Estilos del banner de cookies (layout, colores y responsividad). */
 
 /* =========================================
    SECCIÓN: Contenedor Principal (Flotante)
    ========================================= */
 .banner-cookies {
-  position: fixed; /* Hace que el banner flote sobre la página */
-  bottom: 24px; /* Hace que se separe 24px del fondo */
+  position: fixed; 
+  bottom: 24px; 
   left: 50%;
-  transform: translateX(-50%); /* Hace que quede perfectamente centrado */
+  transform: translateX(-50%); 
   width: calc(100% - 48px);
-  max-width: 900px; /* Hace que no sea tan ancho como el monitor */
-  background-color: #ffffff;
-  border: 1px solid #E5E5E5;
-  border-radius: 12px;
+  max-width: 900px; 
+  background-color: var(--color-superficie); /* Reemplaza #ffffff */
+  border: 1px solid var(--color-borde-suave); /* Reemplaza #E5E5E5 */
+  border-radius: var(--radio); /* Reemplaza 12px */
   padding: 16px 24px;
   display: flex;
-  justify-content: space-between; /* Hace que el texto quede a la izquierda y los botones a la derecha */
+  justify-content: space-between; 
   align-items: center;
   gap: 24px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Hace que resalte con una sombra suave */
-  z-index: 100; /* Hace que esté por encima de todo el contenido */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+  z-index: 100; 
 }
 
 /* =========================================
@@ -31,20 +27,20 @@
    ========================================= */
 .banner-cookies__contenido {
   display: flex;
-  flex-direction: column; /* Hace que el título y la descripción se apilen */
-  gap: 4px; /* Hace que haya poco espacio entre ellos */
+  flex-direction: column; 
+  gap: 4px; 
 }
 
 .banner-cookies__contenido h2 {
-  font-size: 16px;
+  font-size: var(--texto-base); /* Reemplaza 16px */
   font-weight: 600;
-  color: #141414;
+  color: var(--color-texto); /* Reemplaza #141414 */
   margin: 0;
 }
 
 .banner-cookies__contenido p {
-  font-size: 14px;
-  color: #595959;
+  font-size: var(--texto-pequeno); /* Reemplaza 14px */
+  color: var(--color-texto-suave); /* Reemplaza #595959 */
   margin: 0;
   line-height: 1.4;
 }
@@ -56,14 +52,14 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-shrink: 0; /* Hace que los botones no se aplasten si el texto es largo */
+  flex-shrink: 0; 
 }
 
 /* [STATIC] Ajusta la altura de los botones para que no queden tan grandes dentro del banner. */
 .banner-cookies__acciones .boton {
   height: 38px; 
   padding: 0 16px;
-  font-size: 14px;
+  font-size: var(--texto-pequeno); /* Reemplaza 14px */
 }
 
 /* =========================================
@@ -71,14 +67,14 @@
    ========================================= */
 @media (max-width: 768px) {
   .banner-cookies {
-    flex-direction: column; /* Hace que el texto y los botones se apilen en vertical */
+    flex-direction: column; 
     align-items: stretch;
     padding: 20px;
     bottom: 16px;
   }
   
   .banner-cookies__acciones {
-    justify-content: flex-end; /* Hace que los botones se alineen a la derecha en el celular */
+    justify-content: flex-end; 
     margin-top: 8px;
   }
 }

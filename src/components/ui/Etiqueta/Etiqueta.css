@@ -1,0 +1,13 @@
+/* RESPONSABILIDAD: Estilos visuales de la etiqueta. */
+
+.etiqueta {
+  display: inline-block;
+  background-color: var(--color-fondo-etiqueta);
+  color: var(--color-texto);
+  font-size: var(--texto-xs);
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radio-xs);
+  align-self: flex-start;
+  margin-bottom: 12px;
+}

@@ -38,17 +38,6 @@
   border-radius: 12px;
 }
 
-/* [STATIC] Etiqueta superior (fondo gris, bordes de 6px). */
-.etiqueta-destacado {
-  display: inline-block;
-  background-color: #F0F0F0;
-  color: #141414;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
 /* [STATIC] Título del evento en la tarjeta. */
 .ficha-destacado h2 {
   font-size: 24px;
