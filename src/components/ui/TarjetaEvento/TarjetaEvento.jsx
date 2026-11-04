@@ -6,12 +6,13 @@
 
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
-import Etiqueta from "../Etiqueta/Etiqueta.jsx"; // <-- NUEVO IMPORT
+import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import { formatoDinero } from "../../../utils/formato.js";
 import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({ evento, onAbrir, nombreCategoria, en }) {
   
+  // [LOCAL] Formatea la fecha según el idioma (español o inglés).
   const fechaFormateada = new Date(evento.fecha).toLocaleDateString(
     en ? "en-US" : "es-CO",
     {
@@ -22,14 +23,30 @@ export default function TarjetaEvento({ evento, onAbrir, nombreCategoria, en }) 
     }
   );
 
+  // [LOCAL] Diccionario para traducir las categorías al inglés.
+  const traduccionesCategorias = {
+    conciertos: "Concerts",
+    teatro: "Theatre",
+    deportes: "Sports",
+    festivales: "Festivals",
+    comedia: "Comedy",
+    familiares: "Family",
+  };
+
+  // [LOCAL] Si está en inglés, busca la traducción usando el ID de la categoría.
+  // Si no la encuentra, usa el nombre que viene por props o el ID directamente.
+  const categoriaMostrar = en 
+    ? (traduccionesCategorias[evento.categoria] || nombreCategoria || evento.categoria)
+    : (nombreCategoria || evento.categoria);
+
   return (
     <article className="tarjeta-evento">
       <AficheEvento afiche={evento.afiche} />
       
       <div className="contenido-evento">
-        {/* [API] Etiqueta de la categoría usando el nuevo componente */}
+        {/* [API] Etiqueta de la categoría usando el nuevo componente y traducción */}
         <Etiqueta>
-          {nombreCategoria || evento.categoria}
+          {categoriaMostrar}
         </Etiqueta>
         
         <h3>{evento.titulo}</h3>
