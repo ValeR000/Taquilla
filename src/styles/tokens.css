@@ -10,13 +10,12 @@
    en los componentes, no necesitan tokens.
    ============================================================================ */
 
-/* [STATIC] Importa la fuente "Instrument Sans" desde Google Fonts. 
-   Hace que toda la página use una tipografía moderna. */
+/* [STATIC] Importa la fuente "Instrument Sans" desde Google Fonts. */
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap");
 
 :root {
   /* =========================================
-     SECCIÓN: Colores Base de la App
+     1. COLORES GENERALES
      ========================================= */
   --color-fondo: #f8fafc;         /* Hace que el fondo general sea un gris muy claro */
   --color-superficie: #ffffff;    /* Hace que los paneles (como el Navbar) sean blancos */
@@ -28,50 +27,72 @@
   --color-borde: #8C8C8C;         /* Hace que los bordes de los botones sean grises */
   --color-buscador: #F0F0F0;      /* Hace que la píldora del buscador sea gris claro */
 
-  /* [ACCESIBILIDAD] Color del borde de foco */
-  --color-foco: #713bfa;          /* Hace que aparezca un borde morado al navegar con teclado */
-
-  /* [STATIC] Alias (Creados para que los componentes de la profe funcionen sin cambios) */
-  --fondo: var(--color-fondo);            /* Alias para el fondo general */
-  --superficie: var(--color-superficie);  /* Alias para las superficies blancas */
-  --tinta: var(--color-texto);            /* Alias para el color del texto */
-  --suave: var(--color-texto-suave);      /* Alias para el texto secundario */
-  --acento: var(--color-primario);        /* Alias para el color principal/negro */
-  --sobre-acento: var(--color-sobre-primario); /* Alias para el texto sobre el color principal */
-  --borde: var(--color-borde);            /* Alias para los bordes */
-
   /* =========================================
-     SECCIÓN: Colores del Footer (Pie de página)
-     ========================================= */
-  --color-footer: #141414;        /* Hace que el fondo del footer sea negro */
-  --color-footer-texto: #ffffff;  /* Hace que los enlaces del footer sean blancos */
-  --color-footer-suave: #A8A8A8;  /* Hace que los títulos del footer sean grises */
-  --color-footer-lineaDiv: #3A3A3A;/* Hace que la línea divisoria del footer sea oscura */
-
-  /* =========================================
-     SECCIÓN: Tipografías
+     2. TIPOGRAFÍAS GENERALES Y TEXTOS
      ========================================= */
   --fuente-texto: "Instrument Sans", system-ui, sans-serif; /* Hace que el texto normal use Instrument Sans */
   --fuente-titulos: "Instrument Sans", Georgia, serif;      /* Hace que los títulos usen la misma fuente */
-
-  /* =========================================
-     SECCIÓN: Tamaños de Texto y Espaciados
-     ========================================= */
-  --texto-pequeno: 0.875rem;      /* Hace que textos pequeños midan 14px aprox. */
-  --texto-base: 1rem;             /* Hace que el texto base mida 16px aprox. */
-  --texto-subtitulo: 1.5rem;      /* Hace que los subtítulos midan 24px aprox. */
-  --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem); /* Hace que el título principal se adapte al tamaño de la pantalla */
   --interlineado: 1.6;            /* Hace que el espacio entre líneas sea cómodo para leer */
 
+  --texto-xs: 0.75rem;            /* Hace que textos muy pequeños midan 12px (ej. Etiquetas) */
+  --texto-xxs: 0.6875rem;         /* Hace que textos mínimos midan 11px aprox. (ej. Footer del panel) */
+  --texto-pequeno: 0.875rem;      /* Hace que textos pequeños midan 14px aprox. */
+  --texto-base: 1rem;             /* Hace que el texto base mida 16px aprox. */
+  --texto-precio: 1.0625rem;      /* Hace que el precio mida 17px aprox. */
+  --texto-logo: 1.125rem;         /* Hace que el texto del logo sea un poco más grande (18px) */
+  --texto-mediano: 1.125rem;      /* Hace que textos medianos midan 18px aprox. (ej. Descripciones) */
+  --texto-h3: 1.25rem;            /* Hace que los títulos de tarjetas midan 20px */
+  --texto-subtitulo: 1.5rem;      /* Hace que los subtítulos midan 24px aprox. */
+  --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem); /* Hace que el título principal se adapte a la pantalla */
+
+  /* =========================================
+     3. ESPACIADOS Y ESTRUCTURA
+     ========================================= */
   --espacio-1: 0.5rem;            /* Hace que los márgenes pequeños sean de 8px */
   --espacio-2: 1rem;              /* Hace que los márgenes medianos sean de 16px */
   --espacio-3: 1.5rem;            /* Hace que los márgenes grandes sean de 24px */
   --espacio-4: 2rem;              /* Hace que los márgenes extra grandes sean de 32px */
   --espacio-5: 3rem;              /* Hace que los márgenes enormes sean de 48px */
 
+  --ancho-contenido: 1280px;      /* Hace que el contenido no se estire más de lo permitido */
+
   /* =========================================
-     SECCIÓN: Estructura y Contenedores
+     4. BORDES Y RADIOS
      ========================================= */
-  --radio: 0.75rem;               /* Hace que las esquinas redondeadas midan 12px (igual que la profe) */
-  --ancho-contenido: 72rem;       /* Hace que el contenido no se estire más de 1152px */
+  --radio: 0.75rem;               /* Hace que las esquinas redondeadas grandes midan 12px (ej. Tarjetas) */
+  --radio-sm: 8px;                /* Hace que las esquinas redondeadas pequeñas midan 8px (ej. Logo, Botones) */
+  --radio-xs: 6px;                /* Hace que las esquinas muy pequeñas midan 6px (ej. Etiquetas) */
+  --radio-pildora: 999px;         /* Hace que los elementos sean completamente redondos (ej. Buscador, Idiomas) */
+
+  /* =========================================
+     5. COLORES ESPECÍFICOS DE COMPONENTES
+     ========================================= */
+  /* --- Footer --- */
+  --color-footer: #141414;        /* Hace que el fondo del footer sea negro */
+  --color-footer-texto: #ffffff;  /* Hace que los enlaces del footer sean blancos */
+  --color-footer-suave: #A8A8A8;  /* Hace que los títulos del footer sean grises */
+  --color-footer-lineaDiv: #3A3A3A;/* Hace que la línea divisoria del footer sea oscura */
+
+  /* --- Tarjetas de Evento --- */
+  --color-borde-suave: #E5E5E5;   /* Para el borde sutil de las tarjetas */
+  --color-texto-gris: #525252;    /* Para los textos de fecha y lugar en las tarjetas */
+  --color-fondo-etiqueta: #F0F0F0;/* Para el fondo del badge de categoría */
+
+  /* =========================================
+     6. ACCESIBILIDAD
+     ========================================= */
+  /* [ACCESIBILIDAD] Color del borde de foco */
+  --color-foco: #713bfa;          /* Hace que aparezca un borde morado al navegar con teclado */
+  --color-fondo-panel: #F9F9F9;   /* Para el fondo gris del pie del panel de accesibilidad */
+
+  /* =========================================
+     7. ALIAS (Para compatibilidad con el código de la profesora)
+     ========================================= */
+  --fondo: var(--color-fondo);            
+  --superficie: var(--color-superficie);  
+  --tinta: var(--color-texto);            
+  --suave: var(--color-texto-suave);      
+  --acento: var(--color-primario);        
+  --sobre-acento: var(--color-sobre-primario); 
+  --borde: var(--color-borde);            
 }

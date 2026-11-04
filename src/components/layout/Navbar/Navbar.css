@@ -36,11 +36,11 @@
   align-items: center;       /* Hace que los elementos se centren verticalmente */
   justify-content: space-between; /* Hace que un grupo se vaya a la izquierda y otro a la derecha */
   flex-wrap: wrap;           /* Hace que si no caben, bajen a la siguiente línea */
-  gap: 12px 24px;            /* Hace que haya espacio entre los elementos */
-  max-width: 80rem;
-  min-height: 76px;          /* Hace que la barra tenga una altura mínima */
-  margin-inline: auto;       /* Hace que el contenido se centre en pantalla */
-  padding-inline: 24px;      /* Hace que haya espacio a los lados */
+  gap: 12px 24px;            
+  max-width: var(--ancho-contenido); /* Reemplazado 80rem por el token */
+  min-height: 76px;          
+  margin-inline: auto;       
+  padding-inline: 24px;      
 }
 
 /* =========================================
@@ -49,7 +49,7 @@
 .navbar__izquierda {
   display: flex;
   align-items: center;
-  gap: 40px; /* Hace que haya espacio entre el logo y los enlaces */
+  gap: 40px; 
 }
 
 /* --- El Logo --- */
@@ -58,39 +58,41 @@
   align-items: center;
   gap: 10px;
   color: var(--color-texto);
-  font-size: 1.125rem;
-  font-weight: 700; /* Hace que el texto del logo sea negrita */
+  font-size: var(--texto-logo); /* Reemplazado 1.125rem por el token */
+  font-weight: 700; 
 }
 
 /* El recuadro del logo */
 .navbar__logo-icono {
   display: grid;
   place-items: center;
-  width: 32px; height: 32px; /* Hace que el recuadro sea un cuadrado perfecto */
-  border-radius: 8px; /* Hace que las esquinas sean redondeadas */
-  color: var(--color-sobre-primario); /* Hace que el ícono de adentro sea blanco */
-  background: var(--color-primario); /* Hace que el fondo del recuadro sea negro */
+  width: 32px; 
+  height: 32px; 
+  border-radius: var(--radio-sm); /* Reemplazado 8px por el token */
+  color: var(--color-sobre-primario); 
+  background: var(--color-primario); 
 }
 
 /* --- Los Enlaces --- */
 .navbar__enlaces {
   display: flex;
   gap: 20px;
-  margin: 0; padding: 0;
-  list-style: none; /* Hace que desaparezcan los puntos de la lista */
+  margin: 0; 
+  padding: 0;
+  list-style: none; 
 }
 
 .navbar__enlace {
   display: flex;
   align-items: center;
-  min-height: 44px; /* Hace que el área para hacer clic sea grande */
+  min-height: 44px; 
   color: var(--color-texto-suave);
-  font-size: 0.875rem;
+  font-size: var(--texto-pequeno); /* Reemplazado 0.875rem por el token */
   font-weight: 500;
 }
 
-.navbar__enlace:hover { color: var(--color-texto); } /* Hace que se ponga negro al pasar el mouse */
-.navbar__enlace--activo { color: var(--color-texto); font-weight: 600; } /* Hace que el enlace actual esté en negrita */
+.navbar__enlace:hover { color: var(--color-texto); } 
+.navbar__enlace--activo { color: var(--color-texto); font-weight: 600; } 
 
 /* =========================================
    SECCIÓN: Grupo Derecho (Buscador, Idioma, Botones)
@@ -109,48 +111,32 @@
   width: 260px;
   height: 44px;
   padding-left: 16px;
-  border-radius: 999px; /* Hace que el buscador sea una píldora redondeada */
+  border-radius: var(--radio-pildora); /* Reemplazado 999px por el token */
   color: var(--color-texto);
   background: var(--color-buscador);
 }
-.navbar__buscador:focus-within { box-shadow: 0 0 0 1px var(--color-primario); } /* Hace que se ilumine al escribir */
-.navbar__buscador-input { flex: 1; border: 0; background: transparent; } /* Hace que el input no tenga bordes y ocupe todo el espacio */
-.navbar__buscador-input:focus-visible { outline: none; } /* Quita el borde azul por defecto del navegador */
+.navbar__buscador:focus-within { box-shadow: 0 0 0 1px var(--color-primario); } 
+.navbar__buscador-input { flex: 1; border: 0; background: transparent; } 
+.navbar__buscador-input:focus-visible { outline: none; } 
 
-/* --- Selector de Idioma --- */
-.navbar__idiomas {
-  display: inline-flex;
-  height: 44px;
-  padding: 5px;
-  border: 1px solid var(--color-borde);
-  border-radius: 999px;
-}
-.navbar__idioma {
-  height: 32px; padding: 0 14px;
-  border: 0; border-radius: 999px;
-  background: transparent;
-}
-.navbar__idioma--activo {
-  color: var(--color-sobre-primario);
-  background: var(--color-primario); /* Hace que el idioma actual se vea como una píldora negra */
-}
-
-/* NOTA: Las clases de los botones de sesión (ej. .navbar__boton--borde) 
-   se eliminaron porque ahora usamos el componente reutilizable <Boton /> */
+/* --- Selector de Idioma utiliza ui/Etiqueta --- */
 
 /* =========================================
    SECCIÓN: Grupo Móvil (Oculto en PC)
    ========================================= */
 .navbar__movil {
-  display: none; /* Hace que este grupo se oculte por defecto en pantallas grandes */
+  display: none; 
   align-items: center;
   gap: 12px;
 }
 .navbar__movil-boton {
   display: grid;
-  width: 44px; height: 44px;
-  border: 0; background: transparent;
+  width: 44px; 
+  height: 44px;
+  border: 0; 
+  background: transparent;
 }
+
 /* =========================================
    SECCIÓN: Botón de Accesibilidad
    ========================================= */
@@ -161,18 +147,17 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  border-radius: 50%; /* Hace que sea un círculo perfecto */
-  border: 1px solid var(--color-borde); /* Borde gris igual al de Figma */
+  border-radius: 50%; /* Mantenemos el 50% porque es un círculo geométrico */
+  border: 1px solid var(--color-borde); 
   background: var(--color-superficie);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .navbar__accesibilidad:hover {
-  background-color: var(--color-fondo); /* Hace que se ilumine al pasar el mouse */
+  background-color: var(--color-fondo); 
 }
 
-/* Hace que el fondo cambie cuando el modo de letra grande está activo */
 .navbar__accesibilidad[aria-pressed="true"] {
   background-color: var(--color-fondo);
   border-color: var(--color-primario);
