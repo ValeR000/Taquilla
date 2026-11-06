@@ -1,19 +1,29 @@
 /* ============================================================================
    ARCHIVO: BuscadorEventos.css
-   CONVENCIÓN: [STATIC].
+   RESPONSABILIDAD: Estilos del buscador para escritorio y móvil.
+   CONVENCIÓN: Todos los datos aquí son [STATIC].
    ============================================================================ */
 
+/* =========================================
+   SECCIÓN: Estilos Generales (Escritorio)
+   ========================================= */
 .buscador-eventos {
   display: flex;
   align-items: center;
-  gap: 8px;
   background: #fff;
-  color: #141414;
-  padding: 8px;
-  border-radius: 12px;
+  border-radius: var(--radio-lg);
+  width: 100%;
 }
 
-.buscador-eventos label {
+.buscador-desktop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  width: 100%;
+}
+
+.buscador-desktop label {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -22,65 +32,123 @@
   padding: 4px 10px;
 }
 
-.buscador-eventos label + label {
-  border-left: 1px solid #e5e5e5;
+.buscador-desktop label + label {
+  border-left: 1px solid var(--color-borde-suave);
 }
 
-.buscador-eventos label > svg {
+.buscador-desktop label > svg {
   flex-shrink: 0;
-  color: #595959;
+  color: var(--texto-secundario);
 }
 
-.buscador-eventos label > span {
+.buscador-desktop label > span {
   display: flex;
   flex-direction: column;
   min-width: 0;
   width: 100%;
 }
 
-.buscador-eventos label > span > span {
-  font-size: 12px;
-  color: #595959;
+.buscador-desktop label > span > span {
+  font-size: var(--texto-xs);
+  color: var(--texto-secundario);
 }
 
-.buscador-eventos input,
-.buscador-eventos select {
+.buscador-desktop input,
+.buscador-desktop select {
   border: 0;
   padding: 2px 0;
   width: 100%;
   min-width: 0;
-  background: #fff;
-  color: #141414;
-  font-size: 14px;
+  background: transparent;
+  color: var(--texto-principal);
+  font-size: var(--texto-pequeno);
   outline: none;
+  font-family: inherit;
 }
 
-.buscador-eventos input::placeholder {
-  color: #595959;
+.buscador-desktop input::placeholder {
+  color: var(--texto-terciario);
   opacity: 1;
 }
 
-.buscador-eventos .boton-home {
+.buscador-boton {
+  background: var(--marca-primario);
+  color: var(--texto-inverso);
+  border: none;
+  border-radius: var(--radio-md);
   min-height: 52px;
   padding-inline: 22px;
-  background: #141414;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
 }
 
-@media (max-width: 1100px) {
-  .buscador-eventos { flex-wrap: wrap; }
-  .buscador-eventos label:first-child { flex-basis: 100%; }
-  .buscador-eventos label:nth-child(2) { border-left: 0; }
+/* =========================================
+   SECCIÓN: Vista Móvil
+   ========================================= */
+
+/* [STATIC] Oculta la vista móvil por defecto en PC. */
+.buscador-movil {
+  display: none;
 }
 
+/* [STATIC] Ajustes para pantallas de celular. */
 @media (max-width: 640px) {
-  .buscador-eventos { padding: 12px; gap: 12px; }
-  .buscador-eventos label { flex-basis: 100%; border: 0 !important; border-bottom: 1px solid #e5e5e5 !important; padding: 8px 0; }
-  .buscador-eventos input,
-  .buscador-eventos select { font-size: 16px; }
-  .buscador-eventos .boton-home { width: 100%; min-height: 44px; }
+  .buscador-desktop {
+    display: none; /* Hace que la caja de escritorio desaparezca */
+  }
+  
+  .buscador-movil {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Hace que haya 10px de espacio entre la lupa, el texto y el botón (Figma) */
+    background: var(--fondo-superficie); /* Hace que el fondo sea blanco puro (#FFFFFF) */
+    height: 56px; /* Hace que la cajita mida exactamente 56px de alto (Figma) */
+    padding-left: 14px; /* Hace que haya 14px de espacio a la izquierda (Figma) */
+    padding-right: 8px; /* Hace que haya 8px de espacio a la derecha (Figma) */
+    border-radius: var(--radio-md); /* Hace que las esquinas tengan un radio de 8px (Figma) */
+    width: 100%;
+    border: 1px solid var(--color-borde-suave); 
+  }
+
+  .buscador-movil > svg {
+    color: var(--texto-secundario);
+    flex-shrink: 0;
+    width: 20px; /* Ajusta la lupa para que quede proporcionada al alto de 56px */
+    height: 20px;
+  }
+
+  .buscador-movil__texto {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0; /* Evita que el texto desborde la cajita */
+  }
+
+  .buscador-movil__principal {
+    font-size: var(--texto-pequeno); /* Hace que el texto principal mida 14px */
+    font-weight: 500;
+    color: var(--texto-principal);
+    white-space: nowrap; /* Evita que el texto baje a otra línea */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Si el texto es muy largo, pone "..." */
+  }
+
+  .buscador-movil__secundario {
+    font-size: var(--texto-xs); /* Hace que el texto secundario mida 12px */
+    color: var(--texto-terciario);
+  }
+
+  .buscador-movil__filtro {
+    background: var(--fondo-sutil);
+    border: none;
+    border-radius: var(--radio-md); /* Si en tu Figma el botón de filtro es cuadrado, esto lo hará de 8px. Si es redondo, cambia esto a 50% */
+    width: 40px; /* Hace que el botón mida 40px de ancho */
+    height: 40px; /* Hace que el botón mida 40px de alto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--texto-principal);
+    flex-shrink: 0;
+  }
 }

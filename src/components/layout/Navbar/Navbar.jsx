@@ -10,6 +10,7 @@ import Boton from '../../ui/Boton/Boton.jsx';
 import SelectorIdioma from '../../ui/SelectorIdioma/SelectorIdioma.jsx'; // <-- NUEVO IMPORT
 import iconoAccesibilidad from '../../../assets/accesibilidad.svg';
 import logo from '../../../assets/logo-taquilla.svg';
+import MenuMovil from '../MenuMovil/MenuMovil.jsx'; // [STATIC] NUEVO IMPORT
 
 const ENLACES = [
   { id: 'inicio', href: '/' },
@@ -97,10 +98,10 @@ function Navbar({ idioma, cambiarIdioma, textos, abrirAccesibilidad, accesibilid
           </button>
 
           {/* [STATIC] 2. NUEVO COMPONENTE SELECTOR DE IDIOMA */}
-          <SelectorIdioma 
-            idioma={idioma} 
-            cambiarIdioma={cambiarIdioma} 
-            etiqueta={t?.aria.idioma} 
+          <SelectorIdioma
+            idioma={idioma}
+            cambiarIdioma={cambiarIdioma}
+            etiqueta={t?.aria.idioma}
           />
 
           <Boton variante="secundario">
@@ -125,12 +126,13 @@ function Navbar({ idioma, cambiarIdioma, textos, abrirAccesibilidad, accesibilid
             {t?.botones.ingresar}
           </button>
 
+          {/* [LOCAL] Botón hamburguesa que alterna el estado del menú. */}
           <button
             type="button"
             className="navbar__movil-boton"
             aria-label={m?.abrir}
             aria-expanded={menuAbierto}
-            onClick={() => setMenuAbierto(true)}
+            onClick={() => setMenuAbierto(!menuAbierto)}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -140,6 +142,16 @@ function Navbar({ idioma, cambiarIdioma, textos, abrirAccesibilidad, accesibilid
           </button>
         </div>
       </div>
+
+      {/* [STATIC] Renderiza el componente MenuMovil con sus propiedades. */}
+      <MenuMovil
+        abierto={menuAbierto}
+        onCerrar={() => setMenuAbierto(false)}
+        textos={textos}
+        idioma={idioma}
+        cambiarIdioma={cambiarIdioma}
+        abrirAccesibilidad={abrirAccesibilidad}
+      />
     </header>
   );
 }

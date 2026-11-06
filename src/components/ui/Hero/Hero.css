@@ -7,8 +7,10 @@
 }
 
 .hero-taquilla {
-  color: var(--color-superficie); /* Reemplaza #fff */
-  background: var(--color-primario); /* Reemplaza #141414 */
+  color: var(--color-superficie);
+  /* Reemplaza #fff */
+  background: var(--color-primario);
+  /* Reemplaza #141414 */
   padding: 72px 0;
 }
 
@@ -21,7 +23,8 @@
 }
 
 .hero-taquilla h1 {
-  font-size: clamp(36px, 3.5vw, 52px); /* Se mantiene por ser un cálculo fluido */
+  font-size: clamp(36px, 3.5vw, 52px);
+  /* Se mantiene por ser un cálculo fluido */
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.035em;
@@ -29,9 +32,11 @@
   text-wrap: initial;
 }
 
-.hero-taquilla .interior-taquilla > div > p {
-  color: var(--color-texto-suave); /* Reemplaza #b3b3b3 */
-  font-size: var(--texto-mediano); /* Reemplaza 18px */
+.hero-taquilla .interior-taquilla>div>p {
+  color: var(--color-texto-suave);
+  /* Reemplaza #b3b3b3 */
+  font-size: var(--texto-mediano);
+  /* Reemplaza 18px */
   line-height: 1.6;
   margin-bottom: 26px;
 }
@@ -42,34 +47,71 @@
   align-items: center;
   flex-wrap: wrap;
   margin-top: 20px;
-  font-size: var(--texto-pequeno); /* Reemplaza 13px */
+  font-size: var(--texto-pequeno);
+  /* Reemplaza 13px */
 }
 
-.populares > span { color: var(--color-texto-suave); }
-.populares button { 
-  border: 0; 
-  color: var(--color-superficie); 
-  background: none; 
-  padding: 4px 0; 
-  font-size: var(--texto-pequeno); 
-  cursor: pointer; 
+.populares>span {
+  color: var(--color-texto-suave);
 }
-.populares button:hover { text-decoration: underline; }
+
+.populares button {
+  border: 0;
+  color: var(--color-superficie);
+  background: none;
+  padding: 4px 0;
+  font-size: var(--texto-pequeno);
+  cursor: pointer;
+}
+
+.populares button:hover {
+  text-decoration: underline;
+}
 
 /* [ACCESIBILIDAD] Foco visible en el Hero. */
 .taquilla .hero-taquilla a:focus-visible,
 .taquilla .hero-taquilla button:focus-visible {
-  outline-color: var(--color-foco); /* Reemplaza #9191ff */
+  outline-color: var(--color-foco);
+  /* Reemplaza #9191ff */
 }
 
 @media (max-width: 1100px) {
-  .interior-taquilla { gap: 32px; grid-template-columns: 1.35fr 1fr; }
+  .interior-taquilla {
+    gap: 32px;
+    grid-template-columns: 1.35fr 1fr;
+  }
 }
 
 @media (max-width: 640px) {
-  .hero-taquilla { padding: 32px 0; }
-  .interior-taquilla { display: block; }
-  .hero-taquilla h1 { font-size: 34px; margin-block: 20px; }
-  .hero-taquilla .interior-taquilla > div > p { font-size: var(--texto-pequeno); }
-  .populares { gap: 12px; }
+  .hero-taquilla {
+    padding: 2px 0 32px 0; /* Hace que el Hero tenga menos espacio en los bordes superior e inferior */
+  }
+
+  .etiqueta-evento {
+    display: none; /* Hace que el badge de temporada desaparezca en móvil */
+  }
+
+  .interior-taquilla {
+    display: block; /* Hace que el contenido y la tarjeta se apilen verticalmente */
+  }
+
+  .hero-taquilla h1 {
+    font-size: 42px; /* Hace que el título mida exactamente 34px (Figma) */
+    font-weight: 600; /* Hace que la letra tenga grosor SemiBold (Figma) */
+    line-height: 40px; /* Hace que el espacio entre líneas sea de 40px (Figma) */
+    letter-spacing: -0.02em; /* Hace que las letras estén un poco más juntas (Figma) */
+    text-align: left; /* Hace que el título quede alineado a la izquierda */
+    margin-block: 20px; /* Hace que haya espacio arriba y abajo del título */
+    text-wrap: balance; /* Hace que las líneas queden parejas */
+  }
+
+  /* [STATIC] Hace que la descripción desaparezca en móvil */
+  .hero-taquilla .interior-taquilla > div > p {
+    display: none;
+  }
+
+  /* [STATIC] Hace que la sección de populares se oculte en móvil */
+  .populares {
+    display: none; 
+  }
 }
