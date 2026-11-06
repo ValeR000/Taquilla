@@ -18,40 +18,89 @@
    SECCIÓN: Estilos generales de la página
    ========================================= */
 body {
-    margin: 0; /* Hace que la página no tenga bordes blancos por defecto */
-    font-family: var(--fuente-texto); /* Hace que todo el texto use la fuente de tokens.css */
-    font-size: var(--texto-base); /* Hace que el texto base mida 16px aprox. */
-    line-height: var(--interlineado); /* Hace que el espacio entre líneas sea cómodo para leer */
-    color: var(--color-texto); /* Hace que el color de la letra sea casi negro */
-    background: var(--color-fondo); /* Hace que el fondo general sea un gris muy claro */
+  margin: 0; /* Hace que la página no tenga bordes blancos por defecto */
+  font-family: var(--fuente-texto); /* Hace que todo el texto use la fuente oficial */
+  font-size: var(--texto-base); /* Hace que el texto base mida 16px aprox. */
+  line-height: var(--interlineado); /* Hace que el espacio entre líneas sea cómodo para leer */
+  color: var(--color-texto); /* Hace que el color de la letra sea casi negro */
+  background: var(--color-fondo); /* Hace que el fondo general sea un gris muy claro */
+  -webkit-font-smoothing: antialiased; /* Hace que las letras se vean más nítidas en pantalla */
 }
 
 /* =========================================
-   SECCIÓN: Títulos
+   SECCIÓN: Títulos y Tipografías (Generalizadas)
    ========================================= */
-h1, h2, h3 {
-    font-family: var(--fuente-titulos); /* Hace que los títulos usen la misma fuente */
-    line-height: 1.2; /* Hace que las líneas de los títulos estén más juntas */
-    overflow-wrap: anywhere; /* Hace que las palabras largas se corten y no rompan el diseño */
-    text-wrap: balance; /* Hace que las líneas de los títulos queden visualmente parejas */
+
+/* [STATIC] Hace que el <h1> use el tamaño, interlineado y espaciado de Figma (52px). */
+h1 {
+  font-family: var(--fuente-titulos); 
+  font-size: var(--texto-titulo); 
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 0;
+  overflow-wrap: anywhere; /* Hace que las palabras largas se corten y no rompan el diseño */
+  text-wrap: balance; /* Hace que las líneas de los títulos queden visualmente parejas */
 }
 
-h1 { font-size: var(--texto-titulo); } /* Hace que el <h1> sea grande y adaptable */
-h2 { font-size: var(--texto-subtitulo); } /* Hace que el <h2> sea mediano */
+/* [STATIC] Hace que el <h2> use el tamaño de Figma (24px). */
+h2 {
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-subtitulo);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+/* [STATIC] Hace que el <h3> (títulos de tarjetas) use el tamaño de Figma (20px). */
+h3 {
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-h3);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.010em;
+  margin: 0;
+}
+
+/* [STATIC] Hace que los párrafos normales usen el tamaño de Figma (16px). */
+p {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* [STATIC] Hace que los textos pequeños (como notas) usen el tamaño de Figma (12px). */
+small {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-xs);
+  font-weight: 400;
+  line-height: 1.3;
+  display: block;
+}
 
 /* =========================================
    SECCIÓN: Enlaces
    ========================================= */
-a { color: var(--color-primario); } /* Hace que los enlaces sean negros */
-a:hover { color: var(--color-primario-hover); } /* Hace que cambien de tono al pasar el mouse */
+a { 
+  color: var(--color-primario); /* Hace que los enlaces sean negros */
+  text-decoration: none;
+} 
+a:hover { 
+  color: var(--color-primario-hover); /* Hace que cambien de tono al pasar el mouse */
+} 
 
 /* =========================================
    SECCIÓN: Contenedores
    ========================================= */
 .contenedor {
-    max-width: var(--ancho-contenido); /* Hace que el contenido se limite en pantallas gigantes */
-    margin-inline: auto; /* Hace que el contenedor siempre esté centrado */
-    width: calc(100% - 2rem); /* Hace que en celulares deje un pequeño margen a los lados */
+  max-width: var(--ancho-contenido); /* Hace que el contenido se limite en pantallas gigantes */
+  margin-inline: auto; /* Hace que el contenedor siempre esté centrado */
+  width: calc(100% - 2rem); /* Hace que en celulares deje un pequeño margen a los lados */
 }
 
 /* =========================================
@@ -81,6 +130,7 @@ a:hover { color: var(--color-primario-hover); } /* Hace que cambien de tono al p
     scroll-behavior: auto !important;
   }
 }
+
 /* ============================================================================
    SECCIÓN: Clases de Accesibilidad (Se activan desde el Panel)
    ============================================================================ */
