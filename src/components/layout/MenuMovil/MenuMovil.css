@@ -1,0 +1,153 @@
+/* RESPONSABILIDAD: Estilos del menú lateral móvil y su fondo oscuro. */
+
+/* =========================================
+   SECCIÓN: Contenedor Principal y Fondo
+   ========================================= */
+.menu-movil {
+  position: fixed; /* Hace que cubra toda la pantalla */
+  inset: 0;
+  z-index: 200; /* Asegura que esté por encima del Navbar */
+  display: flex;
+  justify-content: flex-end; /* Alinea el panel hacia la derecha */
+}
+
+/* [STATIC] Hace que aparezca el fondo oscuro semitransparente. */
+.menu-movil__fondo {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* [STATIC] Hace que el panel blanco se deslice desde la derecha ocupando el 90%. */
+.menu-movil__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 360px;
+  height: 100%;
+  background-color: var(--color-superficie);
+  padding: 0 16px 24px;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); /* Sombra hacia la izquierda */
+  overflow-y: auto; /* Permite scroll interno si el contenido es muy alto */
+}
+
+/* =========================================
+   SECCIÓN: Cabecera (Logo y Cerrar)
+   ========================================= */
+.menu-movil__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.menu-movil__marca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* [STATIC] El recuadro negro del logo (idéntico al Navbar). */
+.menu-movil__logo-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: var(--color-texto);
+  color: var(--color-superficie);
+}
+
+.menu-movil__logo {
+  font-size: var(--texto-logo);
+  font-weight: 700;
+  color: var(--color-texto);
+}
+
+.menu-movil__cerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-texto);
+  padding: 8px;
+}
+
+/* [STATIC] Hace que aparezca una línea divisoria sutil. */
+.menu-movil__divisoria {
+  border: 0;
+  border-top: 1px solid var(--color-borde-suave);
+  margin: 0;
+  width: 100%;
+}
+
+/* =========================================
+   SECCIÓN: Enlaces de Navegación
+   ========================================= */
+.menu-movil__enlaces {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espacio entre Inicio y Explorar */
+  padding: 24px 0;
+}
+
+.menu-movil__enlaces a {
+  font-size: var(--texto-base);
+  font-weight: 400;
+  color: var(--color-texto);
+  text-decoration: none;
+}
+
+/* =========================================
+   SECCIÓN: Ajustes (Idioma y Accesibilidad)
+   ========================================= */
+.menu-movil__secciones {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-top: auto; /* Empuja esta sección hacia el fondo del panel */
+}
+
+.menu-movil__seccion {
+  display: flex;
+  justify-content: space-between; /* Título a la izquierda, control a la derecha */
+  align-items: center;
+}
+
+.menu-movil__seccion-titulo {
+  font-size: var(--texto-base);
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
+/* [STATIC] Hace que el botón de accesibilidad sea un círculo perfecto con borde. */
+.menu-movil__btn-accesibilidad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-borde);
+  background: transparent;
+  cursor: pointer;
+}
+
+/* =========================================
+   SECCIÓN: Botones de Sesión
+   ========================================= */
+.menu-movil__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 24px;
+}
+
+.menu-movil__acciones .boton {
+  width: 100%; /* Hace que los botones ocupen todo el ancho del panel */
+}
