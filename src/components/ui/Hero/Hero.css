@@ -8,9 +8,7 @@
 
 .hero-taquilla {
   color: var(--color-superficie);
-  /* Reemplaza #fff */
   background: var(--color-primario);
-  /* Reemplaza #141414 */
   padding: 72px 0;
 }
 
@@ -24,7 +22,6 @@
 
 .hero-taquilla h1 {
   font-size: clamp(36px, 3.5vw, 52px);
-  /* Se mantiene por ser un cálculo fluido */
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.035em;
@@ -34,9 +31,7 @@
 
 .hero-taquilla .interior-taquilla>div>p {
   color: var(--color-texto-suave);
-  /* Reemplaza #b3b3b3 */
   font-size: var(--texto-mediano);
-  /* Reemplaza 18px */
   line-height: 1.6;
   margin-bottom: 26px;
 }
@@ -48,7 +43,6 @@
   flex-wrap: wrap;
   margin-top: 20px;
   font-size: var(--texto-pequeno);
-  /* Reemplaza 13px */
 }
 
 .populares>span {
@@ -72,7 +66,6 @@
 .taquilla .hero-taquilla a:focus-visible,
 .taquilla .hero-taquilla button:focus-visible {
   outline-color: var(--color-foco);
-  /* Reemplaza #9191ff */
 }
 
 @media (max-width: 1100px) {
@@ -84,7 +77,7 @@
 
 @media (max-width: 640px) {
   .hero-taquilla {
-    padding: 2px 0 32px 0; /* Hace que el Hero tenga menos espacio en los bordes superior e inferior */
+    padding: 2px 0 32px 0; /* Hace que el Hero tenga menos espacio en los bordes */
   }
 
   .etiqueta-evento {
@@ -96,7 +89,7 @@
   }
 
   .hero-taquilla h1 {
-    font-size: 42px; /* Hace que el título mida exactamente 34px (Figma) */
+    font-size: 34px; /* Hace que el título mida exactamente 34px (Figma) */
     font-weight: 600; /* Hace que la letra tenga grosor SemiBold (Figma) */
     line-height: 40px; /* Hace que el espacio entre líneas sea de 40px (Figma) */
     letter-spacing: -0.02em; /* Hace que las letras estén un poco más juntas (Figma) */

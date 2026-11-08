@@ -7,20 +7,12 @@
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx"; // <-- NUEVO IMPORT
-import { formatoDinero } from "../../../utils/formato.js";
+import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
 import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({ evento, onAbrir, nombreCategoria, en }) {
   
-  const fechaFormateada = new Date(evento.fecha).toLocaleDateString(
-    en ? "en-US" : "es-CO",
-    {
-      weekday: "short",
-      day: "numeric",
-      month: "short",
-      timeZone: "America/Bogota",
-    }
-  );
+  const fechaFormateada = formatoFecha(evento.fecha, en);
 
   return (
     <article className="tarjeta-evento">

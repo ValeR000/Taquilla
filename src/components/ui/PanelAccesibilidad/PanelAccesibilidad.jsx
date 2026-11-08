@@ -1,4 +1,9 @@
-// RESPONSABILIDAD: Panel deslizante para ajustar las opciones de accesibilidad (texto, contraste, movimiento).
+// ============================================================================
+// ARCHIVO: PanelAccesibilidad.jsx
+// RESPONSABILIDAD: Panel flotante para ajustar opciones de accesibilidad (texto, contraste, movimiento).
+// CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
+// ============================================================================
+
 import "./PanelAccesibilidad.css";
 
 export default function PanelAccesibilidad({
@@ -23,8 +28,7 @@ export default function PanelAccesibilidad({
 
   return (
     <>
-      {/* [LOCAL] Fondo oscuro que cierra el panel al hacer clic. */}
-      {/* [ACCESIBILIDAD] aria-hidden evita que el lector de pantalla anuncie el fondo. */}
+      {/* [ACCESIBILIDAD] Fondo oscuro que cierra el panel al hacer clic. aria-hidden evita que el lector de pantalla lo anuncie. */}
       <div className="panel-accesibilidad__overlay" onClick={onCerrar} aria-hidden="true"></div>
 
       {/* [ACCESIBILIDAD] Contenedor principal con roles de diálogo modal. */}
@@ -46,8 +50,11 @@ export default function PanelAccesibilidad({
             onClick={onCerrar}
             aria-label={en ? "Close panel" : "Cerrar panel"} // [ACCESIBILIDAD]
           >
-            {/* [STATIC] SVG de la 'X' para cerrar. */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            {/* [STATIC] Versión escritorio: Texto '✕' */}
+            <span className="panel-accesibilidad__cerrar-texto" aria-hidden="true">✕</span>
+            
+            {/* [STATIC] Versión móvil: SVG de la 'X' */}
+            <svg className="panel-accesibilidad__cerrar-icono" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>

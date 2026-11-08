@@ -1,6 +1,6 @@
 // ============================================================================
 // ARCHIVO: CategoriasEventos.jsx
-// RESPONSABILIDAD: Muestra las categorías como botones con conteo.
+// RESPONSABILIDAD: Muestra las categorías como botones con conteo y un botón para ver todas.
 // CONVENCIÓN: [API], [LOCAL], [STATIC].
 // ============================================================================
 
@@ -21,6 +21,16 @@ export default function CategoriasEventos({ categorias = [], filtros, filtrarCat
 
   return (
     <nav className="categorias-eventos" aria-label={en ? "Event categories" : "Categorías de eventos"}>
+      
+      {/* [LOCAL] Botón "Todos". Hace que se quiten los filtros de categoría. */}
+      <button
+        className="categoria-todos"
+        aria-pressed={filtros === null}
+        onClick={() => filtrarCategoria(null)}
+      >
+        {en ? "All" : "Todos"}
+      </button>
+
       {/* [API] Recorre las categorías reales que vienen de la API. */}
       {categorias.map((cat) => (
         <button

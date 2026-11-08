@@ -1,247 +1,279 @@
-/* RESPONSABILIDAD: Estilos del panel de accesibilidad flotante, sus interruptores (toggles) y el fondo oscuro. */
+/* ============================================================================
+   ARCHIVO: PanelAccesibilidad.css
+   RESPONSABILIDAD: Estilos del panel de accesibilidad (popover centrado en escritorio y hoja inferior en móvil).
+   CONVENCIÓN: [STATIC], [ACCESIBILIDAD].
+   ============================================================================ */
 
 /* =========================================
-   SECCIÓN: Overlay y Contenedor Principal
+   SECCIÓN: Fondo (Overlay)
    ========================================= */
 
-/* [STATIC] Hace que aparezca el fondo oscuro semitransparente para bloquear el fondo. */
+/* [STATIC] Hace que el fondo sea transparente en escritorio para poder hacer clic fuera y cerrar. */
 .panel-accesibilidad__overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
-  z-index: 300;
+  background: transparent;
+  z-index: 999;
 }
 
-/* [STATIC] Hace que el panel se deslice desde abajo, centrado y con bordes superiores redondeados. */
+/* =========================================
+   SECCIÓN: Contenedor Principal (Escritorio)
+   ========================================= */
+
+/* [STATIC] Hace que el panel flote perfectamente centrado debajo del Navbar. */
 .panel-accesibilidad {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 301;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  max-height: 92vh;
-  overflow-y: auto;
-  background-color: var(--color-superficie);
+  top: 90px; 
+  left: 50%; 
+  transform: translateX(-50%); /* Lo centra exactamente en la pantalla */
+  z-index: 1000;
+  width: 340px; /* Tamaño exacto de Figma */
+  background: var(--color-superficie);
   color: var(--color-texto);
-  border-radius: 24px 24px 0 0;
-  padding: 24px 20px 20px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.25); /* Sombra hacia arriba para dar profundidad */
 }
 
 /* =========================================
    SECCIÓN: Cabecera
    ========================================= */
-
-/* [STATIC] Hace que el título y el botón de cerrar queden en los extremos. */
 .panel-accesibilidad__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-borde-suave);
 }
 
 .panel-accesibilidad__header h2 {
-  margin: 0;
-  font-size: var(--texto-subtitulo);
+  font-size: 16px;
   font-weight: 700;
+  margin: 0;
 }
 
 .panel-accesibilidad__cerrar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
+  background: transparent;
   border: none;
-  padding: 8px;
+  font-size: 16px;
   cursor: pointer;
   color: var(--color-texto);
+  padding: 4px;
+}
+
+.panel-accesibilidad__cerrar-icono { 
+  display: none; /* [STATIC] Oculta el SVG en escritorio */
 }
 
 /* =========================================
    SECCIÓN: Tamaño del texto
    ========================================= */
-
-/* [STATIC] Hace que el título y los botones se apilen verticalmente con un pequeño espacio. */
 .panel-accesibilidad__seccion {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-borde-suave);
 }
 
 .panel-accesibilidad__seccion h3 {
-  margin: 0;
-  font-size: var(--texto-base);
+  font-size: 14px;
   font-weight: 500;
+  margin: 0 0 12px 0;
 }
 
-/* [STATIC] Hace que los botones de + y - queden a los extremos, dejando la 'A' en el centro. */
 .panel-accesibilidad__tamano {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px;
   border: 1px solid var(--color-borde-suave);
-  border-radius: 10px;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.panel-accesibilidad__tamano-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--color-fondo-etiqueta); /* Gris claro #F0F0F0 */
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--color-texto);
 }
 
 .panel-accesibilidad__tamano span {
-  flex: 1;
-  text-align: center;
+  font-size: 14px;
   font-weight: 500;
-}
-
-/* [STATIC] Hace que los botones + y - tengan un fondo gris y esquinas redondeadas. */
-.panel-accesibilidad__tamano-btn {
-  width: 44px;
-  height: 36px;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--color-borde-suave);
-  color: var(--color-texto);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1;
-  cursor: pointer;
 }
 
 /* =========================================
    SECCIÓN: Interruptores (Toggles)
    ========================================= */
-
-/* [STATIC] Hace que los toggles se apilen verticalmente con un espacio de 18px entre ellos. */
 .panel-accesibilidad__toggles {
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-/* [STATIC] Hace que el texto quede a la izquierda y el switch a la derecha. */
-.toggle-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: 16px;
+  border-bottom: 1px solid var(--color-borde-suave);
 }
 
-/* [STATIC] Hace que el título del toggle sea mediano y la descripción más pequeña y gris. */
-.toggle-texto h4 {
-  margin: 0 0 2px;
-  font-size: var(--texto-base);
-  font-weight: 500;
-}
-
-.toggle-texto p {
-  margin: 0;
-  font-size: 12px;
-  line-height: 1.4;
-  color: var(--color-texto-secundario, #6b6b6b);
-}
-
-/* [STATIC] Hace que el switch (interruptor) tenga forma de píldora. */
-.switch {
-  position: relative;
-  display: inline-block;
-  flex-shrink: 0;
-  width: 44px;
-  height: 26px;
-}
-
-/* [ACCESIBILIDAD] Hace que el checkbox invisible cubra todo el switch para que sea fácil de clicar. */
-.switch input {
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  cursor: pointer;
-  z-index: 1;
-}
-
-/* [STATIC] Hace que aparezca la barra de fondo del switch en gris. */
-.slider {
-  position: absolute;
-  inset: 0;
-  background-color: #7a7a7a;
-  border-radius: 999px;
-  transition: background-color 0.2s ease;
-}
-
-/* [STATIC] Hace que aparezca el círculo blanco que se desliza (el botón del switch). */
-.slider::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #fff;
-  transition: transform 0.2s ease;
-}
-
-/* [STATIC] Hace que el fondo del switch se vuelva negro cuando está encendido. */
-.switch input:checked + .slider {
-  background-color: var(--color-texto);
-}
-
-/* [STATIC] Hace que el círculo blanco se mueva a la derecha cuando el switch está encendido. */
-.switch input:checked + .slider::before {
-  transform: translateX(18px);
-}
-
-/* [ACCESIBILIDAD] Hace que aparezca un borde visible al navegar con la tecla Tab. */
-.switch input:focus-visible + .slider {
-  outline: 2px solid var(--color-texto);
-  outline-offset: 2px;
-}
-
-/* =========================================
-   SECCIÓN: Pie del Panel
-   ========================================= */
-
-/* [STATIC] Hace que los textos legales y los botones se apilen al fondo del panel. */
-.panel-accesibilidad__footer {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.panel-accesibilidad__footer p {
-  margin: 0;
-  font-size: 11px;
-  line-height: 1.4;
-  color: var(--color-texto-secundario, #6b6b6b);
-}
-
-/* [STATIC] Hace que el enlace de declaración quede a la izquierda y el botón de restablecer a la derecha. */
-.panel-accesibilidad__footer-acciones {
+.toggle-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
 
-/* [STATIC] Hace que el enlace de declaración esté subrayado. */
-.panel-accesibilidad__footer-acciones a {
-  font-size: 13px;
+.toggle-texto h4 {
+  font-size: 14px;
   font-weight: 500;
+  margin: 0 0 2px 0;
+}
+
+.toggle-texto p {
+  font-size: 12px;
+  color: var(--color-texto-suave);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* [STATIC] Estilos del Switch (Interruptor) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--color-borde); /* #8C8C8C */
+  transition: .4s;
+  border-radius: var(--radio-pildora);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--color-superficie);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--color-primario);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* =========================================
+   SECCIÓN: Pie del Panel
+   ========================================= */
+.panel-accesibilidad__footer {
+  padding: 16px 20px;
+  background: var(--color-fondo); /* #f8fafc */
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.panel-accesibilidad__footer p {
+  font-size: 11px;
+  color: var(--color-texto-suave);
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.panel-accesibilidad__footer-acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-accesibilidad__footer-acciones a {
+  font-size: 12px;
   color: var(--color-texto);
   text-decoration: underline;
 }
 
-/* [STATIC] Hace que el botón de restablecer tenga un borde gris y fondo transparente. */
 .panel-accesibilidad__restablecer {
-  padding: 10px 20px;
+  background: var(--color-superficie);
   border: 1px solid var(--color-borde);
+  padding: 6px 12px;
   border-radius: 8px;
-  background: transparent;
-  color: var(--color-texto);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12px;
   cursor: pointer;
+  font-weight: 500;
+}
+
+/* =========================================
+   SECCIÓN: Responsive (Móvil - Hoja inferior)
+   ========================================= */
+@media (max-width: 768px) {
+  /* [STATIC] Hace que el fondo se vuelva oscuro en móvil. */
+  .panel-accesibilidad__overlay {
+    background-color: rgba(0, 0, 0, 0.55);
+  }
+
+  /* [STATIC] Hace que el panel se transforme en una hoja que sube desde abajo. */
+  .panel-accesibilidad {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    max-height: 92vh;
+    margin: 0 auto;
+    transform: none; /* Quita el centrado horizontal de escritorio */
+    border: none;
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px 20px;
+    gap: 20px;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  .panel-accesibilidad__header {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .panel-accesibilidad__header h2 {
+    font-size: var(--texto-subtitulo);
+  }
+
+  /* [STATIC] Hace que en móvil desaparezca el texto '✕' y aparezca el SVG. */
+  .panel-accesibilidad__cerrar-texto {
+    display: none;
+  }
+
+  .panel-accesibilidad__cerrar-icono {
+    display: block;
+  }
+
+  .panel-accesibilidad__seccion,
+  .panel-accesibilidad__toggles {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .panel-accesibilidad__footer {
+    padding: 0;
+    background: transparent;
+  }
 }
