@@ -25,7 +25,7 @@ import CategoriasEventos from "./components/ui/CategoriasEventos/CategoriasEvent
 import BuscadorEventos from "./components/ui/BuscadorEventos/BuscadorEventos.jsx";
 import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
 import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeSemana.jsx";
-import Explorar from "./components/pages/Explorar/Explorar.jsx";
+import Explorar from "./components/ui/Explorar/Explorar.jsx";
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { useEffect, useState } from "react";
