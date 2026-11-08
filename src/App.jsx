@@ -116,8 +116,13 @@ function App() {
     recargar: recargarEventos
   } = useEventosDestacados();
 
-  // [API] Hace que se carguen las categorías.
-  const { categorias, cargando: cargandoCategorias } = useCategorias();
+// [API] Hace que se carguen las categorías, con su carga, error y reintento.
+  const {
+  categorias,
+  cargando: cargandoCategorias,
+  error: errorCategorias,
+  recargar: recargarCategorias
+} = useCategorias();
 
   // [API] Hace que se carguen las ciudades para los buscadores.
   const { ciudades } = useCiudades();
@@ -308,13 +313,18 @@ function App() {
 
           <main className="contenedor demo-contenido">
 
-            {/* [API] Hace que aparezca el estado de carga de las categorías. */}
-            {cargandoCategorias && (
-              <p>{estados?.cargando?.titulo || (en ? "Loading…" : "Cargando…")}</p>
+            {/* [API] Hace que aparezca el error de categorías con un botón para reintentar. */}
+            {errorCategorias && (
+              <div role="alert">
+                <p>{estados?.error?.titulo || (en ? "Something went wrong" : "Algo salió mal")}</p>
+                <button type="button" className="boton-home primario" onClick={recargarCategorias}>
+                  {estados?.error?.botones?.reintentar || (en ? "Retry" : "Reintentar")}
+                </button>
+              </div>
             )}
 
             {/* [API] Hace que aparezcan las categorías. */}
-            {!cargandoCategorias && (
+            {!cargandoCategorias && !errorCategorias && (
               <CategoriasEventos
                 categorias={categorias}
                 filtros={null}
@@ -426,7 +436,6 @@ function App() {
           textos={datos.textos?.cookies?.banner}
           onAceptar={aceptarCookies}
           onRechazar={rechazarCookies}
-          onConfigurar={() => alert("Configurar preferencias...")}
         />
       )}
 

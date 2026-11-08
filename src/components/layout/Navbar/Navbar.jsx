@@ -4,7 +4,7 @@
 // CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
 // ============================================================================
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./Navbar.css";
 import Boton from "../../ui/Boton/Boton.jsx";
 import SelectorIdioma from "../../ui/SelectorIdioma/SelectorIdioma.jsx";
@@ -47,6 +47,9 @@ export default function Navbar({
 
   // [LOCAL] Hace que el menú móvil se abra o se cierre.
   const [menuAbierto, setMenuAbierto] = useState(false);
+
+  // [ACCESIBILIDAD] Hace que el foco no salte al botón cerrar cada vez que el Navbar se vuelve a dibujar.
+const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
 
   // ==========================================
   // BLOQUE B: FUNCIONES
@@ -204,7 +207,7 @@ export default function Navbar({
       {/* [LOCAL] Hace que aparezca el menú móvil. */}
       <MenuMovil
         abierto={menuAbierto}
-        onCerrar={() => setMenuAbierto(false)}
+        onCerrar={cerrarMenu}
         onNavegar={onNavegar}
         textos={textos}
         idioma={idioma}
