@@ -10,10 +10,11 @@ import "./SeccionEventos.css";
 
 export default function SeccionEventos({
   id,
+  clase = "", // [LOCAL] Clase extra para controlar visibilidad (ej. ocultar en móvil)
   titulo,
   descripcion,
   eventos = [],
-  categorias = [], // [API] Necesario para traducir la categoría de la tarjeta
+  categorias = [],
   en,
   onAbrir,
   onVerTodos,
@@ -26,7 +27,7 @@ export default function SeccionEventos({
   };
 
   return (
-    <section className="seccion-eventos" id={id} aria-labelledby={`${id}-titulo`}>
+    <section className={`seccion-eventos ${clase}`} id={id} aria-labelledby={`${id}-titulo`}>
       <div className="titulo-seccion">
         <div>
           {/* [STATIC] Título principal de la sección. */}

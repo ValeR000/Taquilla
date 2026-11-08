@@ -113,14 +113,15 @@ export default function BuscadorEventos({ en, eventos = [], ciudades = [], onBus
         <IconoEvento tipo="buscar" />
 
         <div className="buscador-movil__texto">
-          {/* [API] Hace que aparezca el texto principal */}
+          {/* [API] Hace que aparezca el texto principal (con fallback en inglés/español) */}
           <span className="buscador-movil__principal">
-            {h?.placeholders?.movil || "Evento, artista o lugar"}
+            {h?.placeholders?.movil || (en ? "Event, artist or place" : "Evento, artista o lugar")}
           </span>
 
-          {/* [STATIC] Texto secundario (Ciudad · Cualquier fecha) - SIN SELECTORES */}
+          {/* [STATIC] Texto secundario (Ciudad · Cualquier fecha) con fallback */}
           <span className="buscador-movil__secundario">
-            {ciudad} · {h?.placeholders?.cuando || "Cualquier fecha"}
+            {ciudad || (en ? "All cities" : "Todas las ciudades")} ·{" "}
+            {h?.placeholders?.cuando || (en ? "Any date" : "Cualquier fecha")}
           </span>
         </div>
 

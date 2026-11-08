@@ -12,32 +12,31 @@ export function formatoDinero(valor) {
   }).format(valor);
 }
 
-// [LOCAL] Formatea la fecha ISO de la API al estilo "Sáb 14 nov · 8:00 p. m." en zona horaria de Bogotá.
-export function formatoFecha(fechaISO) {
+// [LOCAL] Formatea la fecha y hora (ej. "Sáb 14 nov · 8:00 p. m.").
+export function formatoFecha(fechaISO, en = false) {
   if (!fechaISO) return "";
-  const fecha = new Date(fechaISO);
-  
-  // Formateamos por partes para tener control total del string final.
-  const partes = new Intl.DateTimeFormat('es-CO', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-    hour: 'numeric',
-    minute: '2-digit',
+
+  const partes = new Intl.DateTimeFormat(en ? "en-US" : "es-CO", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "numeric",
+    minute: "2-digit",
     hour12: true,
-    timeZone: 'America/Bogota'
-  }).formatToParts(fecha);
+    timeZone: "America/Bogota",
+  }).formatToParts(new Date(fechaISO));
 
-  // Construimos el string manualmente para lograr el formato exacto de Figma.
-  const diaSemana = partes.find(p => p.type === 'weekday').value;
-  const dia = partes.find(p => p.type === 'day').value;
-  const mes = partes.find(p => p.type === 'month').value;
-  const hora = partes.find(p => p.type === 'hour').value;
-  const minuto = partes.find(p => p.type === 'minute').value;
-  const ampm = partes.find(p => p.type === 'dayPeriod').value.replace('.', '').toLowerCase();
+  const get = (tipo) => partes.find((p) => p.type === tipo)?.value ?? "";
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-  // Capitalizamos la primera letra del día de la semana.
-  const diaSemanaCapitalizado = diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1);
+  const diaSemana = cap(get("weekday"));
+  const dia = get("day");
+  const mes = get("month");
+  const hora = `${get("hour")}:${get("minute")}`;
+  
+  // Aseguramos que el AM/PM mantenga el formato de Figma (p. m. o PM)
+  const ampm = en ? get("dayPeriod").toUpperCase() : get("dayPeriod").toLowerCase();
 
-  return `${diaSemanaCapitalizado} ${dia} ${mes} · ${hora}:${minuto} ${ampm}`;
+  const fecha = en ? `${diaSemana} ${mes} ${dia}` : `${diaSemana} ${dia} ${mes}`;
+  return `${fecha} · ${hora} ${ampm}`;
 }

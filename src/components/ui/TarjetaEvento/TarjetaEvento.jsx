@@ -7,55 +7,34 @@
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
-import { formatoDinero } from "../../../utils/formato.js";
+import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
 import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({ evento, onAbrir, nombreCategoria, en }) {
   
-  // [LOCAL] Formatea la fecha según el idioma (español o inglés).
-  const fechaFormateada = new Date(evento.fecha).toLocaleDateString(
-    en ? "en-US" : "es-CO",
-    {
-      weekday: "short",
-      day: "numeric",
-      month: "short",
-      timeZone: "America/Bogota",
-    }
-  );
-
-  // [LOCAL] Diccionario para traducir las categorías al inglés.
-  const traduccionesCategorias = {
-    conciertos: "Concerts",
-    teatro: "Theatre",
-    deportes: "Sports",
-    festivales: "Festivals",
-    comedia: "Comedy",
-    familiares: "Family",
-  };
-
-  // [LOCAL] Si está en inglés, busca la traducción usando el ID de la categoría.
-  // Si no la encuentra, usa el nombre que viene por props o el ID directamente.
-  const categoriaMostrar = en 
-    ? (traduccionesCategorias[evento.categoria] || nombreCategoria || evento.categoria)
-    : (nombreCategoria || evento.categoria);
+  // [LOCAL] Formatea la fecha y hora de forma segura según el idioma.
+  const fechaFormateada = formatoFecha(evento.fecha, en);
 
   return (
     <article className="tarjeta-evento">
       <AficheEvento afiche={evento.afiche} />
       
       <div className="contenido-evento">
-        {/* [API] Etiqueta de la categoría usando el nuevo componente y traducción */}
+        {/* [API] Etiqueta de la categoría */}
         <Etiqueta>
-          {categoriaMostrar}
+          {nombreCategoria || evento.categoria}
         </Etiqueta>
         
+        {/* [API] Título del evento */}
         <h3>{evento.titulo}</h3>
         
+        {/* [API] Fecha y hora (traducida) */}
         <p>
           <IconoEvento tipo="fecha" />
           {fechaFormateada}
         </p>
         
+        {/* [API] Lugar del evento */}
         <p>
           <IconoEvento tipo="lugar" />
           {evento.recinto?.nombre}, {evento.recinto?.ciudad}

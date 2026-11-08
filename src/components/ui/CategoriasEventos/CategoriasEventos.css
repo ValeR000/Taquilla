@@ -1,8 +1,4 @@
-/* ============================================================================
-   ARCHIVO: CategoriasEventos.css
-   RESPONSABILIDAD: Estilos de la cuadrícula de categorías.
-   CONVENCIÓN: [STATIC].
-   ============================================================================ */
+/* RESPONSABILIDAD: Estilos de la cuadrícula de categorías. */
 
 /* [STATIC] Crea una cuadrícula de 6 columnas para las categorías en PC. */
 .categorias-eventos {
@@ -12,16 +8,21 @@
   padding: 48px 0 56px;
 }
 
-/* [STATIC] Estilo de cada botón de categoría. */
+/* [STATIC] Hace que el botón "Todos" se oculte por defecto en escritorio. */
+.categoria-todos {
+  display: none;
+}
+
+/* [STATIC] Estilo de cada botón de categoría en PC. */
 .categorias-eventos button {
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid #dedede;
-  border-radius: 12px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio);
   padding: 16px;
-  background: #fff;
-  color: #141414;
+  background: var(--color-superficie);
+  color: var(--color-texto);
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -30,26 +31,26 @@
 /* [STATIC] Hace que el botón se ilumine al pasar el mouse o si está seleccionado. */
 .categorias-eventos button[aria-pressed="true"],
 .categorias-eventos button:hover {
-  border-color: #141414;
-  background: #ededed;
+  border-color: var(--color-primario);
+  background: var(--color-fondo-etiqueta);
 }
 
 /* [STATIC] El recuadro gris donde va el ícono. */
 .icono-categoria {
   display: grid;
   place-items: center;
-  background: #f0f0f0;
+  background: var(--color-fondo-etiqueta);
   width: 44px;
   height: 44px;
-  border-radius: 8px;
+  border-radius: var(--radio-sm);
   flex-shrink: 0;
 }
 
 /* [STATIC] Texto pequeño con el conteo de eventos. */
 .categorias-eventos small {
   display: block;
-  font-size: 12px;
-  color: #595959;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-gris);
 }
 
 /* [STATIC] Adaptación a tablets. */
@@ -59,20 +60,46 @@
   }
 }
 
-/* [STATIC] Adaptación a celulares. */
+/* [STATIC] Adaptación a celulares (Carrusel de píldoras). */
 @media (max-width: 640px) {
   .categorias-eventos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    padding-block: 28px;
+    display: flex;
+    gap: var(--espacio-2);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    padding-block: 24px;
   }
+
+  .categorias-eventos::-webkit-scrollbar {
+    display: none;
+  }
+
   .categorias-eventos button {
-    padding: 10px;
-    gap: 8px;
-    font-size: 14px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--espacio-4);
+    border-radius: var(--radio-completo);
+    scroll-snap-align: start;
+    font-size: var(--texto-pequeno);
   }
-  .icono-categoria {
-    width: 36px;
-    height: 36px;
+
+  .categorias-eventos button[aria-pressed="true"] {
+    color: var(--texto-inverso);
+    background: var(--fondo-inverso);
+    border-color: var(--fondo-inverso);
+  }
+
+  .categorias-eventos .icono-categoria,
+  .categorias-eventos small {
+    display: none;
+  }
+
+  .categorias-eventos > .categoria-todos {
+    display: inline-flex;
   }
 }

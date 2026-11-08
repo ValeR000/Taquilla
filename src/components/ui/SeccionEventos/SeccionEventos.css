@@ -13,15 +13,15 @@
 }
 
 .seccion-eventos h2 {
-  font-size: var(--texto-subtitulo); /* Reemplaza 24px */
+  font-size: var(--texto-subtitulo); 
   font-weight: 600;
   letter-spacing: -0.025em;
   margin-bottom: 6px;
 }
 
 .seccion-eventos .titulo-seccion p {
-  color: var(--color-texto-gris); /* Reemplaza #595959 */
-  font-size: var(--texto-base); /* Reemplaza 16px */
+  color: var(--color-texto-gris); 
+  font-size: var(--texto-base); 
   margin: 0;
 }
 
@@ -35,9 +35,9 @@
 /* [STATIC] Estilos del estado vacío. */
 .sin-resultados {
   padding: 48px;
-  border: 1px solid var(--color-borde-suave); /* Reemplaza #dedede */
-  border-radius: var(--radio); /* Reemplaza 12px */
-  background: var(--color-superficie); /* Reemplaza #fff */
+  border: 1px solid var(--color-borde-suave); 
+  border-radius: var(--radio); 
+  background: var(--color-superficie); 
   text-align: center;
 }
 .sin-resultados p {
@@ -47,27 +47,6 @@
 @media (max-width: 1100px) {
   .eventos-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .eventos-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .seccion-eventos .titulo-seccion {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .seccion-eventos h2 {
-    font-size: 22px; /* Se mantiene porque es un ajuste específico para celular */
-  }
-  .seccion-eventos .titulo-seccion p {
-    font-size: var(--texto-pequeno); /* Reemplaza 14px */
-  }
-  .sin-resultados {
-    padding: 24px;
   }
 }
 
@@ -82,13 +61,62 @@
   border: none;     
   padding: 0;
   font-family: inherit;
-  font-size: var(--texto-pequeno); /* Reemplaza 14px */
+  font-size: var(--texto-pequeno); 
   font-weight: 500;
-  color: var(--color-texto); /* Reemplaza #141414 */
+  color: var(--color-texto); 
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
 
 .enlace-home:hover {
   text-decoration: underline; 
+}
+
+/* [STATIC] Adaptación a celulares. */
+@media (max-width: 640px) {
+  /* [STATIC] Pone el título y "Ver todos" en la misma fila y oculta la descripción. */
+  .seccion-eventos .titulo-seccion {
+    align-items: flex-end; /* Alinea al fondo */
+    flex-direction: row; /* Cambia de columna a fila */
+    gap: 0; 
+  }
+  
+  .seccion-eventos .titulo-seccion p {
+    display: none; /* Hace que la descripción desaparezca en móvil */
+  }
+  
+  .seccion-eventos h2 {
+    font-size: 20px; /* Ajusta el tamaño del título en móvil */
+    margin-bottom: 0;
+  }
+
+  /* [STATIC] Transforma el grid en un carrusel horizontal de tarjetas. */
+  .eventos-grid {
+    display: flex;
+    gap: var(--espacio-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+
+  .eventos-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* [STATIC] Hace que las tarjetas ocupen el 66% del ancho (Figma). */
+  .eventos-grid > .tarjeta-evento {
+    flex: 0 0 66%;
+    scroll-snap-align: start;
+  }
+
+  .sin-resultados {
+    padding: 24px;
+  }
+
+  /* [STATIC] Oculta la sección "Próximamente" en móvil. */
+  .seccion-eventos.proximos {
+    display: none;
+  }
 }
