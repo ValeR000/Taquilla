@@ -256,6 +256,8 @@ export default function Explorar({
         />
 
         <section className="explorar__contenido">
+          {/* [ACCESIBILIDAD] Hace que los lectores de pantalla encuentren un título antes de los resultados. */}
+<       h2 className="solo-lectores">{textoResultados}</h2>
           <div className="explorar__barra">
 
             {/* [LOCAL] Hace que aparezcan los filtros activos con su botón para quitarlos. */}
