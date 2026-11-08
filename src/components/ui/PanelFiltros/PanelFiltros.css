@@ -1,0 +1,345 @@
+/* ============================================================================
+   ARCHIVO: PanelFiltros.css
+   RESPONSABILIDAD: Estilos del panel de filtros (lateral fijo en escritorio, modal de pantalla completa en móvil).
+   CONVENCIÓN: [STATIC], [ACCESIBILIDAD].
+   ============================================================================ */
+
+/* =========================================
+   SECCIÓN: Contenedor Principal (Escritorio)
+   ========================================= */
+.panel-filtros {
+  position: sticky; /* Hace que el panel se quede fijo en la pantalla al hacer scroll */
+  top: var(--espacio-6); /* Hace que mantenga una distancia desde arriba */
+  padding: var(--espacio-6);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio);
+}
+
+/* =========================================
+   SECCIÓN: Cabecera del Panel
+   ========================================= */
+.panel-filtros__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Hace que el título quede a la izquierda y las acciones a la derecha */
+  padding-bottom: var(--espacio-4);
+  border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.panel-filtros__cabecera h2 {
+  font-size: var(--texto-mediano);
+}
+
+.panel-filtros__acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.panel-filtros__limpiar {
+  padding: 0;
+  font: inherit;
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  color: var(--color-texto);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* [STATIC] Hace que el botón de cerrar y el pie se oculten por defecto en escritorio. */
+.panel-filtros__cerrar,
+.panel-filtros__pie {
+  display: none;
+}
+
+/* =========================================
+   SECCIÓN: Grupos de Filtros
+   ========================================= */
+.panel-filtros__grupo {
+  padding-block: var(--espacio-4);
+  border-bottom: 1px solid var(--color-borde-suave); /* Hace que aparezca una línea divisoria entre filtros */
+}
+
+/* [STATIC] Hace que el último grupo no tenga línea divisoria. */
+.panel-filtros__grupo:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.panel-filtros__subtitulo {
+  display: block;
+  margin-bottom: var(--espacio-3);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+}
+
+/* =========================================
+   SECCIÓN: Filtro de Categoría (Escritorio)
+   ========================================= */
+.panel-filtros__opciones {
+  display: grid;
+  gap: var(--espacio-1);
+}
+
+.panel-filtros__opcion {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 4px;
+  font-size: var(--texto-pequeno);
+  cursor: pointer;
+}
+
+.panel-filtros__opcion small {
+  margin-left: auto; /* Hace que el número de eventos se empuje a la derecha */
+  color: var(--color-texto-gris);
+}
+
+/* [STATIC] Hace que el input radio se vea como un cuadrado (checkbox). */
+.panel-filtros__opcion input {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* [STATIC] Hace que el checkbox se rellene de negro al ser seleccionado. */
+.panel-filtros__opcion input:checked {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+}
+
+/* [STATIC] Hace que aparezca el símbolo de 'check' (✓) usando CSS puro. */
+.panel-filtros__opcion input:checked::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid var(--texto-inverso);
+  border-bottom: 2px solid var(--texto-inverso);
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+/* [ACCESIBILIDAD] Hace que aparezca un borde visible al navegar con la tecla Tab. */
+.panel-filtros__opcion input:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   SECCIÓN: Filtro de Fecha (Visual)
+   ========================================= */
+.panel-filtros__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+
+/* [STATIC] Hace que los botones de fecha se vean deshabilitados (cursor bloqueado). */
+.panel-filtros__chips button {
+  height: 36px;
+  padding: 0 14px;
+  font: inherit;
+  font-size: var(--texto-pequeno);
+  color: var(--color-texto);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-completo);
+  cursor: not-allowed;
+}
+
+/* =========================================
+   SECCIÓN: Filtro de Ciudad
+   ========================================= */
+.panel-filtros__select {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--espacio-3);
+  font: inherit;
+  font-size: var(--texto-pequeno);
+  color: var(--color-texto);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-sm);
+}
+
+/* [ACCESIBILIDAD] Hace que el selector tenga un borde morado al navegar con Tab. */
+.panel-filtros__select:focus-visible,
+.panel-filtros button:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   SECCIÓN: Filtro de Precio (Visual)
+   ========================================= */
+.panel-filtros__rango {
+  position: relative;
+  height: 20px;
+  margin-inline: 8px;
+}
+
+/* [STATIC] Hace que aparezca la línea gris de fondo del slider. */
+.panel-filtros__rango::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-borde-suave);
+  transform: translateY(-50%);
+}
+
+/* [STATIC] Hace que aparezca la línea negra que simula la parte seleccionada. */
+.panel-filtros__pista {
+  position: absolute;
+  top: 50%;
+  left: 12%;
+  right: 30%;
+  height: 3px;
+  background: var(--color-primario);
+  transform: translateY(-50%);
+}
+
+/* [STATIC] Hace que aparezcan los dos círculos (bolitas) del slider. */
+.panel-filtros__pista::before,
+.panel-filtros__pista::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  background: var(--color-superficie);
+  border: 2px solid var(--color-primario);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.panel-filtros__pista::before { left: 0; }
+.panel-filtros__pista::after { left: 100%; }
+
+.panel-filtros__valores {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--espacio-2);
+  font-size: var(--texto-xs);
+}
+
+/* =========================================
+   SECCIÓN: Responsive (Móvil - Modal)
+   ========================================= */
+@media (max-width: 640px) {
+  /* [STATIC] Hace que el panel lateral se oculte por defecto en móvil. */
+  .panel-filtros {
+    display: none;
+  }
+
+  /* [STATIC] Hace que el panel cubra toda la pantalla cuando se abre en móvil. */
+  .panel-filtros--abierto {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .panel-filtros--abierto .panel-filtros__cabecera {
+    padding: var(--espacio-4);
+  }
+
+  /* [STATIC] Hace que el botón de cerrar sea un círculo gris visible en móvil. */
+  .panel-filtros__cerrar {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-texto);
+    background: var(--fondo-sutil);
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  /* [STATIC] Hace que el contenido del panel tenga scroll si es muy largo. */
+  .panel-filtros__contenido {
+    flex: 1;
+    overflow-y: auto;
+    padding-inline: var(--espacio-4);
+  }
+
+  .panel-filtros__grupo {
+    border-bottom: 0;
+  }
+
+  /* [STATIC] Hace que las categorías se vean como píldoras en móvil. */
+  .panel-filtros__opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-2);
+  }
+
+  .panel-filtros__opcion {
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--color-borde-suave);
+    border-radius: var(--radio-completo);
+  }
+
+  /* [STATIC] Oculta el contador de eventos para ahorrar espacio en móvil. */
+  .panel-filtros__opcion small {
+    display: none;
+  }
+
+  /* [ACCESIBILIDAD] Oculta el input real pero mantiene su funcionalidad para lectores de pantalla. */
+  .panel-filtros__opcion input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* [STATIC] Hace que la píldora se pinte de negro si su input está seleccionado. */
+  .panel-filtros__opcion:has(input:checked) {
+    color: var(--texto-inverso);
+    background: var(--fondo-inverso);
+    border-color: var(--fondo-inverso);
+  }
+
+  /* [ACCESIBILIDAD] Hace que la píldora muestre un borde de foco al navegar con Tab. */
+  .panel-filtros__opcion:has(input:focus-visible) {
+    outline: 2px solid var(--color-foco);
+    outline-offset: 2px;
+  }
+
+  /* [STATIC] Hace que aparezca el pie del panel con el botón de "Ver eventos". */
+  .panel-filtros__pie {
+    display: block;
+    padding: var(--espacio-4);
+    border-top: 1px solid var(--color-borde-suave);
+  }
+
+  .panel-filtros__pie button {
+    width: 100%;
+    height: 48px;
+    font: inherit;
+    font-weight: 500;
+    color: var(--color-sobre-primario);
+    background: var(--color-primario);
+    border: 0;
+    border-radius: var(--radio-md);
+    cursor: pointer;
+  }
+}
