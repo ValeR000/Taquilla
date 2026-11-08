@@ -119,4 +119,7 @@
   .seccion-eventos.proximos {
     display: none;
   }
+  .enlace-home svg {
+  display: none;
+}
 }

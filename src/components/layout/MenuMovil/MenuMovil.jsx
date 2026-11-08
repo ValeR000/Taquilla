@@ -1,23 +1,51 @@
+// ============================================================================
+// ARCHIVO: MenuMovil.jsx
 // RESPONSABILIDAD: Menú lateral deslizante para móviles con overlay, foco y cierre accesible.
+// CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
+// ============================================================================
+
 import { useEffect, useRef } from 'react';
 import './MenuMovil.css';
 import Boton from '../../ui/Boton/Boton.jsx';
 import SelectorIdioma from '../../ui/SelectorIdioma/SelectorIdioma.jsx';
 import iconoAccesibilidad from '../../../assets/accesibilidad.svg'; // [STATIC] Ícono del muñequito
+import { textosLocales } from '../../../utils/textosLocales.js';
 
 export default function MenuMovil({
   abierto,           // [LOCAL] Booleano que indica si el menú está visible.
   onCerrar,          // [LOCAL] Función para cerrar el menú.
+  onNavegar,         // [LOCAL] Función para manejar el cambio de ruta.
   textos,            // [API] Objeto con todos los textos traducidos.
   idioma,            // [LOCAL] Idioma actual ('es' o 'en').
   cambiarIdioma,     // [LOCAL] Función para cambiar el idioma.
   abrirAccesibilidad // [LOCAL] Función para abrir el panel.
 }) {
+  // ==========================================
+  // BLOQUE A: LÓGICA DE IDIOMA Y NAVEGACIÓN
+  // ==========================================
+  
+  // [LOCAL] Verifica si el idioma actual es inglés.
+  const en = idioma === 'en';
+  
+  // [LOCAL] Función auxiliar de traducción. Hace que se use el texto de la API si existe, 
+  // o un texto de respaldo en español/inglés según el idioma actual.
+  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+
+  // [LOCAL] Función para manejar el clic en un enlace o botón de navegación.
+  function ir(evento, id) {
+    // [LOCAL] Evita que el enlace recargue la página.
+    evento?.preventDefault();
+    // [LOCAL] Hace que el menú móvil se cierre antes de navegar.
+    onCerrar();
+    // [LOCAL] Hace que se ejecute la función de navegación del componente padre.
+    onNavegar(id);
+  }
+
   // [ACCESIBILIDAD] Referencia para devolver el foco al botón de cerrar al abrir.
   const botonCerrarRef = useRef(null);
 
   // ==========================================
-  // BLOQUE A: EFECTOS DE ACCESIBILIDAD
+  // BLOQUE B: EFECTOS DE ACCESIBILIDAD
   // ==========================================
   useEffect(() => {
     // [ACCESIBILIDAD] Cierra el menú si el usuario presiona la tecla Escape.
@@ -39,6 +67,10 @@ export default function MenuMovil({
   // [LOCAL] Si el menú no está abierto, no renderiza nada.
   if (!abierto) return null;
 
+  // ==========================================
+  // BLOQUE C: TEXTOS DE LA API
+  // ==========================================
+  
   // [API] Alias para acceder más rápido a los textos.
   const m = textos?.menuMovil;
   const t = textos?.navbar;
@@ -67,7 +99,7 @@ export default function MenuMovil({
               </svg>
             </span>
             {/* [API] Texto de la marca. */}
-            <span className="menu-movil__logo">{t?.logo?.texto || 'taquilla'}</span>
+            <span className="menu-movil__logo">{t?.logo?.texto}</span>
           </div>
 
           {/* [LOCAL] Botón para cerrar el menú. */}
@@ -76,7 +108,7 @@ export default function MenuMovil({
             type="button"
             className="menu-movil__cerrar"
             onClick={onCerrar}
-            aria-label={m?.cerrar || 'Cerrar menú'} // [ACCESIBILIDAD]
+            aria-label={tr(m?.cerrar, 'Cerrar menú', 'Close menu')} // [ACCESIBILIDAD]
           >
             {/* [STATIC] SVG de la 'X' */}
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -90,10 +122,15 @@ export default function MenuMovil({
         {/* ========================================== */}
         {/* SECCIÓN: Enlaces de Navegación             */}
         {/* ========================================== */}
-        <nav className="menu-movil__enlaces" aria-label="Navegación móvil">
-          {/* [API] Textos de los enlaces. [LOCAL] Cierre al hacer clic. */}
-          <a href="#inicio" onClick={onCerrar}>{m?.enlaces?.inicio || 'Inicio'}</a>
-          <a href="#explorar" onClick={onCerrar}>{m?.enlaces?.explorar || 'Explorar'}</a>
+        <nav className="menu-movil__enlaces" aria-label={textosLocales[en ? 'en' : 'es'].navMovil}>
+          {/* [LOCAL] Hace que al hacer clic en un enlace, navegue y cierre el menú. */}
+          <a href="#inicio" onClick={(e) => ir(e, 'inicio')}>
+            {/* [API] Hace que aparezca el texto del enlace. */}
+            {tr(m?.enlaces?.inicio, 'Inicio', 'Home')}
+          </a>
+          <a href="#explorar" onClick={(e) => ir(e, 'explorar')}>
+            {tr(m?.enlaces?.explorar, 'Explorar', 'Explore')}
+          </a>
         </nav>
 
         {/* ========================================== */}
@@ -101,7 +138,10 @@ export default function MenuMovil({
         {/* ========================================== */}
         <div className="menu-movil__secciones">
           <div className="menu-movil__seccion">
-            <span className="menu-movil__seccion-titulo">{m?.secciones?.idioma || 'Idioma'}</span> {/* [API] */}
+            {/* [API] Hace que aparezca el título "Idioma". */}
+            <span className="menu-movil__seccion-titulo">
+              {tr(m?.secciones?.idioma, 'Idioma', 'Language')}
+            </span>
             {/* [STATIC] Componente reutilizable para alternar ES/EN. */}
             <SelectorIdioma
               idioma={idioma}
@@ -111,7 +151,10 @@ export default function MenuMovil({
           </div>
 
           <div className="menu-movil__seccion">
-            <span className="menu-movil__seccion-titulo">{m?.secciones?.accesibilidad || 'Accesibilidad'}</span> {/* [API] */}
+            {/* [API] Hace que aparezca el título "Accesibilidad". */}
+            <span className="menu-movil__seccion-titulo">
+              {tr(m?.secciones?.accesibilidad, 'Accesibilidad', 'Accessibility')}
+            </span>
             {/* [LOCAL] Cierra el menú y abre el panel de accesibilidad. */}
             <button
               type="button"
@@ -120,7 +163,7 @@ export default function MenuMovil({
                 onCerrar();
                 abrirAccesibilidad();
               }}
-              aria-label={t?.aria?.accesibilidad || 'Abrir panel de accesibilidad'} // [ACCESIBILIDAD]
+              aria-label={tr(t?.aria?.accesibilidad, 'Abrir panel de accesibilidad', 'Open accessibility panel')} // [ACCESIBILIDAD]
             >
               <img src={iconoAccesibilidad} alt="" width="24" height="24" /> {/* [STATIC] */}
             </button>
@@ -133,13 +176,16 @@ export default function MenuMovil({
         {/* SECCIÓN: Botones de Sesión                 */}
         {/* ========================================== */}
         <div className="menu-movil__acciones">
-          {/* [LOCAL] Botón principal con texto de la API. */}
-          <Boton variante="primario" onClick={onCerrar}>
-            {m?.botones?.ingresar || 'Ingresar'}
+          {/* [LOCAL] Botón que cierra el menú y navega a la vista de ingresar. */}
+          <Boton variante="primario" onClick={() => ir(null, 'ingresar')}>
+            {/* [API] Hace que aparezca el texto "Ingresar". */}
+            {tr(m?.botones?.ingresar, 'Ingresar', 'Log in')}
           </Boton>
-          {/* [LOCAL] Botón secundario con texto de la API. */}
-          <Boton variante="secundario" onClick={onCerrar}>
-            {m?.botones?.crearCuenta || 'Crear cuenta'}
+          
+          {/* [LOCAL] Botón que cierra el menú y navega a la vista de registro. */}
+          <Boton variante="secundario" onClick={() => ir(null, 'registro')}>
+            {/* [API] Hace que aparezca el texto "Crear cuenta". */}
+            {tr(m?.botones?.crearCuenta, 'Crear cuenta', 'Sign up')}
           </Boton>
         </div>
       </aside>

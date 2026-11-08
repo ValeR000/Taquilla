@@ -5,8 +5,9 @@ import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
-import { textosLocales, categoriasEn } from "../../../utils/textosLocales.js";
+import { textosLocales } from "../../../utils/textosLocales.js";
 import "./Explorar.css";
+
 
 // [LOCAL] Estado inicial para limpiar los filtros.
 const FILTROS_VACIOS = { categoria: "", ciudad: "", q: "", orden: "", pagina: "1" };
@@ -41,7 +42,7 @@ function guardarFiltros(filtros) {
   window.history.replaceState(null, "", `${window.location.pathname}${search}#explorar`);
 }
 
-export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, textos }) {
+export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, textos, enfocarBusqueda = false }) {
   // ==========================================
   // BLOQUE A: ESTADOS Y REFERENCIAS
   // ==========================================
@@ -138,8 +139,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
 
   // [LOCAL] Obtiene el nombre de la categoría traducido si es necesario.
   function nombreCategoria(id) {
-    const nombre = categorias.find((c) => c.id === id)?.nombre || id;
-    return en ? categoriasEn[id] || nombre : nombre;
+    return categorias.find((c) => c.id === id)?.nombre || id;
   }
 
   // [LOCAL] Arma la lista de filtros activos para mostrar como "chips".
@@ -188,6 +188,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
           <IconoEvento tipo="buscar" />
           <input
             type="search"
+            autoFocus={enfocarBusqueda}
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder={placeholderBusqueda}
@@ -314,6 +315,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
                     key={evento.id}
                     evento={evento}
                     en={en}
+                    textos={textos}
                     nombreCategoria={nombreCategoria(evento.categoria)}
                     onAbrir={onAbrir}
                   />

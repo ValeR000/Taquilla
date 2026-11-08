@@ -13,6 +13,9 @@ export const textosLocales = {
     quitarFiltro: "Quitar filtro {nombre}",
     abrirFiltros: "Abrir filtros",
     cerrarFiltros: "Cerrar filtros",
+    navPrincipal: "Navegación principal",
+    navMovil: "Navegación móvil",
+    navPie: "Enlaces del pie de página",
   },
   en: {
     titulo: "Explore events",
@@ -23,16 +26,18 @@ export const textosLocales = {
     quitarFiltro: "Remove filter {nombre}",
     abrirFiltros: "Open filters",
     cerrarFiltros: "Close filters",
+    navPrincipal: "Main navigation",
+    navMovil: "Mobile navigation",
+    navPie: "Footer links",
+    
   },
 };
 
 // [STATIC] Diccionario local para traducir los IDs de las categorías al inglés, 
 // ya que la API devuelve los nombres en español.
 export const categoriasEn = {
-  conciertos: "Concerts",
-  teatro: "Theatre",
-  deportes: "Sports",
-  festivales: "Festivals",
-  comedia: "Comedy",
-  familiares: "Family",
+  // en es:
+  categoriasAria: "Categorías de eventos",
+  // en en:
+  categoriasAria: "Event categories",
 };

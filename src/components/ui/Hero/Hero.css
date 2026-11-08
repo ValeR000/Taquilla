@@ -80,7 +80,7 @@
     padding: 2px 0 32px 0; /* Hace que el Hero tenga menos espacio en los bordes */
   }
 
-  .etiqueta-evento {
+  .hero-taquilla .etiqueta-evento {
     display: none; /* Hace que el badge de temporada desaparezca en móvil */
   }
 
