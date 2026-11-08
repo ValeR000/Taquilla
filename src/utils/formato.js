@@ -9,11 +9,11 @@ export function formatoDinero(valor) {
     style: "currency", 
     currency: "COP", 
     maximumFractionDigits: 0 
-  }).format(valor);
+  }).format(valor).replace(/\s/g, "");
 }
 
 // [LOCAL] Formatea la fecha y hora (ej. "Sáb 14 nov · 8:00 p. m.").
-export function formatoFecha(fechaISO, en = false) {
+export function formatoFecha(fechaISO, en = false, conHora = true) {
   if (!fechaISO) return "";
 
   const partes = new Intl.DateTimeFormat(en ? "en-US" : "es-CO", {
@@ -33,10 +33,10 @@ export function formatoFecha(fechaISO, en = false) {
   const dia = get("day");
   const mes = get("month");
   const hora = `${get("hour")}:${get("minute")}`;
-  
-  // Aseguramos que el AM/PM mantenga el formato de Figma (p. m. o PM)
   const ampm = en ? get("dayPeriod").toUpperCase() : get("dayPeriod").toLowerCase();
 
   const fecha = en ? `${diaSemana} ${mes} ${dia}` : `${diaSemana} ${dia} ${mes}`;
+
+  if (!conHora) return fecha;
   return `${fecha} · ${hora} ${ampm}`;
 }

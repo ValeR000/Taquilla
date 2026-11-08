@@ -9,7 +9,7 @@
 }
 
 /* [STATIC] Hace que el botón "Todos" se oculte por defecto en escritorio. */
-.categoria-todos {
+.categorias-eventos .categoria-todos {
   display: none;
 }
 

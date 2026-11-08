@@ -97,3 +97,13 @@
 .footer__inferior p {
   margin: 0; /* Hace que los textos no tengan margen extra por defecto */
 }
+
+
+.footer__enlace--boton {
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

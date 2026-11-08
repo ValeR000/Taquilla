@@ -33,9 +33,18 @@ import { useEffect, useState } from "react";
 import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
 
 // 2. FUNCIONES AUXILIARES
+
 // [LOCAL] Lee el numeral de la URL para identificar la sección activa.
 function leerSeccion() {
   return window.location.hash.slice(1) || "inicio";
+}
+
+// [LOCAL] Ciudad inicial utilizada para mostrar los próximos eventos.
+const CIUDAD_INICIAL = "Manizales"; // pendiente: confirmar con la profe
+
+// [LOCAL] Navega a la página del evento seleccionado mediante su slug.
+function abrirEvento(evento) {
+  window.location.hash = `eventos/${evento.slug}`;
 }
 
 // 3. COMPONENTE PRINCIPAL
@@ -58,6 +67,12 @@ function App() {
 
   // [LOCAL] Estado para controlar el tamaño general del texto.
   const [textoGrande, setTextoGrande] = useState(false);
+
+  // [LOCAL] Contador para forzar que el componente Explorar se refresque al navegar.
+  const [busquedaId, setBusquedaId] = useState(0);
+  
+  // [LOCAL] Estado para pedirle a Explorar que enfoque el input de búsqueda al cargar.
+  const [enfocarBusqueda, setEnfocarBusqueda] = useState(false);
 
   // Estados para el Panel de Accesibilidad
   const [panelAbierto, setPanelAbierto] = useState(false);
@@ -95,8 +110,17 @@ function App() {
   // [API] Obtenemos los textos traducidos.
   const datos = useTextos(idioma);
 
-  // [API] Obtenemos los eventos y su estado de carga.
-  const { eventos, cargando: cargandoEventos, error: errorEventos } = useEventosDestacados();
+  // [API] Extraemos los textos específicos de la página de inicio y los estados generales.
+  const inicio = datos.textos?.paginas?.inicio;
+  const estados = datos.textos?.estados;
+
+  // [API] Obtenemos los eventos, su estado de carga y la función para reintentar.
+  const { 
+    eventos, 
+    cargando: cargandoEventos, 
+    error: errorEventos, 
+    recargar: recargarEventos 
+  } = useEventosDestacados();
 
   // [API] Obtenemos las categorías.
   const { categorias, cargando: cargandoCategorias } = useCategorias();
@@ -156,32 +180,64 @@ function App() {
   // BLOQUE D: FUNCIONES DEL COMPONENTE
   // ==========================================
 
-  // [LOCAL] Recibe filtros del buscador, los guarda en la URL y navega a explorar.
+  // [LOCAL] Función centralizada para navegar a la vista de Explorar aplicando filtros en la URL.
+  function irA(search, enfocar = false) {
+    // [LOCAL] Hace que la URL cambie a #explorar conservando la ruta actual pero con los nuevos parámetros.
+    window.history.replaceState(null, "", `${window.location.pathname}${search}#explorar`);
+
+    // [LOCAL] Hace que el componente Explorar sepa si debe enfocar el buscador.
+    setEnfocarBusqueda(enfocar);
+
+    // [LOCAL] Hace que el componente <Explorar> se vuelva a montar incrementando el ID.
+    setBusquedaId((n) => n + 1);
+
+    // [LOCAL] Hace que la vista activa cambie a "explorar".
+    setActivo("explorar");
+
+    // [LOCAL] Hace que la página haga scroll hasta arriba del todo.
+    window.scrollTo(0, 0);
+  }
+
+  // [LOCAL] Función para navegar entre las vistas principales (Inicio, Login, Registro, Explorar).
+  function navegar(id) {
+    // [LOCAL] Si el destino es "explorar", delega la acción a la función específica.
+    if (id === "explorar") return irAExplorar();
+    
+    // [LOCAL] Si es cualquier otra vista, limpia la URL de parámetros y apunta al hash correspondiente.
+    window.history.replaceState(null, "", `${window.location.pathname}#${id}`);
+    
+    // [LOCAL] Hace que la vista activa cambie a la vista solicitada.
+    setActivo(id);
+    
+    // [LOCAL] Hace que la página haga scroll hasta arriba del todo.
+    window.scrollTo(0, 0);
+  }
+
+  // [LOCAL] Hace que la lupa móvil abra la vista de explorar y enfoque el buscador.
+  function abrirBusqueda() {
+    // [LOCAL] Si ya está en explorar, conserva los filtros actuales de la URL, si no, limpia la búsqueda.
+    irA(activo === "explorar" ? window.location.search : "", true);
+  }
+
+  // [LOCAL] Recibe los filtros del buscador (Hero) y los envía a la URL.
   function buscar(filtros) {
     const p = new URLSearchParams();
     if (filtros.consulta) p.set("q", filtros.consulta);
     if (filtros.ciudad) p.set("ciudad", filtros.ciudad);
-    if (filtros.fecha) p.set("fecha", filtros.fecha);
 
-    // [LOCAL] Escribe los filtros en la URL y cambia al hash de explorar.
-    window.history.replaceState(null, "", `?${p.toString()}#explorar`);
-    setActivo("explorar");
+    // Hace que navegue con los filtros aplicados o a la vista limpia.
+    irA(p.toString() ? `?${p}` : "");
   }
 
-  // [LOCAL] Navega a explorar con el filtro de categoría.
+  // [LOCAL] Navega a explorar aplicando el filtro de categoría.
   function filtrarCategoria(idCategoria) {
-    if (!idCategoria) {
-      window.history.replaceState(null, "", `#explorar`);
-    } else {
-      window.history.replaceState(null, "", `?categoria=${idCategoria}#explorar`);
-    }
-    setActivo("explorar");
+    // Hace que se arme la URL con la categoría o se limpie si se deselecciona.
+    irA(idCategoria ? `?${new URLSearchParams({ categoria: idCategoria })}` : "");
   }
 
   // [LOCAL] Limpia los filtros y navega a explorar (para el "Ver todos").
   function irAExplorar() {
-    window.history.replaceState(null, "", `#explorar`);
-    setActivo("explorar");
+    irA("");
   }
 
   // [LOCAL] Cambia el idioma de la aplicación y guarda la preferencia si se aceptaron las cookies.
@@ -218,6 +274,8 @@ function App() {
         cambiarIdioma={cambiarIdioma}
         activo={activo}
         onBuscar={buscar}
+        onNavegar={navegar}
+        onAbrirBusqueda={abrirBusqueda}
         abrirAccesibilidad={abrirAccesibilidad}
         accesibilidadAbierta={panelAbierto}
       />
@@ -228,15 +286,14 @@ function App() {
 
       {/* [LOCAL] CONDICIONAL: Si activo es "explorar", muestra la vista Explorar. Si no, el Home. */}
       {activo === "explorar" ? (
-
-        // [LOCAL] El key={window.location.search} obliga a re-montar el componente si la URL cambia (Ej. al darle Atrás).
         <Explorar
-          key={window.location.search}
+          key={busquedaId}
           en={en}
           categorias={categorias}
           ciudades={ciudades}
-          onAbrir={(evento) => alert(`Abriendo: ${evento.titulo}`)}
+          onAbrir={abrirEvento}
           textos={datos.textos}
+          enfocarBusqueda={enfocarBusqueda}
         />
       ) : (
         <>
@@ -247,10 +304,10 @@ function App() {
           {/* [STATIC] El Hero recibe el buscador como children. */}
           <Hero
             en={en}
+            textos={datos.textos}
             destacado={eventoDestacado}
-            abrirEvento={() => alert("Abriendo...")}
-            setFiltros={irAExplorar}
-            filtrarCategoria={filtrarCategoria}
+            abrirEvento={abrirEvento}
+            onBuscar={buscar}
           >
             {/* [LOCAL] El componente del buscador (con sus ciudades y eventos). */}
             <BuscadorEventos
@@ -269,7 +326,9 @@ function App() {
           <main className="contenedor demo-contenido">
 
             {/* CATEGORÍAS */}
-            {cargandoCategorias && <p>Cargando categorías...</p>}
+            {cargandoCategorias && (
+              <p>{estados?.cargando?.titulo || (en ? "Loading…" : "Cargando…")}</p>
+            )}
 
             {!cargandoCategorias && (
               <CategoriasEventos
@@ -277,6 +336,7 @@ function App() {
                 filtros={null}
                 filtrarCategoria={filtrarCategoria}
                 en={en}
+                textos={datos.textos}
               />
             )}
 
@@ -284,9 +344,21 @@ function App() {
             {/* SECCIÓN: EVENTOS (Cargando y Error)        */}
             {/* ========================================== */}
 
-            {cargandoEventos && <p style={{ marginTop: "3rem" }}>Cargando eventos...</p>}
+            {cargandoEventos && (
+              <p style={{ marginTop: "3rem" }}>
+                {estados?.cargando?.titulo || (en ? "Loading…" : "Cargando…")}
+              </p>
+            )}
 
-            {errorEventos && <p style={{ marginTop: "3rem" }}>Hubo un error al cargar los eventos.</p>}
+            {/* [LOCAL] Muestra un mensaje de error y un botón para reintentar la carga de eventos. */}
+            {errorEventos && (
+              <div style={{ marginTop: "3rem" }} role="alert">
+                <p>{estados?.error?.titulo || (en ? "Something went wrong" : "Algo salió mal")}</p>
+                <button type="button" className="boton-home primario" onClick={recargarEventos}>
+                  {estados?.error?.botones?.reintentar || (en ? "Retry" : "Reintentar")}
+                </button>
+              </div>
+            )}
 
             {/* ========================================== */}
             {/* SECCIÓN: EVENTOS DESTACADOS                */}
@@ -297,34 +369,37 @@ function App() {
                 {/* 1. PRIMERA SECCIÓN (Primeros 4 eventos de la API) */}
                 <SeccionEventos
                   id="eventos"
-                  titulo={en ? "This week's highlights" : "Destacados de la semana"}
-                  descripcion={en ? "The events with the most tickets sold in the last 7 days" : "Los eventos con más entradas vendidas en los últimos 7 días"}
+                  titulo={inicio?.destacados?.titulo || (en ? "This week's highlights" : "Destacados de la semana")}
+                  descripcion={inicio?.destacados?.subtitulo || (en ? "Best-selling events in the last 7 days" : "Los eventos con más entradas vendidas en los últimos 7 días")}
                   eventos={eventos.slice(0, 4)}
                   categorias={categorias}
                   en={en}
-                  onAbrir={(evento) => alert(`Abriendo: ${evento.titulo}`)}
+                  onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
+                  textos={datos.textos}
                 />
 
                 {/* 2. SEGUNDA SECCIÓN (Siguientes 4 eventos de la API) */}
                 <SeccionEventos
                   id="proximos"
                   clase="proximos"
-                  titulo={en ? "Upcoming in Manizales" : "Próximamente en Manizales"}
-                  descripcion={en ? "Change the city from the search bar" : "Cambia la ciudad desde el buscador"}
+                  titulo={(inicio?.proximos?.titulo || (en ? "Upcoming in {ciudad}" : "Próximamente en {ciudad}")).replace("{ciudad}", CIUDAD_INICIAL)}
+                  descripcion={inicio?.proximos?.subtitulo || (en ? "Change the city from the search bar" : "Cambia la ciudad desde el buscador")}
                   eventos={eventos.slice(4, 8)}
                   categorias={categorias}
                   en={en}
-                  onAbrir={(evento) => alert(`Abriendo: ${evento.titulo}`)}
+                  onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
+                  textos={datos.textos}
                 />
 
                 {/* 3. TERCERA SECCIÓN (Lista vertical para móvil) */}
                 <SeccionFinDeSemana
                   eventos={eventos.slice(4, 7)}
                   en={en}
-                  onAbrir={(evento) => alert(`Abriendo: ${evento.titulo}`)}
+                  onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
+                  textos={datos.textos}
                 />
               </>
             )}
@@ -351,8 +426,14 @@ function App() {
         restablecer={restablecerAccesibilidad}
       />
 
-      {/* [STATIC] Footer. */}
-      <Footer textos={datos.textos?.footer} />
+      {/* [STATIC] Footer con sus respectivas props. */}
+      <Footer 
+        textos={datos.textos?.footer} 
+        logo={datos.textos?.navbar?.logo} 
+        en={en} 
+        onNavegar={navegar} 
+        abrirAccesibilidad={abrirAccesibilidad} 
+      />
 
       {/* [LOCAL] Banner de cookies. */}
       {!consentimiento && (

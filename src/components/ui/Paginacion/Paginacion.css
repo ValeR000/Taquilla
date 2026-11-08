@@ -1,0 +1,79 @@
+/* RESPONSABILIDAD: Estilos de la barra de paginación (contenedor, botones, estados y accesibilidad). */
+
+/* =========================================
+   SECCIÓN: Contenedor Principal
+   ========================================= */
+
+/* [STATIC] Hace que la paginación se centre horizontalmente y tenga un margen superior. */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--espacio-8);
+}
+
+/* [STATIC] Hace que los botones y números se alineen en una fila sin viñetas. */
+.paginacion ol {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================
+   SECCIÓN: Botones Base
+   ========================================= */
+
+/* [STATIC] Hace que los botones sean cuadrados con bordes redondeados y fondo blanco. */
+.paginacion button {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 var(--espacio-2);
+  font: inherit;
+  font-size: var(--texto-pequeno);
+  color: var(--color-texto);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-sm);
+  cursor: pointer;
+}
+
+/* [STATIC] Hace que el borde se vuelva negro al pasar el mouse (si no está deshabilitado). */
+.paginacion button:hover:not(:disabled) {
+  border-color: var(--color-primario);
+}
+
+/* =========================================
+   SECCIÓN: Estados de Página
+   ========================================= */
+
+/* [STATIC] Hace que la página actual se pinte de negro con texto blanco. */
+.paginacion button[aria-current="page"] {
+  color: var(--texto-inverso);
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+}
+
+/* [STATIC] Hace que los botones deshabilitados se vean opacos y bloqueen el clic. */
+.paginacion button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* [STATIC] Hace que los puntos suspensivos (...) se vean en color gris. */
+.paginacion__puntos {
+  color: var(--color-texto-gris);
+}
+
+/* =========================================
+   SECCIÓN: Accesibilidad
+   ========================================= */
+
+/* [ACCESIBILIDAD] Hace que aparezca un borde morado visible al navegar con la tecla Tab. */
+.paginacion button:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}

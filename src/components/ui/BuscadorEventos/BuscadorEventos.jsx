@@ -1,74 +1,120 @@
 // ============================================================================
 // ARCHIVO: BuscadorEventos.jsx
-// RESPONSABILIDAD: Caja de búsqueda con filtros para escritorio y versión compacta para móvil.
+// RESPONSABILIDAD: Formulario de búsqueda con filtros para escritorio y versión compacta para móvil.
 // CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
 // ============================================================================
 
 import { useEffect, useState } from "react";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
+import { textosLocales } from "../../../utils/textosLocales.js";
 import "./BuscadorEventos.css";
 
-export default function BuscadorEventos({ en, eventos = [], ciudades = [], onBuscar, filtrosAplicados = null, textos }) {
+export default function BuscadorEventos({ 
+  en,                         // [LOCAL] Booleano para saber si el idioma es inglés.
+  eventos = [],               // [API] Lista de eventos para extraer las fechas disponibles.
+  ciudades = [],              // [API] Lista de ciudades para el selector.
+  onBuscar,                   // [LOCAL] Función que envía los filtros al componente padre.
+  filtrosAplicados = null,    // [LOCAL] Filtros externos (ej. desde la URL) para sincronizar el formulario.
+  textos                      // [API] Los textos de la interfaz desde la API.
+}) {
   // ==========================================
   // BLOQUE A: ESTADOS LOCALES
   // ==========================================
-
+  
   // [LOCAL] Guarda el texto que el usuario escribe.
   const [consulta, setConsulta] = useState("");
-
-  // [LOCAL] Guarda la ciudad seleccionada.
+  
+  // [LOCAL] Guarda la ciudad seleccionada. Inicia en "Manizales".
   const [ciudad, setCiudad] = useState("Manizales");
-
+  
   // [LOCAL] Guarda la fecha seleccionada.
   const [fecha, setFecha] = useState("");
 
-  // [LOCAL] Sincroniza los filtros si el usuario los cambia desde afuera.
+  // ==========================================
+  // BLOQUE B: EFECTO DE SINCRONIZACIÓN
+  // ==========================================
+  
+  // [LOCAL] Sincroniza los estados locales con los filtros aplicados desde fuera (ej. al recargar la página).
   useEffect(() => {
     setConsulta(filtrosAplicados?.consulta ?? "");
     setCiudad(filtrosAplicados === null ? "Manizales" : (filtrosAplicados?.ciudad ?? ""));
     setFecha(filtrosAplicados?.fecha ?? "");
   }, [filtrosAplicados]);
 
-  // [LOCAL] Envía la búsqueda al componente padre.
+  // ==========================================
+  // BLOQUE C: FUNCIONES
+  // ==========================================
+  
+  // [LOCAL] Hace que al enviar el formulario se envíen los 3 filtros al padre sin recargar la página.
   function buscar(evento) {
     evento.preventDefault();
     onBuscar({ consulta, ciudad, fecha });
   }
 
-  // [API] Extrae los textos del buscador desde la API (para la versión móvil).
+  // ==========================================
+  // BLOQUE D: TEXTOS Y TRADUCCIONES
+  // ==========================================
+  
+  // [API] Extrae los textos específicos del buscador desde la API.
   const h = textos?.paginas?.inicio?.hero?.buscador;
+  
+  // [STATIC] Extrae los textos locales (ej. "Todas las ciudades").
+  const local = textosLocales[en ? "en" : "es"];
+  
+  // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
+  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+
+  // [API] Hace que aparezca el texto "Cualquier fecha" desde la API.
+  const cualquierFecha = tr(h?.placeholders?.cuando, "Cualquier fecha", "Any date");
+  
+  // [API] Hace que aparezca el texto del botón "Buscar" desde la API.
+  const textoBuscar = tr(h?.botones?.buscar, "Buscar", "Search");
+  
+  // [API] Hace que aparezca el resumen de ciudad y fecha en la versión móvil.
+  const resumenMovil = tr(h?.resumenMovil, "{ciudad} · {fecha}", "{ciudad} · {fecha}")
+    .replace("{ciudad}", ciudad || local.todasCiudades)
+    .replace("{fecha}", cualquierFecha);
+
+  // ==========================================
+  // BLOQUE E: LO QUE SE DIBUJA EN PANTALLA (JSX)
+  // ==========================================
 
   return (
-    // [STATIC] Formulario contenedor.
+    // [STATIC] Formulario contenedor con role de búsqueda para accesibilidad.
     <form id="buscador-eventos" className="buscador-eventos" role="search" onSubmit={buscar}>
-
+      
       {/* ========================================== */}
       {/* VISTA ESCRITORIO (Oculta en móvil)         */}
       {/* ========================================== */}
       <div className="buscador-desktop">
-
-        {/* [STATIC] Campo 1: Texto */}
+        
+        {/* [STATIC] Campo 1: Búsqueda por texto */}
         <label>
           <IconoEvento tipo="buscar" />
           <span>
-            <span>{en ? "What" : "Qué"}</span>
+            {/* [API] Hace que aparezca la etiqueta "Qué" desde la API. */}
+            <span>{tr(h?.etiquetas?.que, "Qué", "What")}</span>
             <input
               type="search"
               value={consulta}
+              // [LOCAL] Hace que el input se actualice al escribir.
               onChange={(e) => setConsulta(e.target.value)}
-              placeholder={en ? "Event or artist" : "Evento o artista"}
+              // [API] Hace que aparezca el placeholder desde la API.
+              placeholder={tr(h?.placeholders?.que, "Evento o artista", "Event or artist")}
             />
           </span>
         </label>
 
-        {/* [STATIC] Campo 2: Ciudades */}
+        {/* [STATIC] Campo 2: Filtro por ciudad */}
         <label>
           <IconoEvento tipo="lugar" />
           <span>
-            <span>{en ? "Where" : "Dónde"}</span>
+            {/* [API] Hace que aparezca la etiqueta "Dónde" desde la API. */}
+            <span>{tr(h?.etiquetas?.donde, "Dónde", "Where")}</span>
             <select value={ciudad} onChange={(e) => setCiudad(e.target.value)}>
-              <option value="">{en ? "All cities" : "Todas las ciudades"}</option>
-              {/* [API] Recorre las ciudades de la API. */}
+              {/* [STATIC] Hace que aparezca la opción "Todas las ciudades". */}
+              <option value="">{local.todasCiudades}</option>
+              {/* [API] Recorre las ciudades y las dibuja como opciones. */}
               {ciudades.map((c) => (
                 <option key={c.nombre} value={c.nombre}>{c.nombre}</option>
               ))}
@@ -76,18 +122,20 @@ export default function BuscadorEventos({ en, eventos = [], ciudades = [], onBus
           </span>
         </label>
 
-        {/* [STATIC] Campo 3: Fechas */}
+        {/* [STATIC] Campo 3: Filtro por fecha */}
         <label>
           <IconoEvento tipo="fecha" />
           <span>
-            <span>{en ? "When" : "Cuándo"}</span>
+            {/* [API] Hace que aparezca la etiqueta "Cuándo" desde la API. */}
+            <span>{tr(h?.etiquetas?.cuando, "Cuándo", "When")}</span>
             <select value={fecha} onChange={(e) => setFecha(e.target.value)}>
-              <option value="">{en ? "Any date" : "Cualquier fecha"}</option>
-              {/* [API] Recorre las fechas de los eventos de la API. */}
+              <option value="">{cualquierFecha}</option>
+              {/* [API] Recorre los eventos para extraer las fechas disponibles. */}
               {eventos.map((ev) => {
                 if (!ev.fecha) return null;
                 return (
-                  <option key={ev.fecha} value={ev.fecha}>
+                  <option key={ev.id} value={ev.fecha}>
+                    {/* [API] Formatea la fecha ISO a un texto corto (ej. "14 nov"). */}
                     {new Date(ev.fecha).toLocaleDateString(en ? "en" : "es-CO", {
                       day: "numeric",
                       month: "short",
@@ -100,9 +148,9 @@ export default function BuscadorEventos({ en, eventos = [], ciudades = [], onBus
           </span>
         </label>
 
-        {/* [STATIC] Botón Buscar escritorio */}
+        {/* [LOCAL] Botón para enviar el formulario de búsqueda. */}
         <button className="buscador-boton" type="submit">
-          {en ? "Search" : "Buscar"}
+          {textoBuscar}
         </button>
       </div>
 
@@ -113,20 +161,17 @@ export default function BuscadorEventos({ en, eventos = [], ciudades = [], onBus
         <IconoEvento tipo="buscar" />
 
         <div className="buscador-movil__texto">
-          {/* [API] Hace que aparezca el texto principal (con fallback en inglés/español) */}
+          {/* [API] Hace que aparezca el texto principal (ej. "Evento, artista o lugar"). */}
           <span className="buscador-movil__principal">
-            {h?.placeholders?.movil || (en ? "Event, artist or place" : "Evento, artista o lugar")}
+            {tr(h?.placeholders?.movil, "Evento, artista o lugar", "Event, artist or place")}
           </span>
-
-          {/* [STATIC] Texto secundario (Ciudad · Cualquier fecha) con fallback */}
-          <span className="buscador-movil__secundario">
-            {ciudad || (en ? "All cities" : "Todas las ciudades")} ·{" "}
-            {h?.placeholders?.cuando || (en ? "Any date" : "Cualquier fecha")}
-          </span>
+          {/* [API] Hace que aparezca el resumen de ciudad y fecha. */}
+          <span className="buscador-movil__secundario">{resumenMovil}</span>
         </div>
 
-        {/* Botón de filtros para móvil */}
-        <button type="submit" className="buscador-movil__filtro" aria-label="Filtrar">
+        {/* [LOCAL] Botón de filtro para móvil (actualmente envía el formulario). */}
+        <button type="submit" className="buscador-movil__filtro" aria-label={textoBuscar}>
+          {/* [STATIC] Ícono SVG de filtros. */}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <line x1="4" y1="21" x2="4" y2="14"></line>
             <line x1="4" y1="10" x2="4" y2="3"></line>
@@ -140,7 +185,6 @@ export default function BuscadorEventos({ en, eventos = [], ciudades = [], onBus
           </svg>
         </button>
       </div>
-
     </form>
   );
 }

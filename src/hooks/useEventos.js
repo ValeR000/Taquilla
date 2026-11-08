@@ -1,8 +1,11 @@
-// RESPONSABILIDAD: Hook personalizado para obtener la lista de eventos con filtros y paginación desde la API.
+// RESPONSABILIDAD: Hook para obtener la lista de eventos con filtros y paginación desde la API.
 import { useEffect, useState } from "react";
 
 // [API] URL base para consultar los eventos.
 const API = `${import.meta.env.VITE_API_URL}/eventos`;
+
+// [STATIC] Cantidad de eventos que se mostrarán por página.
+const POR_PAGINA = 9;
 
 export function useEventos({ categoria, ciudad, q, orden, pagina }) {
   // ==========================================
@@ -20,12 +23,15 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
   
   // [LOCAL] Booleano para saber si hubo un error en la petición.
   const [error, setError] = useState(false);
+  
+  // [LOCAL] Número de intento para forzar la recarga manual de la petición.
+  const [intento, setIntento] = useState(0);
 
   // ==========================================
   // BLOQUE B: EFECTO DE CARGA
   // ==========================================
   
-  // [LOCAL] Se ejecuta cada vez que cambia alguno de los filtros.
+  // [LOCAL] Se ejecuta cada vez que cambia un filtro o se pide una recarga.
   useEffect(() => {
     
     // [LOCAL] Permite cancelar la petición si los filtros cambian rápidamente.
@@ -34,8 +40,8 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
     // [LOCAL] Bandera para evitar actualizar el estado con datos de peticiones viejas.
     let vigente = true;
 
-    // [LOCAL] Construye la URL dinámicamente solo con los filtros que tengan valor.
-    const params = new URLSearchParams();
+    // [API] Construye los parámetros de la URL, incluyendo siempre el límite por página.
+    const params = new URLSearchParams({ porPagina: POR_PAGINA });
     Object.entries({ categoria, ciudad, q, orden, pagina }).forEach(([clave, valor]) => {
       if (valor) params.set(clave, valor);
     });
@@ -76,12 +82,19 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
       vigente = false;
       controlador.abort();
     };
-  }, [categoria, ciudad, q, orden, pagina]); // [LOCAL] Dependencias del efecto.
+  }, [categoria, ciudad, q, orden, pagina, intento]); // [LOCAL] Dependencias del efecto.
 
   // ==========================================
   // BLOQUE C: LO QUE DEVUELVE EL HOOK
   // ==========================================
   
   // [LOCAL] Devuelve los datos y estados para que el componente los use.
-  return { eventos, paginacion, cargando, error };
+  return {
+    eventos,
+    paginacion,
+    cargando,
+    error,
+    // [LOCAL] Función para volver a intentar la petición incrementando el intento.
+    recargar: () => setIntento((valor) => valor + 1),
+  };
 }
