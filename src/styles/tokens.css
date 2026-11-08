@@ -119,4 +119,8 @@
   /* --- PANEL DE ACCESIBILIDAD --- */
   --color-fondo-panel: #F9F9F9;                 /* Fondo gris del pie del panel de accesibilidad */
   --color-foco: #713bfa;                        /* [ACCESIBILIDAD] Borde morado al navegar con teclado */
+
+
+   
+  --color-error: #dc2626;
 }

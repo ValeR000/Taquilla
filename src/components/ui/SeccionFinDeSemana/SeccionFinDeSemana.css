@@ -1,15 +1,20 @@
-/* RESPONSABILIDAD: Estilos de la lista de eventos horizontales para móvil. */
+/* RESPONSABILIDAD: Estilos de la lista "Este fin de semana" del Inicio en móvil. */
 
+/* [STATIC] Hace que la sección se oculte en escritorio. */
 .fin-de-semana {
-  display: none; /* Hace que se oculte en escritorio */
+  display: none;
 }
 
 @media (max-width: 640px) {
+  /* SECCIÓN: Contenedor y título */
+
+  /* [STATIC] Hace que la sección aparezca solo en móvil. */
   .fin-de-semana {
     display: block;
     margin-top: var(--espacio-8);
   }
 
+  /* [STATIC] Hace que el título y "Ver todos" queden en la misma fila. */
   .fin-de-semana .titulo-seccion {
     display: flex;
     align-items: center;
@@ -17,6 +22,9 @@
     margin-bottom: var(--espacio-4);
   }
 
+  /* SECCIÓN: Lista de eventos */
+
+  /* [STATIC] Hace que la lista no tenga viñetas y las filas queden separadas. */
   .fin-de-semana__lista {
     list-style: none;
     margin: 0;
@@ -25,6 +33,7 @@
     gap: var(--espacio-3);
   }
 
+  /* [STATIC] Hace que cada fila sea una tarjeta horizontal: afiche a la izquierda y texto a la derecha. */
   .fin-de-semana__item {
     width: 100%;
     display: flex;
@@ -32,6 +41,7 @@
     gap: var(--espacio-4);
     padding: var(--espacio-3);
     text-align: left;
+    text-decoration: none; /* Hace que el enlace no se vea subrayado */
     font: inherit;
     color: inherit;
     background: var(--fondo-superficie);
@@ -41,6 +51,7 @@
     cursor: pointer;
   }
 
+  /* [STATIC] Hace que el afiche sea un cuadrado de 64px con bordes redondeados. */
   .fin-de-semana__afiche {
     flex: 0 0 64px;
     width: 64px;
@@ -49,11 +60,13 @@
     overflow: hidden;
   }
 
+  /* [STATIC] Hace que el afiche llene todo el cuadrado. */
   .fin-de-semana__afiche > * {
     width: 100%;
     height: 100%;
   }
 
+  /* [STATIC] Hace que título, fecha y precio queden uno debajo del otro. */
   .fin-de-semana__texto {
     display: grid;
     gap: 2px;
@@ -65,6 +78,7 @@
     font-weight: 500;
   }
 
+  /* [STATIC] Hace que la fecha se vea en gris. */
   .fin-de-semana__texto small {
     color: var(--texto-terciario);
   }

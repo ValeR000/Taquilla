@@ -1,7 +1,4 @@
-/* ============================================================================
-   ARCHIVO: EventoDestacado.css
-   CONVENCIÓN: [STATIC].
-   ============================================================================ */
+/* RESPONSABILIDAD: Estilos de la tarjeta del evento destacado del Hero. */
 
 /* [STATIC] Hace que la tarjeta mida 440px de alto y tenga los bordes redondeados. */
 .destacado-taquilla {
@@ -18,7 +15,7 @@
   height: 100%;
 }
 
-/* [STATIC] Ajusta la posición de los círculos decorativos para este tamaño. */
+/* [STATIC] Hace que los círculos decorativos se acomoden a este tamaño. */
 .destacado-taquilla .arte-evento::before {
   top: -15%;
 }
@@ -26,19 +23,19 @@
   bottom: -25%;
 }
 
-/* [STATIC] La tarjeta blanca flotante. */
+/* [STATIC] Hace que la ficha blanca flote sobre la parte baja del afiche. */
 .ficha-destacado {
   position: absolute;
   bottom: 26px;
   left: 20px;
   right: 20px;
-  background: #fff;
-  color: #141414;
+  background: var(--color-superficie);
+  color: var(--color-texto);
   padding: 20px;
   border-radius: 12px;
 }
 
-/* [STATIC] Título del evento en la tarjeta. */
+/* [STATIC] Hace que el título del evento se vea grande y en negrita. */
 .ficha-destacado h2 {
   font-size: 24px;
   margin: 12px 0;
@@ -46,14 +43,14 @@
   letter-spacing: -0.03em;
 }
 
-/* [STATIC] Texto de la fecha y lugar. */
+/* [STATIC] Hace que la fecha y el lugar se vean en gris. */
 .ficha-destacado > p {
-  color: #595959;
+  color: var(--texto-secundario);
   font-size: 14px;
   margin: 0 0 16px 0;
 }
 
-/* [STATIC] Alinea el precio y el botón a los extremos. */
+/* [STATIC] Hace que el precio y el botón queden en los extremos. */
 .ficha-destacado > div {
   display: flex;
   justify-content: space-between;
@@ -66,26 +63,32 @@
 }
 
 /* =========================================
-   SECCIÓN: Botón "Ver evento" (Negro)
+   SECCIÓN: Enlace "Ver evento" (Negro)
    ========================================= */
+
+/* [STATIC] Hace que el enlace se vea como botón negro. */
 .boton-destacado {
-  background-color: #141414;
-  color: #ffffff;
+  display: inline-block;
+  background-color: var(--color-primario);
+  color: var(--color-sobre-primario);
   border: none;
   padding: 10px 16px;
   border-radius: 6px;
   font-family: inherit;
   font-size: 14px;
   font-weight: 400;
+  text-decoration: none; /* Hace que el enlace no se vea subrayado */
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
+/* [STATIC] Hace que el botón se aclare al pasar el mouse y el texto siga blanco. */
 .boton-destacado:hover {
-  background-color: #333333; /* Hace que el botón se aclare un poco al pasar el mouse */
+  background-color: var(--color-primario-hover);
+  color: var(--color-sobre-primario);
 }
 
-/* [STATIC] Oculta la tarjeta en celulares para que no se desborde. */
+/* [STATIC] Hace que la tarjeta se oculte en celulares para que no se desborde. */
 @media (max-width: 640px) {
   .destacado-taquilla {
     display: none;

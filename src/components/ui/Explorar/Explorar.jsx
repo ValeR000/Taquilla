@@ -1,4 +1,4 @@
-// RESPONSABILIDAD: Vista de exploración de eventos con filtros, ordenamiento, paginación y adaptabilidad móvil.
+// RESPONSABILIDAD: Vista Explorar (/explorar) con filtros en la URL, orden, paginación, estados y panel de filtros móvil.
 import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
@@ -8,18 +8,17 @@ import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import "./Explorar.css";
 
-
-// [LOCAL] Estado inicial para limpiar los filtros.
+// [LOCAL] Hace que "Limpiar" deje todos los filtros vacíos.
 const FILTROS_VACIOS = { categoria: "", ciudad: "", q: "", orden: "", pagina: "1" };
 
-// [STATIC] Opciones de ordenamiento con sus respectivas traducciones.
+// [STATIC] Hace que el selector de orden tenga textos de respaldo si la API no responde.
 const ORDEN = {
   fecha: ["Fecha más próxima", "Soonest date"],
   precio: ["Precio más bajo", "Lowest price"],
   popularidad: ["Más populares", "Most popular"],
 };
 
-// [LOCAL] Lee los filtros actuales desde la URL (query params).
+// [LOCAL] Hace que los filtros se lean desde la URL al cargar la vista.
 function leerFiltros() {
   const p = new URLSearchParams(window.location.search);
   return {
@@ -31,52 +30,60 @@ function leerFiltros() {
   };
 }
 
-// [LOCAL] Actualiza la URL sin recargar la página cuando cambian los filtros.
+// [LOCAL] Hace que los filtros se guarden en la URL sin recargar ni llenar el historial.
 function guardarFiltros(filtros) {
   const p = new URLSearchParams();
   Object.entries(filtros).forEach(([clave, valor]) => {
-    // Hace que no se guarde la página 1 en la URL para mantenerla limpia
+    // [LOCAL] Hace que la página 1 no aparezca en la URL.
     if (valor && !(clave === "pagina" && valor === "1")) p.set(clave, valor);
   });
   const search = p.toString() ? `?${p}` : "";
-  window.history.replaceState(null, "", `${window.location.pathname}${search}#explorar`);
+  window.history.replaceState(null, "", `/explorar${search}`);
 }
 
-export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, textos, enfocarBusqueda = false }) {
+export default function Explorar({
+  en,                       // [LOCAL] Indica si el idioma es inglés.
+  categorias = [],          // [API] Categorías para el filtro.
+  ciudades = [],            // [API] Ciudades para el filtro.
+  textos,                   // [API] Textos de la interfaz.
+  onAbrir,                  // [LOCAL] Función para abrir el detalle de un evento.
+  onNavegar,                // [LOCAL] Función para cambiar de vista.
+  enfocarBusqueda = false,  // [ACCESIBILIDAD] Indica si el buscador recibe el foco al cargar.
+}) {
   // ==========================================
   // BLOQUE A: ESTADOS Y REFERENCIAS
   // ==========================================
-  
-  // [LOCAL] Inicializa el estado con los filtros de la URL.
+
+  // [LOCAL] Hace que los filtros empiecen con lo que dice la URL.
   const [filtros, setFiltros] = useState(leerFiltros);
-  
-  // [LOCAL] Guarda el texto del buscador para no actualizar la URL en cada tecla.
+
+  // [LOCAL] Hace que el texto del buscador no cambie la URL hasta enviarlo.
   const [busqueda, setBusqueda] = useState(filtros.q);
-  
-  // [LOCAL] Controla si el panel de filtros móvil está abierto o cerrado.
+
+  // [LOCAL] Hace que el panel de filtros móvil se abra o se cierre.
   const [panelAbierto, setPanelAbierto] = useState(false);
-  
-  // [ACCESIBILIDAD] Referencia al botón de filtros para devolverle el foco al cerrar el panel.
+
+  // [ACCESIBILIDAD] Hace que el foco vuelva al botón de filtros al cerrar el panel.
   const botonFiltrosRef = useRef(null);
 
   // ==========================================
   // BLOQUE B: CONEXIÓN CON LA API Y TEXTOS
   // ==========================================
-  
-  // [API] Obtiene los eventos, la paginación y los estados de carga/error.
+
+  // [API] Hace que se carguen los eventos según los filtros.
   const { eventos, paginacion, cargando, error, recargar } = useEventos(filtros);
 
-  // [API] Extrae los textos dinámicos desde la API.
+  // [API] Hace que los textos de Explorar y de los estados estén a mano.
   const t = textos?.paginas?.explorar;
   const tEstado = textos?.estados;
-  
-  // [STATIC] Extrae los textos locales (porque la API no tiene estos).
+
+  // [STATIC] Hace que estén disponibles los textos que la API no trae.
   const local = textosLocales[en ? "en" : "es"];
-  
-  // [LOCAL] Función auxiliar para elegir texto de la API o local según el idioma.
+
+  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
   const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
 
-  // [API] Calcula el total de eventos y maneja singular/plural.
+  // [API] Hace que el conteo de resultados use singular o plural.
   const total = paginacion?.total ?? 0;
   const uno = total === 1;
 
@@ -101,55 +108,55 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
   // ==========================================
   // BLOQUE C: FUNCIONES DEL COMPONENTE
   // ==========================================
-  
-  // [LOCAL] Guarda los filtros en el estado y en la URL.
+
+  // [LOCAL] Hace que los filtros se guarden en el estado y en la URL.
   function aplicar(nuevos) {
     setFiltros(nuevos);
     guardarFiltros(nuevos);
   }
 
-  // [LOCAL] Actualiza un filtro específico y resetea a la página 1.
+  // [LOCAL] Hace que un filtro cambie y la lista vuelva a la página 1.
   function actualizar(cambios) {
     aplicar({ ...filtros, pagina: "1", ...cambios });
   }
 
-  // [LOCAL] Cambia de página y hace scroll hacia arriba.
+  // [LOCAL] Hace que cambie la página y la vista suba al inicio.
   function cambiarPagina(numero) {
     aplicar({ ...filtros, pagina: String(numero) });
     window.scrollTo(0, 0);
   }
 
-  // [LOCAL] Limpia todos los filtros excepto el orden actual.
+  // [LOCAL] Hace que se borren todos los filtros menos el orden.
   function limpiar() {
     setBusqueda("");
     aplicar({ ...FILTROS_VACIOS, orden: filtros.orden });
   }
 
-  // [LOCAL] Envía la búsqueda al presionar Enter o el ícono de la lupa.
+  // [LOCAL] Hace que la búsqueda se aplique al presionar Enter.
   function buscar(e) {
     e.preventDefault();
     actualizar({ q: busqueda.trim() });
   }
 
-  // [ACCESIBILIDAD] Cierra el panel y devuelve el foco al botón que lo abrió.
+  // [ACCESIBILIDAD] Hace que el panel se cierre y el foco vuelva al botón que lo abrió.
   const cerrarPanel = useCallback(() => {
     setPanelAbierto(false);
     botonFiltrosRef.current?.focus();
   }, []);
 
-  // [LOCAL] Obtiene el nombre de la categoría traducido si es necesario.
+  // [API] Hace que aparezca el nombre de la categoría tal como lo trae la API.
   function nombreCategoria(id) {
     return categorias.find((c) => c.id === id)?.nombre || id;
   }
 
-  // [LOCAL] Arma la lista de filtros activos para mostrar como "chips".
+  // [LOCAL] Hace que los filtros activos se muestren como chips.
   const chips = [
     filtros.categoria && { clave: "categoria", texto: nombreCategoria(filtros.categoria) },
     filtros.ciudad && { clave: "ciudad", texto: filtros.ciudad },
     filtros.q && { clave: "q", texto: `"${filtros.q}"` },
   ].filter(Boolean);
 
-  // [LOCAL] Quita un filtro específico.
+  // [LOCAL] Hace que la × de un chip quite ese filtro.
   function quitarChip(clave) {
     if (clave === "q") setBusqueda("");
     actualizar({ [clave]: "" });
@@ -161,33 +168,43 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
 
   return (
     <main className="contenedor explorar">
-      
-      {/* [STATIC] Migas de pan (Breadcrumbs). */}
+
+      {/* [ACCESIBILIDAD] Hace que aparezca la ruta de navegación (Inicio › Explorar). */}
       <nav className="explorar__migas" aria-label={local.migas}>
         <ol>
           <li>
-            <a href="#inicio">{tr(textos?.navbar?.enlaces?.inicio, "Inicio", "Home")}</a>
+            {/* [LOCAL] Hace que "Inicio" vuelva al Inicio sin recargar. */}
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavegar("inicio");
+              }}
+            >
+              {tr(textos?.navbar?.enlaces?.inicio, "Inicio", "Home")}
+            </a>
           </li>
           <li aria-current="page">{tr(textos?.navbar?.enlaces?.explorar, "Explorar", "Explore")}</li>
         </ol>
       </nav>
 
-      {/* [API] Título principal de la vista. */}
+      {/* [STATIC] Hace que aparezca el título de la vista. */}
       <h1 className="explorar__titulo">{local.titulo}</h1>
 
-      {/* [API] Muestra el conteo de resultados si hay paginación. */}
+      {/* [API] Hace que aparezca cuántos eventos coinciden con los filtros. */}
       {paginacion && (
         <p className="explorar__resultados" role="status">
           {textoResultados}
         </p>
       )}
 
-      {/* [STATIC] Barra de búsqueda y botón de filtros para móvil. */}
+      {/* [STATIC] Hace que aparezcan el buscador y el botón de filtros en móvil. */}
       <div className="explorar__buscador-movil">
         <form className="explorar__busqueda" role="search" onSubmit={buscar}>
           <IconoEvento tipo="buscar" />
           <input
             type="search"
+            // [ACCESIBILIDAD] Hace que el buscador reciba el foco si se abrió desde la lupa.
             autoFocus={enfocarBusqueda}
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
@@ -200,6 +217,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
           ref={botonFiltrosRef}
           type="button"
           className="explorar__boton-filtros"
+          // [ACCESIBILIDAD] Hace que el lector anuncie el botón y si el panel está abierto.
           aria-label={local.abrirFiltros}
           aria-expanded={panelAbierto}
           aria-controls="panel-filtros"
@@ -220,7 +238,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
       </div>
 
       <div className="explorar__cuerpo">
-        {/* [STATIC] Componente del panel de filtros (Sidebar/Móvil). */}
+        {/* [LOCAL] Hace que aparezca el panel de filtros (barra lateral en escritorio, overlay en móvil). */}
         <PanelFiltros
           id="panel-filtros"
           abierto={panelAbierto}
@@ -239,8 +257,8 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
 
         <section className="explorar__contenido">
           <div className="explorar__barra">
-            
-            {/* [LOCAL] Muestra los filtros activos como "chips" con botón para quitarlos. */}
+
+            {/* [LOCAL] Hace que aparezcan los filtros activos con su botón para quitarlos. */}
             {chips.length > 0 && (
               <ul className="explorar__chips">
                 {chips.map((chip) => (
@@ -248,6 +266,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
                     {chip.texto}
                     <button
                       type="button"
+                      // [ACCESIBILIDAD] Hace que el lector anuncie qué filtro se va a quitar.
                       aria-label={local.quitarFiltro.replace("{nombre}", chip.texto)}
                       onClick={() => quitarChip(chip.clave)}
                     >
@@ -259,10 +278,10 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
             )}
 
             <div className="explorar__barra-fila">
-              {/* [API] Conteo de resultados corto (para móvil). */}
+              {/* [API] Hace que aparezca el conteo corto en móvil. */}
               {paginacion && <p className="explorar__total-movil">{textoCorto}</p>}
 
-              {/* [LOCAL] Selector de ordenamiento. */}
+              {/* [LOCAL] Hace que se pueda cambiar el orden de los resultados. */}
               <label className="explorar__orden">
                 <span className="explorar__orden-etiqueta">{tr(t?.orden?.etiqueta, "Ordenar:", "Sort by:")}</span>
                 <select value={filtros.orden || "fecha"} onChange={(e) => actualizar({ orden: e.target.value })}>
@@ -276,7 +295,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
             </div>
           </div>
 
-          {/* [LOCAL] Estado de carga. */}
+          {/* [API] Hace que aparezca el estado de carga. */}
           {cargando && (
             <div className="explorar__estado" role="status">
               <h3>{tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}</h3>
@@ -284,7 +303,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
             </div>
           )}
 
-          {/* [LOCAL] Estado de error. */}
+          {/* [API] Hace que aparezca el error con un botón para reintentar. */}
           {!cargando && error && (
             <div className="explorar__estado" role="alert">
               <h3>{tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}</h3>
@@ -295,7 +314,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
             </div>
           )}
 
-          {/* [LOCAL] Estado vacío (sin resultados). */}
+          {/* [API] Hace que aparezca el estado vacío con un botón para limpiar filtros. */}
           {!cargando && !error && eventos.length === 0 && (
             <div className="explorar__estado">
               <h3>{tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}</h3>
@@ -306,7 +325,7 @@ export default function Explorar({ en, categorias = [], ciudades = [], onAbrir, 
             </div>
           )}
 
-          {/* [API] Grid de resultados y paginación. */}
+          {/* [API] Hace que aparezcan las tarjetas de eventos y la paginación. */}
           {!cargando && !error && eventos.length > 0 && (
             <>
               <div className="explorar__grid">

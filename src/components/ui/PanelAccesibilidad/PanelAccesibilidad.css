@@ -93,7 +93,7 @@
 .panel-accesibilidad__tamano-btn {
   width: 36px;
   height: 36px;
-  background: var(--color-fondo-etiqueta); /* Gris claro #F0F0F0 */
+  background: var(--color-fondo-etiqueta); /* Gris claro*/
   border: none;
   border-radius: 6px;
   font-size: 18px;
@@ -124,7 +124,7 @@
   gap: 12px;
 }
 
-.toggle-texto h4 {
+.toggle-texto h3 {
   font-size: 14px;
   font-weight: 500;
   margin: 0 0 2px 0;
@@ -156,7 +156,7 @@
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background-color: var(--color-borde); /* #8C8C8C */
+  background-color: var(--color-borde);
   transition: .4s;
   border-radius: var(--radio-pildora);
 }
@@ -186,7 +186,7 @@ input:checked + .slider:before {
    ========================================= */
 .panel-accesibilidad__footer {
   padding: 16px 20px;
-  background: var(--color-fondo); /* #f8fafc */
+  background: var(--color-fondo);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }

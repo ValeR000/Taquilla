@@ -8,7 +8,7 @@
   position: relative;
   height: 176px;
   overflow: hidden;
-  background: #ccc; /* Color de fondo por si la API falla */
+  background: var(--fondo-sutil); /* Color de fondo por si la API falla */
 }
 
 /* [STATIC] Círculo decorativo blanco. */

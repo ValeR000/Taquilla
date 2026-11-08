@@ -10,36 +10,34 @@ import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
 import "./TarjetaEvento.css";
 
-export default function TarjetaEvento({ 
-  evento,             // [API] El objeto del evento con sus datos.
+export default function TarjetaEvento({
+  evento,             // [API] Datos del evento.
   onAbrir,            // [LOCAL] Función para abrir el detalle del evento.
-  nombreCategoria,    // [API] El nombre de la categoría ya traducido.
-  en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
-  textos              // [API] Los textos de la interfaz desde la API.
+  nombreCategoria,    // [API] Nombre de la categoría, tal como lo trae la API.
+  en,                 // [LOCAL] Indica si el idioma es inglés.
+  textos              // [API] Textos de la interfaz.
 }) {
   // ==========================================
-  // BLOQUE A: TEXTOS Y TRADUCCIONES
+  // BLOQUE A: TEXTOS
   // ==========================================
-  
-  // [API] Extrae los textos específicos de la tarjeta desde la API.
+
+  // [API] Hace que los textos de la tarjeta estén a mano.
   const t = textos?.paginas?.inicio?.tarjeta;
-  
-  // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
+
+  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
   const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
-  
-  // [API] Hace que aparezca el texto del botón (Ver evento / View event).
+
   const verEvento = tr(t?.botones?.verEvento, "Ver evento", "View event");
 
   return (
-    // [STATIC] Contenedor principal de la tarjeta.
     <article className="tarjeta-evento">
-      
-      {/* [API] Pinta el afiche del evento usando los colores de la API. */}
+
+      {/* [API] Hace que el afiche se pinte con los colores del evento. */}
       <AficheEvento afiche={evento.afiche} />
 
       <div className="contenido-evento">
-        
-        {/* [API] Hace que aparezca la etiqueta con el nombre de la categoría. */}
+
+        {/* [API] Hace que aparezca la categoría. */}
         <Etiqueta>{nombreCategoria || evento.categoria}</Etiqueta>
 
         {/* [API] Hace que aparezca el título del evento. */}
@@ -47,34 +45,37 @@ export default function TarjetaEvento({
 
         <p>
           <IconoEvento tipo="fecha" />
-          {/* [API] Hace que aparezca la fecha y hora formateada. */}
+          {/* [API] Hace que aparezca la fecha y hora en el idioma actual. */}
           {formatoFecha(evento.fecha, en)}
         </p>
 
         <p>
           <IconoEvento tipo="lugar" />
-          {/* [API] Hace que aparezca el nombre del recinto y la ciudad. */}
+          {/* [API] Hace que aparezcan el recinto y la ciudad. */}
           {evento.recinto?.nombre}, {evento.recinto?.ciudad}
         </p>
 
         <div className="precio-evento">
           <div>
-            {/* [API] Hace que aparezca el texto "Desde" o "From". */}
+            {/* [API] Hace que aparezca "Desde". */}
             <small>{tr(t?.desde, "Desde", "From")}</small>
-            {/* [API] Hace que aparezca el precio formateado. */}
+            {/* [API] Hace que aparezca el precio en pesos. */}
             <strong>{formatoDinero(evento.precioDesde)}</strong>
           </div>
-          
-          <button
+
+          {/* [LOCAL] Hace que "Ver evento" lleve a /eventos/slug sin recargar la página. */}
+          <a
+            href={`/eventos/${evento.slug}`}
             className="boton-evento"
-            // [ACCESIBILIDAD] Hace que el lector de pantalla anuncie qué evento se va a abrir.
+            // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
             aria-label={`${verEvento}: ${evento.titulo}`}
-            // [LOCAL] Hace que al hacer clic se abra el detalle del evento.
-            onClick={() => onAbrir(evento)}
+            onClick={(e) => {
+              e.preventDefault();
+              onAbrir(evento);
+            }}
           >
-            {/* [API] Hace que aparezca el texto del botón. */}
             {verEvento}
-          </button>
+          </a>
         </div>
       </div>
     </article>

@@ -85,15 +85,17 @@
   font-weight: 500;
 }
 
-/* [STATIC] Botón "Ver evento". */
+/* [STATIC] Hace que el enlace "Ver evento" se vea como botón con borde. */
 .precio-evento .boton-evento {
-  border: 1px solid var(--color-borde); 
+  display: inline-block;
+  border: 1px solid var(--color-borde);
   background: transparent;
   border-radius: var(--radio-sm);
   padding: 8px 16px;
   font-size: var(--texto-pequeno);
   font-weight: 500;
   color: var(--color-texto);
+  text-decoration: none; /* Hace que el enlace no se vea subrayado */
   cursor: pointer;
   transition: background-color 0.2s ease;
 }

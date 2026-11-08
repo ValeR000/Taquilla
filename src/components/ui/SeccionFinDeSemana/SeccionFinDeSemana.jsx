@@ -8,27 +8,24 @@ import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
 import "./SeccionFinDeSemana.css";
 
-export default function SeccionFinDeSemana({ 
-  eventos = [],       // [API] Lista de eventos que se van a mostrar.
-  en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
-  textos,             // [API] Los textos de la interfaz desde la API.
+export default function SeccionFinDeSemana({
+  eventos = [],       // [API] Eventos que se muestran.
+  en,                 // [LOCAL] Indica si el idioma es inglés.
+  textos,             // [API] Textos de la interfaz.
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
-  onVerTodos          // [LOCAL] Función para navegar a la vista de Explorar.
+  onVerTodos          // [LOCAL] Función para ir a Explorar.
 }) {
   // ==========================================
-  // BLOQUE A: TEXTOS Y TRADUCCIONES
+  // BLOQUE A: TEXTOS
   // ==========================================
-  
-  // [API] Extrae los textos de la página de inicio desde la API.
+
+  // [API] Hace que los textos del Inicio estén a mano.
   const inicio = textos?.paginas?.inicio;
-  
-  // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
+
+  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
   const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
-  
-  // [API] Hace que aparezca el texto del botón de ver evento (con su aria-label).
+
   const verEvento = tr(inicio?.tarjeta?.botones?.verEvento, "Ver evento", "View event");
-  
-  // [API] Hace que aparezca el texto "Desde" o "From" para el precio.
   const desde = tr(inicio?.tarjeta?.desde, "Desde", "From");
 
   // ==========================================
@@ -36,51 +33,51 @@ export default function SeccionFinDeSemana({
   // ==========================================
 
   return (
-    // [ACCESIBILIDAD] Etiqueta semántica con aria-labelledby para vincularla al título.
+    // [ACCESIBILIDAD] Hace que la sección tome su nombre del título.
     <section className="fin-de-semana" aria-labelledby="fin-de-semana-titulo">
-      
+
       <div className="titulo-seccion">
-        {/* [API] Hace que aparezca el título "Este fin de semana" desde la API. */}
+        {/* [API] Hace que aparezca el título "Este fin de semana". */}
         <h2 id="fin-de-semana-titulo">
           {tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend")}
         </h2>
-        
-        {/* [LOCAL] Botón para navegar a la vista de explorar y ver todos los eventos. */}
+
+        {/* [LOCAL] Hace que "Ver todos" lleve a Explorar. */}
         <button className="enlace-home" onClick={onVerTodos}>
-          {/* [API] Hace que aparezca el texto "Ver todos" desde la API. */}
           {tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all")}
         </button>
       </div>
 
       <ul className="fin-de-semana__lista">
-        {/* [API] Recorre los eventos y dibuja un elemento de la lista por cada uno. */}
         {eventos.map((evento) => (
           <li key={evento.id}>
-            {/* [LOCAL] Hace que al hacer clic se abra el detalle del evento. */}
-            <button
+            {/* [LOCAL] Hace que toda la fila lleve a /eventos/slug sin recargar la página. */}
+            <a
+              href={`/eventos/${evento.slug}`}
               className="fin-de-semana__item"
-              onClick={() => onAbrir(evento)}
-              // [ACCESIBILIDAD] Hace que el lector de pantalla anuncie qué evento se va a abrir.
+              // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
               aria-label={`${verEvento}: ${evento.titulo}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onAbrir(evento);
+              }}
             >
               <span className="fin-de-semana__afiche">
-                {/* [API] Pinta el afiche del evento usando los colores de la API. */}
+                {/* [API] Hace que el afiche se pinte con los colores del evento. */}
                 <AficheEvento afiche={evento.afiche} />
               </span>
 
               <span className="fin-de-semana__texto">
                 {/* [API] Hace que aparezca el título del evento. */}
                 <strong className="fin-de-semana__titulo">{evento.titulo}</strong>
-                
-                {/* [API] Hace que aparezca la fecha y hora formateada. */}
+                {/* [API] Hace que aparezca la fecha y hora en el idioma actual. */}
                 <small>{formatoFecha(evento.fecha, en)}</small>
-                
-                {/* [API] Hace que aparezca el precio formateado. */}
+                {/* [API] Hace que aparezca el precio. */}
                 <span className="fin-de-semana__precio">
                   {desde} {formatoDinero(evento.precioDesde)}
                 </span>
               </span>
-            </button>
+            </a>
           </li>
         ))}
       </ul>

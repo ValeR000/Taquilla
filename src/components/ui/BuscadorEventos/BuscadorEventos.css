@@ -10,7 +10,7 @@
 .buscador-eventos {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--color-superficie);
   border-radius: var(--radio-lg);
   width: 100%;
 }
@@ -101,7 +101,7 @@
     display: flex;
     align-items: center;
     gap: 10px; /* Hace que haya 10px de espacio entre la lupa, el texto y el botón (Figma) */
-    background: var(--fondo-superficie); /* Hace que el fondo sea blanco puro (#FFFFFF) */
+    background: var(--fondo-superficie); /* Hace que el fondo sea blanco puro */
     height: 56px; /* Hace que la cajita mida exactamente 56px de alto (Figma) */
     padding-left: 14px; /* Hace que haya 14px de espacio a la izquierda (Figma) */
     padding-right: 8px; /* Hace que haya 8px de espacio a la derecha (Figma) */

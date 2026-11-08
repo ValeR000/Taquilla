@@ -16,6 +16,9 @@ export const textosLocales = {
     navPrincipal: "Navegación principal",
     navMovil: "Navegación móvil",
     navPie: "Enlaces del pie de página",
+
+    /* ACCESIBILIDAD */
+    cerrarPanel: "Cerrar panel",
   },
   en: {
     titulo: "Explore events",
@@ -29,6 +32,9 @@ export const textosLocales = {
     navPrincipal: "Main navigation",
     navMovil: "Mobile navigation",
     navPie: "Footer links",
+
+    /* ACCESIBILITY */
+    cerrarPanel: "Close panel",
     
   },
 };
