@@ -272,7 +272,10 @@
 
   /* 4. AJUSTES EXTRA */
 
+  /* 4. AJUSTES EXTRA */
+
   .navbar__contenedor {
     padding-inline: 16px;
+    min-height: 59px; /* Hace que la barra mida 60 px en total con su borde de 1 px, como en Figma */
   }
 }

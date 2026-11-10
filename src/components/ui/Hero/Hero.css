@@ -107,4 +107,8 @@
   .populares {
     display: none; 
   }
+  /* [STATIC] Hace que el contenido del Hero tenga 20 px de margen a cada lado en celular. */
+  .ancho-home {
+    width: calc(100% - 40px);
+  }
 }

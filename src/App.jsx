@@ -434,6 +434,7 @@ function App() {
       {!consentimiento && (
         <BannerCookies
           textos={datos.textos?.cookies?.banner}
+          en={en}
           onAceptar={aceptarCookies}
           onRechazar={rechazarCookies}
         />

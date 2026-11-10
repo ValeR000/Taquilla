@@ -27,10 +27,17 @@ body {
   -webkit-font-smoothing: antialiased; /* Hace que las letras se vean más nítidas en pantalla */
 }
 
+/* [STATIC] Hace que botones y campos usen la fuente oficial, porque el navegador les pone otra por defecto. */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 /* =========================================
    SECCIÓN: Títulos y Tipografías (Generalizadas)
    ========================================= */
-
 /* [STATIC] Hace que el <h1> use el tamaño, interlineado y espaciado de Figma (52px). */
 h1 {
   font-family: var(--fuente-titulos); 

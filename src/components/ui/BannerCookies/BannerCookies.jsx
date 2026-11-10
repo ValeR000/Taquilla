@@ -1,39 +1,49 @@
-// ============================================================================
-// ARCHIVO: BannerCookies.jsx
-// RESPONSABILIDAD: Muestra el aviso flotante de cookies en la parte inferior.
-// CONVENCIÓN: [API], [LOCAL], [STATIC].
-// ============================================================================
+// RESPONSABILIDAD: Aviso de cookies de la primera visita, con los botones Aceptar y Rechazar.
 
 import "./BannerCookies.css";
-import Boton from "../Boton/Boton.jsx"; // [STATIC] Importamos tu componente de botón
+import Boton from "../Boton/Boton.jsx";
 
-export default function BannerCookies({ textos, onAceptar, onRechazar }) {
+export default function BannerCookies({
+  textos,       // [API] Textos de cookies.banner.
+  en,           // [LOCAL] Indica si el idioma es inglés.
+  onAceptar,    // [LOCAL] Función para aceptar las cookies.
+  onRechazar,   // [LOCAL] Función para rechazar las cookies.
+}) {
+  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
+  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+
+  const titulo = tr(textos?.titulo, "Usamos cookies", "We use cookies");
+
   return (
-    // [STATIC] Contenedor principal tipo "aside" para accesibilidad.
-    <aside className="banner-cookies" aria-label={textos?.titulo || "Aviso de cookies"}>
-      
+    // [ACCESIBILIDAD] Hace que el lector de pantalla anuncie el aviso con su título.
+    <aside className="banner-cookies" aria-label={titulo}>
+
       <div className="banner-cookies__contenido">
-        {/* [API] Hace que aparezca el título desde la API o un texto por defecto. */}
-        <h2>{textos?.titulo || "Usamos cookies"}</h2>
-        
-        {/* [API] Hace que aparezca la descripción desde la API o el texto por defecto. */}
-        <p>{textos?.descripcion || "Usamos solo las cookies necesarias para mantener tu sesión y recordar tu idioma. Puedes aceptarlas o rechazarlas."}</p>
+        {/* [API] Hace que aparezca el título del aviso. */}
+        <h2>{titulo}</h2>
+
+        {/* [API] Hace que aparezca el texto del aviso. */}
+        <p>
+          {tr(
+            textos?.texto,
+            "Usamos solo las cookies necesarias para mantener tu sesión y recordar tu idioma. Puedes aceptarlas o rechazarlas.",
+            "We only use the cookies needed to keep you logged in and remember your language. You can accept or reject them."
+          )}
+        </p>
       </div>
-      
+
       <div className="banner-cookies__acciones">
-        {/* [LOCAL] Botón de Rechazar. Ejecuta la función pasada por props. */}
+        {/* [LOCAL] Hace que se rechacen las cookies al hacer clic. */}
         <Boton variante="secundario" onClick={onRechazar}>
-          {/* [API] Texto desde la API o por defecto. */}
-          {textos?.rechazar || "Rechazar"}
+          {tr(textos?.botones?.rechazar, "Rechazar", "Reject")}
         </Boton>
-        
-        {/* [LOCAL] Botón de Aceptar. Ejecuta la función pasada por props. */}
+
+        {/* [LOCAL] Hace que se acepten las cookies al hacer clic. */}
         <Boton variante="primario" onClick={onAceptar}>
-          {/* [API] Texto desde la API o por defecto. */}
-          {textos?.aceptar || "Aceptar"}
+          {tr(textos?.botones?.aceptar, "Aceptar", "Accept")}
         </Boton>
       </div>
-      
+
     </aside>
   );
 }
