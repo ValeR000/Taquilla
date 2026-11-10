@@ -17,3 +17,11 @@ Thumbs.db
 *.log
 .vscode/*
 !.vscode/extensions.json
+
+
+
+Cada bloque lógico lleva una etiqueta que indica de dónde sale lo que se ve o se ejecuta:
+•	`[API]` — Dato que viene de internet: textos de GET /textos, eventos, categorías, ciudades. Ejemplo: // [API] Hace que aparezca el título del evento.
+•	`[LOCAL]` — Lógica interna de React: estados, eventos de clic, variables calculadas. Ejemplo: // [LOCAL] Hace que el menú móvil se cierre al hacer clic en un enlace.
+•	`[STATIC]` — Código fijo de diseño: HTML, SVG, listas fijas y textos de respaldo. Ejemplo: // [STATIC] Hace que estén disponibles los textos que la API no trae.
+•	`[ACCESIBILIDAD]` — Reglas de teclado, foco y lectores de pantalla. Ejemplo: // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
