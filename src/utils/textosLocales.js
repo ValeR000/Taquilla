@@ -40,15 +40,6 @@ export const textosLocales = {
   },
 };
 
-// [STATIC] Diccionario local para traducir los IDs de las categorías al inglés, 
-// ya que la API devuelve los nombres en español.
-export const categoriasEn = {
-  // en es:
-  categoriasAria: "Categorías de eventos",
-  // en en:
-  categoriasAria: "Event categories",
-};
-
 export const textosRespaldo = {
   es: {
     navbar: {
