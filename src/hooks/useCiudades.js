@@ -10,6 +10,7 @@
 // ============================================================================
 
 import { useEffect, useState } from "react";
+import { pedirJSON } from "../services/api.js";
 
 // 1. CONFIGURACIÓN
 // [API] Guarda la dirección exacta (endpoint) de donde sacaremos las ciudades.
@@ -38,9 +39,6 @@ export function useCiudades() {
   // [LOCAL] Se ejecuta automáticamente al iniciar el componente.
   useEffect(() => {
     
-    // [LOCAL] Crea un "AbortController". Sirve para cancelar la petición si el usuario se va de la página.
-    const controlador = new AbortController();
-    
     // [LOCAL] Bandera de seguridad. Hace que React sepa si este efecto sigue "vivo".
     let vigente = true;
 
@@ -48,14 +46,8 @@ export function useCiudades() {
     async function cargar() {
       try {
         // [API] Hace la petición a la URL de la API.
-        const res = await fetch(API, { signal: controlador.signal });
-        
-        // [LOCAL] Revisa si la API respondió con un error.
-        if (!res.ok) throw new Error("Error al cargar ciudades");
-        
-        // [API] Convierte la respuesta en un objeto de JavaScript (JSON).
-        const datos = await res.json();
-        
+        const datos = await pedirJSON(API);
+
         // [API] Si todo salió bien, guarda las ciudades en el estado.
         if (vigente) setCiudades(datos.datos);
         
@@ -74,7 +66,6 @@ export function useCiudades() {
     // [LOCAL] FUNCIÓN DE LIMPIEZA: Cancela la petición si el componente se destruye.
     return () => {
       vigente = false;
-      controlador.abort();
     };
   }, []); 
 

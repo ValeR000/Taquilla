@@ -20,6 +20,8 @@ import { useEffect, useState } from "react"; //useState: Guarda un valor que Rea
 //useEffect(  () => { ...código... }  ,  [ ...lista... ]  );
 //          └──── 1. QUÉ hacer ────┘     └─ 2. CUÁNDO ─┘
 
+import { pedirJSON } from "../services/api.js";
+
 // [API] Hace que la dirección del endpoint salga de la variable de entorno.
 const API = `${import.meta.env.VITE_API_URL}/categorias`;
 //crea var llamada API y tal .env y se mete el coso de la url de la var de entorno y /endpoint como en el contrato
@@ -40,7 +42,6 @@ export function useCategorias() { //se declara funcion, el export permite q otro
 
   // [API] Hace que se pidan las categorías al cargar y en cada reintento.
   useEffect(() => {
-    const controlador = new AbortController();
     let vigente = true;
 
     setCargando(true);
@@ -49,13 +50,7 @@ export function useCategorias() { //se declara funcion, el export permite q otro
     //CONSULTAR LA API LO MISMO QUE HACE EL SEND DE POSTMAN
     async function cargar() {
       try {
-        const res = await fetch(API, { signal: controlador.signal }); //fetch(API): hace la petición GET a esa URL
-        //res: la respuesta completa: código de estado, cabeceras, cuerpo.
-
-        if (!res.ok) throw new Error("Error al cargar categorías"); //res.ok: es true si el código está entre 200 y 299. ! significa “no”, así que !res.ok = “si salió mal”.
-
-        const datos = await res.json();
-        //res.json(): convierte el cuerpo de texto JSON a un objeto de JavaScript.
+        const datos = await pedirJSON(API, { forzar: intento > 0 });
 
         if (vigente) setCategorias(datos.datos);
       } catch (err) {
@@ -74,7 +69,6 @@ export function useCategorias() { //se declara funcion, el export permite q otro
     // [LOCAL] Hace que la petición se cancele si el componente se desmonta.
     return () => {
       vigente = false;
-      controlador.abort();
     };
   }, [intento]);
 
