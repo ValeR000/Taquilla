@@ -19,6 +19,8 @@ export const textosLocales = {
 
     /* ACCESIBILIDAD */
     cerrarPanel: "Cerrar panel",
+
+    populares: ["Salsa", "Stand-up", "Fútbol", "Festivales de fin de año"],
   },
   en: {
     titulo: "Explore events",
@@ -35,7 +37,8 @@ export const textosLocales = {
 
     /* ACCESIBILITY */
     cerrarPanel: "Close panel",
-    
+
+    populares: ["Salsa", "Stand-up", "Football", "Year-end festivals"],
   },
 };
 
