@@ -65,7 +65,7 @@ export default function Hero({
 
         {/* [STATIC] Componente de la tarjeta derecha. */}
         {/* [API] Le pasa el evento destacado desde la API. */}
-        <EventoDestacado evento={destacado} en={en} onAbrir={abrirEvento} />
+        <EventoDestacado evento={destacado} en={en} textos={textos} onAbrir={abrirEvento} />
       </div>
     </section>
   );

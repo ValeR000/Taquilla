@@ -130,6 +130,8 @@ function App() {
 
   const en = idioma === "en";
 
+  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+
   // [API] Hace que el primer evento destacado aparezca en la tarjeta del Hero.
   const eventoDestacado = eventos?.[0];
 
@@ -318,9 +320,9 @@ function App() {
             {/* [API] Hace que aparezca el error de categorías con un botón para reintentar. */}
             {errorCategorias && (
               <div role="alert">
-                <p>{estados?.error?.titulo || (en ? "Something went wrong" : "Algo salió mal")}</p>
+                <p>{tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}</p>
                 <button type="button" className="boton-home primario" onClick={recargarCategorias}>
-                  {estados?.error?.botones?.reintentar || (en ? "Retry" : "Reintentar")}
+                  {tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
                 </button>
               </div>
             )}
@@ -344,16 +346,16 @@ function App() {
             {/* [API] Hace que aparezca el estado de carga de los eventos. */}
             {cargandoEventos && (
               <p className="solo-lectores" role="status">
-                {estados?.cargando?.titulo || (en ? "Loading…" : "Cargando…")}
+                {tr(estados?.cargando?.titulo, "Cargando…", "Loading…")}
               </p>
             )}
 
             {/* [API] Hace que aparezca el error con un botón para reintentar. */}
             {errorEventos && (
               <div style={{ marginTop: "3rem" }} role="alert">
-                <p>{estados?.error?.titulo || (en ? "Something went wrong" : "Algo salió mal")}</p>
+                <p>{tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}</p>
                 <button type="button" className="boton-home primario" onClick={recargarEventos}>
-                  {estados?.error?.botones?.reintentar || (en ? "Retry" : "Reintentar")}
+                  {tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
                 </button>
               </div>
             )}
@@ -368,8 +370,8 @@ function App() {
                 <SeccionEventos
                   id="eventos"
                   cargando={cargandoEventos}
-                  titulo={inicio?.destacados?.titulo || (en ? "This week's highlights" : "Destacados de la semana")}
-                  descripcion={inicio?.destacados?.subtitulo || (en ? "Best-selling events in the last 7 days" : "Los eventos con más entradas vendidas en los últimos 7 días")}
+                  titulo={tr(inicio?.destacados?.titulo, "Destacados de la semana", "This week's highlights")}
+                  descripcion={tr(inicio?.destacados?.subtitulo, "Los eventos con más entradas vendidas en los últimos 7 días", "Best-selling events in the last 7 days")}
                   eventos={eventos.slice(0, 4)}
                   categorias={categorias}
                   en={en}
@@ -383,8 +385,8 @@ function App() {
                   id="proximos"
                   clase="proximos"
                   cargando={cargandoEventos}
-                  titulo={(inicio?.proximos?.titulo || (en ? "Upcoming in {ciudad}" : "Próximamente en {ciudad}")).replace("{ciudad}", CIUDAD_INICIAL)}
-                  descripcion={inicio?.proximos?.subtitulo || (en ? "Change the city from the search bar" : "Cambia la ciudad desde el buscador")}
+                  titulo={tr(inicio?.proximos?.titulo, "Próximamente en {ciudad}", "Upcoming in {ciudad}").replace("{ciudad}", CIUDAD_INICIAL)}
+                  descripcion={tr(inicio?.proximos?.subtitulo, "Cambia la ciudad desde el buscador", "Change the city from the search bar")}
                   eventos={eventos.slice(4, 8)}
                   categorias={categorias}
                   en={en}

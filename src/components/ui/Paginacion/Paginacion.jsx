@@ -69,7 +69,7 @@ export default function Paginacion({ pagina, paginas, onCambiar, etiquetas }) {
               <button
                 type="button"
                 // [ACCESIBILIDAD] Reemplaza {n} en el texto de la etiqueta (ej. "Ir a la página 3").
-                aria-label={etiquetas.pagina.replace("{n}", n)}
+                aria-label={etiquetas.pagina.replace("{numero}", n)}
                 // [ACCESIBILIDAD] Avisa a los lectores de pantalla cuál es la página actual.
                 aria-current={n === pagina ? "page" : undefined}
                 onClick={() => onCambiar(n)}

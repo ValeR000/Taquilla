@@ -38,6 +38,8 @@ export default function Navbar({
   // [STATIC] Hace que estén disponibles los textos que la API no trae.
   const local = textosLocales[en ? "en" : "es"];
 
+  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+
   // ==========================================
   // BLOQUE A: ESTADOS LOCALES
   // ==========================================
@@ -144,7 +146,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
           <button
             type="button"
             className="navbar__accesibilidad"
-            aria-label={t?.aria?.accesibilidad || (en ? "Open accessibility panel" : "Abrir panel de accesibilidad")}
+            aria-label={tr(t?.aria?.accesibilidad, "Abrir panel de accesibilidad", "Open accessibility panel")}
             aria-expanded={accesibilidadAbierta}
             onClick={abrirAccesibilidad}
           >

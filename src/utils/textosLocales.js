@@ -7,8 +7,6 @@ export const textosLocales = {
   es: {
     titulo: "Explorar eventos",
     migas: "Ruta de navegación",
-    paginacion: "Paginación",
-    pagina: "Página {n}",
     todasCiudades: "Todas las ciudades",
     quitarFiltro: "Quitar filtro {nombre}",
     abrirFiltros: "Abrir filtros",
@@ -16,6 +14,7 @@ export const textosLocales = {
     navPrincipal: "Navegación principal",
     navMovil: "Navegación móvil",
     navPie: "Enlaces del pie de página",
+    categoriasAria: "Categorías de eventos",
 
     /* ACCESIBILIDAD */
     cerrarPanel: "Cerrar panel",
@@ -25,8 +24,6 @@ export const textosLocales = {
   en: {
     titulo: "Explore events",
     migas: "Breadcrumb",
-    paginacion: "Pagination",
-    pagina: "Page {n}",
     todasCiudades: "All cities",
     quitarFiltro: "Remove filter {nombre}",
     abrirFiltros: "Open filters",
@@ -34,6 +31,7 @@ export const textosLocales = {
     navPrincipal: "Main navigation",
     navMovil: "Mobile navigation",
     navPie: "Footer links",
+    categoriasAria: "Event categories",
 
     /* ACCESIBILITY */
     cerrarPanel: "Close panel",
