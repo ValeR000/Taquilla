@@ -27,6 +27,7 @@ import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeS
 import Explorar from "./components/ui/Explorar/Explorar.jsx";
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
+import { textosRespaldo } from "./utils/textosLocales.js";
 import { useCallback, useEffect, useState } from "react";
 
 import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
@@ -258,6 +259,7 @@ function App() {
       {/* [STATIC] Hace que aparezca la barra de navegación. */}
       <Navbar
         {...datos}
+        textos={datos.textos || textosRespaldo[idioma]}
         idioma={idioma}
         cambiarIdioma={cambiarIdioma}
         activo={activo}
@@ -423,8 +425,8 @@ function App() {
 
       {/* [STATIC] Hace que aparezca el pie de página. */}
       <Footer
-        textos={datos.textos?.footer}
-        logo={datos.textos?.navbar?.logo}
+        textos={datos.textos?.footer || textosRespaldo[idioma].footer}
+        logo={datos.textos?.navbar?.logo || textosRespaldo[idioma].navbar.logo}
         en={en}
         onNavegar={navegar}
         abrirAccesibilidad={abrirAccesibilidad}
