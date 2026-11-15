@@ -36,7 +36,7 @@ export const textosLocales = {
     /* ACCESIBILITY */
     cerrarPanel: "Close panel",
 
-    populares: ["Salsa", "Stand-up", "Football", "Year-end festivals"],
+    populares: ["Salsa", "Stand-up", "Soccer", "Year-end festivals"],
   },
 };
 
