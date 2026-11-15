@@ -181,10 +181,10 @@ export default function Explorar({
                 onNavegar("inicio");
               }}
             >
-              {tr(textos?.navbar?.enlaces?.inicio, "Inicio", "Home")}
+              {tr(textos?.componentes?.migas?.inicio, "Inicio", "Home")}
             </a>
           </li>
-          <li aria-current="page">{tr(textos?.navbar?.enlaces?.explorar, "Explorar", "Explore")}</li>
+          <li aria-current="page">{tr(textos?.componentes?.migas?.explorar, "Explorar", "Explore")}</li>
         </ol>
       </nav>
 
@@ -257,7 +257,7 @@ export default function Explorar({
 
         <section className="explorar__contenido">
           {/* [ACCESIBILIDAD] Hace que los lectores de pantalla encuentren un título antes de los resultados. */}
-<       h2 className="solo-lectores">{textoResultados}</h2>
+          <h2 className="solo-lectores">{textoResultados}</h2>
           <div className="explorar__barra">
 
             {/* [LOCAL] Hace que aparezcan los filtros activos con su botón para quitarlos. */}
@@ -348,8 +348,8 @@ export default function Explorar({
                 paginas={paginacion?.paginas ?? 1}
                 onCambiar={cambiarPagina}
                 etiquetas={{
-                  nav: local.paginacion,
-                  pagina: local.pagina,
+                  nav: tr(textos?.componentes?.paginacion?.aria?.etiqueta, "Paginación", "Pagination"),
+                  pagina: tr(textos?.componentes?.paginacion?.aria?.irAPagina, "Ir a la página {numero}", "Go to page {numero}"),
                   anterior: tr(t?.paginacion?.anterior, "Página anterior", "Previous page"),
                   siguiente: tr(t?.paginacion?.siguiente, "Página siguiente", "Next page"),
                 }}

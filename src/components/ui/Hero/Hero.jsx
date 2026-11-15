@@ -5,16 +5,23 @@
 // ============================================================================
 
 import EventoDestacado from "../EventoDestacado/EventoDestacado.jsx";
+import { textosLocales } from "../../../utils/textosLocales.js";
 import "./Hero.css";
 
-export default function Hero({ 
+export default function Hero({
   en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
+  textos,
   children,           // [LOCAL] El componente del buscador que se inyecta desde App.jsx.
   destacado,          // [API] El evento destacado que viene de la API.
   abrirEvento,        // [LOCAL] Función para abrir el detalle del evento.
-  setFiltros,         // [LOCAL] Función para enviar filtros a la URL.
-  filtrarCategoria    // [LOCAL] Función para filtrar por categoría.
+  onBuscar
 }) {
+  // ##########
+  const hero = textos?.paginas?.inicio?.hero;
+  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const populares = textosLocales[en ? "en" : "es"].populares;
+  // ##########
+
   return (
     // [STATIC] Sección principal con fondo oscuro.
     <section className="hero-taquilla">
@@ -22,17 +29,19 @@ export default function Hero({
         <div>
           {/* [STATIC] Etiqueta de temporada con texto condicional según el idioma. */}
           <span className="etiqueta-evento">
-            {en ? "November – December 2026 season" : "Temporada nov – dic 2026"}
+            {tr(hero?.etiquetas?.temporada, "Temporada nov – dic 2026", "November – December 2026 season")}
           </span>
-          
+
           {/* [STATIC] Título principal con texto condicional según el idioma. */}
-          <h1>{en ? "Your next night starts here" : "Tu próxima noche empieza aquí"}</h1>
-          
+          <h1>{tr(hero?.titulo, "Tu próxima noche empieza aquí", "Your next night starts here")}</h1>
+
           {/* [STATIC] Párrafo descriptivo con texto condicional según el idioma. */}
           <p>
-            {en
-              ? "Concerts, theatre, sports and festivals. Search by category, date or city and discover all the details of each event."
-              : "Conciertos, teatro, deportes y festivales. Busca por categoría, fecha o ciudad y consulta todos los detalles de cada evento."}
+            {tr(
+              hero?.subtitulo,
+              "Conciertos, teatro, deportes y festivales. Busca por categoría, fecha o ciudad y consulta todos los detalles de cada evento.",
+              "Concerts, theatre, sports and festivals. Search by category, date or city and discover all the details of each event."
+            )}
           </p>
           
           {/* [LOCAL] Aquí se inyecta el BuscadorEventos desde App.jsx. */}
@@ -41,21 +50,22 @@ export default function Hero({
           {/* [STATIC] Sección de enlaces populares. */}
           <div className="populares">
             {/* [STATIC] Título de populares con texto condicional. */}
-            <span>{en ? "Popular:" : "Populares:"}</span>
-            
+            <span>{tr(hero?.buscador?.populares, "Populares:", "Popular:")}</span>
+
             {/* [STATIC] Recorre la lista de términos populares y dibuja un botón por cada uno. */}
-            {["Salsa", "Stand-up", "Fútbol", "Festivales de fin de año"].map((valor, i) => (
-              // [LOCAL] Al hacer clic, el primer término ("Salsa") busca por texto, los demás filtran por categoría.
-              <button key={valor} onClick={() => i === 0 ? setFiltros({ consulta: "Salsa" }) : filtrarCategoria(valor)}>
-                {valor}
+            {/* ########## */}
+            {populares.map((termino) => (
+              <button key={termino} type="button" onClick={() => onBuscar({ consulta: termino })}>
+                {termino}
               </button>
             ))}
+            {/* ########## */}
           </div>
         </div>
 
         {/* [STATIC] Componente de la tarjeta derecha. */}
         {/* [API] Le pasa el evento destacado desde la API. */}
-        <EventoDestacado evento={destacado} en={en} onAbrir={abrirEvento} />
+        <EventoDestacado evento={destacado} en={en} textos={textos} onAbrir={abrirEvento} />
       </div>
     </section>
   );

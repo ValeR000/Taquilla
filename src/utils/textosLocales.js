@@ -7,8 +7,6 @@ export const textosLocales = {
   es: {
     titulo: "Explorar eventos",
     migas: "Ruta de navegación",
-    paginacion: "Paginación",
-    pagina: "Página {n}",
     todasCiudades: "Todas las ciudades",
     quitarFiltro: "Quitar filtro {nombre}",
     abrirFiltros: "Abrir filtros",
@@ -16,15 +14,16 @@ export const textosLocales = {
     navPrincipal: "Navegación principal",
     navMovil: "Navegación móvil",
     navPie: "Enlaces del pie de página",
+    categoriasAria: "Categorías de eventos",
 
     /* ACCESIBILIDAD */
     cerrarPanel: "Cerrar panel",
+
+    populares: ["Salsa", "Stand-up", "Fútbol", "Festivales de fin de año"],
   },
   en: {
     titulo: "Explore events",
     migas: "Breadcrumb",
-    paginacion: "Pagination",
-    pagina: "Page {n}",
     todasCiudades: "All cities",
     quitarFiltro: "Remove filter {nombre}",
     abrirFiltros: "Open filters",
@@ -32,20 +31,13 @@ export const textosLocales = {
     navPrincipal: "Main navigation",
     navMovil: "Mobile navigation",
     navPie: "Footer links",
+    categoriasAria: "Event categories",
 
     /* ACCESIBILITY */
     cerrarPanel: "Close panel",
-    
-  },
-};
 
-// [STATIC] Diccionario local para traducir los IDs de las categorías al inglés, 
-// ya que la API devuelve los nombres en español.
-export const categoriasEn = {
-  // en es:
-  categoriasAria: "Categorías de eventos",
-  // en en:
-  categoriasAria: "Event categories",
+    populares: ["Salsa", "Stand-up", "Soccer", "Year-end festivals"],
+  },
 };
 
 export const textosRespaldo = {
