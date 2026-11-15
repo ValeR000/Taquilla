@@ -3,7 +3,7 @@ import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import "./CategoriasEventos.css";
 
-export default function CategoriasEventos({ categorias = [], filtros, filtrarCategoria, en, textos }) {
+export default function CategoriasEventos({ categorias = [], filtros, filtrarCategoria, en, textos, cargando = false }) {
   // ==========================================
   // BLOQUE A: TEXTOS Y TRADUCCIONES
   // ==========================================
@@ -39,6 +39,10 @@ export default function CategoriasEventos({ categorias = [], filtros, filtrarCat
         {/* [API] Hace que aparezca el texto "Todos" desde la API o como respaldo. */}
         {tr(inicio?.filtrosMovil?.todos, "Todos", "All")}
       </button>
+
+      {cargando && Array.from({ length: 6 }, (_, i) => (
+        <span key={i} className="categoria-esqueleto" aria-hidden="true" />
+      ))}
 
       {/* [API] Recorre las categorías reales que vienen de la API. */}
       {categorias.map((cat) => (

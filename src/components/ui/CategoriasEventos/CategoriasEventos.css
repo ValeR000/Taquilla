@@ -35,6 +35,12 @@
   background: var(--color-fondo-etiqueta);
 }
 
+.categoria-esqueleto {
+  min-height: 80px;
+  border-radius: var(--radio);
+  background: var(--fondo-sutil);
+}
+
 /* [STATIC] El recuadro gris donde va el ícono. */
 .icono-categoria {
   display: grid;
@@ -101,5 +107,11 @@
 
   .categorias-eventos > .categoria-todos {
     display: inline-flex;
+  }
+
+  .categoria-esqueleto {
+    flex: 0 0 104px;
+    min-height: 40px;
+    border-radius: var(--radio-completo);
   }
 }

@@ -14,6 +14,7 @@ export default function SeccionEventos({
   titulo,             // [API] Título de la sección (ej. "Destacados de la semana").
   descripcion,        // [API] Subtítulo o descripción de la sección.
   eventos = [],       // [API] Lista de eventos a mostrar.
+  cargando = false,
   categorias = [],    // [API] Lista de categorías para traducir los IDs.
   en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
   textos,             // [API] Los textos de la interfaz desde la API.
@@ -62,6 +63,10 @@ export default function SeccionEventos({
       </div>
 
       <div className="eventos-grid">
+        {cargando && Array.from({ length: 4 }, (_, i) => (
+          <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
+        ))}
+
         {/* [API] Recorre los eventos y pinta una TarjetaEvento por cada uno. */}
         {eventos.map((evento) => (
           <TarjetaEvento
@@ -76,7 +81,7 @@ export default function SeccionEventos({
       </div>
 
       {/* [LOCAL] Si no hay eventos, muestra un mensaje de estado vacío. */}
-      {!eventos.length && (
+      {!cargando && !eventos.length && (
         <div className="sin-resultados">
           {/* [API] Hace que aparezca el título del estado vacío desde la API. */}
           <h3>{tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}</h3>
