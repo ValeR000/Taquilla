@@ -102,8 +102,9 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    margin-inline: -1rem;
-    padding-inline: 1rem;
+    margin-inline: -20px;
+    padding-inline: 20px;
+    scroll-padding-inline: 20px;
   }
 
   .eventos-grid::-webkit-scrollbar {

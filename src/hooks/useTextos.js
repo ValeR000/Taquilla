@@ -11,6 +11,7 @@
 // ============================================================================
 
 import { useEffect, useState } from "react";
+import { pedirJSON } from "../services/api.js";
 
 // 1. CONFIGURACIÓN Y VALIDACIÓN
 // [API] Guarda la dirección exacta (endpoint) de donde sacaremos los textos.
@@ -97,15 +98,20 @@ export function useTextos(idioma) {
 
     const guardado = leerGuardado(idioma);
 
-    // [LOCAL] Crea un "AbortController". Sirve para cancelar la petición si se demora demasiado o si el usuario cambia de página.
-    const controlador = new AbortController();
-    
-    // [LOCAL] Un temporizador. Hace que la petición se cancele sola después de 12 segundos (12000 ms) para no dejarla colgada.
-    const limite = setTimeout(() => controlador.abort(), 12000);
-    
     // [LOCAL] Bandera de seguridad. Hace que React sepa si este efecto sigue "vivo" o si ya fue reemplazado.
     let vigente = true;
-    
+    let expirado = false;
+
+    // [LOCAL] Un temporizador. Hace que la petición se cancele sola después de 12 segundos (12000 ms) para no dejarla colgada.
+    // ##########
+    const limite = setTimeout(() => {
+      expirado = true;
+      if (!vigente) return;
+      if (!guardado) setError(true);
+      setCargando(false);
+    }, 12000);
+    // ##########
+
     // [LOCAL] Hace que la pantalla muestre "Cargando..." y limpie errores anteriores.
     setCargando(!guardado);
     setError(false);
@@ -115,34 +121,25 @@ export function useTextos(idioma) {
     async function cargarTextosNavbar() {
       try {
         // [API] Hace la petición a la URL de la API, agregando el idioma al final (ej. ?idioma=en).
-        // Le pasamos el "signal" para que se pueda cancelar con el AbortController.
-        const respuesta = await fetch(`${API}?idioma=${idioma}`, {
-          signal: controlador.signal,
-        });
-        
-        // [LOCAL] Revisa si la API respondió con un error (ej. 404 o 500). Si es así, frena todo.
-        if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
-        
-        // [API] Convierte la respuesta cruda de internet en un objeto de JavaScript (JSON).
-        const datos = await respuesta.json();
-        
+        const datos = await pedirJSON(`${API}?idioma=${idioma}`, { forzar: intento > 0 });
+
         // [LOCAL] Llama a nuestra función de validación para asegurar que los datos sirven.
         const nuevosTextos = validarTextos(datos);
         guardar(idioma, nuevosTextos);
 
         // [LOCAL] Si todo salió bien y el efecto sigue vigente, guarda los textos en el estado.
-        if (vigente) setTextos(nuevosTextos);
-        
+        if (vigente && !expirado) setTextos(nuevosTextos);
+
       } catch (error) {
         // [LOCAL] Si hubo un error (falló la red o la validación), avisa en consola y activa el estado de error.
-        if (vigente && !guardado) {
+        if (vigente && !expirado && !guardado) {
           console.error("Error al cargar los textos:", error);
           setError(true);
         }
       } finally {
         // [LOCAL] Pase lo que pase (éxito o error), limpia el temporizador y apaga el estado de "Cargando".
         clearTimeout(limite);
-        if (vigente) setCargando(false);
+        if (vigente && !expirado) setCargando(false);
       }
     }
 
@@ -153,8 +150,6 @@ export function useTextos(idioma) {
     // Hace que se cancele la petición anterior, se limpie el temporizador y se marque esta petición como "vieja".
     return () => {
       vigente = false;
-      clearTimeout(limite);
-      controlador.abort();
     };
   }, [idioma, intento]); // [LOCAL] El efecto se reinicia si el idioma cambia o si se pide un reintento.
 

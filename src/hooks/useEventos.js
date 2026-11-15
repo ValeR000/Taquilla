@@ -1,5 +1,6 @@
 // RESPONSABILIDAD: Hook para obtener la lista de eventos con filtros y paginación desde la API.
 import { useEffect, useState } from "react";
+import { pedirJSON } from "../services/api.js";
 
 // [API] URL base para consultar los eventos.
 const API = `${import.meta.env.VITE_API_URL}/eventos`;
@@ -34,9 +35,6 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
   // [LOCAL] Se ejecuta cada vez que cambia un filtro o se pide una recarga.
   useEffect(() => {
     
-    // [LOCAL] Permite cancelar la petición si los filtros cambian rápidamente.
-    const controlador = new AbortController();
-    
     // [LOCAL] Bandera para evitar actualizar el estado con datos de peticiones viejas.
     let vigente = true;
 
@@ -54,11 +52,7 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
     async function cargar() {
       try {
         // [API] Hace la petición HTTP a la API con los filtros.
-        const res = await fetch(`${API}?${params}`, { signal: controlador.signal });
-        if (!res.ok) throw new Error("Error al cargar eventos");
-
-        // [API] Convierte la respuesta en un objeto JSON.
-        const json = await res.json();
+        const json = await pedirJSON(`${API}?${params}`, { forzar: intento > 0 });
 
         // [API] Si la petición sigue vigente, guarda los eventos y la paginación.
         if (vigente) {
@@ -67,7 +61,7 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
         }
       } catch (err) {
         // [LOCAL] Si hay un error (y no es por aborto), activa el estado de error.
-        if (vigente && err.name !== "AbortError") setError(true);
+        if (vigente) setError(true);
       } finally {
         // [LOCAL] Apaga el estado de carga cuando termina la petición.
         if (vigente) setCargando(false);
@@ -80,7 +74,6 @@ export function useEventos({ categoria, ciudad, q, orden, pagina }) {
     // [LOCAL] Función de limpieza: cancela la petición y marca como no vigente si el efecto se reinicia.
     return () => {
       vigente = false;
-      controlador.abort();
     };
   }, [categoria, ciudad, q, orden, pagina, intento]); // [LOCAL] Dependencias del efecto.
 
