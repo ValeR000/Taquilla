@@ -32,6 +32,11 @@
   gap: 24px;
 }
 
+.tarjeta-esqueleto {
+  min-height: 434px;
+  background: linear-gradient(var(--fondo-sutil) 176px, var(--color-superficie) 176px);
+}
+
 /* [STATIC] Estilos del estado vacío. */
 .sin-resultados {
   padding: 48px;
@@ -109,6 +114,11 @@
   .eventos-grid > .tarjeta-evento {
     flex: 0 0 66%;
     scroll-snap-align: start;
+  }
+
+  .tarjeta-esqueleto {
+    min-height: 474px;
+    background: linear-gradient(var(--fondo-sutil) 190px, var(--color-superficie) 190px);
   }
 
   .sin-resultados {

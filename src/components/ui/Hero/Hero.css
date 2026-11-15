@@ -18,6 +18,7 @@
   grid-template-columns: 1.53fr 1fr;
   gap: 64px;
   align-items: center;
+  min-height: 440px;
 }
 
 .hero-taquilla h1 {
@@ -86,6 +87,7 @@
 
   .interior-taquilla {
     display: block; /* Hace que el contenido y la tarjeta se apilen verticalmente */
+    min-height: 0;
   }
 
   .hero-taquilla h1 {

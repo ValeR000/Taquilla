@@ -27,6 +27,7 @@ import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeS
 import Explorar from "./components/ui/Explorar/Explorar.jsx";
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
+import { textosRespaldo } from "./utils/textosLocales.js";
 import { useCallback, useEffect, useState } from "react";
 
 import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
@@ -258,6 +259,7 @@ function App() {
       {/* [STATIC] Hace que aparezca la barra de navegación. */}
       <Navbar
         {...datos}
+        textos={datos.textos || textosRespaldo[idioma]}
         idioma={idioma}
         cambiarIdioma={cambiarIdioma}
         activo={activo}
@@ -324,8 +326,9 @@ function App() {
             )}
 
             {/* [API] Hace que aparezcan las categorías. */}
-            {!cargandoCategorias && !errorCategorias && (
+            {!errorCategorias && (
               <CategoriasEventos
+                cargando={cargandoCategorias}
                 categorias={categorias}
                 filtros={null}
                 filtrarCategoria={filtrarCategoria}
@@ -340,7 +343,7 @@ function App() {
 
             {/* [API] Hace que aparezca el estado de carga de los eventos. */}
             {cargandoEventos && (
-              <p style={{ marginTop: "3rem" }}>
+              <p className="solo-lectores" role="status">
                 {estados?.cargando?.titulo || (en ? "Loading…" : "Cargando…")}
               </p>
             )}
@@ -359,11 +362,12 @@ function App() {
             {/* SECCIÓN: EVENTOS DESTACADOS                */}
             {/* ========================================== */}
 
-            {!cargandoEventos && !errorEventos && (
+            {!errorEventos && (
               <>
                 {/* [API] Hace que aparezcan los 4 primeros eventos destacados. */}
                 <SeccionEventos
                   id="eventos"
+                  cargando={cargandoEventos}
                   titulo={inicio?.destacados?.titulo || (en ? "This week's highlights" : "Destacados de la semana")}
                   descripcion={inicio?.destacados?.subtitulo || (en ? "Best-selling events in the last 7 days" : "Los eventos con más entradas vendidas en los últimos 7 días")}
                   eventos={eventos.slice(0, 4)}
@@ -378,6 +382,7 @@ function App() {
                 <SeccionEventos
                   id="proximos"
                   clase="proximos"
+                  cargando={cargandoEventos}
                   titulo={(inicio?.proximos?.titulo || (en ? "Upcoming in {ciudad}" : "Próximamente en {ciudad}")).replace("{ciudad}", CIUDAD_INICIAL)}
                   descripcion={inicio?.proximos?.subtitulo || (en ? "Change the city from the search bar" : "Cambia la ciudad desde el buscador")}
                   eventos={eventos.slice(4, 8)}
@@ -389,13 +394,13 @@ function App() {
                 />
 
                 {/* [API] Hace que aparezca la lista "Este fin de semana" (solo móvil). */}
-                <SeccionFinDeSemana
+                {!cargandoEventos && <SeccionFinDeSemana
                   eventos={eventos.slice(4, 7)}
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
                   textos={datos.textos}
-                />
+                />}
               </>
             )}
           </main>
@@ -423,8 +428,8 @@ function App() {
 
       {/* [STATIC] Hace que aparezca el pie de página. */}
       <Footer
-        textos={datos.textos?.footer}
-        logo={datos.textos?.navbar?.logo}
+        textos={datos.textos?.footer || textosRespaldo[idioma].footer}
+        logo={datos.textos?.navbar?.logo || textosRespaldo[idioma].navbar.logo}
         en={en}
         onNavegar={navegar}
         abrirAccesibilidad={abrirAccesibilidad}

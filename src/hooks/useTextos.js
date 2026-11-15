@@ -16,6 +16,26 @@ import { useEffect, useState } from "react";
 // [API] Guarda la dirección exacta (endpoint) de donde sacaremos los textos.
 const API = `${import.meta.env.VITE_API_URL}/textos`; //PARA SUBIRLO A VERCEL CON LO DE .ENV
 
+const cache = {};
+
+function leerGuardado(idioma) {
+  try {
+    const guardado = sessionStorage.getItem(`textos-${idioma}`);
+    return guardado ? JSON.parse(guardado) : null;
+  } catch {
+    return null;
+  }
+}
+
+function guardar(idioma, textos) {
+  cache[idioma] = textos;
+  try {
+    sessionStorage.setItem(`textos-${idioma}`, JSON.stringify(textos));
+  } catch {
+    return;
+  }
+}
+
 // [LOCAL] Esta función revisa que la API no nos haya enviado datos vacíos o rotos.
 // Hace que la app explote de forma controlada si falta un texto importante, en vez de mostrar la pantalla en blanco.
 function validarTextos(datos) {
@@ -51,10 +71,10 @@ export function useTextos(idioma) {
   // ==========================================
   
   // [API] Guarda los textos que llegan de la API. Inicia en null (nada) porque aún no hemos ido a buscarlos.
-  const [textos, setTextos] = useState(null);
-  
+  const [textos, setTextos] = useState(() => cache[idioma] || leerGuardado(idioma));
+
   // [LOCAL] Booleano. Hace que la app sepa si debe mostrar un mensaje de "Cargando...".
-  const [cargando, setCargando] = useState(true);
+  const [cargando, setCargando] = useState(() => !textos);
   
   // [LOCAL] Booleano. Hace que la app sepa si hubo un error de red o de la API.
   const [error, setError] = useState(false);
@@ -68,7 +88,15 @@ export function useTextos(idioma) {
   
   // [LOCAL] Se ejecuta automáticamente al iniciar o cada vez que "idioma" o "intento" cambien.
   useEffect(() => {
-    
+    if (cache[idioma]) {
+      setTextos(cache[idioma]);
+      setCargando(false);
+      setError(false);
+      return;
+    }
+
+    const guardado = leerGuardado(idioma);
+
     // [LOCAL] Crea un "AbortController". Sirve para cancelar la petición si se demora demasiado o si el usuario cambia de página.
     const controlador = new AbortController();
     
@@ -79,9 +107,9 @@ export function useTextos(idioma) {
     let vigente = true;
     
     // [LOCAL] Hace que la pantalla muestre "Cargando..." y limpie errores anteriores.
-    setCargando(true);
+    setCargando(!guardado);
     setError(false);
-    setTextos(null);
+    setTextos(guardado);
 
     // [LOCAL] Función asíncrona que hace la petición real.
     async function cargarTextosNavbar() {
@@ -100,13 +128,14 @@ export function useTextos(idioma) {
         
         // [LOCAL] Llama a nuestra función de validación para asegurar que los datos sirven.
         const nuevosTextos = validarTextos(datos);
-        
+        guardar(idioma, nuevosTextos);
+
         // [LOCAL] Si todo salió bien y el efecto sigue vigente, guarda los textos en el estado.
         if (vigente) setTextos(nuevosTextos);
         
       } catch (error) {
         // [LOCAL] Si hubo un error (falló la red o la validación), avisa en consola y activa el estado de error.
-        if (vigente) {
+        if (vigente && !guardado) {
           console.error("Error al cargar los textos:", error);
           setError(true);
         }
