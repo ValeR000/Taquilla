@@ -16,5 +16,11 @@ export default defineConfig(({ mode }) => {
             : [],
       },
     ],
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-dom/client'],
+      rolldownOptions: {
+        output: { minify: true },
+      },
+    },
   }
 })
