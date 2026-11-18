@@ -37,7 +37,7 @@
 
 /* [STATIC] Hace que el título del evento se vea grande y en negrita. */
 .ficha-destacado h2 {
-  font-size: 24px;
+  font-size: var(--texto-grande);
   margin: 12px 0;
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -46,7 +46,7 @@
 /* [STATIC] Hace que la fecha y el lugar se vean en gris. */
 .ficha-destacado > p {
   color: var(--texto-secundario);
-  font-size: 14px;
+  font-size: var(--texto-pequeno);
   margin: 0 0 16px 0;
 }
 
@@ -75,7 +75,7 @@
   padding: 10px 16px;
   border-radius: 6px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--texto-pequeno);
   font-weight: 400;
   text-decoration: none; /* Hace que el enlace no se vea subrayado */
   cursor: pointer;

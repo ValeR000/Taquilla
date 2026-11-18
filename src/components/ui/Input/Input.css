@@ -74,7 +74,7 @@
 
 /* Hace que el mensaje de error sea pequeño y rojo */
 .campo__error-msg {
-  font-size: 0.75rem;
+  font-size: var(--texto-xs);
   color: var(--color-error);
   margin: 0;
 }

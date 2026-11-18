@@ -22,7 +22,7 @@
 }
 
 .hero-taquilla h1 {
-  font-size: clamp(36px, 3.5vw, 52px);
+  font-size: var(--texto-titulo);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.035em;
@@ -91,9 +91,8 @@
   }
 
   .hero-taquilla h1 {
-    font-size: 34px; /* Hace que el título mida exactamente 34px (Figma) */
     font-weight: 600; /* Hace que la letra tenga grosor SemiBold (Figma) */
-    line-height: 40px; /* Hace que el espacio entre líneas sea de 40px (Figma) */
+    line-height: 1.1765; /* Hace que el espacio entre líneas sea de 40px (Figma) */
     letter-spacing: -0.02em; /* Hace que las letras estén un poco más juntas (Figma) */
     text-align: left; /* Hace que el título quede alineado a la izquierda */
     margin-block: 20px; /* Hace que haya espacio arriba y abajo del título */

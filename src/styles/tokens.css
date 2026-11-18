@@ -72,8 +72,14 @@
   --texto-logo: 1.125rem;           /* 18px - Texto "taquilla" al lado del logo */
   --texto-mediano: 1.125rem;        /* 18px - Descripción en el Hero */
   --texto-h3: 1.25rem;              /* 20px - Título de la tarjeta de evento */
-  --texto-subtitulo: 1.5rem;        /* 24px - Títulos de secciones (Destacados) */
-  --texto-titulo: 52px;             /* 52px - Título principal del Hero */
+  --texto-subtitulo: clamp(1.25rem, 1.1571rem + 0.381vw, 1.5rem);        /* 24px - Títulos de secciones (Destacados) */
+  --texto-titulo: clamp(2.125rem, 1.7071rem + 1.7143vw, 3.25rem);             /* 52px - Título principal del Hero */
+
+  /* ########## */
+  --texto-titulo-pagina: clamp(1.625rem, 1.4857rem + 0.5714vw, 2rem);
+  --texto-grande: 1.5rem;
+  --texto-lema: 0.8125rem;
+  /* ########## */
 
   /* =========================================
      4. ESTRUCTURA

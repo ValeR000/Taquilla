@@ -37,7 +37,7 @@
   align-items: center;
   gap: 10px;
   color: var(--color-footer-texto);
-  font-size: 1.125rem;
+  font-size: var(--texto-logo);
   font-weight: 700;
   text-decoration: none;
 }
@@ -52,7 +52,7 @@
 .footer__descripcion {
   max-width: 320px; /* Hace que el lema se parta en varias líneas si es muy largo */
   color: var(--color-footer-suave); /* Hace que el lema sea gris */
-  font-size: 0.8125rem;
+  font-size: var(--texto-lema);
 }
 
 /* --- Las Columnas de Enlaces --- */
@@ -63,7 +63,7 @@
 .footer__titulo {
   color: var(--color-footer-suave);
   font-family: var(--fuente-texto);
-  font-size: 0.75rem;
+  font-size: var(--texto-xs);
   font-weight: 400;
 }
 .footer__lista {
@@ -75,7 +75,7 @@
 }
 .footer__enlace {
   color: var(--color-footer-texto);
-  font-size: 0.875rem;
+  font-size: var(--texto-pequeno);
   text-decoration: none;
 }
 .footer__enlace:hover {
@@ -92,7 +92,7 @@
   padding-top: 20px;
   border-top: 0.5px solid var(--color-footer-lineaDiv); /* Hace que aparezca la línea divisoria gris */
   color: var(--color-footer-suave);
-  font-size: 0.75rem;
+  font-size: var(--texto-xs);
 }
 .footer__inferior p {
   margin: 0; /* Hace que los textos no tengan margen extra por defecto */
