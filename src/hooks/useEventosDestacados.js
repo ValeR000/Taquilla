@@ -1,77 +1,67 @@
 // RESPONSABILIDAD: Hook personalizado para obtener la lista de eventos destacados desde la API.
+
 import { useEffect, useState } from "react";
 import { pedirJSON } from "../services/api.js";
 
-// [API] URL base para consultar los eventos destacados.
+// [API] Hace que la URL del endpoint se construya desde las variables de entorno.
 const API = `${import.meta.env.VITE_API_URL}/eventos/destacados`;
 
 export function useEventosDestacados() {
-  // ==========================================
-  // BLOQUE A: ESTADOS DEL HOOK
-  // ==========================================
   
-  // [API] Guarda la lista de eventos que devuelve la API.
+  // [API] Hace que se guarde la lista de eventos que devuelve la API.
   const [eventos, setEventos] = useState([]);
   
-  // [LOCAL] Booleano para saber si la petición está en curso.
+  // [LOCAL] Hace que la app sepa si la petición está en curso.
   const [cargando, setCargando] = useState(true);
   
-  // [LOCAL] Booleano para saber si hubo un error en la petición.
+  // [LOCAL] Hace que la app sepa si hubo un error en la petición.
   const [error, setError] = useState(false);
   
-  // [LOCAL] Número de intento para forzar la recarga manual de la petición.
+  // [LOCAL] Hace que se fuerce la recarga manual de la petición.
   const [intento, setIntento] = useState(0);
 
-  // ==========================================
-  // BLOQUE B: EFECTO DE CARGA
-  // ==========================================
-  
-  // [LOCAL] Se ejecuta al iniciar el componente o cuando cambia el número de intento.
+  // [LOCAL] Hace que se ejecute la petición al iniciar el componente o al cambiar el intento.
   useEffect(() => {
     
-    // [LOCAL] Bandera para evitar actualizar el estado con datos de peticiones viejas.
+    // [LOCAL] Hace que se evite actualizar el estado con datos de peticiones viejas.
     let vigente = true;
 
-    // [LOCAL] Activa el estado de carga y limpia errores previos.
+    // [LOCAL] Hace que se active el estado de carga y se limpien errores previos.
     setCargando(true);
     setError(false);
 
     // [LOCAL] Función asíncrona que realiza la petición.
     async function cargar() {
       try {
-        // [API] Hace la petición HTTP a la API pasando la señal de cancelación.
+        // [API] Hace la petición HTTP a la API usando la utilidad de caché.
         const datos = await pedirJSON(API, { forzar: intento > 0 });
 
-        // [API] Guarda los eventos en el estado si la petición sigue vigente.
+        // [API] Hace que se guarden los eventos si la petición sigue vigente.
         if (vigente) setEventos(datos.datos);
       } catch (err) {
-        // [LOCAL] Activa el estado de error si la petición falla.
+        // [LOCAL] Hace que se active el estado de error si la petición falla.
         if (vigente) setError(true);
       } finally {
-        // [LOCAL] Apaga el estado de carga cuando termina la petición (éxito o error).
+        // [LOCAL] Hace que se apague el estado de carga al terminar la petición (éxito o error).
         if (vigente) setCargando(false);
       }
     }
 
-    // [LOCAL] Ejecuta la función de carga.
+    // [LOCAL] Ejecuta la función para que inicie la petición.
     cargar();
 
-    // [LOCAL] Función de limpieza: cancela la petición y marca como no vigente.
+    // [LOCAL] Función de limpieza: Hace que se marque el componente como no vigente al desmontarse.
     return () => {
       vigente = false;
     };
-  }, [intento]); // [LOCAL] Dependencia del efecto: se vuelve a ejecutar si cambia el intento.
+  }, [intento]); // [LOCAL] El efecto se vuelve a ejecutar si cambia el intento.
 
-  // ==========================================
-  // BLOQUE C: LO QUE DEVUELVE EL HOOK
-  // ==========================================
-  
-  // [LOCAL] Devuelve los datos, estados y la función para recargar.
+  // [LOCAL] Devuelve los datos y estados al componente que use el hook.
   return { 
     eventos, 
     cargando, 
     error, 
-    // [LOCAL] Incrementa el intento para disparar el efecto de carga de nuevo.
+    // [LOCAL] Hace que el botón de reintentar sume 1 al intento para forzar la recarga.
     recargar: () => setIntento((v) => v + 1) 
   };
 }

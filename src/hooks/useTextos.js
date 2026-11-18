@@ -1,24 +1,15 @@
-// ============================================================================
-// ARCHIVO: useTextos.js
-// RESPONSABILIDAD: Este es un Hook personalizado. Su único trabajo es ir a la API, 
-// pedir los textos según el idioma, manejar si está cargando o si hay error, y 
-// devolverle todo eso al componente App.
-// 
-// CONVENCIÓN DE ETIQUETAS (Origen del dato):
-// [API]    = Dato que viene de internet (peticiones al servidor).
-// [LOCAL]  = Dato o lógica que vive dentro de React (estados, eventos).
-// [STATIC] = Código fijo de diseño (HTML, CSS, SVGs) que no cambia.
-// ============================================================================
+// RESPONSABILIDAD: Hook para obtener los textos de la interfaz desde la API, con validación, caché en memoria y sessionStorage.
 
 import { useEffect, useState } from "react";
 import { pedirJSON } from "../services/api.js";
 
-// 1. CONFIGURACIÓN Y VALIDACIÓN
-// [API] Guarda la dirección exacta (endpoint) de donde sacaremos los textos.
-const API = `${import.meta.env.VITE_API_URL}/textos`; //PARA SUBIRLO A VERCEL CON LO DE .ENV
+// [API] Hace que la URL del endpoint se construya desde las variables de entorno.
+const API = `${import.meta.env.VITE_API_URL}/textos`;
 
+// [LOCAL] Hace que se guarde una caché en memoria para evitar peticiones repetitivas a la API.
 const cache = {};
 
+// [LOCAL] Hace que se intente recuperar los textos guardados en el sessionStorage del navegador.
 function leerGuardado(idioma) {
   try {
     const guardado = sessionStorage.getItem(`textos-${idioma}`);
@@ -28,6 +19,7 @@ function leerGuardado(idioma) {
   }
 }
 
+// [LOCAL] Hace que se guarden los textos en memoria y en el sessionStorage.
 function guardar(idioma, textos) {
   cache[idioma] = textos;
   try {
@@ -37,12 +29,12 @@ function guardar(idioma, textos) {
   }
 }
 
-// [LOCAL] Esta función revisa que la API no nos haya enviado datos vacíos o rotos.
-// Hace que la app explote de forma controlada si falta un texto importante, en vez de mostrar la pantalla en blanco.
+// [LOCAL] Hace que se valide que la API envió todos los textos obligatorios del navbar para evitar errores visuales.
 function validarTextos(datos) {
   const textos = datos?.textos;
   const nav = textos?.navbar;
-  // [API] Hace una lista con todos los textos que necesitamos que existan obligatoriamente.
+  
+  // [API] Hace una lista con los textos que deben existir obligatoriamente.
   const etiquetas = [
     nav?.logo?.texto,
     nav?.logo?.aria,
@@ -55,40 +47,33 @@ function validarTextos(datos) {
     nav?.aria?.idioma,
   ];
 
-  // [LOCAL] Revisa la lista. Si al menos un texto falta o está vacío, lanza un error.
+  // [LOCAL] Hace que se lance un error controlado si al menos un texto falta o está vacío.
   if (!etiquetas.every((valor) => typeof valor === "string" && valor.trim())) {
     throw new Error("La respuesta no contiene los textos del navbar.");
   }
-  // [API] Si todo está bien, devuelve los textos listos para usarse.
+  
+  // [API] Hace que se devuelvan los textos validados si todo está correcto.
   return textos;
 }
 
-// 2. EL HOOK PERSONALIZADO
-// [LOCAL] Recibe el "idioma" desde App.jsx para saber en qué idioma pedir los textos.
 export function useTextos(idioma) {
   
-  // ==========================================
-  // BLOQUE A: ESTADOS DEL HOOK
-  // ==========================================
-  
-  // [API] Guarda los textos que llegan de la API. Inicia en null (nada) porque aún no hemos ido a buscarlos.
+  // [API] Hace que se guarden los textos que llegan de la API, iniciando con la caché o el sessionStorage.
   const [textos, setTextos] = useState(() => cache[idioma] || leerGuardado(idioma));
 
-  // [LOCAL] Booleano. Hace que la app sepa si debe mostrar un mensaje de "Cargando...".
+  // [LOCAL] Hace que la app sepa si debe mostrar el estado de carga.
   const [cargando, setCargando] = useState(() => !textos);
   
-  // [LOCAL] Booleano. Hace que la app sepa si hubo un error de red o de la API.
+  // [LOCAL] Hace que la app sepa si hubo un error en la petición.
   const [error, setError] = useState(false);
   
-  // [LOCAL] Número. Sirve para forzar a React a volver a intentar la petición si el usuario hace clic en "Reintentar".
+  // [LOCAL] Hace que se fuerce la recarga manual de los textos.
   const [intento, setIntento] = useState(0);
 
-  // ==========================================
-  // BLOQUE B: EFECTO DE CARGA (La petición HTTP)
-  // ==========================================
-  
-  // [LOCAL] Se ejecuta automáticamente al iniciar o cada vez que "idioma" o "intento" cambien.
+  // [LOCAL] Hace que se ejecute la petición cada vez que cambie el idioma o el intento.
   useEffect(() => {
+    
+    // [LOCAL] Hace que si los textos ya están en caché, se usen inmediatamente sin hacer fetch.
     if (cache[idioma]) {
       setTextos(cache[idioma]);
       setCargando(false);
@@ -96,71 +81,67 @@ export function useTextos(idioma) {
       return;
     }
 
+    // [LOCAL] Hace que se busque un respaldo en el sessionStorage.
     const guardado = leerGuardado(idioma);
 
-    // [LOCAL] Bandera de seguridad. Hace que React sepa si este efecto sigue "vivo" o si ya fue reemplazado.
+    // [LOCAL] Hace que se evite actualizar el estado con peticiones viejas.
     let vigente = true;
     let expirado = false;
 
-    // [LOCAL] Un temporizador. Hace que la petición se cancele sola después de 12 segundos (12000 ms) para no dejarla colgada.
-    // ##########
+    // [LOCAL] Hace que la petición se cancele si tarda más de 12 segundos y muestra error si no hay respaldo.
     const limite = setTimeout(() => {
       expirado = true;
       if (!vigente) return;
       if (!guardado) setError(true);
       setCargando(false);
     }, 12000);
-    // ##########
 
-    // [LOCAL] Hace que la pantalla muestre "Cargando..." y limpie errores anteriores.
+    // [LOCAL] Hace que se active el estado de carga (solo si no hay respaldo) y se limpien errores previos.
     setCargando(!guardado);
     setError(false);
     setTextos(guardado);
 
-    // [LOCAL] Función asíncrona que hace la petición real.
+    // [LOCAL] Función asíncrona que realiza la petición real.
     async function cargarTextosNavbar() {
       try {
-        // [API] Hace la petición a la URL de la API, agregando el idioma al final (ej. ?idioma=en).
+        // [API] Hace la petición a la API incluyendo el idioma y forzando si es un reintento.
         const datos = await pedirJSON(`${API}?idioma=${idioma}`, { forzar: intento > 0 });
 
-        // [LOCAL] Llama a nuestra función de validación para asegurar que los datos sirven.
+        // [LOCAL] Hace que se validen los datos recibidos antes de guardarlos.
         const nuevosTextos = validarTextos(datos);
         guardar(idioma, nuevosTextos);
 
-        // [LOCAL] Si todo salió bien y el efecto sigue vigente, guarda los textos en el estado.
+        // [API] Hace que se guarden los textos en el estado si el efecto sigue vigente.
         if (vigente && !expirado) setTextos(nuevosTextos);
 
       } catch (error) {
-        // [LOCAL] Si hubo un error (falló la red o la validación), avisa en consola y activa el estado de error.
+        // [LOCAL] Hace que se active el estado de error si falla la petición y no hay datos guardados.
         if (vigente && !expirado && !guardado) {
           console.error("Error al cargar los textos:", error);
           setError(true);
         }
       } finally {
-        // [LOCAL] Pase lo que pase (éxito o error), limpia el temporizador y apaga el estado de "Cargando".
+        // [LOCAL] Hace que se limpie el temporizador y se apague el estado de carga al terminar.
         clearTimeout(limite);
         if (vigente && !expirado) setCargando(false);
       }
     }
 
-    // [LOCAL] Llama a la función para que la petición arranque.
+    // [LOCAL] Ejecuta la función para que inicie la petición.
     cargarTextosNavbar();
     
-    // [LOCAL] FUNCIÓN DE LIMPIEZA: Se ejecuta si el usuario cierra la app o cambia de idioma muy rápido.
-    // Hace que se cancele la petición anterior, se limpie el temporizador y se marque esta petición como "vieja".
+    // [LOCAL] Función de limpieza: Hace que se marque el efecto como no vigente al desmontar o cambiar de idioma.
     return () => {
       vigente = false;
     };
-  }, [idioma, intento]); // [LOCAL] El efecto se reinicia si el idioma cambia o si se pide un reintento.
+  }, [idioma, intento]); 
 
-  // ==========================================
-  // BLOQUE C: LO QUE DEVUELVE EL HOOK
-  // ==========================================
-  // [LOCAL] Devuelve un objeto con todos los datos y funciones para que App.jsx los use.
+  // [LOCAL] Devuelve los datos y estados al componente que use el hook.
   return {
-    textos, // [API] Los datos finales.
-    cargando, // [LOCAL] Para mostrar el spinner.
-    error, // [LOCAL] Para mostrar la alerta.
-    recargar: () => setIntento((valor) => valor + 1), // [LOCAL] Función que suma 1 al intento y dispara el useEffect de nuevo.
+    textos, // [API] Hace que se expongan los textos finales.
+    cargando, // [LOCAL] Hace que se exponga el estado de carga.
+    error, // [LOCAL] Hace que se exponga el estado de error.
+    // [LOCAL] Hace que se exponga la función para reintentar la petición.
+    recargar: () => setIntento((valor) => valor + 1), 
   };
 }
