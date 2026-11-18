@@ -35,6 +35,17 @@
   --borde-fuerte: #8c8c8c;          /* Borde gris oscuro para botones y elementos activos */
   --borde-inverso: #3a3a3a;         /* Borde oscuro para separar elementos sobre fondos negros */
 
+  /* ########## */
+  --fondo-oscurecido: rgb(0 0 0 / 55%);
+  --sombra-color-suave: rgb(0 0 0 / 10%);
+  --sombra-color-media: rgb(0 0 0 / 15%);
+  --sombra-color-fuerte: rgb(0 0 0 / 25%);
+  --afiche-luz: rgb(255 255 255 / 12%);
+  --afiche-sombra: rgb(0 0 0 / 12%);
+  --afiche-color-1: #a49086;
+  --afiche-color-2: #554650;
+  /* ########## */
+
   /* =========================================
      2. TOKENS OFICIALES DE FIGMA (Medidas)
      ========================================= */

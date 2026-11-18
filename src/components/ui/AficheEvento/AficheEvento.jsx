@@ -8,8 +8,8 @@ import "./AficheEvento.css";
 
 export default function AficheEvento({ afiche }) {
   // [API] Toma los colores de la API. Si falla, usa un gris por defecto.
-  const color1 = afiche?.color1 || "#a49086";
-  const color2 = afiche?.color2 || "#554650";
+  const color1 = afiche?.color1 || "var(--afiche-color-1)";
+  const color2 = afiche?.color2 || "var(--afiche-color-2)";
 
   return (
     // [STATIC] Aplica la clase base de la profe y el degradado por estilo en línea.

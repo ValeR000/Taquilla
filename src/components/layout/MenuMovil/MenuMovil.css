@@ -15,7 +15,7 @@
 .menu-movil__fondo {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: var(--fondo-oscurecido);
 }
 
 /* [STATIC] Hace que el panel blanco se deslice desde la derecha ocupando el 90%. */
@@ -28,7 +28,7 @@
   height: 100%;
   background-color: var(--color-superficie);
   padding: 0 16px 24px;
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); /* Sombra hacia la izquierda */
+  box-shadow: -8px 0 24px var(--sombra-color-media); /* Sombra hacia la izquierda */
   overflow-y: auto; /* Permite scroll interno si el contenido es muy alto */
 }
 
