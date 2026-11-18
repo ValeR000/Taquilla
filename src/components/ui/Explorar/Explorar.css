@@ -163,41 +163,6 @@
 }
 
 /* =========================================
-   SECCIÓN: Estados (Carga, Error, Vacío)
-   ========================================= */
-/* [STATIC] Hace que los mensajes de estado tengan fondo blanco, bordes y estén centrados. */
-.explorar__estado {
-  padding: var(--espacio-12);
-  text-align: center;
-  background: var(--color-superficie);
-  border: 1px solid var(--color-borde-suave);
-  border-radius: var(--radio);
-}
-
-.explorar__estado p {
-  margin-top: var(--espacio-3);
-  color: var(--color-texto-gris);
-}
-
-.explorar__boton {
-  height: 40px;
-  margin-top: var(--espacio-4);
-  padding: 0 var(--espacio-4);
-  font: inherit;
-  font-size: var(--texto-pequeno);
-  font-weight: 500;
-  color: var(--color-sobre-primario);
-  background: var(--color-primario);
-  border: 0;
-  border-radius: var(--radio-sm);
-  cursor: pointer;
-}
-
-.explorar__boton:hover {
-  background: var(--color-primario-hover);
-}
-
-/* =========================================
    SECCIÓN: Accesibilidad
    ========================================= */
 /* [ACCESIBILIDAD] Hace que aparezca un borde visible al navegar con la tecla Tab. */
@@ -343,9 +308,5 @@
   /* [STATIC] Hace que las tarjetas se apilen en una sola columna. */
   .explorar__grid {
     grid-template-columns: 1fr;
-  }
-
-  .explorar__estado {
-    padding: var(--espacio-6);
   }
 }

@@ -5,6 +5,7 @@ import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
+import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import "./Explorar.css";
 
@@ -299,32 +300,32 @@ export default function Explorar({
 
           {/* [API] Hace que aparezca el estado de carga. */}
           {cargando && (
-            <div className="explorar__estado" role="status">
-              <h3>{tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}</h3>
-              <p>{tr(tEstado?.cargando?.texto, "Esto puede tardar unos segundos.", "This may take a few seconds.")}</p>
-            </div>
+            <EstadoMensaje
+              rol="status"
+              titulo={tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+              texto={tr(tEstado?.cargando?.texto, "Esto puede tardar unos segundos.", "This may take a few seconds.")}
+            />
           )}
 
           {/* [API] Hace que aparezca el error con un botón para reintentar. */}
           {!cargando && error && (
-            <div className="explorar__estado" role="alert">
-              <h3>{tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}</h3>
-              <p>{tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}</p>
-              <button type="button" className="explorar__boton" onClick={recargar}>
-                {tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
-              </button>
-            </div>
+            <EstadoMensaje
+              rol="alert"
+              titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
+              texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
+              boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
+              onBoton={recargar}
+            />
           )}
 
           {/* [API] Hace que aparezca el estado vacío con un botón para limpiar filtros. */}
           {!cargando && !error && eventos.length === 0 && (
-            <div className="explorar__estado">
-              <h3>{tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}</h3>
-              <p>{tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}</p>
-              <button type="button" className="explorar__boton" onClick={limpiar}>
-                {tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
-              </button>
-            </div>
+            <EstadoMensaje
+              titulo={tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}
+              texto={tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}
+              boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
+              onBoton={limpiar}
+            />
           )}
 
           {/* [API] Hace que aparezcan las tarjetas de eventos y la paginación. */}

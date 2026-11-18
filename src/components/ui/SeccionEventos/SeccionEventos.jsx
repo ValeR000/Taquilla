@@ -6,6 +6,7 @@
 
 import Flecha from "../Flecha/Flecha.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
+import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import "./SeccionEventos.css";
 
 export default function SeccionEventos({
@@ -82,18 +83,12 @@ export default function SeccionEventos({
 
       {/* [LOCAL] Si no hay eventos, muestra un mensaje de estado vacío. */}
       {!cargando && !eventos.length && (
-        <div className="sin-resultados">
-          {/* [API] Hace que aparezca el título del estado vacío desde la API. */}
-          <h3>{tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}</h3>
-          
-          {/* [API] Hace que aparezca el texto del estado vacío desde la API. */}
-          <p>{tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}</p>
-          
-          {/* [LOCAL] Botón que lleva a explorar todos los eventos. */}
-          <button className="boton-home primario" onClick={onVerTodos}>
-            {verTodos}
-          </button>
-        </div>
+        <EstadoMensaje
+          titulo={tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
+          texto={tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}
+          boton={verTodos}
+          onBoton={onVerTodos}
+        />
       )}
     </section>
   );

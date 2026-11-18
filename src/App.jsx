@@ -25,6 +25,7 @@ import BuscadorEventos from "./components/ui/BuscadorEventos/BuscadorEventos.jsx
 import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
 import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeSemana.jsx";
 import Explorar from "./components/ui/Explorar/Explorar.jsx";
+import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
@@ -319,12 +320,13 @@ function App() {
 
             {/* [API] Hace que aparezca el error de categorías con un botón para reintentar. */}
             {errorCategorias && (
-              <div role="alert">
-                <p>{tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}</p>
-                <button type="button" className="boton-home primario" onClick={recargarCategorias}>
-                  {tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
-                </button>
-              </div>
+              <EstadoMensaje
+                rol="alert"
+                clase="inicio__estado"
+                titulo={tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}
+                boton={tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
+                onBoton={recargarCategorias}
+              />
             )}
 
             {/* [API] Hace que aparezcan las categorías. */}
@@ -352,12 +354,13 @@ function App() {
 
             {/* [API] Hace que aparezca el error con un botón para reintentar. */}
             {errorEventos && (
-              <div style={{ marginTop: "3rem" }} role="alert">
-                <p>{tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}</p>
-                <button type="button" className="boton-home primario" onClick={recargarEventos}>
-                  {tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
-                </button>
-              </div>
+              <EstadoMensaje
+                rol="alert"
+                clase="inicio__estado"
+                titulo={tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}
+                boton={tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
+                onBoton={recargarEventos}
+              />
             )}
 
             {/* ========================================== */}
