@@ -33,7 +33,7 @@ export default function DetalleEvento({
   const local = textosLocales[en ? "en" : "es"];
 
   const { evento, cargando, error, noEncontrado, recargar } = useEvento(slug);
-  const { relacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
+  const { relacionados, cargando: cargandoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
 
   const [pestana, setPestana] = useState("descripcion");
   const [expandida, setExpandida] = useState(false);
@@ -362,24 +362,38 @@ export default function DetalleEvento({
         </aside>
       </div>
 
-      {relacionados.length > 0 && (
-        <section className="detalle__relacionados" aria-labelledby="detalle-relacionados-titulo">
+      {(cargandoRelacionados || relacionados.length > 0) && (
+        <section
+          className="detalle__relacionados"
+          aria-labelledby="detalle-relacionados-titulo"
+          aria-busy={cargandoRelacionados}
+        >
           <EncabezadoSeccion
             idTitulo="detalle-relacionados-titulo"
             titulo={tr(t?.relacionados?.titulo, "También te puede interesar", "You may also like")}
           />
 
+          {cargandoRelacionados && (
+            <p className="solo-lectores" role="status">
+              {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+            </p>
+          )}
+
           <div className="detalle__relacionados-lista">
-            {relacionados.map((relacionado) => (
-              <TarjetaEvento
-                key={relacionado.id}
-                evento={relacionado}
-                nombreCategoria={nombreCategoria(relacionado.categoria)}
-                en={en}
-                textos={textos}
-                onAbrir={onAbrir}
-              />
-            ))}
+            {cargandoRelacionados
+              ? Array.from({ length: 4 }, (_, i) => (
+                <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
+              ))
+              : relacionados.map((relacionado) => (
+                <TarjetaEvento
+                  key={relacionado.id}
+                  evento={relacionado}
+                  nombreCategoria={nombreCategoria(relacionado.categoria)}
+                  en={en}
+                  textos={textos}
+                  onAbrir={onAbrir}
+                />
+              ))}
           </div>
         </section>
       )}
