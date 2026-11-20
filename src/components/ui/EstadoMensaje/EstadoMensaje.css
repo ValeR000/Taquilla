@@ -8,7 +8,7 @@
 }
 
 .estado-mensaje p {
-  margin-top: 12px;
+  margin-top: 10px;
   color: var(--color-texto-gris);
 }
 
@@ -37,7 +37,7 @@
 
 @media (max-width: 640px) {
   .estado-mensaje {
-    padding: 24px;
+    padding: 26px;
   }
 }
 /* ########## */

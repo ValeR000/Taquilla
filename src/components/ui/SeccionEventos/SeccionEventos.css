@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .seccion-eventos h2 {
@@ -29,7 +29,7 @@
 .eventos-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  gap: 26px;
 }
 
 .tarjeta-esqueleto {
@@ -49,7 +49,7 @@
 .enlace-home {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: none; 
   border: none;     
   padding: 0;

@@ -18,8 +18,8 @@
 .buscador-desktop {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px;
+  gap: 6px;
+  padding: 6px;
   width: 100%;
 }
 
@@ -29,7 +29,7 @@
   gap: 10px;
   flex: 1;
   min-width: 0;
-  padding: 4px 10px;
+  padding: 6px 10px;
 }
 
 .buscador-desktop label + label {

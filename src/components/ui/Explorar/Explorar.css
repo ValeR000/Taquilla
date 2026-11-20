@@ -97,7 +97,7 @@
   align-items: center;
   gap: 6px;
   height: 32px;
-  padding: 0 10px 0 12px;
+  padding: 0 10px 0 10px;
   font-size: var(--texto-pequeno);
   background: var(--color-fondo-etiqueta);
   border-radius: var(--radio-sm);
@@ -213,7 +213,7 @@
     align-items: center;
     gap: var(--espacio-2);
     height: 44px;
-    padding: 0 14px;
+    padding: 0 16px;
     background: var(--color-superficie);
     border: 1px solid var(--color-borde-suave);
     border-radius: var(--radio-md);

@@ -60,7 +60,7 @@
   font-size: var(--texto-base);
   cursor: pointer;
   color: var(--color-texto);
-  padding: 4px;
+  padding: 6px;
 }
 
 .panel-accesibilidad__cerrar-icono { 
@@ -78,7 +78,7 @@
 .panel-accesibilidad__seccion h3 {
   font-size: var(--texto-pequeno);
   font-weight: 500;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
 }
 
 .panel-accesibilidad__tamano {
@@ -87,7 +87,7 @@
   justify-content: space-between;
   border: 1px solid var(--color-borde-suave);
   border-radius: 8px;
-  padding: 4px;
+  padding: 6px;
 }
 
 .panel-accesibilidad__tamano-btn {
@@ -121,7 +121,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .toggle-texto h3 {
@@ -194,7 +194,7 @@ input:checked + .slider:before {
 .panel-accesibilidad__footer p {
   font-size: var(--texto-xxs);
   color: var(--color-texto-suave);
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   line-height: 1.4;
 }
 
@@ -213,7 +213,7 @@ input:checked + .slider:before {
 .panel-accesibilidad__restablecer {
   background: var(--color-superficie);
   border: 1px solid var(--color-borde);
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   font-size: var(--texto-xs);
   cursor: pointer;
@@ -243,7 +243,7 @@ input:checked + .slider:before {
     transform: none; /* Quita el centrado horizontal de escritorio */
     border: none;
     border-radius: 24px 24px 0 0;
-    padding: 24px 20px 20px;
+    padding: 26px 20px 20px;
     gap: 20px;
     box-shadow: 0 -8px 32px var(--sombra-color-fuerte);
   }

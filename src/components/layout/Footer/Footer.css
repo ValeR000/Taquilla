@@ -17,7 +17,7 @@
 .footer__contenedor {
   max-width: 80rem;
   margin-inline: auto; /* Hace que el contenido se centre */
-  padding: 44px 24px 24px; /* Hace que haya espacio arriba, a los lados y abajo */
+  padding: 42px 24px 26px; /* Hace que haya espacio arriba, a los lados y abajo */
 }
 
 /* =========================================
@@ -69,7 +69,7 @@
 .footer__lista {
   display: flex;
   flex-direction: column; /* Hace que los enlaces se apilen hacia abajo */
-  gap: 7px;
+  gap: 6px;
   padding: 0;
   list-style: none; /* Quita los puntos de la lista */
 }
@@ -88,7 +88,7 @@
 .footer__inferior {
   display: flex;
   justify-content: space-between; /* Hace que un texto quede a la izquierda y otro a la derecha */
-  margin-top: 40px; 
+  margin-top: 42px; 
   padding-top: 20px;
   border-top: 0.5px solid var(--color-footer-lineaDiv); /* Hace que aparezca la línea divisoria gris */
   color: var(--color-footer-suave);

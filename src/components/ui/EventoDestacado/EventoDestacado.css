@@ -38,7 +38,7 @@
 /* [STATIC] Hace que el título del evento se vea grande y en negrita. */
 .ficha-destacado h2 {
   font-size: var(--texto-grande);
-  margin: 12px 0;
+  margin: 10px 0;
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -55,7 +55,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .ficha-destacado strong {
