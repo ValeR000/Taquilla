@@ -10,9 +10,27 @@
     margin-block: 48px;
 }
 
+/* SPRINT 2: Hace que el error de categorías ocupe el mismo alto que la fila de categorías */
+.inicio__estado--categorias {
+    margin-block: 48px 56px;
+    min-height: 80px;
+}
+/* SPRINT 2 */
+
 @media (max-width: 640px) {
     .demo-contenido {
         width: calc(100% - 40px);
     }
+
+    /* SPRINT 2: Hace que en móvil los errores ocupen el alto de lo que reemplazan y el footer no suba */
+    .inicio__estado--categorias {
+        margin-block: 12px;
+        min-height: 68px;
+    }
+
+    .inicio__estado--destacados {
+        min-height: 474px;
+    }
+    /* SPRINT 2 */
 }
 /* ########## */

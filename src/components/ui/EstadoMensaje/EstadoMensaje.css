@@ -1,5 +1,11 @@
 /* ########## */
 .estado-mensaje {
+  /* SPRINT 2: Hace que el contenido quede centrado si la sección le reserva más alto */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* SPRINT 2 */
   padding: 48px;
   text-align: center;
   background: var(--color-superficie);
@@ -40,8 +46,10 @@
 /* SPRINT 2: Variante compacta: mensaje y botón en una fila, para errores dentro de una sección */
 .estado-mensaje--compacto {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  align-content: center;
   justify-content: space-between;
   gap: 8px 16px;
   padding: 12px 16px;

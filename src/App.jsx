@@ -144,6 +144,8 @@ function App() {
 
   const slugEvento = activo.startsWith("eventos/") ? activo.replace("eventos/", "") : ""; // Sprint 2: slug del evento leído de la ruta /eventos/{slug}
 
+  const mensajeCategorias = textosError(datos.textos, codigoCategorias, en); // Sprint 2: mensaje y botón del error compacto de categorías
+
   // [API] Hace que el primer evento destacado aparezca en la tarjeta del Hero.
   const eventoDestacado = eventos?.[0];
 
@@ -348,9 +350,13 @@ function App() {
             {/* [API] Hace que aparezca el error de categorías con un botón para reintentar. */}
             {errorCategorias && (
               <EstadoMensaje
+                /* SPRINT 2: Hace que el error sea compacto, con el mismo alto que la fila de categorías, y su mensaje salga del codigo */
+                compacto
                 rol="alert"
-                clase="inicio__estado"
-                {...textosError(datos.textos, codigoCategorias, en)} // Sprint 2: título, mensaje según el codigo y botón
+                clase="inicio__estado inicio__estado--categorias"
+                texto={mensajeCategorias.texto}
+                boton={mensajeCategorias.boton}
+                /* SPRINT 2 */
                 /* SPRINT 2: Hace que Reintentar maneje el foco */
                 onBoton={reintentoCategorias.reintentar}
                 enfocarBoton={reintentoCategorias.enfocarBoton}
@@ -385,7 +391,7 @@ function App() {
             {errorEventos && (
               <EstadoMensaje
                 rol="alert"
-                clase="inicio__estado"
+                clase="inicio__estado inicio__estado--destacados" // Sprint 2: reserva el alto del carrusel en móvil
                 {...textosError(datos.textos, codigoEventos, en)} // Sprint 2: título, mensaje según el codigo y botón
                 /* SPRINT 2: Hace que Reintentar maneje el foco */
                 onBoton={reintentoEventos.reintentar}

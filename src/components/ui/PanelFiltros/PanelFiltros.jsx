@@ -137,6 +137,7 @@ export default function PanelFiltros({
             <EstadoMensaje
               compacto
               rol="alert"
+              clase="panel-filtros__error"
               texto={mensajeError?.texto}
               boton={mensajeError?.boton}
               onBoton={onReintentarCategorias}

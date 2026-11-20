@@ -330,6 +330,7 @@ export default function Explorar({
           {!cargando && error && (
             <EstadoMensaje
               rol="alert"
+              clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
               {...textosError(textos, codigo, en)} // Sprint 2: título, mensaje según el codigo y botón
               /* SPRINT 2: Hace que Reintentar maneje el foco */
               onBoton={reintentoLista.reintentar}
@@ -341,6 +342,7 @@ export default function Explorar({
           {/* [API] Hace que aparezca el estado vacío con un botón para limpiar filtros. */}
           {!cargando && !error && eventos.length === 0 && (
             <EstadoMensaje
+              clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
               titulo={tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}
               texto={tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}
               boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}

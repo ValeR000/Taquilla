@@ -89,6 +89,18 @@
 }
 /* SPRINT 2 */
 
+/* SPRINT 2: Hace que el error de categorías ocupe el alto de las 6 opciones para que los demás filtros no suban */
+.panel-filtros__error {
+  min-height: calc((var(--texto-pequeno) * 1.6 + 12px) * 6 + 20px);
+}
+
+@media (max-width: 640px) {
+  .panel-filtros__error {
+    min-height: 0;
+  }
+}
+/* SPRINT 2 */
+
 .panel-filtros__opcion {
   position: relative;
   display: flex;

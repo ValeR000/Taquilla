@@ -520,6 +520,10 @@
    ESTADO: No encontrado
    ========================================= */
 .detalle__estado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
   padding: 48px 0 64px;
 }
 

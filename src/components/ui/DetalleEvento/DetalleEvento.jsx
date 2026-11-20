@@ -121,7 +121,7 @@ export default function DetalleEvento({
 
   if (error) {
     return (
-      <main className="contenedor">
+      <main className="contenedor detalle__estado">
         <EstadoMensaje
           rol="alert"
           {...textosError(textos, codigo, en)}
