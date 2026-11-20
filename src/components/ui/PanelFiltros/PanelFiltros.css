@@ -93,6 +93,14 @@
   cursor: pointer;
 }
 
+/* SPRINT 2: Fila esqueleto con la misma altura que una opción de categoría */
+.panel-filtros__esqueleto {
+  height: calc(var(--texto-pequeno) * 1.6 + 12px);
+  border-radius: var(--radio-sm);
+  background: var(--fondo-sutil);
+}
+/* SPRINT 2 */
+
 .panel-filtros__opcion small {
   margin-left: auto; /* Hace que el número de eventos se empuje a la derecha */
   color: var(--color-texto-gris);

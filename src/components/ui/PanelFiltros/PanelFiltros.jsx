@@ -22,6 +22,7 @@ export default function PanelFiltros({
   textos,
   local,
   categorias = [],
+  cargandoCategorias = false, // Sprint 2: indica si las categorías siguen cargando
   ciudades = [],
   filtros,
   onCambiar,
@@ -125,7 +126,12 @@ export default function PanelFiltros({
           </h3>
 
           {/* [ACCESIBILIDAD] Usa un grupo de radios para que solo se seleccione una categoría a la vez (como lo permite la API). */}
-          <div role="radiogroup" aria-labelledby={`${id}-categoria`} className="panel-filtros__opciones">
+          <div role="radiogroup" aria-labelledby={`${id}-categoria`} className="panel-filtros__opciones" aria-busy={cargandoCategorias}>{/* Sprint 2 */}
+            {/* SPRINT 2: Hace que aparezcan filas esqueleto mientras cargan las categorías */}
+            {cargandoCategorias && categorias.length === 0 && Array.from({ length: 6 }, (_, i) => (
+              <span key={i} className="panel-filtros__esqueleto" aria-hidden="true" />
+            ))}
+            {/* SPRINT 2 */}
             {categorias.map((cat) => (
               <label key={cat.id} className="panel-filtros__opcion">
                 {/* [API] Input radio que se conecta con el filtro actual */}

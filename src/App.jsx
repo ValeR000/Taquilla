@@ -285,6 +285,7 @@ function App() {
           key={busquedaId}
           en={en}
           categorias={categorias}
+          cargandoCategorias={cargandoCategorias} // Sprint 2: para los esqueletos del filtro de categoría
           ciudades={ciudades}
           onAbrir={abrirEvento}
           onNavegar={navegar}
