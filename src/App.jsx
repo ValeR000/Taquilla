@@ -26,6 +26,7 @@ import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
 import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeSemana.jsx";
 import Explorar from "./components/ui/Explorar/Explorar.jsx";
 import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
+import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
@@ -132,6 +133,8 @@ function App() {
 
   const tr = crearTraductor(en);
 
+  const slugEvento = activo.startsWith("eventos/") ? activo.replace("eventos/", "") : ""; // Sprint 2: slug del evento leído de la ruta /eventos/{slug}
+
   // [API] Hace que el primer evento destacado aparezca en la tarjeta del Hero.
   const eventoDestacado = eventos?.[0];
 
@@ -185,7 +188,7 @@ function App() {
 
   // [LOCAL] Hace que la URL cambie sin recargar, quede en el historial y la página suba al inicio.
   function cambiarRuta(ruta, nuevaVista) {
-    window.history.pushState(null, "", ruta);
+    window.history.pushState({ interna: true }, "", ruta); // Sprint 2: marca las rutas abiertas desde la app para que "Volver" sepa si hay historial
     setActivo(nuevaVista);
     window.scrollTo(0, 0);
   }
@@ -288,6 +291,17 @@ function App() {
           textos={datos.textos}
           enfocarBusqueda={enfocarBusqueda}
         />
+      ) : slugEvento ? (
+        /* SPRINT 2: Hace que /eventos/{slug} muestre el detalle del evento */
+        <DetalleEvento
+          slug={slugEvento}
+          en={en}
+          textos={datos.textos}
+          categorias={categorias}
+          onAbrir={abrirEvento}
+          onNavegar={navegar}
+        />
+        /* SPRINT 2 */
       ) : (
         <>
           {/* ========================================== */}

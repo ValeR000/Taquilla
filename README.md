@@ -1,4 +1,4 @@
-# Taquilla 🎟️
+# Taquilla
 
 Plataforma web para descubrir conciertos, teatro, deportes y festivales. Proyecto académico construido con **React + Vite** que consume la **Taquilla API** del curso.
 

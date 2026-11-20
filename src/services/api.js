@@ -13,7 +13,20 @@ async function descargar(url) {
     const respuesta = await fetch(url);
     
     // [LOCAL] Hace que se valide si la respuesta es correcta, si no, lanza un error.
-    if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+    /* SPRINT 2: Hace que el error lleve el estado HTTP y el codigo de la API para distinguir un 404 */
+    if (!respuesta.ok) {
+      let cuerpo = null;
+      try {
+        cuerpo = await respuesta.json();
+      } catch {
+        cuerpo = null;
+      }
+      const fallo = new Error(`HTTP ${respuesta.status}`);
+      fallo.estado = respuesta.status;
+      fallo.codigo = cuerpo?.error?.codigo;
+      throw fallo;
+    }
+    /* SPRINT 2 */
     
     // [API] Hace que se convierta la respuesta cruda en un objeto JSON.
     const datos = await respuesta.json();

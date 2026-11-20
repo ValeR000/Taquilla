@@ -13,6 +13,7 @@ export default function IconoEvento({ tipo }) {
     buscar: "M15 15l6 6M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14",
     lugar: "M12 22S4 14 4 9a8 8 0 1 1 16 0c0 5-8 13-8 13ZM12 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6",
     fecha: "M5 5h14a2 2 0 0 1 2 2v13H3V7a2 2 0 0 1 2-2ZM3 10h18M7 2v6m10-6v6",
+    hora: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM12 6v6l4 2", // Sprint 2: ícono del reloj para la hora del evento
     conciertos: "M9 18V5l11-2v13M9 8l11-2M9 18c0 4-7 4-7 0s7-4 7 0Zm11-2c0 4-7 4-7 0s7-4 7 0Z",
     teatro: "m12 2 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z",
     deportes: "M7 3h10v7a5 5 0 0 1-10 0V3ZM7 5H3v4a4 4 0 0 0 5 4m9-8h4v4a4 4 0 0 1-5 4m-4 2v5m-5 1h10",
