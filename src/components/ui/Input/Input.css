@@ -24,7 +24,7 @@
 /* =========================================
    SECCIÓN: Input Base
    ========================================= */
-.campo__input {
+.campo__input--caja {
   height: 44px;
   padding: 0 10px;
   border: 1px solid var(--color-borde);
@@ -36,7 +36,7 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Hace que el borde cambie suavemente */
 }
 
-.campo__input::placeholder {
+.campo__input--caja::placeholder {
   color: var(--color-texto-suave);
 }
 
@@ -45,23 +45,32 @@
    ========================================= */
 
 /* Hace que el borde se oscurezca al pasar el mouse */
-.campo__input:hover:not(:disabled) {
+.campo__input--caja:hover:not(:disabled) {
   border-color: var(--color-texto-suave);
 }
 
 /* Hace que aparezca un borde negro y una sombra suave cuando el usuario hace clic para escribir */
-.campo__input:focus-visible {
+.campo__input--caja:focus-visible {
   outline: none;
   border-color: var(--color-primario);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primario) 20%, transparent);
 }
 
 /* Hace que el input se vea grisáceo y bloqueado si está deshabilitado */
-.campo__input:disabled {
+.campo__input--caja:disabled {
   background-color: var(--color-fondo);
   cursor: not-allowed;
   opacity: 0.7;
 }
+
+/* ########## */
+.campo__input--busqueda {
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+/* ########## */
 
 /* =========================================
    SECCIÓN: Estado de Error

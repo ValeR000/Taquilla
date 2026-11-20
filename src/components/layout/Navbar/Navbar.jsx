@@ -7,6 +7,7 @@
 import { useCallback, useState } from "react";
 import "./Navbar.css";
 import Boton from "../../ui/Boton/Boton.jsx";
+import Input from "../../ui/Input/Input.jsx";
 import SelectorIdioma from "../../ui/SelectorIdioma/SelectorIdioma.jsx";
 import iconoAccesibilidad from "../../../assets/accesibilidad.svg";
 import logo from "../../../assets/logo-taquilla.svg";
@@ -130,13 +131,14 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
               <circle cx="11" cy="11" r="7" />
               <path d="M21 21l-4.3-4.3" />
             </svg>
-            <input
+            <Input
               type="search"
-              className="navbar__buscador-input"
+              variante="busqueda"
+              clase="navbar__buscador-input"
               // [API] Hace que aparezca el texto de ejemplo.
               placeholder={t?.buscador.placeholder}
               // [ACCESIBILIDAD] Hace que el lector anuncie para qué sirve el campo.
-              aria-label={t?.buscador.aria}
+              etiqueta={t?.buscador.aria}
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
             />

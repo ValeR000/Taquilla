@@ -227,12 +227,8 @@
 
   .explorar__busqueda input {
     flex: 1;
-    min-width: 0;
     font: inherit;
     font-size: var(--texto-pequeno);
-    background: transparent;
-    border: 0;
-    outline: none;
   }
 
   .explorar__boton-filtros {

@@ -4,6 +4,7 @@ import { useEventos } from "../../../hooks/useEventos.js";
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import Icono from "../../ui/Icono.jsx";
+import Input from "../../ui/Input/Input.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
@@ -204,14 +205,15 @@ export default function Explorar({
       <div className="explorar__buscador-movil">
         <form className="explorar__busqueda" role="search" onSubmit={buscar}>
           <IconoEvento tipo="buscar" />
-          <input
+          <Input
             type="search"
+            variante="busqueda"
             // [ACCESIBILIDAD] Hace que el buscador reciba el foco si se abrió desde la lupa.
             autoFocus={enfocarBusqueda}
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder={placeholderBusqueda}
-            aria-label={placeholderBusqueda}
+            etiqueta={placeholderBusqueda}
           />
         </form>
 

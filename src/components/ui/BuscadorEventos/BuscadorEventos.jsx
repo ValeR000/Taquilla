@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
+import Input from "../Input/Input.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import "./BuscadorEventos.css";
 
@@ -96,8 +97,9 @@ export default function BuscadorEventos({
           <span>
             {/* [API] Hace que aparezca la etiqueta "Qué" desde la API. */}
             <span>{tr(h?.etiquetas?.que, "Qué", "What")}</span>
-            <input
+            <Input
               type="search"
+              variante="busqueda"
               value={consulta}
               // [LOCAL] Hace que el input se actualice al escribir.
               onChange={(e) => setConsulta(e.target.value)}
