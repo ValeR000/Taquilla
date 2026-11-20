@@ -7,6 +7,7 @@
 import { useEffect, useRef } from 'react';
 import './MenuMovil.css';
 import Boton from '../../ui/Boton/Boton.jsx';
+import Icono from '../../ui/Icono.jsx';
 import SelectorIdioma from '../../ui/SelectorIdioma/SelectorIdioma.jsx';
 import iconoAccesibilidad from '../../../assets/accesibilidad.svg';
 import { textosLocales } from '../../../utils/textosLocales.js';
@@ -102,9 +103,7 @@ export default function MenuMovil({
             onClick={onCerrar}
             aria-label={tr(m?.cerrar, 'Cerrar menú', 'Close menu')}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <Icono nombre="cerrar" />
           </button>
         </div>
 

@@ -44,5 +44,36 @@ const ICONOS = {
   },
 
   cerrar: {
+    caja: 24,
+    trazos: <path d="M6 18 18 6M6 6l12 12" />,
+  },
+
+  filtros: {
+    caja: 24,
+    trazos: <path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6" />,
   },
 };
+
+// ##########
+export default function Icono({ nombre, tamano, clase }) {
+  const icono = ICONOS[nombre];
+  const medida = tamano || icono.tamano || icono.caja;
+
+  return (
+    <svg
+      className={clase}
+      width={medida}
+      height={medida}
+      viewBox={`0 0 ${icono.caja} ${icono.caja}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {icono.trazos}
+    </svg>
+  );
+}
+// ##########

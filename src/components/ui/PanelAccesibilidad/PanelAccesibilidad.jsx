@@ -6,6 +6,7 @@
 
 import { useEffect, useRef } from "react";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import Icono from "../Icono.jsx";
 import "./PanelAccesibilidad.css";
 
 export default function PanelAccesibilidad({
@@ -134,9 +135,7 @@ export default function PanelAccesibilidad({
             {/* [STATIC] Versión escritorio: Texto '✕' */}
             <span className="panel-accesibilidad__cerrar-texto" aria-hidden="true">✕</span>
             {/* [STATIC] Versión móvil: SVG de la 'X' */}
-            <svg className="panel-accesibilidad__cerrar-icono" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <Icono nombre="cerrar" clase="panel-accesibilidad__cerrar-icono" />
           </button>
         </div>
 
