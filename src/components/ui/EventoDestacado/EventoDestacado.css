@@ -82,6 +82,12 @@
   outline-offset: revert;
 }
 
+/* SPRINT 2: Tarjeta esqueleto sobre el fondo oscuro del Hero */
+.destacado-esqueleto {
+  background: var(--fondo-inverso-2);
+}
+/* SPRINT 2 */
+
 /* [STATIC] Hace que la tarjeta se oculte en celulares para que no se desborde. */
 @media (max-width: 640px) {
   .destacado-taquilla {

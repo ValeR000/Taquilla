@@ -11,8 +11,15 @@ export default function EventoDestacado({
   evento,         // [API] Evento destacado.
   en,             // [LOCAL] Indica si el idioma es inglés.
   textos,         // [API] Textos de la interfaz.
-  onAbrir         // [LOCAL] Función para abrir el detalle del evento.
+  onAbrir,        // [LOCAL] Función para abrir el detalle del evento.
+  cargando = false // Sprint 2: indica si el evento destacado sigue cargando
 }) {
+  /* SPRINT 2: Hace que mientras carga se vea la tarjeta esqueleto en lugar de un hueco */
+  if (!evento && cargando) {
+    return <div className="destacado-taquilla destacado-esqueleto" aria-hidden="true" />;
+  }
+  /* SPRINT 2 */
+
   // [LOCAL] Hace que no se dibuje nada mientras no haya evento.
   if (!evento) return null;
 

@@ -314,6 +314,7 @@ function App() {
             en={en}
             textos={datos.textos}
             destacado={eventoDestacado}
+            cargandoDestacado={cargandoEventos} // Sprint 2: para la tarjeta esqueleto del Hero
             abrirEvento={abrirEvento}
             onBuscar={buscar}
           >
@@ -413,13 +414,16 @@ function App() {
                 />
 
                 {/* [API] Hace que aparezca la lista "Este fin de semana" (solo móvil). */}
-                {!cargandoEventos && <SeccionFinDeSemana
+                {/* SPRINT 2: Hace que la lista se vea con filas esqueleto mientras cargan los eventos */}
+                <SeccionFinDeSemana
+                  cargando={cargandoEventos}
                   eventos={eventos.slice(4, 7)}
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
                   textos={datos.textos}
-                />}
+                />
+                {/* SPRINT 2 */}
               </>
             )}
           </main>
