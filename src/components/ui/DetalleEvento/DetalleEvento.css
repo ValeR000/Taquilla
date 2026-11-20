@@ -529,3 +529,68 @@
     padding: 32px 0 48px;
   }
 }
+
+/* =========================================
+   ESQUELETO: mientras carga el evento
+   ========================================= */
+.detalle__esqueleto {
+  color: transparent;
+  border-radius: var(--radio-sm);
+  background: linear-gradient(var(--fondo-sutil), var(--fondo-sutil)) left center / 100% 70% no-repeat;
+}
+
+.detalle__esqueleto-bloque {
+  background: var(--fondo-sutil);
+}
+
+.detalle__esqueleto--migas {
+  width: 260px;
+}
+
+.detalle__esqueleto--etiqueta {
+  min-width: 72px;
+}
+
+.detalle__esqueleto--titulo {
+  width: 60%;
+  font-size: var(--texto-titulo);
+  line-height: 1.1;
+}
+
+.detalle__esqueleto--artistas {
+  width: 220px;
+}
+
+.detalle__esqueleto--corto {
+  width: 64px;
+}
+
+.detalle__esqueleto--valor {
+  width: 140px;
+}
+
+.detalle__esqueleto--pestana {
+  display: inline-block;
+  width: 88px;
+}
+
+.detalle__esqueleto--h2 {
+  width: 200px;
+  font-size: var(--texto-subtitulo);
+  line-height: 1.25;
+}
+
+.detalle__esqueleto--linea {
+  display: block;
+}
+
+.detalle__esqueleto--linea:last-child {
+  width: 70%;
+}
+
+@media (max-width: 640px) {
+  .detalle__esqueleto--titulo {
+    width: 90%;
+    line-height: 1.1765;
+  }
+}

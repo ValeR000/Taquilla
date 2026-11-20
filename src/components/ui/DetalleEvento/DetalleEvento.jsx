@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useEvento } from "../../../hooks/useEvento.js";
 import { useRelacionados } from "../../../hooks/useRelacionados.js";
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
+import DetalleEsqueleto from "./DetalleEsqueleto.jsx";
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
@@ -108,11 +109,7 @@ export default function DetalleEvento({
   }
 
   if (cargando) {
-    return (
-      <main className="contenedor">
-        <p role="status">{tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}</p>
-      </main>
-    );
+    return <DetalleEsqueleto en={en} textos={textos} />;
   }
 
   if (error) {
