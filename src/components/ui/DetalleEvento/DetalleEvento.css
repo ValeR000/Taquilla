@@ -520,3 +520,17 @@
     scroll-snap-align: start;
   }
 }
+
+/* =========================================
+   ESTADO: No encontrado
+   ========================================= */
+.detalle__estado {
+  padding: 48px 0 64px;
+}
+
+@media (max-width: 640px) {
+  .detalle__estado {
+    width: calc(100% - 40px);
+    padding: 32px 0 48px;
+  }
+}

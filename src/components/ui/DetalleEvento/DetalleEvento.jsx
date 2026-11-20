@@ -41,13 +41,19 @@ export default function DetalleEvento({
 
   const eventoListo = evento?.slug === slug && !cargando && !error ? evento : null;
 
+  const tNoEncontrado = textos?.paginas?.noEncontrado?.seo;
+
   const tituloPagina = eventoListo
     ? tr(t?.seo?.titulo, "{titulo} · Taquilla", "{titulo} · Taquilla").replace("{titulo}", eventoListo.titulo)
-    : "";
+    : noEncontrado
+      ? tr(tNoEncontrado?.titulo, "Página no encontrada · Taquilla", "Page not found · Taquilla")
+      : "";
 
   const descripcionPagina = eventoListo
     ? eventoListo.descripcion || tr(t?.seo?.descripcion, "Fecha, lugar, precios y detalles del evento.", "Date, venue, prices and event details.")
-    : "";
+    : noEncontrado
+      ? tr(tNoEncontrado?.descripcion, "La página que buscas no existe o cambió de dirección.", "The page you are looking for does not exist or has moved.")
+      : "";
 
   useEffect(() => {
     if (!tituloPagina) return;
@@ -125,8 +131,14 @@ export default function DetalleEvento({
 
   if (noEncontrado) {
     return (
-      <main className="contenedor">
-        <h1>{tr(t?.noEncontrado?.titulo, "No encontramos este evento", "We couldn't find this event")}</h1>
+      <main className="contenedor detalle__estado">
+        <EstadoMensaje
+          nivel={1}
+          titulo={tr(t?.noEncontrado?.titulo, "No encontramos este evento", "We couldn't find this event")}
+          texto={tr(t?.noEncontrado?.texto, "Puede que haya terminado o que el enlace esté mal escrito.", "It may have ended or the link may be mistyped.")}
+          boton={tr(t?.noEncontrado?.botones?.volver, "Volver a explorar", "Back to explore")}
+          onBoton={() => onNavegar("explorar")}
+        />
       </main>
     );
   }

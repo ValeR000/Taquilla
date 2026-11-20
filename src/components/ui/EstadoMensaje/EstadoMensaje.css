@@ -7,6 +7,14 @@
   border-radius: var(--radio);
 }
 
+/* SPRINT 2: Hace que el título como h1 se vea igual que el h3 de los demás estados */
+.estado-mensaje h1 {
+  font-size: var(--texto-h3);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+/* SPRINT 2 */
+
 .estado-mensaje p {
   margin-top: 10px;
   color: var(--color-texto-gris);
