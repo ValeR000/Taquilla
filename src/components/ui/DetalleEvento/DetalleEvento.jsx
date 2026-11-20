@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useEvento } from "../../../hooks/useEvento.js";
 import { useRelacionados } from "../../../hooks/useRelacionados.js";
+import { useReintento } from "../../../hooks/useReintento.js";
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import DetalleEsqueleto from "./DetalleEsqueleto.jsx";
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
@@ -37,6 +38,9 @@ export default function DetalleEvento({
   const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, codigo: codigoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
 
   const mensajeRelacionados = textosError(textos, codigoRelacionados, en);
+
+  const reintentoEvento = useReintento(cargando, error, recargar, "detalle-titulo", "detalle-espera");
+  const reintentoRelacionados = useReintento(cargandoRelacionados, errorRelacionados, recargarRelacionados, "detalle-relacionados-titulo");
 
   const [pestana, setPestana] = useState("descripcion");
   const [expandida, setExpandida] = useState(false);
@@ -107,7 +111,12 @@ export default function DetalleEvento({
   }
 
   if (cargando) {
-    return <DetalleEsqueleto en={en} textos={textos} />;
+    return (
+      <>
+        <span id="detalle-espera" tabIndex={-1} className="solo-lectores" />
+        <DetalleEsqueleto en={en} textos={textos} />
+      </>
+    );
   }
 
   if (error) {
@@ -116,7 +125,8 @@ export default function DetalleEvento({
         <EstadoMensaje
           rol="alert"
           {...textosError(textos, codigo, en)}
-          onBoton={recargar}
+          onBoton={reintentoEvento.reintentar}
+          enfocarBoton={reintentoEvento.enfocarBoton}
         />
       </main>
     );
@@ -219,7 +229,7 @@ export default function DetalleEvento({
             </div>
 
             <div className="detalle__titulos">
-              <h1 className="detalle__titulo">{evento?.titulo}</h1>
+              <h1 id="detalle-titulo" tabIndex={-1} className="detalle__titulo">{evento?.titulo}</h1>
               {artistas && <p className="detalle__artistas">{artistas}</p>}
             </div>
 
@@ -381,7 +391,8 @@ export default function DetalleEvento({
               rol="alert"
               texto={mensajeRelacionados.texto}
               boton={mensajeRelacionados.boton}
-              onBoton={recargarRelacionados}
+              onBoton={reintentoRelacionados.reintentar}
+              enfocarBoton={reintentoRelacionados.enfocarBoton}
             />
           ) : (
             <div className="detalle__relacionados-lista">

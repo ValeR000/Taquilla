@@ -1,6 +1,7 @@
 // RESPONSABILIDAD: Vista Explorar (/explorar) con filtros en la URL, orden, paginación, estados y panel de filtros móvil.
 import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
+import { useReintento } from "../../../hooks/useReintento.js"; // Sprint 2
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import Icono from "../../ui/Icono.jsx";
@@ -81,6 +82,11 @@ export default function Explorar({
 
   // [API] Hace que se carguen los eventos según los filtros.
   const { eventos, paginacion, cargando, error, codigo, recargar } = useEventos(filtros); // Sprint 2: también el codigo del error
+
+  /* SPRINT 2: Hace que Reintentar lleve el foco al título si carga bien, o al botón si vuelve a fallar */
+  const reintentoLista = useReintento(cargando, error, recargar, "explorar-titulo");
+  const reintentoCategorias = useReintento(cargandoCategorias, errorCategorias, recargarCategorias, "panel-filtros-categoria");
+  /* SPRINT 2 */
 
   // [API] Hace que los textos de Explorar y de los estados estén a mano.
   const t = textos?.paginas?.explorar;
@@ -198,7 +204,7 @@ export default function Explorar({
       </nav>
 
       {/* [STATIC] Hace que aparezca el título de la vista. */}
-      <h1 className="explorar__titulo">{local.titulo}</h1>
+      <h1 id="explorar-titulo" tabIndex={-1} className="explorar__titulo">{local.titulo}</h1>{/* Sprint 2: puede recibir el foco después de Reintentar */}
 
       {/* [API] Hace que aparezca cuántos eventos coinciden con los filtros. */}
       {/* SPRINT 2: Hace que el contador reserve su línea mientras carga */}
@@ -251,7 +257,8 @@ export default function Explorar({
           /* SPRINT 2: Hace que el filtro de categoría muestre su error con Reintentar */
           errorCategorias={errorCategorias}
           mensajeError={textosError(textos, codigoCategorias, en)}
-          onReintentarCategorias={recargarCategorias}
+          onReintentarCategorias={reintentoCategorias.reintentar}
+          enfocarBotonCategorias={reintentoCategorias.enfocarBoton}
           /* SPRINT 2 */
           ciudades={ciudades}
           filtros={filtros}
@@ -324,7 +331,10 @@ export default function Explorar({
             <EstadoMensaje
               rol="alert"
               {...textosError(textos, codigo, en)} // Sprint 2: título, mensaje según el codigo y botón
-              onBoton={recargar}
+              /* SPRINT 2: Hace que Reintentar maneje el foco */
+              onBoton={reintentoLista.reintentar}
+              enfocarBoton={reintentoLista.enfocarBoton}
+              /* SPRINT 2 */
             />
           )}
 

@@ -14,6 +14,7 @@ import { useTextos } from "./hooks/useTextos.js";
 import { useEventosDestacados } from "./hooks/useEventosDestacados.js";
 import { useCategorias } from "./hooks/useCategorias.js";
 import { useCiudades } from "./hooks/useCiudades.js";
+import { useReintento } from "./hooks/useReintento.js"; // Sprint 2
 import "./App.css";
 
 import Footer from "./components/layout/Footer/Footer.jsx";
@@ -128,6 +129,11 @@ function App() {
   codigo: codigoCategorias, // Sprint 2: codigo del error para elegir el mensaje
   recargar: recargarCategorias
 } = useCategorias();
+
+  /* SPRINT 2: Hace que Reintentar lleve el foco al título de la sección si carga bien, o al botón si vuelve a fallar */
+  const reintentoEventos = useReintento(cargandoEventos, errorEventos, recargarEventos, "eventos-titulo");
+  const reintentoCategorias = useReintento(cargandoCategorias, errorCategorias, recargarCategorias, "categorias-eventos");
+  /* SPRINT 2 */
 
   // [API] Hace que se carguen las ciudades para los buscadores.
   const { ciudades } = useCiudades();
@@ -345,7 +351,10 @@ function App() {
                 rol="alert"
                 clase="inicio__estado"
                 {...textosError(datos.textos, codigoCategorias, en)} // Sprint 2: título, mensaje según el codigo y botón
-                onBoton={recargarCategorias}
+                /* SPRINT 2: Hace que Reintentar maneje el foco */
+                onBoton={reintentoCategorias.reintentar}
+                enfocarBoton={reintentoCategorias.enfocarBoton}
+                /* SPRINT 2 */
               />
             )}
 
@@ -378,7 +387,10 @@ function App() {
                 rol="alert"
                 clase="inicio__estado"
                 {...textosError(datos.textos, codigoEventos, en)} // Sprint 2: título, mensaje según el codigo y botón
-                onBoton={recargarEventos}
+                /* SPRINT 2: Hace que Reintentar maneje el foco */
+                onBoton={reintentoEventos.reintentar}
+                enfocarBoton={reintentoEventos.enfocarBoton}
+                /* SPRINT 2 */
               />
             )}
 

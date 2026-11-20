@@ -28,6 +28,7 @@ export default function PanelFiltros({
   errorCategorias = false,
   mensajeError,
   onReintentarCategorias,
+  enfocarBotonCategorias = false,
   /* SPRINT 2 */
   ciudades = [],
   filtros,
@@ -127,7 +128,7 @@ export default function PanelFiltros({
         {/* SECCIÓN: Filtro por Categoría              */}
         {/* ========================================== */}
         <div className="panel-filtros__grupo">
-          <h3 id={`${id}-categoria`} className="panel-filtros__subtitulo">
+          <h3 id={`${id}-categoria`} tabIndex={-1} className="panel-filtros__subtitulo">{/* Sprint 2: puede recibir el foco después de Reintentar */}
             {tr(tf?.categoria, "Categoría", "Category")}
           </h3>
 
@@ -139,6 +140,7 @@ export default function PanelFiltros({
               texto={mensajeError?.texto}
               boton={mensajeError?.boton}
               onBoton={onReintentarCategorias}
+              enfocarBoton={enfocarBotonCategorias}
             />
           )}
           {/* SPRINT 2 */}
