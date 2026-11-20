@@ -346,3 +346,177 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
 }
+
+/* =========================================
+   TABLET: una columna y relacionados de a 2
+   ========================================= */
+@media (max-width: 1100px) {
+  .detalle__portada {
+    padding: 32px 16px 0;
+  }
+
+  .detalle__contenido {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 40px 16px 64px;
+  }
+
+  .detalle__lateral {
+    position: static;
+  }
+
+  .detalle__relacionados {
+    padding: 0 16px 64px;
+  }
+
+  .detalle__relacionados-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   MÓVIL
+   ========================================= */
+@media (max-width: 640px) {
+  .detalle__portada {
+    gap: 0;
+    padding: 0;
+  }
+
+  .detalle__migas {
+    display: none;
+  }
+
+  .detalle__afiche {
+    height: 280px;
+    border-radius: 0;
+  }
+
+  .detalle__boton-portada {
+    position: absolute;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-superficie);
+    color: var(--color-texto);
+    cursor: pointer;
+  }
+
+  .detalle__volver {
+    left: 20px;
+  }
+
+  .detalle__compartir {
+    right: 20px;
+  }
+
+  .detalle__contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+    padding: 24px 20px 32px;
+    background: var(--color-superficie);
+  }
+
+  .detalle__principal {
+    gap: 24px;
+  }
+
+  .detalle__edad {
+    display: none;
+  }
+
+  .detalle__titulos {
+    gap: 6px;
+  }
+
+  .detalle__titulo {
+    line-height: 1.1765;
+  }
+
+  .detalle__info {
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-borde-suave);
+  }
+
+  .detalle__info-item--hora,
+  .detalle__info-etiqueta,
+  .detalle__info-ciudad {
+    display: none;
+  }
+
+  .detalle__info-icono {
+    width: 44px;
+    height: 44px;
+  }
+
+  .detalle__info-valor {
+    font-size: var(--texto-base);
+    line-height: 1.5;
+  }
+
+  .detalle__info-secundario {
+    display: block;
+  }
+
+  .detalle__pestanas {
+    display: none;
+  }
+
+  .detalle__descripcion-texto:not(.detalle__descripcion-texto--expandida) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .detalle__leer-mas {
+    display: block;
+    align-self: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: var(--texto-pequeno);
+    font-weight: 500;
+    color: var(--color-texto);
+    cursor: pointer;
+  }
+
+  .detalle__lateral {
+    padding: 20px;
+  }
+
+  .detalle__relacionados {
+    padding: 32px 20px 48px;
+  }
+
+  .detalle__relacionados-lista {
+    display: flex;
+    gap: 12px;
+    margin-inline: -20px;
+    padding-inline: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    scrollbar-width: none;
+  }
+
+  .detalle__relacionados-lista::-webkit-scrollbar {
+    display: none;
+  }
+
+  .detalle__relacionados-lista > .tarjeta-evento {
+    flex: 0 0 66%;
+    scroll-snap-align: start;
+  }
+}
