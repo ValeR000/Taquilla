@@ -22,19 +22,6 @@
   flex-grow: 1;
 }
 
-/* [STATIC] Etiqueta con fondo gris y bordes de 6px. */
-.etiqueta-evento {
-  display: inline-block;
-  background-color: var(--color-fondo-etiqueta);
-  color: var(--color-texto);
-  font-size: var(--texto-xs);
-  font-weight: 500;
-  padding: 6px 10px;
-  border-radius: var(--radio-xs);
-  align-self: flex-start;
-  margin-bottom: 10px;
-}
-
 .contenido-evento h3 {
   font-size: var(--texto-h3);
   font-weight: 600;
