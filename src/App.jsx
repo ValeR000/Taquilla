@@ -31,6 +31,7 @@ import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
 import { crearTraductor } from "./utils/traductor.js";
+import { textosError } from "./utils/textosError.js"; // Sprint 2
 import { useCallback, useEffect, useState } from "react";
 
 import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
@@ -115,6 +116,7 @@ function App() {
     eventos,
     cargando: cargandoEventos,
     error: errorEventos,
+    codigo: codigoEventos, // Sprint 2: codigo del error para elegir el mensaje
     recargar: recargarEventos
   } = useEventosDestacados();
 
@@ -123,6 +125,7 @@ function App() {
   categorias,
   cargando: cargandoCategorias,
   error: errorCategorias,
+  codigo: codigoCategorias, // Sprint 2: codigo del error para elegir el mensaje
   recargar: recargarCategorias
 } = useCategorias();
 
@@ -287,6 +290,7 @@ function App() {
           categorias={categorias}
           cargandoCategorias={cargandoCategorias} // Sprint 2: para los esqueletos del filtro de categoría
           errorCategorias={errorCategorias} // Sprint 2: para el error del filtro de categoría
+          codigoCategorias={codigoCategorias} // Sprint 2: para el mensaje del error según su codigo
           recargarCategorias={recargarCategorias} // Sprint 2: para reintentar solo las categorías
           ciudades={ciudades}
           onAbrir={abrirEvento}
@@ -340,8 +344,7 @@ function App() {
               <EstadoMensaje
                 rol="alert"
                 clase="inicio__estado"
-                titulo={tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}
-                boton={tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
+                {...textosError(datos.textos, codigoCategorias, en)} // Sprint 2: título, mensaje según el codigo y botón
                 onBoton={recargarCategorias}
               />
             )}
@@ -374,8 +377,7 @@ function App() {
               <EstadoMensaje
                 rol="alert"
                 clase="inicio__estado"
-                titulo={tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}
-                boton={tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
+                {...textosError(datos.textos, codigoEventos, en)} // Sprint 2: título, mensaje según el codigo y botón
                 onBoton={recargarEventos}
               />
             )}

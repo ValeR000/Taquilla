@@ -14,6 +14,7 @@ import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import { formatoDinero, formatoFecha, formatoFechaConAnio, formatoHora } from "../../../utils/formato.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { textosError } from "../../../utils/textosError.js";
 import "./DetalleEvento.css";
 
 export default function DetalleEvento({
@@ -32,8 +33,10 @@ export default function DetalleEvento({
   const tDisponibilidad = textos?.componentes?.etiquetas?.disponibilidad;
   const local = textosLocales[en ? "en" : "es"];
 
-  const { evento, cargando, error, noEncontrado, recargar } = useEvento(slug);
-  const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : ""); // Sprint 2: también el error de relacionados
+  const { evento, cargando, error, codigo, noEncontrado, recargar } = useEvento(slug);
+  const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, codigo: codigoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
+
+  const mensajeRelacionados = textosError(textos, codigoRelacionados, en);
 
   const [pestana, setPestana] = useState("descripcion");
   const [expandida, setExpandida] = useState(false);
@@ -112,10 +115,8 @@ export default function DetalleEvento({
       <main className="contenedor">
         <EstadoMensaje
           rol="alert"
-          titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
-          texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
-          boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
-          onBoton={recargar} // Sprint 2: solo vuelve a pedir el evento; los relacionados se piden cuando llega
+          {...textosError(textos, codigo, en)}
+          onBoton={recargar}
         />
       </main>
     );
@@ -357,7 +358,7 @@ export default function DetalleEvento({
         </aside>
       </div>
 
-      {(cargandoRelacionados || errorRelacionados || relacionados.length > 0) && ( // Sprint 2: la sección se queda visible con el error
+      {(cargandoRelacionados || errorRelacionados || relacionados.length > 0) && (
         <section
           className="detalle__relacionados"
           aria-labelledby="detalle-relacionados-titulo"
@@ -374,13 +375,12 @@ export default function DetalleEvento({
             </p>
           )}
 
-          {/* SPRINT 2: Hace que si fallan los relacionados aparezca un error compacto que solo los vuelve a pedir */}
           {errorRelacionados ? (
             <EstadoMensaje
               compacto
               rol="alert"
-              texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
-              boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Try again")}
+              texto={mensajeRelacionados.texto}
+              boton={mensajeRelacionados.boton}
               onBoton={recargarRelacionados}
             />
           ) : (
@@ -401,7 +401,6 @@ export default function DetalleEvento({
                 ))}
             </div>
           )}
-          {/* SPRINT 2 */}
         </section>
       )}
     </main>

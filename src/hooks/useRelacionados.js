@@ -14,6 +14,7 @@ export function useRelacionados(slug) {
   const [cargando, setCargando] = useState(true);
 
   const [error, setError] = useState(false);
+  const [codigo, setCodigo] = useState("");
 
   const [intento, setIntento] = useState(0);
 
@@ -25,6 +26,7 @@ export function useRelacionados(slug) {
 
     setCargando(true);
     setError(false);
+    setCodigo("");
 
     async function cargar() {
       try {
@@ -32,7 +34,10 @@ export function useRelacionados(slug) {
 
         if (vigente) setRelacionados(datos.datos.slice(0, MAXIMO));
       } catch (err) {
-        if (vigente) setError(true);
+        if (vigente) {
+          setError(true);
+          setCodigo(err.codigo || "");
+        }
       } finally {
         if (vigente) setCargando(false);
       }
@@ -49,6 +54,7 @@ export function useRelacionados(slug) {
     relacionados,
     cargando,
     error,
+    codigo,
     recargar: () => setIntento((valor) => valor + 1),
   };
 }

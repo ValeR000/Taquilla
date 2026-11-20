@@ -10,6 +10,7 @@ import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { textosError } from "../../../utils/textosError.js"; // Sprint 2
 import "./Explorar.css";
 
 // [LOCAL] Hace que "Limpiar" deje todos los filtros vacíos.
@@ -50,6 +51,7 @@ export default function Explorar({
   categorias = [],          // [API] Categorías para el filtro.
   cargandoCategorias = false, // Sprint 2: indica si las categorías del filtro siguen cargando
   errorCategorias = false,  // Sprint 2: indica si fallaron las categorías del filtro
+  codigoCategorias = "",    // Sprint 2: codigo del error de las categorías
   recargarCategorias,       // Sprint 2: vuelve a pedir solo las categorías
   ciudades = [],            // [API] Ciudades para el filtro.
   textos,                   // [API] Textos de la interfaz.
@@ -78,7 +80,7 @@ export default function Explorar({
   // ==========================================
 
   // [API] Hace que se carguen los eventos según los filtros.
-  const { eventos, paginacion, cargando, error, recargar } = useEventos(filtros);
+  const { eventos, paginacion, cargando, error, codigo, recargar } = useEventos(filtros); // Sprint 2: también el codigo del error
 
   // [API] Hace que los textos de Explorar y de los estados estén a mano.
   const t = textos?.paginas?.explorar;
@@ -248,10 +250,7 @@ export default function Explorar({
           cargandoCategorias={cargandoCategorias} // Sprint 2
           /* SPRINT 2: Hace que el filtro de categoría muestre su error con Reintentar */
           errorCategorias={errorCategorias}
-          mensajeError={{
-            texto: tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again."),
-            boton: tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Try again"),
-          }}
+          mensajeError={textosError(textos, codigoCategorias, en)}
           onReintentarCategorias={recargarCategorias}
           /* SPRINT 2 */
           ciudades={ciudades}
@@ -324,9 +323,7 @@ export default function Explorar({
           {!cargando && error && (
             <EstadoMensaje
               rol="alert"
-              titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
-              texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
-              boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
+              {...textosError(textos, codigo, en)} // Sprint 2: título, mensaje según el codigo y botón
               onBoton={recargar}
             />
           )}

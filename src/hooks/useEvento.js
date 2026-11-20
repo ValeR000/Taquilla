@@ -12,6 +12,7 @@ export function useEvento(slug) {
   const [cargando, setCargando] = useState(true);
 
   const [error, setError] = useState(false);
+  const [codigo, setCodigo] = useState("");
 
   const [noEncontrado, setNoEncontrado] = useState(false);
 
@@ -23,6 +24,7 @@ export function useEvento(slug) {
 
     setCargando(true);
     setError(false);
+    setCodigo("");
     setNoEncontrado(false);
 
     async function cargar() {
@@ -33,7 +35,10 @@ export function useEvento(slug) {
       } catch (err) {
         if (!vigente) return;
         if (err.estado === 404 && err.codigo === "no_encontrado") setNoEncontrado(true);
-        else setError(true);
+        else {
+          setError(true);
+          setCodigo(err.codigo || "");
+        }
       } finally {
         if (vigente) setCargando(false);
       }
@@ -50,6 +55,7 @@ export function useEvento(slug) {
     evento,
     cargando,
     error,
+    codigo,
     noEncontrado,
     recargar: () => setIntento((valor) => valor + 1),
   };
