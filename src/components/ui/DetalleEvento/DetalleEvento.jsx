@@ -13,6 +13,7 @@ import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import { formatoDinero, formatoFecha, formatoFechaConAnio, formatoHora } from "../../../utils/formato.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import "./DetalleEvento.css";
 
 export default function DetalleEvento({
   slug,
@@ -113,58 +114,60 @@ export default function DetalleEvento({
   const leerMas = tr(t?.descripcion?.botones?.leerMas, "Leer más", "Read more");
 
   return (
-    <main className="contenedor detalle">
-
-      <nav className="detalle__migas" aria-label={local.migas}>
-        <ol>
-          <li>
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavegar("inicio");
-              }}
-            >
-              {tr(tMigas?.inicio, "Inicio", "Home")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="/explorar"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavegar("explorar");
-              }}
-            >
-              {tr(tMigas?.explorar, "Explorar", "Explore")}
-            </a>
-          </li>
-          <li aria-current="page">{evento?.titulo}</li>
-        </ol>
-      </nav>
+    <main className="detalle">
 
       <div className="detalle__portada">
-        <AficheEvento afiche={evento?.afiche} clase="detalle__afiche" />
+        <nav className="detalle__migas" aria-label={local.migas}>
+          <ol>
+            <li>
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavegar("inicio");
+                }}
+              >
+                {tr(tMigas?.inicio, "Inicio", "Home")}
+              </a>
+            </li>
+            <li>
+              <a
+                href="/explorar"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavegar("explorar");
+                }}
+              >
+                {tr(tMigas?.explorar, "Explorar", "Explore")}
+              </a>
+            </li>
+            <li aria-current="page">{evento?.titulo}</li>
+          </ol>
+        </nav>
 
-        <button
-          type="button"
-          className="detalle__boton-portada detalle__volver"
-          aria-label={tr(tGeneral?.aria?.volver, "Volver", "Back")}
-          onClick={volver}
-        >
-          <Icono nombre="flechaIzquierda" />
-        </button>
+        <div className="detalle__imagen">
+          <AficheEvento afiche={evento?.afiche} clase="detalle__afiche" />
 
-        {puedeCompartir && (
           <button
             type="button"
-            className="detalle__boton-portada detalle__compartir"
-            aria-label={tr(tGeneral?.acciones?.compartir, "Compartir", "Share")}
-            onClick={compartir}
+            className="detalle__boton-portada detalle__volver"
+            aria-label={tr(tGeneral?.aria?.volver, "Volver", "Back")}
+            onClick={volver}
           >
-            <Icono nombre="compartir" />
+            <Icono nombre="flechaIzquierda" />
           </button>
-        )}
+
+          {puedeCompartir && (
+            <button
+              type="button"
+              className="detalle__boton-portada detalle__compartir"
+              aria-label={tr(tGeneral?.acciones?.compartir, "Compartir", "Share")}
+              onClick={compartir}
+            >
+              <Icono nombre="compartir" />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="detalle__contenido">
@@ -172,13 +175,14 @@ export default function DetalleEvento({
 
           <header className="detalle__encabezado">
             <div className="detalle__etiquetas">
-              <Etiqueta>{nombreCategoria(evento?.categoria)}</Etiqueta>
+              <Etiqueta>{tGeneral?.categorias?.singular?.[evento?.categoria] || nombreCategoria(evento?.categoria)}</Etiqueta>
               <Etiqueta clase="detalle__edad">{edad}</Etiqueta>
             </div>
 
-            <h1 className="detalle__titulo">{evento?.titulo}</h1>
-
-            {artistas && <p className="detalle__artistas">{artistas}</p>}
+            <div className="detalle__titulos">
+              <h1 className="detalle__titulo">{evento?.titulo}</h1>
+              {artistas && <p className="detalle__artistas">{artistas}</p>}
+            </div>
 
             <ul className="detalle__info">
               <li className="detalle__info-item detalle__info-item--fecha">
@@ -202,8 +206,11 @@ export default function DetalleEvento({
                 <span className="detalle__info-icono"><IconoEvento tipo="lugar" /></span>
                 <div className="detalle__info-texto">
                   <small className="detalle__info-etiqueta">{tr(t?.info?.lugar, "Lugar", "Venue")}</small>
-                  <span className="detalle__info-valor">{recinto?.nombre}, {recinto?.ciudad}</span>
-                  <span className="detalle__info-secundario">{recinto?.direccion}</span>
+                  <span className="detalle__info-valor">
+                    {recinto?.nombre}
+                    <span className="detalle__info-ciudad">, {recinto?.ciudad}</span>
+                  </span>
+                  <span className="detalle__info-secundario">{recinto?.direccion}, {recinto?.ciudad}</span>
                 </div>
               </li>
             </ul>

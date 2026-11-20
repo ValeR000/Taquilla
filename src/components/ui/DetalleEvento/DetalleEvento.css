@@ -1,0 +1,348 @@
+/* SPRINT 2: Estilos de la vista de detalle de un evento (/eventos/{slug}) según Figma */
+
+.detalle h2 {
+  font-size: var(--texto-subtitulo);
+  letter-spacing: -0.025em;
+}
+
+/* =========================================
+   SECCIÓN: Portada (migas + afiche)
+   ========================================= */
+.detalle__portada {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 32px 80px 0;
+}
+
+.detalle__migas ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--texto-pequeno);
+  font-weight: 400;
+  line-height: 1.4286;
+  color: var(--texto-secundario);
+}
+
+.detalle__migas li + li::before {
+  content: "›";
+  margin-right: 8px;
+  color: var(--texto-secundario);
+}
+
+.detalle__migas a {
+  color: inherit;
+}
+
+.detalle__migas a:hover {
+  color: var(--color-texto);
+  text-decoration: underline;
+}
+
+.detalle__migas [aria-current="page"] {
+  color: var(--color-texto);
+  font-weight: 500;
+}
+
+.detalle__imagen {
+  position: relative;
+}
+
+.detalle__afiche {
+  height: 360px;
+  border-radius: var(--radio);
+}
+
+.detalle__boton-portada {
+  display: none;
+}
+
+/* =========================================
+   SECCIÓN: Contenido (principal + aside)
+   ========================================= */
+.detalle__contenido {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  align-items: start;
+  gap: 48px;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 40px 80px 64px;
+}
+
+.detalle__principal {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+/* =========================================
+   SECCIÓN: Encabezado del evento
+   ========================================= */
+.detalle__encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detalle__etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detalle__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detalle__artistas {
+  font-size: var(--texto-base);
+  line-height: 1.5;
+  color: var(--texto-secundario);
+}
+
+/* =========================================
+   SECCIÓN: Info (fecha, hora y lugar)
+   ========================================= */
+.detalle__info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detalle__info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.detalle__info-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio-md);
+  background: var(--fondo-sutil);
+  color: var(--color-texto);
+}
+
+.detalle__info-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.detalle__info-etiqueta {
+  font-size: var(--texto-xs);
+  line-height: 1.3333;
+  color: var(--texto-secundario);
+}
+
+.detalle__info-valor {
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  line-height: 1.4286;
+  overflow-wrap: anywhere;
+}
+
+.detalle__info-secundario {
+  display: none;
+  font-size: var(--texto-pequeno);
+  line-height: 1.4286;
+  color: var(--texto-secundario);
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   SECCIÓN: Pestañas
+   ========================================= */
+.detalle__pestanas ul {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.detalle__pestana {
+  display: block;
+  margin-bottom: -1px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid transparent;
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  line-height: 1.4286;
+  color: var(--texto-secundario);
+}
+
+.detalle__pestana:hover {
+  color: var(--color-texto);
+}
+
+.detalle__pestana[aria-current="true"] {
+  border-bottom-color: var(--color-texto);
+  color: var(--color-texto);
+}
+
+/* =========================================
+   SECCIÓN: Sobre el evento
+   ========================================= */
+.detalle__descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detalle__descripcion-texto {
+  font-size: var(--texto-base);
+  line-height: 1.5;
+  color: var(--texto-secundario);
+  white-space: pre-line;
+}
+
+.detalle__leer-mas {
+  display: none;
+}
+
+/* =========================================
+   SECCIÓN: Cómo llegar
+   ========================================= */
+.detalle__como-llegar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detalle__mapa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 220px;
+  padding: 16px;
+  border-radius: var(--radio-md);
+  background: var(--fondo-sutil);
+  font-size: var(--texto-xs);
+  color: var(--texto-secundario);
+  text-align: center;
+}
+
+.detalle__mapa svg {
+  color: var(--color-texto);
+}
+
+.detalle__direccion {
+  font-size: var(--texto-base);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--texto-secundario);
+}
+
+/* =========================================
+   SECCIÓN: Aside (desde, funciones y localidades)
+   ========================================= */
+.detalle__lateral {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+}
+
+.detalle__desde small {
+  font-size: var(--texto-xs);
+  color: var(--texto-secundario);
+}
+
+.detalle__desde strong {
+  display: block;
+  font-size: var(--texto-subtitulo);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.detalle__funciones,
+.detalle__localidades {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detalle__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detalle__lista-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4px 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-borde-suave);
+  font-size: var(--texto-pequeno);
+  line-height: 1.4286;
+}
+
+.detalle__lista-nombre {
+  flex: 1 1 140px;
+  min-width: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.detalle__lista-precio {
+  font-weight: 600;
+}
+
+.detalle__lista-disponibles {
+  flex-basis: 100%;
+  color: var(--texto-secundario);
+}
+
+.detalle__funciones .detalle__lista-disponibles {
+  flex-basis: auto;
+}
+
+/* =========================================
+   SECCIÓN: Relacionados
+   ========================================= */
+.detalle__relacionados {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 0 80px 64px;
+}
+
+.detalle__relacionados-lista {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
