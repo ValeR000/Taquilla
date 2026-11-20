@@ -9,6 +9,12 @@ const API = `${import.meta.env.VITE_API_URL}/textos`;
 // [LOCAL] Hace que se guarde una caché en memoria para evitar peticiones repetitivas a la API.
 const cache = {};
 
+/* SPRINT 2: Hace que se sepa si la página se está cerrando o recargando, porque el navegador cancela las peticiones en curso */
+let saliendo = false;
+window.addEventListener("pagehide", () => { saliendo = true; });
+window.addEventListener("pageshow", () => { saliendo = false; });
+/* SPRINT 2 */
+
 // [LOCAL] Hace que se intente recuperar los textos guardados en el sessionStorage del navegador.
 function leerGuardado(idioma) {
   try {
@@ -117,7 +123,7 @@ export function useTextos(idioma) {
       } catch (error) {
         // [LOCAL] Hace que se active el estado de error si falla la petición y no hay datos guardados.
         if (vigente && !expirado && !guardado) {
-          console.error("Error al cargar los textos:", error);
+          if (!saliendo) console.error("Error al cargar los textos:", error); // Sprint 2: no imprime la cancelación esperada al recargar o salir
           setError(true);
         }
       } finally {
