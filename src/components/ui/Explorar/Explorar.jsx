@@ -1,6 +1,7 @@
 // RESPONSABILIDAD: Vista Explorar (/explorar) con filtros en la URL, orden, paginación, estados y panel de filtros móvil.
 import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
+import { useReintento } from "../../../hooks/useReintento.js"; // Sprint 2
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import Icono from "../../ui/Icono.jsx";
@@ -10,6 +11,7 @@ import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { textosError } from "../../../utils/textosError.js"; // Sprint 2
 import "./Explorar.css";
 
 // [LOCAL] Hace que "Limpiar" deje todos los filtros vacíos.
@@ -48,6 +50,10 @@ function guardarFiltros(filtros) {
 export default function Explorar({
   en,                       // [LOCAL] Indica si el idioma es inglés.
   categorias = [],          // [API] Categorías para el filtro.
+  cargandoCategorias = false, // Sprint 2: indica si las categorías del filtro siguen cargando
+  errorCategorias = false,  // Sprint 2: indica si fallaron las categorías del filtro
+  codigoCategorias = "",    // Sprint 2: codigo del error de las categorías
+  recargarCategorias,       // Sprint 2: vuelve a pedir solo las categorías
   ciudades = [],            // [API] Ciudades para el filtro.
   textos,                   // [API] Textos de la interfaz.
   onAbrir,                  // [LOCAL] Función para abrir el detalle de un evento.
@@ -75,7 +81,12 @@ export default function Explorar({
   // ==========================================
 
   // [API] Hace que se carguen los eventos según los filtros.
-  const { eventos, paginacion, cargando, error, recargar } = useEventos(filtros);
+  const { eventos, paginacion, cargando, error, codigo, recargar } = useEventos(filtros); // Sprint 2: también el codigo del error
+
+  /* SPRINT 2: Hace que Reintentar lleve el foco al título si carga bien, o al botón si vuelve a fallar */
+  const reintentoLista = useReintento(cargando, error, recargar, "explorar-titulo");
+  const reintentoCategorias = useReintento(cargandoCategorias, errorCategorias, recargarCategorias, "panel-filtros-categoria");
+  /* SPRINT 2 */
 
   // [API] Hace que los textos de Explorar y de los estados estén a mano.
   const t = textos?.paginas?.explorar;
@@ -193,14 +204,14 @@ export default function Explorar({
       </nav>
 
       {/* [STATIC] Hace que aparezca el título de la vista. */}
-      <h1 className="explorar__titulo">{local.titulo}</h1>
+      <h1 id="explorar-titulo" tabIndex={-1} className="explorar__titulo">{local.titulo}</h1>{/* Sprint 2: puede recibir el foco después de Reintentar */}
 
       {/* [API] Hace que aparezca cuántos eventos coinciden con los filtros. */}
-      {paginacion && (
-        <p className="explorar__resultados" role="status">
-          {textoResultados}
-        </p>
-      )}
+      {/* SPRINT 2: Hace que el contador reserve su línea mientras carga */}
+      <p className="explorar__resultados" role="status">
+        {paginacion ? textoResultados : " "}
+      </p>
+      {/* SPRINT 2 */}
 
       {/* [STATIC] Hace que aparezcan el buscador y el botón de filtros en móvil. */}
       <div className="explorar__buscador-movil">
@@ -242,6 +253,13 @@ export default function Explorar({
           textos={t}
           local={local}
           categorias={categorias}
+          cargandoCategorias={cargandoCategorias} // Sprint 2
+          /* SPRINT 2: Hace que el filtro de categoría muestre su error con Reintentar */
+          errorCategorias={errorCategorias}
+          mensajeError={textosError(textos, codigoCategorias, en)}
+          onReintentarCategorias={reintentoCategorias.reintentar}
+          enfocarBotonCategorias={reintentoCategorias.enfocarBoton}
+          /* SPRINT 2 */
           ciudades={ciudades}
           filtros={filtros}
           onCambiar={actualizar}
@@ -250,7 +268,7 @@ export default function Explorar({
           nombreCategoria={nombreCategoria}
         />
 
-        <section className="explorar__contenido">
+        <section className="explorar__contenido" aria-busy={cargando}>{/* Sprint 2: avisa que los resultados están cargando */}
           {/* [ACCESIBILIDAD] Hace que los lectores de pantalla encuentren un título antes de los resultados. */}
           <h2 className="solo-lectores">{textoResultados}</h2>
           <div className="explorar__barra">
@@ -276,7 +294,7 @@ export default function Explorar({
 
             <div className="explorar__barra-fila">
               {/* [API] Hace que aparezca el conteo corto en móvil. */}
-              {paginacion && <p className="explorar__total-movil">{textoCorto}</p>}
+              <p className="explorar__total-movil">{paginacion ? textoCorto : " "}</p>{/* Sprint 2: reserva el espacio del contador mientras carga */}
 
               {/* [LOCAL] Hace que se pueda cambiar el orden de los resultados. */}
               <label className="explorar__orden">
@@ -293,28 +311,38 @@ export default function Explorar({
           </div>
 
           {/* [API] Hace que aparezca el estado de carga. */}
+          {/* SPRINT 2: Hace que mientras carga se vean 9 tarjetas esqueleto y el lector anuncie la carga */}
           {cargando && (
-            <EstadoMensaje
-              rol="status"
-              titulo={tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
-              texto={tr(tEstado?.cargando?.texto, "Esto puede tardar unos segundos.", "This may take a few seconds.")}
-            />
+            <>
+              <p className="solo-lectores" role="status">
+                {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+              </p>
+              <div className="explorar__grid">
+                {Array.from({ length: 9 }, (_, i) => (
+                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
+                ))}
+              </div>
+            </>
           )}
+          {/* SPRINT 2 */}
 
           {/* [API] Hace que aparezca el error con un botón para reintentar. */}
           {!cargando && error && (
             <EstadoMensaje
               rol="alert"
-              titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
-              texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
-              boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
-              onBoton={recargar}
+              clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
+              {...textosError(textos, codigo, en)} // Sprint 2: título, mensaje según el codigo y botón
+              /* SPRINT 2: Hace que Reintentar maneje el foco */
+              onBoton={reintentoLista.reintentar}
+              enfocarBoton={reintentoLista.enfocarBoton}
+              /* SPRINT 2 */
             />
           )}
 
           {/* [API] Hace que aparezca el estado vacío con un botón para limpiar filtros. */}
           {!cargando && !error && eventos.length === 0 && (
             <EstadoMensaje
+              clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
               titulo={tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}
               texto={tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}
               boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}

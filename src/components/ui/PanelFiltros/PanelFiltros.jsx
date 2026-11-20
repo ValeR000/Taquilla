@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { formatoDinero } from "../../../utils/formato.js";
 import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
+import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx"; // Sprint 2
 import { crearTraductor } from "../../../utils/traductor.js";
 import "./PanelFiltros.css";
 
@@ -22,6 +23,13 @@ export default function PanelFiltros({
   textos,
   local,
   categorias = [],
+  cargandoCategorias = false, // Sprint 2: indica si las categorías siguen cargando
+  /* SPRINT 2: Error de las categorías con sus textos y su reintento */
+  errorCategorias = false,
+  mensajeError,
+  onReintentarCategorias,
+  enfocarBotonCategorias = false,
+  /* SPRINT 2 */
   ciudades = [],
   filtros,
   onCambiar,
@@ -120,12 +128,31 @@ export default function PanelFiltros({
         {/* SECCIÓN: Filtro por Categoría              */}
         {/* ========================================== */}
         <div className="panel-filtros__grupo">
-          <h3 id={`${id}-categoria`} className="panel-filtros__subtitulo">
+          <h3 id={`${id}-categoria`} tabIndex={-1} className="panel-filtros__subtitulo">{/* Sprint 2: puede recibir el foco después de Reintentar */}
             {tr(tf?.categoria, "Categoría", "Category")}
           </h3>
 
+          {/* SPRINT 2: Hace que si fallan las categorías aparezca un error pequeño con Reintentar en lugar de las opciones */}
+          {errorCategorias && (
+            <EstadoMensaje
+              compacto
+              rol="alert"
+              clase="panel-filtros__error"
+              texto={mensajeError?.texto}
+              boton={mensajeError?.boton}
+              onBoton={onReintentarCategorias}
+              enfocarBoton={enfocarBotonCategorias}
+            />
+          )}
+          {/* SPRINT 2 */}
+
           {/* [ACCESIBILIDAD] Usa un grupo de radios para que solo se seleccione una categoría a la vez (como lo permite la API). */}
-          <div role="radiogroup" aria-labelledby={`${id}-categoria`} className="panel-filtros__opciones">
+          <div role="radiogroup" aria-labelledby={`${id}-categoria`} className="panel-filtros__opciones" aria-busy={cargandoCategorias} hidden={errorCategorias}>{/* Sprint 2 */}
+            {/* SPRINT 2: Hace que aparezcan filas esqueleto mientras cargan las categorías */}
+            {cargandoCategorias && categorias.length === 0 && Array.from({ length: 6 }, (_, i) => (
+              <span key={i} className="panel-filtros__esqueleto" aria-hidden="true" />
+            ))}
+            {/* SPRINT 2 */}
             {categorias.map((cat) => (
               <label key={cat.id} className="panel-filtros__opcion">
                 {/* [API] Input radio que se conecta con el filtro actual */}

@@ -28,7 +28,7 @@ export default function CategoriasEventos({ categorias = [], filtros, filtrarCat
 
   return (
     // [ACCESIBILIDAD] Etiqueta semántica de navegación con su descripción para lectores de pantalla.
-    <nav className="categorias-eventos" aria-label={textosLocales[en ? "en" : "es"].categoriasAria}>
+    <nav id="categorias-eventos" tabIndex={-1} className="categorias-eventos" aria-label={textosLocales[en ? "en" : "es"].categoriasAria}>{/* Sprint 2: puede recibir el foco después de Reintentar */}
       
       {/* [LOCAL] Botón "Todos". Hace que se limpien los filtros de categoría. */}
       <button

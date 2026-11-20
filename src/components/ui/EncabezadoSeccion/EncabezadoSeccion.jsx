@@ -13,7 +13,7 @@ export default function EncabezadoSeccion({
     <div className="titulo-seccion">
       <div>
         {/* [API] Hace que aparezca el título de la sección. */}
-        <h2 id={idTitulo}>{titulo}</h2>
+        <h2 id={idTitulo} tabIndex={-1}>{titulo}</h2>{/* Sprint 2: puede recibir el foco después de Reintentar */}
 
         {/* [LOCAL] Hace que aparezca la descripción*/}
         {descripcion && <p>{descripcion}</p>}

@@ -83,6 +83,24 @@
   gap: var(--espacio-1);
 }
 
+/* SPRINT 2: Hace que las opciones se oculten mientras se muestra el error de las categorías */
+.panel-filtros__opciones[hidden] {
+  display: none;
+}
+/* SPRINT 2 */
+
+/* SPRINT 2: Hace que el error de categorías ocupe el alto de las 6 opciones para que los demás filtros no suban */
+.panel-filtros__error {
+  min-height: calc((var(--texto-pequeno) * 1.6 + 12px) * 6 + 20px);
+}
+
+@media (max-width: 640px) {
+  .panel-filtros__error {
+    min-height: 0;
+  }
+}
+/* SPRINT 2 */
+
 .panel-filtros__opcion {
   position: relative;
   display: flex;
@@ -92,6 +110,14 @@
   font-size: var(--texto-pequeno);
   cursor: pointer;
 }
+
+/* SPRINT 2: Fila esqueleto con la misma altura que una opción de categoría */
+.panel-filtros__esqueleto {
+  height: calc(var(--texto-pequeno) * 1.6 + 12px);
+  border-radius: var(--radio-sm);
+  background: var(--fondo-sutil);
+}
+/* SPRINT 2 */
 
 .panel-filtros__opcion small {
   margin-left: auto; /* Hace que el número de eventos se empuje a la derecha */

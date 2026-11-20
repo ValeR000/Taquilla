@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { useEvento } from "../../../hooks/useEvento.js";
 import { useRelacionados } from "../../../hooks/useRelacionados.js";
+import { useReintento } from "../../../hooks/useReintento.js";
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
+import DetalleEsqueleto from "./DetalleEsqueleto.jsx";
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
@@ -13,6 +15,7 @@ import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import { formatoDinero, formatoFecha, formatoFechaConAnio, formatoHora } from "../../../utils/formato.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { textosError } from "../../../utils/textosError.js";
 import "./DetalleEvento.css";
 
 export default function DetalleEvento({
@@ -31,8 +34,13 @@ export default function DetalleEvento({
   const tDisponibilidad = textos?.componentes?.etiquetas?.disponibilidad;
   const local = textosLocales[en ? "en" : "es"];
 
-  const { evento, cargando, error, noEncontrado, recargar } = useEvento(slug);
-  const { relacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
+  const { evento, cargando, error, codigo, noEncontrado, recargar } = useEvento(slug);
+  const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, codigo: codigoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
+
+  const mensajeRelacionados = textosError(textos, codigoRelacionados, en);
+
+  const reintentoEvento = useReintento(cargando, error, recargar, "detalle-titulo", "detalle-espera");
+  const reintentoRelacionados = useReintento(cargandoRelacionados, errorRelacionados, recargarRelacionados, "detalle-relacionados-titulo");
 
   const [pestana, setPestana] = useState("descripcion");
   const [expandida, setExpandida] = useState(false);
@@ -79,11 +87,6 @@ export default function DetalleEvento({
     };
   }, [tituloPagina, descripcionPagina]);
 
-  function reintentar() {
-    recargar();
-    recargarRelacionados();
-  }
-
   function nombreCategoria(id) {
     return categorias.find((c) => c.id === id)?.nombre || id;
   }
@@ -109,21 +112,21 @@ export default function DetalleEvento({
 
   if (cargando) {
     return (
-      <main className="contenedor">
-        <p role="status">{tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}</p>
-      </main>
+      <>
+        <span id="detalle-espera" tabIndex={-1} className="solo-lectores" />
+        <DetalleEsqueleto en={en} textos={textos} />
+      </>
     );
   }
 
   if (error) {
     return (
-      <main className="contenedor">
+      <main className="contenedor detalle__estado">
         <EstadoMensaje
           rol="alert"
-          titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
-          texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
-          boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
-          onBoton={reintentar}
+          {...textosError(textos, codigo, en)}
+          onBoton={reintentoEvento.reintentar}
+          enfocarBoton={reintentoEvento.enfocarBoton}
         />
       </main>
     );
@@ -226,7 +229,7 @@ export default function DetalleEvento({
             </div>
 
             <div className="detalle__titulos">
-              <h1 className="detalle__titulo">{evento?.titulo}</h1>
+              <h1 id="detalle-titulo" tabIndex={-1} className="detalle__titulo">{evento?.titulo}</h1>
               {artistas && <p className="detalle__artistas">{artistas}</p>}
             </div>
 
@@ -365,25 +368,50 @@ export default function DetalleEvento({
         </aside>
       </div>
 
-      {relacionados.length > 0 && (
-        <section className="detalle__relacionados" aria-labelledby="detalle-relacionados-titulo">
+      {(cargandoRelacionados || errorRelacionados || relacionados.length > 0) && (
+        <section
+          className="detalle__relacionados"
+          aria-labelledby="detalle-relacionados-titulo"
+          aria-busy={cargandoRelacionados}
+        >
           <EncabezadoSeccion
             idTitulo="detalle-relacionados-titulo"
             titulo={tr(t?.relacionados?.titulo, "También te puede interesar", "You may also like")}
           />
 
-          <div className="detalle__relacionados-lista">
-            {relacionados.map((relacionado) => (
-              <TarjetaEvento
-                key={relacionado.id}
-                evento={relacionado}
-                nombreCategoria={nombreCategoria(relacionado.categoria)}
-                en={en}
-                textos={textos}
-                onAbrir={onAbrir}
-              />
-            ))}
-          </div>
+          {cargandoRelacionados && (
+            <p className="solo-lectores" role="status">
+              {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+            </p>
+          )}
+
+          {errorRelacionados ? (
+            <EstadoMensaje
+              compacto
+              rol="alert"
+              texto={mensajeRelacionados.texto}
+              boton={mensajeRelacionados.boton}
+              onBoton={reintentoRelacionados.reintentar}
+              enfocarBoton={reintentoRelacionados.enfocarBoton}
+            />
+          ) : (
+            <div className="detalle__relacionados-lista">
+              {cargandoRelacionados
+                ? Array.from({ length: 4 }, (_, i) => (
+                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
+                ))
+                : relacionados.map((relacionado) => (
+                  <TarjetaEvento
+                    key={relacionado.id}
+                    evento={relacionado}
+                    nombreCategoria={nombreCategoria(relacionado.categoria)}
+                    en={en}
+                    textos={textos}
+                    onAbrir={onAbrir}
+                  />
+                ))}
+            </div>
+          )}
         </section>
       )}
     </main>

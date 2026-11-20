@@ -15,6 +15,7 @@ export default function Hero({
   textos,
   children,           // [LOCAL] El componente del buscador que se inyecta desde App.jsx.
   destacado,          // [API] El evento destacado que viene de la API.
+  cargandoDestacado = false, // Sprint 2: indica si el evento destacado sigue cargando
   abrirEvento,        // [LOCAL] Función para abrir el detalle del evento.
   onBuscar
 }) {
@@ -67,7 +68,7 @@ export default function Hero({
 
         {/* [STATIC] Componente de la tarjeta derecha. */}
         {/* [API] Le pasa el evento destacado desde la API. */}
-        <EventoDestacado evento={destacado} en={en} textos={textos} onAbrir={abrirEvento} />
+        <EventoDestacado evento={destacado} en={en} textos={textos} onAbrir={abrirEvento} cargando={cargandoDestacado} />{/* Sprint 2 */}
       </div>
     </section>
   );

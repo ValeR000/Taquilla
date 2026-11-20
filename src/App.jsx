@@ -14,6 +14,7 @@ import { useTextos } from "./hooks/useTextos.js";
 import { useEventosDestacados } from "./hooks/useEventosDestacados.js";
 import { useCategorias } from "./hooks/useCategorias.js";
 import { useCiudades } from "./hooks/useCiudades.js";
+import { useReintento } from "./hooks/useReintento.js"; // Sprint 2
 import "./App.css";
 
 import Footer from "./components/layout/Footer/Footer.jsx";
@@ -31,6 +32,7 @@ import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
 import { crearTraductor } from "./utils/traductor.js";
+import { textosError } from "./utils/textosError.js"; // Sprint 2
 import { useCallback, useEffect, useState } from "react";
 
 import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
@@ -115,6 +117,7 @@ function App() {
     eventos,
     cargando: cargandoEventos,
     error: errorEventos,
+    codigo: codigoEventos, // Sprint 2: codigo del error para elegir el mensaje
     recargar: recargarEventos
   } = useEventosDestacados();
 
@@ -123,8 +126,14 @@ function App() {
   categorias,
   cargando: cargandoCategorias,
   error: errorCategorias,
+  codigo: codigoCategorias, // Sprint 2: codigo del error para elegir el mensaje
   recargar: recargarCategorias
 } = useCategorias();
+
+  /* SPRINT 2: Hace que Reintentar lleve el foco al título de la sección si carga bien, o al botón si vuelve a fallar */
+  const reintentoEventos = useReintento(cargandoEventos, errorEventos, recargarEventos, "eventos-titulo");
+  const reintentoCategorias = useReintento(cargandoCategorias, errorCategorias, recargarCategorias, "categorias-eventos");
+  /* SPRINT 2 */
 
   // [API] Hace que se carguen las ciudades para los buscadores.
   const { ciudades } = useCiudades();
@@ -134,6 +143,8 @@ function App() {
   const tr = crearTraductor(en);
 
   const slugEvento = activo.startsWith("eventos/") ? activo.replace("eventos/", "") : ""; // Sprint 2: slug del evento leído de la ruta /eventos/{slug}
+
+  const mensajeCategorias = textosError(datos.textos, codigoCategorias, en); // Sprint 2: mensaje y botón del error compacto de categorías
 
   // [API] Hace que el primer evento destacado aparezca en la tarjeta del Hero.
   const eventoDestacado = eventos?.[0];
@@ -285,6 +296,10 @@ function App() {
           key={busquedaId}
           en={en}
           categorias={categorias}
+          cargandoCategorias={cargandoCategorias} // Sprint 2: para los esqueletos del filtro de categoría
+          errorCategorias={errorCategorias} // Sprint 2: para el error del filtro de categoría
+          codigoCategorias={codigoCategorias} // Sprint 2: para el mensaje del error según su codigo
+          recargarCategorias={recargarCategorias} // Sprint 2: para reintentar solo las categorías
           ciudades={ciudades}
           onAbrir={abrirEvento}
           onNavegar={navegar}
@@ -313,6 +328,7 @@ function App() {
             en={en}
             textos={datos.textos}
             destacado={eventoDestacado}
+            cargandoDestacado={cargandoEventos} // Sprint 2: para la tarjeta esqueleto del Hero
             abrirEvento={abrirEvento}
             onBuscar={buscar}
           >
@@ -334,11 +350,17 @@ function App() {
             {/* [API] Hace que aparezca el error de categorías con un botón para reintentar. */}
             {errorCategorias && (
               <EstadoMensaje
+                /* SPRINT 2: Hace que el error sea compacto, con el mismo alto que la fila de categorías, y su mensaje salga del codigo */
+                compacto
                 rol="alert"
-                clase="inicio__estado"
-                titulo={tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}
-                boton={tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
-                onBoton={recargarCategorias}
+                clase="inicio__estado inicio__estado--categorias"
+                texto={mensajeCategorias.texto}
+                boton={mensajeCategorias.boton}
+                /* SPRINT 2 */
+                /* SPRINT 2: Hace que Reintentar maneje el foco */
+                onBoton={reintentoCategorias.reintentar}
+                enfocarBoton={reintentoCategorias.enfocarBoton}
+                /* SPRINT 2 */
               />
             )}
 
@@ -369,10 +391,12 @@ function App() {
             {errorEventos && (
               <EstadoMensaje
                 rol="alert"
-                clase="inicio__estado"
-                titulo={tr(estados?.error?.titulo, "Algo salió mal", "Something went wrong")}
-                boton={tr(estados?.error?.botones?.reintentar, "Reintentar", "Retry")}
-                onBoton={recargarEventos}
+                clase="inicio__estado inicio__estado--destacados" // Sprint 2: reserva el alto del carrusel en móvil
+                {...textosError(datos.textos, codigoEventos, en)} // Sprint 2: título, mensaje según el codigo y botón
+                /* SPRINT 2: Hace que Reintentar maneje el foco */
+                onBoton={reintentoEventos.reintentar}
+                enfocarBoton={reintentoEventos.enfocarBoton}
+                /* SPRINT 2 */
               />
             )}
 
@@ -412,13 +436,16 @@ function App() {
                 />
 
                 {/* [API] Hace que aparezca la lista "Este fin de semana" (solo móvil). */}
-                {!cargandoEventos && <SeccionFinDeSemana
+                {/* SPRINT 2: Hace que la lista se vea con filas esqueleto mientras cargan los eventos */}
+                <SeccionFinDeSemana
+                  cargando={cargandoEventos}
                   eventos={eventos.slice(4, 7)}
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
                   textos={datos.textos}
-                />}
+                />
+                {/* SPRINT 2 */}
               </>
             )}
           </main>

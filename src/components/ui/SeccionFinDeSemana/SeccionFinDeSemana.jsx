@@ -15,7 +15,8 @@ export default function SeccionFinDeSemana({
   en,                 // [LOCAL] Indica si el idioma es inglés.
   textos,             // [API] Textos de la interfaz.
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
-  onVerTodos          // [LOCAL] Función para ir a Explorar.
+  onVerTodos,         // [LOCAL] Función para ir a Explorar.
+  cargando = false    // Sprint 2: indica si los eventos siguen cargando
 }) {
   // ==========================================
   // BLOQUE A: TEXTOS
@@ -47,7 +48,21 @@ export default function SeccionFinDeSemana({
         onBoton={onVerTodos}
       />
 
-      <ul className="fin-de-semana__lista">
+      <ul className="fin-de-semana__lista" aria-busy={cargando}>{/* Sprint 2 */}
+        {/* SPRINT 2: Hace que aparezcan 3 filas esqueleto mientras cargan los eventos */}
+        {cargando && Array.from({ length: 3 }, (_, i) => (
+          <li key={i} aria-hidden="true">
+            <span className="fin-de-semana__item fin-de-semana__esqueleto">
+              <span className="fin-de-semana__afiche" />
+              <span className="fin-de-semana__texto">
+                <strong className="fin-de-semana__titulo fin-de-semana__barra">{" "}</strong>
+                <small className="fin-de-semana__barra fin-de-semana__barra--corta">{" "}</small>
+                <span className="fin-de-semana__precio fin-de-semana__barra fin-de-semana__barra--corta">{" "}</span>
+              </span>
+            </span>
+          </li>
+        ))}
+        {/* SPRINT 2 */}
         {eventos.map((evento) => (
           <li key={evento.id}>
             {/* [LOCAL] Hace que toda la fila lleve a /eventos/slug sin recargar la página. */}

@@ -85,4 +85,25 @@
     font-size: var(--texto-pequeno);
     font-weight: 600;
   }
+
+  /* SPRINT 2: Fila esqueleto con las mismas medidas que una fila real */
+  .fin-de-semana__esqueleto {
+    cursor: default;
+  }
+
+  .fin-de-semana__esqueleto .fin-de-semana__afiche {
+    background: var(--fondo-sutil);
+  }
+
+  .fin-de-semana__barra {
+    width: 160px;
+    color: transparent;
+    border-radius: var(--radio-sm);
+    background: linear-gradient(var(--fondo-sutil), var(--fondo-sutil)) left center / 100% 70% no-repeat;
+  }
+
+  .fin-de-semana__barra--corta {
+    width: 96px;
+  }
+  /* SPRINT 2 */
 }

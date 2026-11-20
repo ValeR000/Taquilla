@@ -19,6 +19,7 @@ export function useCategorias() {
   
   // [LOCAL] Hace que la app sepa si hubo un error en la petición.
   const [error, setError] = useState(false);
+  const [codigo, setCodigo] = useState(""); // Sprint 2: codigo del error que devuelve la API
   
   // [LOCAL] Hace que al incrementar este número se vuelva a pedir la información.
   const [intento, setIntento] = useState(0);
@@ -35,6 +36,7 @@ export function useCategorias() {
     // [LOCAL] Hace que se active el estado de carga y se limpie cualquier error previo.
     setCargando(true);
     setError(false);
+    setCodigo(""); // Sprint 2
 
     // [LOCAL] Función asíncrona que realiza la petición.
     async function cargar() {
@@ -47,7 +49,12 @@ export function useCategorias() {
         if (vigente) setCategorias(datos.datos);
       } catch (err) {
         // [LOCAL] Hace que se active el estado de error si la petición falla.
-        if (vigente) setError(true);
+        /* SPRINT 2: Hace que se guarde también el codigo del error de la API */
+        if (vigente) {
+          setError(true);
+          setCodigo(err.codigo || "");
+        }
+        /* SPRINT 2 */
       } finally {
         // [LOCAL] Hace que se apague el estado de carga pase lo que pase.
         if (vigente) setCargando(false);
@@ -72,6 +79,7 @@ export function useCategorias() {
     categorias,
     cargando,
     error,
+    codigo, // Sprint 2
     // [LOCAL] Hace que el botón "Reintentar" sume 1 al intento para disparar el efecto de nuevo.
     recargar: () => setIntento((valor) => valor + 1),
   };

@@ -28,6 +28,7 @@ export function useEventos({
   
   // [LOCAL] Hace que la app sepa si hubo un error en la petición.
   const [error, setError] = useState(false);
+  const [codigo, setCodigo] = useState(""); // Sprint 2: codigo del error que devuelve la API
   
   // [LOCAL] Hace que se fuerce la recarga manual de la petición.
   const [intento, setIntento] = useState(0);
@@ -47,6 +48,7 @@ export function useEventos({
     // [LOCAL] Hace que se active el estado de carga y se limpien errores previos.
     setCargando(true);
     setError(false);
+    setCodigo(""); // Sprint 2
 
     // [LOCAL] Función asíncrona que realiza la petición.
     async function cargar() {
@@ -61,7 +63,12 @@ export function useEventos({
         }
       } catch (err) {
         // [LOCAL] Hace que se active el estado de error si la petición falla.
-        if (vigente) setError(true);
+        /* SPRINT 2: Hace que se guarde también el codigo del error de la API */
+        if (vigente) {
+          setError(true);
+          setCodigo(err.codigo || "");
+        }
+        /* SPRINT 2 */
       } finally {
         // [LOCAL] Hace que se apague el estado de carga al terminar la petición.
         if (vigente) setCargando(false);
@@ -83,6 +90,7 @@ export function useEventos({
     paginacion,
     cargando,
     error,
+    codigo, // Sprint 2
     // [LOCAL] Hace que el botón de reintentar sume 1 al intento para forzar la recarga.
     recargar: () => setIntento((valor) => valor + 1),
   };

@@ -273,6 +273,12 @@
     white-space: nowrap;
   }
 
+  /* SPRINT 2: Hace que el estado vacío o de error llegue hasta el borde de la pantalla para que el footer no suba */
+  .explorar__estado {
+    min-height: calc(100svh - 240px);
+  }
+  /* SPRINT 2 */
+
   .explorar__barra-fila {
     justify-content: space-between;
     margin-left: 0;
