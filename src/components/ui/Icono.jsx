@@ -75,6 +75,19 @@ const ICONOS = {
       </>
     ),
   },
+
+  /* SPRINT 2: Hace que el botón de compartir del detalle tenga su ícono */
+  compartir: {
+    caja: 24,
+    tamano: 18,
+    trazos: (
+      <>
+        <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7" />
+        <path d="m16 6-4-4-4 4M12 2v13" />
+      </>
+    ),
+  },
+  /* SPRINT 2 */
 };
 
 // ##########

@@ -188,7 +188,7 @@ function App() {
 
   // [LOCAL] Hace que la URL cambie sin recargar, quede en el historial y la página suba al inicio.
   function cambiarRuta(ruta, nuevaVista) {
-    window.history.pushState(null, "", ruta);
+    window.history.pushState({ interna: true }, "", ruta); // Sprint 2: marca las rutas abiertas desde la app para que "Volver" sepa si hay historial
     setActivo(nuevaVista);
     window.scrollTo(0, 0);
   }
@@ -297,7 +297,9 @@ function App() {
           slug={slugEvento}
           en={en}
           textos={datos.textos}
+          categorias={categorias}
           onAbrir={abrirEvento}
+          onNavegar={navegar}
         />
         /* SPRINT 2 */
       ) : (

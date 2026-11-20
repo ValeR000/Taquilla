@@ -20,6 +20,13 @@ export const textosLocales = {
     cerrarPanel: "Cerrar panel",
 
     populares: ["Salsa", "Stand-up", "Fútbol", "Festivales de fin de año"],
+
+    /* SPRINT 2: Textos del detalle del evento que no vienen en /textos */
+    detalleSecciones: "Secciones del evento",
+    funciones: "Funciones",
+    localidades: "Localidades",
+    leerMenos: "Leer menos",
+    /* SPRINT 2 */
   },
   en: {
     titulo: "Explore events",
@@ -37,6 +44,13 @@ export const textosLocales = {
     cerrarPanel: "Close panel",
 
     populares: ["Salsa", "Stand-up", "Soccer", "Year-end festivals"],
+
+    /* SPRINT 2: Textos del detalle del evento que no vienen en /textos */
+    detalleSecciones: "Event sections",
+    funciones: "Shows",
+    localidades: "Sections",
+    leerMenos: "Read less",
+    /* SPRINT 2 */
   },
 };
 

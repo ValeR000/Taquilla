@@ -40,3 +40,19 @@ export function formatoFecha(fechaISO, en = false, conHora = true) {
   if (!conHora) return fecha;
   return `${fecha} · ${hora} ${ampm}`;
 }
+
+/* SPRINT 2: Hace que la fecha salga con el año (ej. "Sáb 14 nov 2026") y la hora sola (ej. "8:00 p. m.") */
+export function formatoFechaConAnio(fechaISO, en = false) {
+  if (!fechaISO) return "";
+
+  const anio = new Intl.DateTimeFormat("en-US", { year: "numeric", timeZone: "America/Bogota" }).format(new Date(fechaISO));
+
+  return en ? `${formatoFecha(fechaISO, true, false)}, ${anio}` : `${formatoFecha(fechaISO, false, false)} ${anio}`;
+}
+
+export function formatoHora(fechaISO, en = false) {
+  if (!fechaISO) return "";
+
+  return formatoFecha(fechaISO, en).split(" · ")[1];
+}
+/* SPRINT 2 */

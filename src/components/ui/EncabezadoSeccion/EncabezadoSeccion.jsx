@@ -20,11 +20,15 @@ export default function EncabezadoSeccion({
       </div>
 
       {/* [LOCAL] Botón para ver todos los eventos. */}
-      <button className="enlace-home" onClick={onBoton}>
-        {/* [API] Hace que aparezca el texto "Ver todos". */}
-        {textoBoton}
-        <Flecha />
-      </button>
+      {/* SPRINT 2: Hace que el botón solo aparezca si tiene texto, para usar el encabezado sin "Ver todos" */}
+      {textoBoton && (
+        <button className="enlace-home" onClick={onBoton}>
+          {/* [API] Hace que aparezca el texto "Ver todos". */}
+          {textoBoton}
+          <Flecha />
+        </button>
+      )}
+      {/* SPRINT 2 */}
     </div>
   );
 }
