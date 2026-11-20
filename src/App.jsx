@@ -62,8 +62,6 @@ function App() {
   // [LOCAL] Hace que se sepa qué vista mostrar según la ruta.
   const [activo, setActivo] = useState(leerSeccion);
 
-  const [textoGrande, setTextoGrande] = useState(false);
-
   // [LOCAL] Hace que Explorar se vuelva a montar y relea la URL al navegar.
   const [busquedaId, setBusquedaId] = useState(0);
 
