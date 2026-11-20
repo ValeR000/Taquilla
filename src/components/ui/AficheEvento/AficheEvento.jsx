@@ -15,7 +15,7 @@ export default function AficheEvento({ afiche }) {
     // [STATIC] Aplica la clase base de la profe y el degradado por estilo en línea.
     <div 
       className="arte-evento" 
-      style={{ background: `linear-gradient(135deg, ${color1}, ${color2})` }}
+      style={{ "--afiche-inicio": color1, "--afiche-fin": color2 }}
       aria-hidden="true"
     ></div>
   );
