@@ -7,7 +7,9 @@
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
+import Boton from "../Boton/Boton.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({
@@ -25,7 +27,7 @@ export default function TarjetaEvento({
   const t = textos?.paginas?.inicio?.tarjeta;
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   const verEvento = tr(t?.botones?.verEvento, "Ver evento", "View event");
 
@@ -64,18 +66,19 @@ export default function TarjetaEvento({
           </div>
 
           {/* [LOCAL] Hace que "Ver evento" lleve a /eventos/slug sin recargar la página. */}
-          <a
+          <Boton
             href={`/eventos/${evento.slug}`}
-            className="boton-evento"
+            variante="contorno"
+            clase="boton-evento"
             // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
-            aria-label={`${verEvento}: ${evento.titulo}`}
+            etiqueta={`${verEvento}: ${evento.titulo}`}
             onClick={(e) => {
               e.preventDefault();
               onAbrir(evento);
             }}
           >
             {verEvento}
-          </a>
+          </Boton>
         </div>
       </div>
     </article>

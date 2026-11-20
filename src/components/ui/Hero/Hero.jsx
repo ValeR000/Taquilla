@@ -5,7 +5,9 @@
 // ============================================================================
 
 import EventoDestacado from "../EventoDestacado/EventoDestacado.jsx";
+import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./Hero.css";
 
 export default function Hero({
@@ -18,7 +20,7 @@ export default function Hero({
 }) {
   // ##########
   const hero = textos?.paginas?.inicio?.hero;
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
   const populares = textosLocales[en ? "en" : "es"].populares;
   // ##########
 
@@ -28,9 +30,9 @@ export default function Hero({
       <div className="ancho-home interior-taquilla">
         <div>
           {/* [STATIC] Etiqueta de temporada con texto condicional según el idioma. */}
-          <span className="etiqueta-evento">
+          <Etiqueta clase="etiqueta-evento">
             {tr(hero?.etiquetas?.temporada, "Temporada nov – dic 2026", "November – December 2026 season")}
-          </span>
+          </Etiqueta>
 
           {/* [STATIC] Título principal con texto condicional según el idioma. */}
           <h1>{tr(hero?.titulo, "Tu próxima noche empieza aquí", "Your next night starts here")}</h1>

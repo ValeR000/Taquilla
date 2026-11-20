@@ -1,10 +1,10 @@
 const ICONOS = {
   buscar: {
-    caja: 16,
+    caja: 24,
     trazos: (
       <>
-        <path d="M12.667 7.333a5.333 5.333 0 1 1-10.667 0 5.333 5.333 0 0 1 10.667 0Z" />
-        <path d="m14 14-2.867-2.867" />
+        <circle cx="11" cy="11" r="7" />
+        <path d="m21 21-4.3-4.3" />
       </>
     ),
   },
@@ -39,10 +39,64 @@ const ICONOS = {
 
   menu: {
     caja: 24,
-    tamano: 20,
-    trazos: <path d="M4 6h16M4 12h16M4 18h16" />,
+    tamano: 22,
+    trazos: <path d="M4 7h16M4 12h16M4 17h16" />,
   },
 
   cerrar: {
+    caja: 24,
+    trazos: <path d="M6 18 18 6M6 6l12 12" />,
+  },
+
+  filtros: {
+    caja: 24,
+    trazos: <path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6" />,
+  },
+
+  flechaIzquierda: {
+    caja: 24,
+    tamano: 16,
+    trazos: <path d="m15 18-6-6 6-6" />,
+  },
+
+  flechaDerecha: {
+    caja: 24,
+    tamano: 16,
+    trazos: <path d="m9 18 6-6-6-6" />,
+  },
+
+  ticket: {
+    caja: 24,
+    tamano: 18,
+    trazos: (
+      <>
+        <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z" />
+        <path d="M10 9h4M10 15h4" />
+      </>
+    ),
   },
 };
+
+// ##########
+export default function Icono({ nombre, tamano, clase }) {
+  const icono = ICONOS[nombre];
+  const medida = tamano || icono.tamano || icono.caja;
+
+  return (
+    <svg
+      className={clase}
+      width={medida}
+      height={medida}
+      viewBox={`0 0 ${icono.caja} ${icono.caja}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {icono.trazos}
+    </svg>
+  );
+}
+// ##########

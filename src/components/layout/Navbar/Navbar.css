@@ -47,11 +47,11 @@
   align-items: center; /* Hace que los elementos se centren verticalmente */
   justify-content: space-between; /* Separa los grupos a izquierda y derecha */
   flex-wrap: wrap; /* Hace que si no caben, bajen a la siguiente línea */
-  gap: 12px 24px; /* Hace que haya espacio entre los elementos */
+  gap: 10px 26px; /* Hace que haya espacio entre los elementos */
   max-width: var(--ancho-contenido);
   min-height: 76px; /* Hace que la barra tenga una altura mínima */
   margin-inline: auto; /* Hace que el contenido se centre en pantalla */
-  padding-inline: 24px; /* Hace que haya espacio a los lados */
+  padding-inline: 26px; /* Hace que haya espacio a los lados */
 }
 
 /* =========================================
@@ -61,7 +61,7 @@
 .navbar__izquierda {
   display: flex;
   align-items: center;
-  gap: 40px; /* Hace que haya espacio entre el logo y los enlaces */
+  gap: 42px; /* Hace que haya espacio entre el logo y los enlaces */
 }
 
 /* --- El Logo --- */
@@ -143,8 +143,6 @@
 
 .navbar__buscador-input {
   flex: 1;
-  border: 0;
-  background: transparent;
 }
 
 .navbar__buscador-input:focus-visible {
@@ -184,7 +182,7 @@
 .navbar__movil {
   display: none;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 /* Estilo del botón de la lupa y la hamburguesa */
@@ -207,7 +205,7 @@
   font-weight: 500;
   color: var(--color-texto);
   cursor: pointer;
-  padding: 0 8px;
+  padding: 0 6px;
 }
 
 /* =========================================

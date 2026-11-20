@@ -6,6 +6,10 @@
 }
 
 /* ########## */
+.inicio__estado {
+    margin-block: 48px;
+}
+
 @media (max-width: 640px) {
     .demo-contenido {
         width: calc(100% - 40px);

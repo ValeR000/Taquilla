@@ -48,6 +48,7 @@
 /* Hace que el color de fondo cambie al pasar el mouse */
 .boton--primario:hover:not(:disabled) {
   background-color: var(--color-primario-hover);
+  color: var(--color-sobre-primario);
 }
 
 /* --- Variante Secundaria (Fondo blanco, borde gris) --- */
@@ -61,3 +62,16 @@
 .boton--secundario:hover:not(:disabled) {
   background-color: var(--color-fondo);
 }
+
+/* ########## */
+.boton--contorno {
+  background-color: transparent;
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+}
+
+.boton--contorno:hover:not(:disabled) {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+/* ########## */

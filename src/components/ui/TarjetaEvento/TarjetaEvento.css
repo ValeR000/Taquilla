@@ -22,19 +22,6 @@
   flex-grow: 1;
 }
 
-/* [STATIC] Etiqueta con fondo gris y bordes de 6px. */
-.etiqueta-evento {
-  display: inline-block;
-  background-color: var(--color-fondo-etiqueta);
-  color: var(--color-texto);
-  font-size: var(--texto-xs);
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: var(--radio-xs);
-  align-self: flex-start;
-  margin-bottom: 12px;
-}
-
 .contenido-evento h3 {
   font-size: var(--texto-h3);
   font-weight: 600;
@@ -47,7 +34,7 @@
 .contenido-evento > p {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: var(--texto-pequeno);
   color: var(--color-texto-gris); 
   margin: 6px 0;
@@ -68,9 +55,9 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   margin-top: auto;
-  padding-top: 24px;
+  padding-top: 26px;
 }
 
 .precio-evento small {
@@ -88,18 +75,14 @@
 /* [STATIC] Hace que el enlace "Ver evento" se vea como botón con borde. */
 .precio-evento .boton-evento {
   display: inline-block;
-  border: 1px solid var(--color-borde);
-  background: transparent;
+  height: auto;
   border-radius: var(--radio-sm);
-  padding: 8px 16px;
-  font-size: var(--texto-pequeno);
+  padding: 6px 16px;
   font-weight: 500;
-  color: var(--color-texto);
-  text-decoration: none; /* Hace que el enlace no se vea subrayado */
-  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.precio-evento .boton-evento:hover {
-  background-color: var(--color-fondo);
+.precio-evento .boton-evento:focus-visible {
+  outline: revert;
+  outline-offset: revert;
 }

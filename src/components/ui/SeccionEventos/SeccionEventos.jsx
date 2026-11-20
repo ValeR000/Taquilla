@@ -4,8 +4,10 @@
 // CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
 // ============================================================================
 
-import Flecha from "../Flecha/Flecha.jsx";
+import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
+import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./SeccionEventos.css";
 
 export default function SeccionEventos({
@@ -26,7 +28,7 @@ export default function SeccionEventos({
   // ==========================================
   
   // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
   
   // [API] Hace que aparezca el texto del enlace "Ver todos" o "View all".
   const verTodos = tr(textos?.paginas?.inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all");
@@ -45,22 +47,13 @@ export default function SeccionEventos({
     // [STATIC] Contenedor principal con semántica de sección y accesibilidad para el título.
     <section className={`seccion-eventos ${clase}`} id={id} aria-labelledby={`${id}-titulo`}>
       
-      <div className="titulo-seccion">
-        <div>
-          {/* [API] Hace que aparezca el título de la sección. */}
-          <h2 id={`${id}-titulo`}>{titulo}</h2>
-          
-          {/* [LOCAL] Hace que aparezca la descripción*/}
-          <p>{descripcion}</p>
-        </div>
-
-        {/* [LOCAL] Botón para ver todos los eventos. */}
-        <button className="enlace-home" onClick={onVerTodos}>
-          {/* [API] Hace que aparezca el texto "Ver todos". */}
-          {verTodos}
-          <Flecha />
-        </button>
-      </div>
+      <EncabezadoSeccion
+        idTitulo={`${id}-titulo`}
+        titulo={titulo}
+        descripcion={descripcion}
+        textoBoton={verTodos}
+        onBoton={onVerTodos}
+      />
 
       <div className="eventos-grid">
         {cargando && Array.from({ length: 4 }, (_, i) => (
@@ -82,18 +75,12 @@ export default function SeccionEventos({
 
       {/* [LOCAL] Si no hay eventos, muestra un mensaje de estado vacío. */}
       {!cargando && !eventos.length && (
-        <div className="sin-resultados">
-          {/* [API] Hace que aparezca el título del estado vacío desde la API. */}
-          <h3>{tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}</h3>
-          
-          {/* [API] Hace que aparezca el texto del estado vacío desde la API. */}
-          <p>{tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}</p>
-          
-          {/* [LOCAL] Botón que lleva a explorar todos los eventos. */}
-          <button className="boton-home primario" onClick={onVerTodos}>
-            {verTodos}
-          </button>
-        </div>
+        <EstadoMensaje
+          titulo={tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
+          texto={tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}
+          boton={verTodos}
+          onBoton={onVerTodos}
+        />
       )}
     </section>
   );

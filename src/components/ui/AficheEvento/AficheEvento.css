@@ -11,6 +11,12 @@
   background: var(--fondo-sutil); /* Color de fondo por si la API falla */
 }
 
+/* ########## */
+.arte-evento {
+  background-image: linear-gradient(135deg, var(--afiche-inicio), var(--afiche-fin));
+}
+/* ########## */
+
 /* [STATIC] Círculo decorativo blanco. */
 .arte-evento::before,
 .arte-evento::after {
@@ -24,7 +30,7 @@
   aspect-ratio: 1;
   right: -20%;
   top: -45%;
-  background: rgb(255 255 255 / 12%);
+  background: var(--afiche-luz);
 }
 
 /* [STATIC] Círculo decorativo negro. */
@@ -33,7 +39,7 @@
   aspect-ratio: 1;
   bottom: -60%;
   left: -18%;
-  background: rgb(0 0 0 / 12%);
+  background: var(--afiche-sombra);
 }
 
 /* [STATIC] Altura especial para la tarjeta de evento pequeño. */

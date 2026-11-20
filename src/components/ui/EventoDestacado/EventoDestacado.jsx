@@ -2,7 +2,9 @@
 
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
+import Boton from "../Boton/Boton.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./EventoDestacado.css";
 
 export default function EventoDestacado({
@@ -18,7 +20,7 @@ export default function EventoDestacado({
   const d = textos?.paginas?.inicio?.hero?.destacado;
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   return (
     <div className="destacado-taquilla">
@@ -46,16 +48,16 @@ export default function EventoDestacado({
           </strong>
 
           {/* [LOCAL] Hace que "Ver evento" lleve a /eventos/slug sin recargar la página. */}
-          <a
+          <Boton
             href={`/eventos/${evento.slug}`}
-            className="boton-destacado"
+            clase="boton-destacado"
             onClick={(e) => {
               e.preventDefault();
               onAbrir(evento);
             }}
           >
             {tr(d?.botones?.verEvento, "Ver evento", "View event")}
-          </a>
+          </Boton>
         </div>
       </div>
     </div>

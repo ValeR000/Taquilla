@@ -17,6 +17,12 @@
 /* =========================================
    SECCIÓN: Estilos generales de la página
    ========================================= */
+/* ########## */
+html {
+  scroll-padding-top: 110px;
+}
+/* ########## */
+
 body {
   margin: 0; /* Hace que la página no tenga bordes blancos por defecto */
   font-family: var(--fuente-texto); /* Hace que todo el texto use la fuente oficial */
@@ -53,7 +59,7 @@ h1 {
 /* [STATIC] Hace que el <h2> use el tamaño de Figma (24px). */
 h2 {
   font-family: var(--fuente-titulos);
-  font-size: var(--texto-subtitulo);
+  font-size: var(--texto-grande);
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.015em;

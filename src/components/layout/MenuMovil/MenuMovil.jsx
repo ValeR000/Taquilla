@@ -7,9 +7,11 @@
 import { useEffect, useRef } from 'react';
 import './MenuMovil.css';
 import Boton from '../../ui/Boton/Boton.jsx';
+import Icono from '../../ui/Icono.jsx';
 import SelectorIdioma from '../../ui/SelectorIdioma/SelectorIdioma.jsx';
 import iconoAccesibilidad from '../../../assets/accesibilidad.svg';
 import { textosLocales } from '../../../utils/textosLocales.js';
+import { crearTraductor } from '../../../utils/traductor.js';
 
 export default function MenuMovil({
   abierto,           // [LOCAL] Indica si el menú está visible.
@@ -27,7 +29,7 @@ export default function MenuMovil({
   const en = idioma === 'en';
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [LOCAL] Hace que el menú se cierre y se cambie de vista sin recargar.
   function ir(evento, id) {
@@ -85,10 +87,7 @@ export default function MenuMovil({
           <div className="menu-movil__marca">
             {/* [STATIC] Hace que aparezca el ícono del logo. */}
             <span className="menu-movil__logo-icono" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z" />
-                <path d="M10 9h4M10 15h4" />
-              </svg>
+              <Icono nombre="ticket" />
             </span>
             {/* [API] Hace que aparezca el nombre de la marca. */}
             <span className="menu-movil__logo">{t?.logo?.texto}</span>
@@ -102,9 +101,7 @@ export default function MenuMovil({
             onClick={onCerrar}
             aria-label={tr(m?.cerrar, 'Cerrar menú', 'Close menu')}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <Icono nombre="cerrar" />
           </button>
         </div>
 

@@ -15,7 +15,7 @@
 .menu-movil__fondo {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: var(--fondo-oscurecido);
 }
 
 /* [STATIC] Hace que el panel blanco se deslice desde la derecha ocupando el 90%. */
@@ -27,8 +27,8 @@
   max-width: 360px;
   height: 100%;
   background-color: var(--color-superficie);
-  padding: 0 16px 24px;
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); /* Sombra hacia la izquierda */
+  padding: 0 16px 26px;
+  box-shadow: -8px 0 24px var(--sombra-color-media); /* Sombra hacia la izquierda */
   overflow-y: auto; /* Permite scroll interno si el contenido es muy alto */
 }
 
@@ -45,7 +45,7 @@
 .menu-movil__marca {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 /* [STATIC] El recuadro negro del logo (idéntico al Navbar). */
@@ -74,7 +74,7 @@
   border: none;
   cursor: pointer;
   color: var(--color-texto);
-  padding: 8px;
+  padding: 6px;
 }
 
 /* [STATIC] Hace que aparezca una línea divisoria sutil. */
@@ -92,7 +92,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px; /* Espacio entre Inicio y Explorar */
-  padding: 24px 0;
+  padding: 26px 0;
 }
 
 .menu-movil__enlaces a {
@@ -109,7 +109,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-bottom: 24px;
+  padding-bottom: 26px;
   margin-top: auto; /* Empuja esta sección hacia el fondo del panel */
 }
 
@@ -144,8 +144,8 @@
 .menu-movil__acciones {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 24px;
+  gap: 10px;
+  padding-top: 26px;
 }
 
 .menu-movil__acciones .boton {

@@ -1,6 +1,9 @@
 // RESPONSABILIDAD: Panel de filtros (lateral en escritorio, modal en móvil) para refinar la búsqueda de eventos.
 import { useEffect, useRef } from "react";
 import { formatoDinero } from "../../../utils/formato.js";
+import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./PanelFiltros.css";
 
 // [STATIC] Opciones de fecha locales (visuales, ya que la API no filtra por fecha).
@@ -37,7 +40,7 @@ export default function PanelFiltros({
   const tf = textos?.filtros;
   
   // [LOCAL] Función auxiliar para elegir texto de la API o local según el idioma.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // ==========================================
   // BLOQUE B: EFECTOS DE ACCESIBILIDAD
@@ -106,10 +109,7 @@ export default function PanelFiltros({
             onClick={onCerrar}
           >
             {/* [STATIC] Ícono SVG de la 'X' */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <Icono nombre="cerrar" tamano={16} />
           </button>
         </div>
       </div>
@@ -206,9 +206,9 @@ export default function PanelFiltros({
       {/* ========================================== */}
       <div className="panel-filtros__pie">
         {/* [LOCAL] Botón para aplicar filtros y cerrar el panel (muestra el total de eventos) */}
-        <button type="button" onClick={onCerrar}>
+        <Boton onClick={onCerrar}>
           {verResultados}
-        </button>
+        </Boton>
       </div>
     </aside>
   );

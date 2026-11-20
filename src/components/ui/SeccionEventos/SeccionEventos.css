@@ -6,10 +6,8 @@
 
 /* [STATIC] Alinea el título a la izquierda y el botón a la derecha. */
 .seccion-eventos .titulo-seccion {
-  display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .seccion-eventos h2 {
@@ -29,7 +27,7 @@
 .eventos-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  gap: 26px;
 }
 
 .tarjeta-esqueleto {
@@ -37,44 +35,10 @@
   background: linear-gradient(var(--fondo-sutil) 176px, var(--color-superficie) 176px);
 }
 
-/* [STATIC] Estilos del estado vacío. */
-.sin-resultados {
-  padding: 48px;
-  border: 1px solid var(--color-borde-suave); 
-  border-radius: var(--radio); 
-  background: var(--color-superficie); 
-  text-align: center;
-}
-.sin-resultados p {
-  margin: 12px 0 24px;
-}
-
 @media (max-width: 1100px) {
   .eventos-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
-
-/* =========================================
-   SECCIÓN: Botón "Ver todos" (Link)
-   ========================================= */
-.enlace-home {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: none; 
-  border: none;     
-  padding: 0;
-  font-family: inherit;
-  font-size: var(--texto-pequeno); 
-  font-weight: 500;
-  color: var(--color-texto); 
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.enlace-home:hover {
-  text-decoration: underline; 
 }
 
 /* [STATIC] Adaptación a celulares. */
@@ -91,7 +55,6 @@
   }
   
   .seccion-eventos h2 {
-    font-size: 20px; /* Ajusta el tamaño del título en móvil */
     margin-bottom: 0;
   }
 
@@ -122,15 +85,8 @@
     background: linear-gradient(var(--fondo-sutil) 190px, var(--color-superficie) 190px);
   }
 
-  .sin-resultados {
-    padding: 24px;
-  }
-
   /* [STATIC] Oculta la sección "Próximamente" en móvil. */
   .seccion-eventos.proximos {
     display: none;
   }
-  .enlace-home svg {
-  display: none;
-}
 }

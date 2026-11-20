@@ -3,9 +3,13 @@ import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
+import Icono from "../../ui/Icono.jsx";
+import Input from "../../ui/Input/Input.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
+import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./Explorar.css";
 
 // [LOCAL] Hace que "Limpiar" deje todos los filtros vacíos.
@@ -81,7 +85,7 @@ export default function Explorar({
   const local = textosLocales[en ? "en" : "es"];
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [API] Hace que el conteo de resultados use singular o plural.
   const total = paginacion?.total ?? 0;
@@ -202,14 +206,15 @@ export default function Explorar({
       <div className="explorar__buscador-movil">
         <form className="explorar__busqueda" role="search" onSubmit={buscar}>
           <IconoEvento tipo="buscar" />
-          <input
+          <Input
             type="search"
+            variante="busqueda"
             // [ACCESIBILIDAD] Hace que el buscador reciba el foco si se abrió desde la lupa.
             autoFocus={enfocarBusqueda}
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder={placeholderBusqueda}
-            aria-label={placeholderBusqueda}
+            etiqueta={placeholderBusqueda}
           />
         </form>
 
@@ -223,17 +228,7 @@ export default function Explorar({
           aria-controls="panel-filtros"
           onClick={() => setPanelAbierto(true)}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <line x1="4" y1="21" x2="4" y2="14" />
-            <line x1="4" y1="10" x2="4" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12" y2="3" />
-            <line x1="20" y1="21" x2="20" y2="16" />
-            <line x1="20" y1="12" x2="20" y2="3" />
-            <line x1="1" y1="14" x2="7" y2="14" />
-            <line x1="9" y1="8" x2="15" y2="8" />
-            <line x1="17" y1="16" x2="23" y2="16" />
-          </svg>
+          <Icono nombre="filtros" tamano={20} />
         </button>
       </div>
 
@@ -299,32 +294,32 @@ export default function Explorar({
 
           {/* [API] Hace que aparezca el estado de carga. */}
           {cargando && (
-            <div className="explorar__estado" role="status">
-              <h3>{tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}</h3>
-              <p>{tr(tEstado?.cargando?.texto, "Esto puede tardar unos segundos.", "This may take a few seconds.")}</p>
-            </div>
+            <EstadoMensaje
+              rol="status"
+              titulo={tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+              texto={tr(tEstado?.cargando?.texto, "Esto puede tardar unos segundos.", "This may take a few seconds.")}
+            />
           )}
 
           {/* [API] Hace que aparezca el error con un botón para reintentar. */}
           {!cargando && error && (
-            <div className="explorar__estado" role="alert">
-              <h3>{tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}</h3>
-              <p>{tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}</p>
-              <button type="button" className="explorar__boton" onClick={recargar}>
-                {tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
-              </button>
-            </div>
+            <EstadoMensaje
+              rol="alert"
+              titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
+              texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
+              boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
+              onBoton={recargar}
+            />
           )}
 
           {/* [API] Hace que aparezca el estado vacío con un botón para limpiar filtros. */}
           {!cargando && !error && eventos.length === 0 && (
-            <div className="explorar__estado">
-              <h3>{tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}</h3>
-              <p>{tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}</p>
-              <button type="button" className="explorar__boton" onClick={limpiar}>
-                {tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
-              </button>
-            </div>
+            <EstadoMensaje
+              titulo={tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}
+              texto={tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}
+              boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
+              onBoton={limpiar}
+            />
           )}
 
           {/* [API] Hace que aparezcan las tarjetas de eventos y la paginación. */}

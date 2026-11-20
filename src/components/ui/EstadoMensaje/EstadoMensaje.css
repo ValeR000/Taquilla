@@ -1,0 +1,37 @@
+/* ########## */
+.estado-mensaje {
+  padding: 48px;
+  text-align: center;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio);
+}
+
+.estado-mensaje p {
+  margin-top: 10px;
+  color: var(--color-texto-gris);
+}
+
+.estado-mensaje .estado-mensaje__boton {
+  display: inline-block;
+  height: 40px;
+  margin-top: 16px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  border: 0;
+  border-radius: var(--radio-sm);
+  transition: none;
+}
+
+.estado-mensaje .estado-mensaje__boton:focus-visible {
+  outline-width: 2px;
+}
+
+@media (max-width: 640px) {
+  .estado-mensaje {
+    padding: 26px;
+  }
+}
+/* ########## */

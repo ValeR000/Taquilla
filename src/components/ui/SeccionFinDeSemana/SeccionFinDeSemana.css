@@ -16,9 +16,7 @@
 
   /* [STATIC] Hace que el título y "Ver todos" queden en la misma fila. */
   .fin-de-semana .titulo-seccion {
-    display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: var(--espacio-4);
   }
 

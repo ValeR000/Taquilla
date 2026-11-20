@@ -6,6 +6,9 @@
 
 import { useEffect, useRef } from "react";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./PanelAccesibilidad.css";
 
 export default function PanelAccesibilidad({
@@ -33,7 +36,7 @@ export default function PanelAccesibilidad({
   const cerrarRef = useRef(null);
   
   // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
   
   // [STATIC] Extrae los textos locales de respaldo según el idioma.
   const local = textosLocales[en ? "en" : "es"];
@@ -134,9 +137,7 @@ export default function PanelAccesibilidad({
             {/* [STATIC] Versión escritorio: Texto '✕' */}
             <span className="panel-accesibilidad__cerrar-texto" aria-hidden="true">✕</span>
             {/* [STATIC] Versión móvil: SVG de la 'X' */}
-            <svg className="panel-accesibilidad__cerrar-icono" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <Icono nombre="cerrar" clase="panel-accesibilidad__cerrar-icono" />
           </button>
         </div>
 
@@ -222,10 +223,10 @@ export default function PanelAccesibilidad({
             <a href="#declaracion">{tr(textos?.enlaces?.declaracion, "Declaración de accesibilidad", "Accessibility statement")}</a>
             
             {/* [LOCAL] Botón que restablece todos los valores iniciales. */}
-            <button type="button" className="panel-accesibilidad__restablecer" onClick={restablecer}>
+            <Boton variante="secundario" clase="panel-accesibilidad__restablecer" onClick={restablecer}>
               {/* [API] Hace que aparezca el texto del botón "Restablecer". */}
               {tr(textos?.botones?.restablecer, "Restablecer", "Reset")}
-            </button>
+            </Boton>
           </div>
         </div>
       </aside>

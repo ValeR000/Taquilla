@@ -10,7 +10,7 @@
 
 .selector-idioma__boton {
   height: 32px; 
-  padding: 0 14px;
+  padding: 0 16px;
   border: 0; 
   border-radius: var(--radio-pildora);
   background: transparent;

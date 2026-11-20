@@ -4,21 +4,20 @@
    SECCIÓN: Contenedor Principal (Flotante)
    ========================================= */
 .banner-cookies {
-  position: fixed; 
-  bottom: 24px; 
-  left: 50%;
-  transform: translateX(-50%); 
+  position: sticky;
+  bottom: 24px;
   width: calc(100% - 48px);
-  max-width: 900px; 
+  max-width: 900px;
+  margin: 0 auto 24px;
   background-color: var(--color-superficie);
   border: 1px solid var(--color-borde-suave);
   border-radius: var(--radio); /* Reemplaza 12px */
-  padding: 16px 24px;
+  padding: 16px 26px;
   display: flex;
   justify-content: space-between; 
   align-items: center;
-  gap: 24px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+  gap: 26px;
+  box-shadow: 0 10px 25px var(--sombra-color-suave); 
   z-index: 100; 
 }
 
@@ -28,7 +27,7 @@
 .banner-cookies__contenido {
   display: flex;
   flex-direction: column; 
-  gap: 4px; 
+  gap: 6px; 
 }
 
 .banner-cookies__contenido h2 {
@@ -51,7 +50,7 @@
 .banner-cookies__acciones {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0; 
 }
 
@@ -71,10 +70,11 @@
     align-items: stretch;
     padding: 20px;
     bottom: 16px;
+    margin-bottom: 16px;
   }
   
   .banner-cookies__acciones {
     justify-content: flex-end; 
-    margin-top: 8px;
+    margin-top: 6px;
   }
 }

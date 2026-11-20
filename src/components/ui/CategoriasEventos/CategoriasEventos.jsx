@@ -1,6 +1,7 @@
 // RESPONSABILIDAD: Muestra la lista de categorías con sus íconos y conteo de eventos para filtrar el catálogo.
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./CategoriasEventos.css";
 
 export default function CategoriasEventos({ categorias = [], filtros, filtrarCategoria, en, textos, cargando = false }) {
@@ -12,7 +13,7 @@ export default function CategoriasEventos({ categorias = [], filtros, filtrarCat
   const inicio = textos?.paginas?.inicio;
   
   // [LOCAL] Función auxiliar para elegir texto de la API o local según el idioma.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [LOCAL] Función que formatea el conteo de eventos (singular o plural).
   const contar = (n) =>
