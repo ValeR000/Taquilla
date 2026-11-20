@@ -1,6 +1,6 @@
 /* SPRINT 2: Vista de detalle de un evento en /eventos/{slug} con sus eventos relacionados */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEvento } from "../../../hooks/useEvento.js";
 import { useRelacionados } from "../../../hooks/useRelacionados.js";
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
@@ -38,6 +38,40 @@ export default function DetalleEvento({
   const [expandida, setExpandida] = useState(false);
 
   const puedeCompartir = Boolean(navigator.share);
+
+  const eventoListo = evento?.slug === slug && !cargando && !error ? evento : null;
+
+  const tituloPagina = eventoListo
+    ? tr(t?.seo?.titulo, "{titulo} · Taquilla", "{titulo} · Taquilla").replace("{titulo}", eventoListo.titulo)
+    : "";
+
+  const descripcionPagina = eventoListo
+    ? eventoListo.descripcion || tr(t?.seo?.descripcion, "Fecha, lugar, precios y detalles del evento.", "Date, venue, prices and event details.")
+    : "";
+
+  useEffect(() => {
+    if (!tituloPagina) return;
+
+    let meta = document.querySelector('meta[name="description"]');
+    const metaNueva = !meta;
+    if (metaNueva) {
+      meta = document.createElement("meta");
+      meta.name = "description";
+      document.head.append(meta);
+    }
+
+    const tituloAnterior = document.title;
+    const descripcionAnterior = meta.content;
+
+    document.title = tituloPagina;
+    meta.content = descripcionPagina;
+
+    return () => {
+      document.title = tituloAnterior;
+      if (metaNueva) meta.remove();
+      else meta.content = descripcionAnterior;
+    };
+  }, [tituloPagina, descripcionPagina]);
 
   function reintentar() {
     recargar();
