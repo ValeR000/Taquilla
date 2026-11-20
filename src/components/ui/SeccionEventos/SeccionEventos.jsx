@@ -4,7 +4,7 @@
 // CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
 // ============================================================================
 
-import Flecha from "../Flecha/Flecha.jsx";
+import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import "./SeccionEventos.css";
@@ -46,22 +46,13 @@ export default function SeccionEventos({
     // [STATIC] Contenedor principal con semántica de sección y accesibilidad para el título.
     <section className={`seccion-eventos ${clase}`} id={id} aria-labelledby={`${id}-titulo`}>
       
-      <div className="titulo-seccion">
-        <div>
-          {/* [API] Hace que aparezca el título de la sección. */}
-          <h2 id={`${id}-titulo`}>{titulo}</h2>
-          
-          {/* [LOCAL] Hace que aparezca la descripción*/}
-          <p>{descripcion}</p>
-        </div>
-
-        {/* [LOCAL] Botón para ver todos los eventos. */}
-        <button className="enlace-home" onClick={onVerTodos}>
-          {/* [API] Hace que aparezca el texto "Ver todos". */}
-          {verTodos}
-          <Flecha />
-        </button>
-      </div>
+      <EncabezadoSeccion
+        idTitulo={`${id}-titulo`}
+        titulo={titulo}
+        descripcion={descripcion}
+        textoBoton={verTodos}
+        onBoton={onVerTodos}
+      />
 
       <div className="eventos-grid">
         {cargando && Array.from({ length: 4 }, (_, i) => (

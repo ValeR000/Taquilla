@@ -5,6 +5,7 @@
 // ============================================================================
 
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
+import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
 import "./SeccionFinDeSemana.css";
 
@@ -36,17 +37,14 @@ export default function SeccionFinDeSemana({
     // [ACCESIBILIDAD] Hace que la sección tome su nombre del título.
     <section className="fin-de-semana" aria-labelledby="fin-de-semana-titulo">
 
-      <div className="titulo-seccion">
-        {/* [API] Hace que aparezca el título "Este fin de semana". */}
-        <h2 id="fin-de-semana-titulo">
-          {tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend")}
-        </h2>
-
-        {/* [LOCAL] Hace que "Ver todos" lleve a Explorar. */}
-        <button className="enlace-home" onClick={onVerTodos}>
-          {tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all")}
-        </button>
-      </div>
+      <EncabezadoSeccion
+        idTitulo="fin-de-semana-titulo"
+        // [API] Hace que aparezca el título "Este fin de semana".
+        titulo={tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend")}
+        // [LOCAL] Hace que "Ver todos" lleve a Explorar.
+        textoBoton={tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all")}
+        onBoton={onVerTodos}
+      />
 
       <ul className="fin-de-semana__lista">
         {eventos.map((evento) => (
