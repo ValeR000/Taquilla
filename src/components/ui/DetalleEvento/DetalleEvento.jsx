@@ -102,7 +102,13 @@ export default function DetalleEvento({
     ? tr(t?.etiquetas?.edadMinima, "Mayores de {edad}", "{edad}+").replace("{edad}", evento.edadMinima)
     : tr(t?.etiquetas?.todoPublico, "Todo público", "All ages");
 
+  const artistas = evento?.artistas?.join(" · "); // Sprint 2: "Invitada:" de Figma (No en la API)
+
   const hora = formatoHora(evento?.fecha, en);
+  const puertas = formatoHora(new Date(new Date(evento?.fecha) - 60 * 60 * 1000).toISOString(), en); // Sprint 2: puertas 1 hora antes del evento (No en la API)
+  const horaValor = tr(t?.info?.horaValor, "{hora} · Puertas {puertas}", "{hora} · Doors {puertas}")
+    .replace("{hora}", hora)
+    .replace("{puertas}", puertas);
 
   const leerMas = tr(t?.descripcion?.botones?.leerMas, "Leer más", "Read more");
 
@@ -172,9 +178,7 @@ export default function DetalleEvento({
 
             <h1 className="detalle__titulo">{evento?.titulo}</h1>
 
-            {evento?.artistas?.length > 0 && (
-              <p className="detalle__artistas">{evento.artistas.join(" · ")}</p>
-            )}
+            {artistas && <p className="detalle__artistas">{artistas}</p>}
 
             <ul className="detalle__info">
               <li className="detalle__info-item detalle__info-item--fecha">
@@ -182,7 +186,7 @@ export default function DetalleEvento({
                 <div className="detalle__info-texto">
                   <small className="detalle__info-etiqueta">{tr(t?.info?.fecha, "Fecha", "Date")}</small>
                   <span className="detalle__info-valor">{formatoFechaConAnio(evento?.fecha, en)}</span>
-                  <span className="detalle__info-secundario">{hora}</span>
+                  <span className="detalle__info-secundario">{horaValor}</span>
                 </div>
               </li>
 
@@ -190,7 +194,7 @@ export default function DetalleEvento({
                 <span className="detalle__info-icono"><IconoEvento tipo="hora" /></span>
                 <div className="detalle__info-texto">
                   <small className="detalle__info-etiqueta">{tr(t?.info?.hora, "Hora", "Time")}</small>
-                  <span className="detalle__info-valor">{hora}</span>
+                  <span className="detalle__info-valor">{horaValor}</span>
                 </div>
               </li>
 
