@@ -8,6 +8,7 @@ import { useCallback, useState } from "react";
 import "./Navbar.css";
 import Boton from "../../ui/Boton/Boton.jsx";
 import Input from "../../ui/Input/Input.jsx";
+import Icono from "../../ui/Icono.jsx";
 import SelectorIdioma from "../../ui/SelectorIdioma/SelectorIdioma.jsx";
 import iconoAccesibilidad from "../../../assets/accesibilidad.svg";
 import logo from "../../../assets/logo-taquilla.svg";
@@ -127,10 +128,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
 
           {/* [LOCAL] Hace que la búsqueda se envíe al presionar Enter. */}
           <form className="navbar__buscador" role="search" onSubmit={manejarBusqueda}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" />
-              <path d="M21 21l-4.3-4.3" />
-            </svg>
+            <Icono nombre="buscar" tamano={16} />
             <Input
               type="search"
               variante="busqueda"
@@ -182,10 +180,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
             aria-label={t?.buscador.aria}
             onClick={onAbrirBusqueda}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" />
-              <path d="M21 21l-4.3-4.3" />
-            </svg>
+            <Icono nombre="buscar" tamano={20} />
           </button>
 
           {/* [LOCAL] Hace que "Ingresar" lleve a la vista de login. */}
@@ -201,9 +196,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
             aria-expanded={menuAbierto}
             onClick={() => setMenuAbierto(!menuAbierto)}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
+            <Icono nombre="menu" />
           </button>
         </div>
       </div>

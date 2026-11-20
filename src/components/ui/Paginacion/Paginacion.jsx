@@ -1,4 +1,5 @@
 // RESPONSABILIDAD: Componente de paginación para navegar entre páginas de resultados.
+import Icono from "../Icono.jsx";
 import "./Paginacion.css";
 
 // [LOCAL] Calcula qué números de página mostrar y cuándo poner puntos suspensivos (...).
@@ -47,9 +48,7 @@ export default function Paginacion({ pagina, paginas, onCambiar, etiquetas }) {
             onClick={() => onCambiar(pagina - 1)}
           >
             {/* [STATIC] Ícono SVG de flecha izquierda. */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            <Icono nombre="flechaIzquierda" />
           </button>
         </li>
 
@@ -93,9 +92,7 @@ export default function Paginacion({ pagina, paginas, onCambiar, etiquetas }) {
             onClick={() => onCambiar(pagina + 1)}
           >
             {/* [STATIC] Ícono SVG de flecha derecha. */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
+            <Icono nombre="flechaDerecha" />
           </button>
         </li>
       </ol>
