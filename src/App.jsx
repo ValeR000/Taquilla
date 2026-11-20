@@ -26,6 +26,7 @@ import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
 import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeSemana.jsx";
 import Explorar from "./components/ui/Explorar/Explorar.jsx";
 import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
+import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
@@ -131,6 +132,8 @@ function App() {
   const en = idioma === "en";
 
   const tr = crearTraductor(en);
+
+  const slugEvento = activo.startsWith("eventos/") ? activo.replace("eventos/", "") : ""; // Sprint 2: slug del evento leído de la ruta /eventos/{slug}
 
   // [API] Hace que el primer evento destacado aparezca en la tarjeta del Hero.
   const eventoDestacado = eventos?.[0];
@@ -288,6 +291,15 @@ function App() {
           textos={datos.textos}
           enfocarBusqueda={enfocarBusqueda}
         />
+      ) : slugEvento ? (
+        /* SPRINT 2: Hace que /eventos/{slug} muestre el detalle del evento */
+        <DetalleEvento
+          slug={slugEvento}
+          en={en}
+          textos={datos.textos}
+          onAbrir={abrirEvento}
+        />
+        /* SPRINT 2 */
       ) : (
         <>
           {/* ========================================== */}
