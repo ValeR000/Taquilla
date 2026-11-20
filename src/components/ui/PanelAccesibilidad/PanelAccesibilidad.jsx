@@ -7,6 +7,7 @@
 import { useEffect, useRef } from "react";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
 import "./PanelAccesibilidad.css";
 
 export default function PanelAccesibilidad({
@@ -221,10 +222,10 @@ export default function PanelAccesibilidad({
             <a href="#declaracion">{tr(textos?.enlaces?.declaracion, "Declaración de accesibilidad", "Accessibility statement")}</a>
             
             {/* [LOCAL] Botón que restablece todos los valores iniciales. */}
-            <button type="button" className="panel-accesibilidad__restablecer" onClick={restablecer}>
+            <Boton variante="secundario" clase="panel-accesibilidad__restablecer" onClick={restablecer}>
               {/* [API] Hace que aparezca el texto del botón "Restablecer". */}
               {tr(textos?.botones?.restablecer, "Restablecer", "Reset")}
-            </button>
+            </Boton>
           </div>
         </div>
       </aside>

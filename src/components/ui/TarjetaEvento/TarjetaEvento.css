@@ -88,18 +88,14 @@
 /* [STATIC] Hace que el enlace "Ver evento" se vea como botón con borde. */
 .precio-evento .boton-evento {
   display: inline-block;
-  border: 1px solid var(--color-borde);
-  background: transparent;
+  height: auto;
   border-radius: var(--radio-sm);
   padding: 6px 16px;
-  font-size: var(--texto-pequeno);
   font-weight: 500;
-  color: var(--color-texto);
-  text-decoration: none; /* Hace que el enlace no se vea subrayado */
-  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.precio-evento .boton-evento:hover {
-  background-color: var(--color-fondo);
+.precio-evento .boton-evento:focus-visible {
+  outline: revert;
+  outline-offset: revert;
 }

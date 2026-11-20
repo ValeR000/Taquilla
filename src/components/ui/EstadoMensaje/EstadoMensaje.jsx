@@ -1,3 +1,4 @@
+import Boton from "../Boton/Boton.jsx";
 import "./EstadoMensaje.css";
 
 // ##########
@@ -16,9 +17,9 @@ export default function EstadoMensaje({
       {texto && <p>{texto}</p>}
 
       {boton && (
-        <button type="button" className="estado-mensaje__boton" onClick={onBoton}>
+        <Boton clase="estado-mensaje__boton" onClick={onBoton}>
           {boton}
-        </button>
+        </Boton>
       )}
     </div>
   );

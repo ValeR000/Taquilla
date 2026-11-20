@@ -7,6 +7,7 @@
 import { useEffect, useState } from "react";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import "./BuscadorEventos.css";
 
@@ -150,9 +151,9 @@ export default function BuscadorEventos({
         </label>
 
         {/* [LOCAL] Botón para enviar el formulario de búsqueda. */}
-        <button className="buscador-boton" type="submit">
+        <Boton clase="buscador-boton" type="submit">
           {textoBuscar}
-        </button>
+        </Boton>
       </div>
 
       {/* ========================================== */}

@@ -332,14 +332,18 @@
   }
 
   .panel-filtros__pie button {
+    display: inline-block;
     width: 100%;
     height: 48px;
+    padding: revert;
     font: inherit;
     font-weight: 500;
-    color: var(--color-sobre-primario);
-    background: var(--color-primario);
     border: 0;
     border-radius: var(--radio-md);
-    cursor: pointer;
+    transition: none;
+  }
+
+  .panel-filtros__pie .boton:hover:not(:disabled) {
+    background-color: var(--color-primario);
   }
 }

@@ -67,25 +67,19 @@
    ========================================= */
 
 /* [STATIC] Hace que el enlace se vea como botón negro. */
-.boton-destacado {
+.ficha-destacado .boton-destacado {
   display: inline-block;
-  background-color: var(--color-primario);
-  color: var(--color-sobre-primario);
+  height: auto;
   border: none;
   padding: 10px 16px;
   border-radius: 6px;
-  font-family: inherit;
-  font-size: var(--texto-pequeno);
   font-weight: 400;
-  text-decoration: none; /* Hace que el enlace no se vea subrayado */
-  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-/* [STATIC] Hace que el botón se aclare al pasar el mouse y el texto siga blanco. */
-.boton-destacado:hover {
-  background-color: var(--color-primario-hover);
-  color: var(--color-sobre-primario);
+.ficha-destacado .boton-destacado:focus-visible {
+  outline: revert;
+  outline-offset: revert;
 }
 
 /* [STATIC] Hace que la tarjeta se oculte en celulares para que no se desborde. */

@@ -71,15 +71,25 @@
   opacity: 1;
 }
 
-.buscador-boton {
-  background: var(--marca-primario);
-  color: var(--texto-inverso);
+.buscador-desktop .buscador-boton {
+  display: inline-block;
+  height: auto;
   border: none;
   border-radius: var(--radio-md);
   min-height: 52px;
+  padding: revert;
   padding-inline: 22px;
-  font-weight: 600;
-  cursor: pointer;
+  font-size: revert;
+  transition: none;
+}
+
+.buscador-desktop .buscador-boton:hover:not(:disabled) {
+  background-color: var(--color-primario);
+}
+
+.buscador-desktop .buscador-boton:focus-visible {
+  outline: revert;
+  outline-offset: revert;
 }
 
 /* =========================================

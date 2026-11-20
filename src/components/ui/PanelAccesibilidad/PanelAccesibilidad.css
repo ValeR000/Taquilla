@@ -210,14 +210,23 @@ input:checked + .slider:before {
   text-decoration: underline;
 }
 
-.panel-accesibilidad__restablecer {
-  background: var(--color-superficie);
-  border: 1px solid var(--color-borde);
+.panel-accesibilidad .panel-accesibilidad__restablecer {
+  display: inline-block;
+  height: auto;
   padding: 6px 10px;
-  border-radius: 8px;
   font-size: var(--texto-xs);
-  cursor: pointer;
   font-weight: 500;
+  color: revert;
+  transition: none;
+}
+
+.panel-accesibilidad .panel-accesibilidad__restablecer:hover:not(:disabled) {
+  background-color: var(--color-superficie);
+}
+
+.panel-accesibilidad .panel-accesibilidad__restablecer:focus-visible {
+  outline: revert;
+  outline-offset: revert;
 }
 
 /* =========================================

@@ -12,27 +12,21 @@
   color: var(--color-texto-gris);
 }
 
-.estado-mensaje__boton {
+.estado-mensaje .estado-mensaje__boton {
+  display: inline-block;
   height: 40px;
   margin-top: 16px;
   padding: 0 16px;
   font: inherit;
   font-size: var(--texto-pequeno);
   font-weight: 500;
-  color: var(--color-sobre-primario);
-  background: var(--color-primario);
   border: 0;
   border-radius: var(--radio-sm);
-  cursor: pointer;
+  transition: none;
 }
 
-.estado-mensaje__boton:hover {
-  background: var(--color-primario-hover);
-}
-
-.estado-mensaje__boton:focus-visible {
-  outline: 2px solid var(--color-foco);
-  outline-offset: 2px;
+.estado-mensaje .estado-mensaje__boton:focus-visible {
+  outline-width: 2px;
 }
 
 @media (max-width: 640px) {

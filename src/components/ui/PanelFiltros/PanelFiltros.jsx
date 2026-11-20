@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { formatoDinero } from "../../../utils/formato.js";
 import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
 import "./PanelFiltros.css";
 
 // [STATIC] Opciones de fecha locales (visuales, ya que la API no filtra por fecha).
@@ -204,9 +205,9 @@ export default function PanelFiltros({
       {/* ========================================== */}
       <div className="panel-filtros__pie">
         {/* [LOCAL] Botón para aplicar filtros y cerrar el panel (muestra el total de eventos) */}
-        <button type="button" onClick={onCerrar}>
+        <Boton onClick={onCerrar}>
           {verResultados}
-        </button>
+        </Boton>
       </div>
     </aside>
   );

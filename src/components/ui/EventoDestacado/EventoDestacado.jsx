@@ -2,6 +2,7 @@
 
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
+import Boton from "../Boton/Boton.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
 import "./EventoDestacado.css";
 
@@ -46,16 +47,16 @@ export default function EventoDestacado({
           </strong>
 
           {/* [LOCAL] Hace que "Ver evento" lleve a /eventos/slug sin recargar la página. */}
-          <a
+          <Boton
             href={`/eventos/${evento.slug}`}
-            className="boton-destacado"
+            clase="boton-destacado"
             onClick={(e) => {
               e.preventDefault();
               onAbrir(evento);
             }}
           >
             {tr(d?.botones?.verEvento, "Ver evento", "View event")}
-          </a>
+          </Boton>
         </div>
       </div>
     </div>
