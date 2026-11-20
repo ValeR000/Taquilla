@@ -60,6 +60,19 @@
   display: flex;
   gap: 60px; /* Hace que haya mucha separación entre una columna y otra */
 }
+/* ########## */
+.footer__contenedor {
+  container-type: inline-size;
+}
+
+@container (width < calc(12.5em + 120px)) {
+  .footer__columnas {
+    flex-wrap: wrap;
+    row-gap: 26px;
+  }
+}
+/* ########## */
+
 .footer__titulo {
   color: var(--color-footer-suave);
   font-family: var(--fuente-texto);

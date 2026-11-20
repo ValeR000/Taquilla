@@ -209,6 +209,7 @@
 
   .explorar__busqueda {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: var(--espacio-2);
