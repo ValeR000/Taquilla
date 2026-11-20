@@ -7,6 +7,7 @@
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./SeccionEventos.css";
 
 export default function SeccionEventos({
@@ -27,7 +28,7 @@ export default function SeccionEventos({
   // ==========================================
   
   // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
   
   // [API] Hace que aparezca el texto del enlace "Ver todos" o "View all".
   const verTodos = tr(textos?.paginas?.inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all");

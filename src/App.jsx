@@ -29,6 +29,7 @@ import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
+import { crearTraductor } from "./utils/traductor.js";
 import { useCallback, useEffect, useState } from "react";
 
 import PanelAccesibilidad from "./components/ui/PanelAccesibilidad/PanelAccesibilidad.jsx";
@@ -129,7 +130,7 @@ function App() {
 
   const en = idioma === "en";
 
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [API] Hace que el primer evento destacado aparezca en la tarjeta del Hero.
   const eventoDestacado = eventos?.[0];

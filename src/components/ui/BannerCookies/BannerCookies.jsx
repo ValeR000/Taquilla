@@ -2,6 +2,7 @@
 
 import "./BannerCookies.css";
 import Boton from "../Boton/Boton.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 
 export default function BannerCookies({
   textos,       // [API] Textos de cookies.banner.
@@ -10,7 +11,7 @@ export default function BannerCookies({
   onRechazar,   // [LOCAL] Función para rechazar las cookies.
 }) {
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   const titulo = tr(textos?.titulo, "Usamos cookies", "We use cookies");
 

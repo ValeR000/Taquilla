@@ -9,6 +9,7 @@ import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./Explorar.css";
 
 // [LOCAL] Hace que "Limpiar" deje todos los filtros vacíos.
@@ -84,7 +85,7 @@ export default function Explorar({
   const local = textosLocales[en ? "en" : "es"];
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [API] Hace que el conteo de resultados use singular o plural.
   const total = paginacion?.total ?? 0;

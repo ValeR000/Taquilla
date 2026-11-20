@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { formatoDinero } from "../../../utils/formato.js";
 import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./PanelFiltros.css";
 
 // [STATIC] Opciones de fecha locales (visuales, ya que la API no filtra por fecha).
@@ -39,7 +40,7 @@ export default function PanelFiltros({
   const tf = textos?.filtros;
   
   // [LOCAL] Función auxiliar para elegir texto de la API o local según el idioma.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // ==========================================
   // BLOQUE B: EFECTOS DE ACCESIBILIDAD

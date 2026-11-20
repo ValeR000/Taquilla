@@ -11,6 +11,7 @@ import Icono from '../../ui/Icono.jsx';
 import SelectorIdioma from '../../ui/SelectorIdioma/SelectorIdioma.jsx';
 import iconoAccesibilidad from '../../../assets/accesibilidad.svg';
 import { textosLocales } from '../../../utils/textosLocales.js';
+import { crearTraductor } from '../../../utils/traductor.js';
 
 export default function MenuMovil({
   abierto,           // [LOCAL] Indica si el menú está visible.
@@ -28,7 +29,7 @@ export default function MenuMovil({
   const en = idioma === 'en';
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [LOCAL] Hace que el menú se cierre y se cambie de vista sin recargar.
   function ir(evento, id) {

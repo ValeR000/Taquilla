@@ -10,6 +10,7 @@ import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
 import Input from "../Input/Input.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./BuscadorEventos.css";
 
 export default function BuscadorEventos({ 
@@ -65,7 +66,7 @@ export default function BuscadorEventos({
   const local = textosLocales[en ? "en" : "es"];
   
   // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // [API] Hace que aparezca el texto "Cualquier fecha" desde la API.
   const cualquierFecha = tr(h?.placeholders?.cuando, "Cualquier fecha", "Any date");

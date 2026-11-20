@@ -14,6 +14,7 @@ import iconoAccesibilidad from "../../../assets/accesibilidad.svg";
 import logo from "../../../assets/logo-taquilla.svg";
 import MenuMovil from "../MenuMovil/MenuMovil.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 
 // [STATIC] Hace que existan los enlaces principales con su ruta real.
 const ENLACES = [
@@ -40,7 +41,7 @@ export default function Navbar({
   // [STATIC] Hace que estén disponibles los textos que la API no trae.
   const local = textosLocales[en ? "en" : "es"];
 
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   // ==========================================
   // BLOQUE A: ESTADOS LOCALES

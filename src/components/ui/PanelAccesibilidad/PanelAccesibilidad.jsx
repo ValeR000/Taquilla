@@ -8,6 +8,7 @@ import { useEffect, useRef } from "react";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./PanelAccesibilidad.css";
 
 export default function PanelAccesibilidad({
@@ -35,7 +36,7 @@ export default function PanelAccesibilidad({
   const cerrarRef = useRef(null);
   
   // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
   
   // [STATIC] Extrae los textos locales de respaldo según el idioma.
   const local = textosLocales[en ? "en" : "es"];

@@ -7,6 +7,7 @@
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
+import { crearTraductor } from "../../../utils/traductor.js";
 import "./SeccionFinDeSemana.css";
 
 export default function SeccionFinDeSemana({
@@ -24,7 +25,7 @@ export default function SeccionFinDeSemana({
   const inicio = textos?.paginas?.inicio;
 
   // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = (valor, es, enTexto) => valor || (en ? enTexto : es);
+  const tr = crearTraductor(en);
 
   const verEvento = tr(inicio?.tarjeta?.botones?.verEvento, "Ver evento", "View event");
   const desde = tr(inicio?.tarjeta?.desde, "Desde", "From");
