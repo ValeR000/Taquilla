@@ -19,6 +19,8 @@ export function useRelacionados(slug) {
 
   useEffect(() => {
 
+    if (!slug) return;
+
     let vigente = true;
 
     setCargando(true);

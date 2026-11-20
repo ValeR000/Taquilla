@@ -16,7 +16,7 @@ export default function DetalleEvento({
   const tEstado = textos?.estados;
 
   const { evento, cargando, error, noEncontrado, recargar } = useEvento(slug);
-  const { relacionados, recargar: recargarRelacionados } = useRelacionados(slug);
+  const { relacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
 
   function reintentar() {
     recargar();
