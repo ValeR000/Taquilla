@@ -37,9 +37,36 @@
   outline-width: 2px;
 }
 
+/* SPRINT 2: Variante compacta: mensaje y botón en una fila, para errores dentro de una sección */
+.estado-mensaje--compacto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.estado-mensaje--compacto p {
+  flex: 1 1 160px;
+  margin-top: 0;
+  font-size: var(--texto-pequeno);
+}
+
+.estado-mensaje--compacto .estado-mensaje__boton {
+  flex-shrink: 0;
+  margin-top: 0;
+}
+/* SPRINT 2 */
+
 @media (max-width: 640px) {
   .estado-mensaje {
     padding: 26px;
+  }
+
+  .estado-mensaje--compacto {
+    padding: 12px 16px; /* Sprint 2: la variante compacta conserva su relleno en móvil */
   }
 }
 /* ########## */

@@ -49,6 +49,8 @@ export default function Explorar({
   en,                       // [LOCAL] Indica si el idioma es inglés.
   categorias = [],          // [API] Categorías para el filtro.
   cargandoCategorias = false, // Sprint 2: indica si las categorías del filtro siguen cargando
+  errorCategorias = false,  // Sprint 2: indica si fallaron las categorías del filtro
+  recargarCategorias,       // Sprint 2: vuelve a pedir solo las categorías
   ciudades = [],            // [API] Ciudades para el filtro.
   textos,                   // [API] Textos de la interfaz.
   onAbrir,                  // [LOCAL] Función para abrir el detalle de un evento.
@@ -244,6 +246,14 @@ export default function Explorar({
           local={local}
           categorias={categorias}
           cargandoCategorias={cargandoCategorias} // Sprint 2
+          /* SPRINT 2: Hace que el filtro de categoría muestre su error con Reintentar */
+          errorCategorias={errorCategorias}
+          mensajeError={{
+            texto: tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again."),
+            boton: tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Try again"),
+          }}
+          onReintentarCategorias={recargarCategorias}
+          /* SPRINT 2 */
           ciudades={ciudades}
           filtros={filtros}
           onCambiar={actualizar}

@@ -286,6 +286,8 @@ function App() {
           en={en}
           categorias={categorias}
           cargandoCategorias={cargandoCategorias} // Sprint 2: para los esqueletos del filtro de categoría
+          errorCategorias={errorCategorias} // Sprint 2: para el error del filtro de categoría
+          recargarCategorias={recargarCategorias} // Sprint 2: para reintentar solo las categorías
           ciudades={ciudades}
           onAbrir={abrirEvento}
           onNavegar={navegar}

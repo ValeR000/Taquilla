@@ -33,7 +33,7 @@ export default function DetalleEvento({
   const local = textosLocales[en ? "en" : "es"];
 
   const { evento, cargando, error, noEncontrado, recargar } = useEvento(slug);
-  const { relacionados, cargando: cargandoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
+  const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : ""); // Sprint 2: también el error de relacionados
 
   const [pestana, setPestana] = useState("descripcion");
   const [expandida, setExpandida] = useState(false);
@@ -80,11 +80,6 @@ export default function DetalleEvento({
     };
   }, [tituloPagina, descripcionPagina]);
 
-  function reintentar() {
-    recargar();
-    recargarRelacionados();
-  }
-
   function nombreCategoria(id) {
     return categorias.find((c) => c.id === id)?.nombre || id;
   }
@@ -120,7 +115,7 @@ export default function DetalleEvento({
           titulo={tr(tEstado?.error?.titulo, "Algo salió mal", "Something went wrong")}
           texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
           boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Retry")}
-          onBoton={reintentar}
+          onBoton={recargar} // Sprint 2: solo vuelve a pedir el evento; los relacionados se piden cuando llega
         />
       </main>
     );
@@ -362,7 +357,7 @@ export default function DetalleEvento({
         </aside>
       </div>
 
-      {(cargandoRelacionados || relacionados.length > 0) && (
+      {(cargandoRelacionados || errorRelacionados || relacionados.length > 0) && ( // Sprint 2: la sección se queda visible con el error
         <section
           className="detalle__relacionados"
           aria-labelledby="detalle-relacionados-titulo"
@@ -379,22 +374,34 @@ export default function DetalleEvento({
             </p>
           )}
 
-          <div className="detalle__relacionados-lista">
-            {cargandoRelacionados
-              ? Array.from({ length: 4 }, (_, i) => (
-                <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-              ))
-              : relacionados.map((relacionado) => (
-                <TarjetaEvento
-                  key={relacionado.id}
-                  evento={relacionado}
-                  nombreCategoria={nombreCategoria(relacionado.categoria)}
-                  en={en}
-                  textos={textos}
-                  onAbrir={onAbrir}
-                />
-              ))}
-          </div>
+          {/* SPRINT 2: Hace que si fallan los relacionados aparezca un error compacto que solo los vuelve a pedir */}
+          {errorRelacionados ? (
+            <EstadoMensaje
+              compacto
+              rol="alert"
+              texto={tr(tEstado?.error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again.")}
+              boton={tr(tEstado?.error?.botones?.reintentar, "Reintentar", "Try again")}
+              onBoton={recargarRelacionados}
+            />
+          ) : (
+            <div className="detalle__relacionados-lista">
+              {cargandoRelacionados
+                ? Array.from({ length: 4 }, (_, i) => (
+                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
+                ))
+                : relacionados.map((relacionado) => (
+                  <TarjetaEvento
+                    key={relacionado.id}
+                    evento={relacionado}
+                    nombreCategoria={nombreCategoria(relacionado.categoria)}
+                    en={en}
+                    textos={textos}
+                    onAbrir={onAbrir}
+                  />
+                ))}
+            </div>
+          )}
+          {/* SPRINT 2 */}
         </section>
       )}
     </main>

@@ -83,6 +83,12 @@
   gap: var(--espacio-1);
 }
 
+/* SPRINT 2: Hace que las opciones se oculten mientras se muestra el error de las categorías */
+.panel-filtros__opciones[hidden] {
+  display: none;
+}
+/* SPRINT 2 */
+
 .panel-filtros__opcion {
   position: relative;
   display: flex;
