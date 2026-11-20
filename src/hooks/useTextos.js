@@ -133,8 +133,9 @@ export function useTextos(idioma) {
     // [LOCAL] Función de limpieza: Hace que se marque el efecto como no vigente al desmontar o cambiar de idioma.
     return () => {
       vigente = false;
+      clearTimeout(limite);
     };
-  }, [idioma, intento]); 
+  }, [idioma, intento]);
 
   // [LOCAL] Devuelve los datos y estados al componente que use el hook.
   return {
