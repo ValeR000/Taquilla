@@ -357,7 +357,9 @@ function App() {
         /* SPRINT 2 */
       ) : activo === "ingresar" ? (
         /* SPRINT 2: Hace que /ingresar muestre el formulario de iniciar sesión solo a visitantes, después de comprobar la sesión */
-        !sesion.usuario && !sesion.comprobando && (
+        !sesion.usuario && (sesion.comprobando ? (
+          <main className="ingresar-espera" aria-busy="true" />
+        ) : (
           <Ingresar
             en={en}
             textos={datos.textos}
@@ -366,7 +368,7 @@ function App() {
             sesionVencida={sesion.vencida}
             onAvisoMostrado={sesion.apagarVencida}
           />
-        )
+        ))
         /* SPRINT 2 */
       ) : (
         <>
