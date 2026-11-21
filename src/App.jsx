@@ -205,6 +205,13 @@ function App() {
   }, [sesion.usuario, activo]);
   /* SPRINT 2 */
 
+  /* SPRINT 2: Hace que si la sesión venció (401 no_autenticado) la persona vaya a ingresar */
+  useEffect(() => {
+    if (!sesion.vencida || leerSeccion() === "ingresar") return;
+    cambiarRuta("/ingresar", "ingresar");
+  }, [sesion.vencida]);
+  /* SPRINT 2 */
+
   // ==========================================
   // BLOQUE D: FUNCIONES DEL COMPONENTE
   // ==========================================
@@ -356,6 +363,7 @@ function App() {
             textos={datos.textos}
             onIngresar={iniciarSesion}
             onNavegar={navegar}
+            sesionVencida={sesion.vencida}
           />
         )
         /* SPRINT 2 */
