@@ -18,6 +18,7 @@
   font-family: var(--fuente-texto);
   font-size: var(--texto-pequeno);
   font-weight: 500;
+  line-height: 20px; /* Sprint 2 */
   color: var(--color-texto);
 }
 
@@ -28,9 +29,9 @@
   height: 44px;
   padding: 0 10px;
   border: 1px solid var(--color-borde);
-  border-radius: var(--radio);
+  border-radius: var(--radio-md); /* Sprint 2: radio de 8px de Figma */
   font-family: var(--fuente-texto);
-  font-size: var(--texto-base);
+  font-size: var(--texto-pequeno); /* Sprint 2: texto de 14px de Figma */
   color: var(--color-texto);
   background-color: var(--color-superficie);
   transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Hace que el borde cambie suavemente */
@@ -80,6 +81,18 @@
 .campo__input--error {
   border-color: var(--color-error);
 }
+
+/* SPRINT 2: Hace que el campo y su botón de acción (el ojo de la contraseña) queden en una fila */
+.campo__control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo__control .campo__input--caja {
+  padding-right: 48px;
+}
+/* SPRINT 2 */
 
 /* Hace que el mensaje de error sea pequeño y rojo */
 .campo__error-msg {

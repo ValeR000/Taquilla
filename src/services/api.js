@@ -67,3 +67,31 @@ export function pedirJSON(url, { forzar = false } = {}) {
   
   return peticion;
 }
+/* SPRINT 2: Hace que se envíen datos a la API (POST) sin caché y con la cookie de sesión; el error lleva estado, codigo, campos y Retry-After */
+export async function enviarJSON(url, cuerpo) {
+  const respuesta = await fetch(url, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(cuerpo),
+  });
+
+  let datos = null;
+  try {
+    datos = await respuesta.json();
+  } catch {
+    datos = null;
+  }
+
+  if (!respuesta.ok) {
+    const fallo = new Error(`HTTP ${respuesta.status}`);
+    fallo.estado = respuesta.status;
+    fallo.codigo = datos?.error?.codigo;
+    fallo.campos = datos?.error?.campos;
+    fallo.reintentarEn = Number(respuesta.headers.get("Retry-After")) || 0;
+    throw fallo;
+  }
+
+  return datos;
+}
+/* SPRINT 2 */

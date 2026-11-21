@@ -1,7 +1,8 @@
 /* SPRINT 2: Vista de detalle de un evento en /eventos/{slug} con sus eventos relacionados */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useEvento } from "../../../hooks/useEvento.js";
+import { useMetadatos } from "../../../hooks/useMetadatos.js";
 import { useRelacionados } from "../../../hooks/useRelacionados.js";
 import { useReintento } from "../../../hooks/useReintento.js";
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
@@ -63,29 +64,7 @@ export default function DetalleEvento({
       ? tr(tNoEncontrado?.descripcion, "La página que buscas no existe o cambió de dirección.", "The page you are looking for does not exist or has moved.")
       : "";
 
-  useEffect(() => {
-    if (!tituloPagina) return;
-
-    let meta = document.querySelector('meta[name="description"]');
-    const metaNueva = !meta;
-    if (metaNueva) {
-      meta = document.createElement("meta");
-      meta.name = "description";
-      document.head.append(meta);
-    }
-
-    const tituloAnterior = document.title;
-    const descripcionAnterior = meta.content;
-
-    document.title = tituloPagina;
-    meta.content = descripcionPagina;
-
-    return () => {
-      document.title = tituloAnterior;
-      if (metaNueva) meta.remove();
-      else meta.content = descripcionAnterior;
-    };
-  }, [tituloPagina, descripcionPagina]);
+  useMetadatos(tituloPagina, descripcionPagina);
 
   function nombreCategoria(id) {
     return categorias.find((c) => c.id === id)?.nombre || id;
