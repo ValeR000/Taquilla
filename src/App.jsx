@@ -364,6 +364,7 @@ function App() {
             onIngresar={iniciarSesion}
             onNavegar={navegar}
             sesionVencida={sesion.vencida}
+            onAvisoMostrado={sesion.apagarVencida}
           />
         )
         /* SPRINT 2 */

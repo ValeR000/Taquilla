@@ -69,11 +69,15 @@ export function useSesion() {
     setUsuario(nuevoUsuario);
   }
 
+  function apagarVencida() {
+    setVencida(false);
+  }
+
   function cerrar() {
     quitarMarca();
     setUsuario(null);
     return pedirConSesion(API, "DELETE").catch(() => null);
   }
 
-  return { usuario, comprobando, vencida, iniciar, cerrar };
+  return { usuario, comprobando, vencida, iniciar, apagarVencida, cerrar };
 }

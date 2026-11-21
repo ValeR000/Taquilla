@@ -13,7 +13,7 @@ import "./Ingresar.css";
 
 const API = `${import.meta.env.VITE_API_URL}/sesion`;
 
-export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVencida }) { // Sprint 2: sesionVencida muestra el aviso de sesión terminada
+export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVencida, onAvisoMostrado }) { // Sprint 2: sesionVencida muestra el aviso de sesión terminada
   const tr = crearTraductor(en);
   const t = textos?.paginas?.ingresar;
   const tf = t?.formulario;
@@ -138,6 +138,12 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
       texto: tr(tConexion?.texto, "Revisa tu conexión a internet e inténtalo de nuevo. Lo que escribiste se conserva.", "Check your internet connection and try again. What you typed is kept."),
     },
   };
+
+  useEffect(() => {
+    if (!sesionVencida) return;
+    setAnuncio(`${avisos.sesionVencida.titulo}. ${avisos.sesionVencida.texto}`);
+    onAvisoMostrado();
+  }, []);
 
   const textoBoton = aviso === "conexion"
     ? tr(tConexion?.botones?.reintentar, "Reintentar", "Try again")
