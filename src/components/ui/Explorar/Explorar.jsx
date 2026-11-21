@@ -343,8 +343,10 @@ export default function Explorar({
           {!cargando && !error && eventos.length === 0 && (
             <EstadoMensaje
               clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
-              titulo={tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}
-              texto={tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}
+              /* SPRINT 2: Hace que el título y el texto del estado vacío salgan de textos.estados.vacio */
+              titulo={tr(tEstado?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
+              texto={tr(tEstado?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you will see it here.")}
+              /* SPRINT 2 */
               boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
               onBoton={limpiar}
             />
