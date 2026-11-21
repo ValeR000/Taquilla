@@ -24,13 +24,24 @@ function Input({
   variante = 'caja',
   clase = '',
   etiqueta,
-  autoFocus
+  autoFocus,
+  /* SPRINT 2: Props para formularios: nombre, autocompletado, ref para enfocar y un botón junto al campo (como el ojo de la contraseña) */
+  name,
+  autoComplete,
+  ref,
+  accion
+  /* SPRINT 2 */
 }) {
   // ##########
-  const campo = (
+  const control = (
     // [STATIC] El campo de texto real.
     <input
+      ref={ref} // Sprint 2
       id={id}
+      name={name} // Sprint 2
+      autoComplete={autoComplete} // Sprint 2
+      aria-invalid={error ? true : undefined} // Sprint 2: avisa que el campo tiene error
+      aria-describedby={error ? `${id}-error` : undefined} // Sprint 2: une el mensaje de error al campo
       type={type}
       // [LOCAL] Si hay un error, le añade la clase roja. Si no, se queda normal.
       className={`campo__input campo__input--${variante} ${error ? 'campo__input--error' : ''} ${clase}`.trim()}
@@ -45,6 +56,15 @@ function Input({
     />
   );
 
+  /* SPRINT 2: Hace que el botón de acción quede junto al campo */
+  const campo = accion ? (
+    <div className="campo__control">
+      {control}
+      {accion}
+    </div>
+  ) : control;
+  /* SPRINT 2 */
+
   if (!label && !error) return campo;
   // ##########
 
@@ -58,7 +78,7 @@ function Input({
       {campo}
 
       {/* [LOCAL] Si existe un mensaje de error, lo muestra en texto rojo abajo. */}
-      {error && <span className="campo__error-msg">{error}</span>}
+      {error && <span id={`${id}-error`} className="campo__error-msg">{error}</span>}{/* Sprint 2: id para aria-describedby */}
     </div>
   );
 }

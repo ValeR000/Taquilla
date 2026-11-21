@@ -81,6 +81,18 @@
   border-color: var(--color-error);
 }
 
+/* SPRINT 2: Hace que el campo y su botón de acción (el ojo de la contraseña) queden en una fila */
+.campo__control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo__control .campo__input--caja {
+  padding-right: 48px;
+}
+/* SPRINT 2 */
+
 /* Hace que el mensaje de error sea pequeño y rojo */
 .campo__error-msg {
   font-size: var(--texto-xs);

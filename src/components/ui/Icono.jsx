@@ -88,6 +88,30 @@ const ICONOS = {
     ),
   },
   /* SPRINT 2 */
+
+  /* SPRINT 2: Hace que el botón de mostrar u ocultar la contraseña tenga sus íconos */
+  ojo: {
+    caja: 24,
+    tamano: 20,
+    trazos: (
+      <>
+        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+        <circle cx="12" cy="12" r="3" />
+      </>
+    ),
+  },
+
+  ojoTachado: {
+    caja: 24,
+    tamano: 20,
+    trazos: (
+      <>
+        <path d="M10.7 5.1A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-2.2 3.2M6.6 6.6A17.4 17.4 0 0 0 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6" />
+        <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2M2 2l20 20" />
+      </>
+    ),
+  },
+  /* SPRINT 2 */
 };
 
 // ##########
