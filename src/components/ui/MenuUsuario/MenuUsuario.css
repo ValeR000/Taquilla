@@ -32,7 +32,7 @@
 
 .menu-usuario__boton:hover,
 .menu-usuario__boton[aria-expanded="true"] {
-  background: var(--borde-sutil);
+  background: var(--fondo-sutil-activo);
 }
 
 .menu-usuario__lista {

@@ -49,7 +49,7 @@
   height: 20px;
   border-radius: var(--radio-completo);
   color: var(--texto-inverso);
-  background: var(--borde-inverso);
+  background: var(--fondo-inverso-3);
 }
 
 .ingresar__contenido {
