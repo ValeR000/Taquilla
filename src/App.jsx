@@ -30,6 +30,7 @@ import Explorar from "./components/ui/Explorar/Explorar.jsx";
 import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
 import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // Sprint 2
 import Ingresar from "./components/ui/Ingresar/Ingresar.jsx"; // Sprint 2
+import NoEncontrado from "./components/ui/NoEncontrado/NoEncontrado.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
@@ -50,6 +51,8 @@ function leerSeccion() {
 
 // [STATIC] Hace que "Próximamente" use Manizales como ciudad inicial, porque la API no define una.
 const CIUDAD_INICIAL = "Manizales";
+
+const RUTAS_INICIO = ["inicio", "registro", "recuperar-clave"]; // Sprint 2: rutas que muestran el Inicio (registro y recuperar-clave son pantallas del Sprint 3)
 
 function App() {
 
@@ -329,6 +332,7 @@ function App() {
       {/* ========================================== */}
 
       {/* [LOCAL] Hace que se muestre Explorar en /explorar y el Inicio en cualquier otra ruta. */}
+      {/* Sprint 2: el Inicio solo se muestra en /, /registro y /recuperar-clave; las rutas desconocidas muestran la página de no encontrado */}
       {activo === "explorar" ? (
         <Explorar
           key={busquedaId}
@@ -369,6 +373,10 @@ function App() {
             onAvisoMostrado={sesion.apagarVencida}
           />
         ))
+        /* SPRINT 2 */
+      ) : !RUTAS_INICIO.includes(activo) ? (
+        /* SPRINT 2: Hace que una ruta desconocida muestre la página de no encontrado */
+        <NoEncontrado en={en} textos={datos.textos} onNavegar={navegar} />
         /* SPRINT 2 */
       ) : (
         <>
