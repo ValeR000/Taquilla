@@ -88,7 +88,7 @@ export async function enviarJSON(url, cuerpo) {
     fallo.estado = respuesta.status;
     fallo.codigo = datos?.error?.codigo;
     fallo.campos = datos?.error?.campos;
-    fallo.reintentarEn = Number(respuesta.headers.get("Retry-After")) || 0;
+    fallo.reintentarEn = Number(respuesta.headers.get("Retry-After")) || datos?.error?.detalles?.reintentarEnSegundos || 0;
     throw fallo;
   }
 
