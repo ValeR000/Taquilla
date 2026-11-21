@@ -1,9 +1,11 @@
 /* SPRINT 2: Vista de iniciar sesión en /ingresar: panel de presentación y formulario de correo y contraseña con POST /sesion */
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMetadatos } from "../../../hooks/useMetadatos.js";
 import { enviarJSON } from "../../../services/api.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { textosLocales } from "../../../utils/textosLocales.js";
+import Aviso from "../Aviso/Aviso.jsx";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono.jsx";
 import Input from "../Input/Input.jsx";
@@ -17,12 +19,18 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
   const tf = t?.formulario;
   const te = t?.errores;
   const beneficios = t?.presentacion?.beneficios;
+  const local = textosLocales[en ? "en" : "es"];
 
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
   const [verClave, setVerClave] = useState(false);
   const [mantenerSesion, setMantenerSesion] = useState(false);
   const [errores, setErrores] = useState({});
+  const [aviso, setAviso] = useState(null);
+  const [enviando, setEnviando] = useState(false);
+  const [espera, setEspera] = useState(0);
+  const [segundos, setSegundos] = useState(0);
+  const [anuncio, setAnuncio] = useState("");
 
   const correoRef = useRef(null);
   const claveRef = useRef(null);
@@ -32,28 +40,101 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
     tr(t?.seo?.descripcion, "Ingresa a tu cuenta de Taquilla.", "Log in to your Taquilla account.")
   );
 
+  useEffect(() => {
+    if (segundos <= 0) return;
+
+    const temporizador = setTimeout(() => {
+      setSegundos(segundos - 1);
+      if (segundos === 1) {
+        setAviso(null);
+        setAnuncio(local.ingresoDisponible);
+      }
+    }, 1000);
+
+    return () => clearTimeout(temporizador);
+  }, [segundos, local.ingresoDisponible]);
+
   function marcarErrores(nuevos) {
     setErrores(nuevos);
+    setAviso("campos");
     if (nuevos.correo) correoRef.current?.focus();
     else if (nuevos.clave) claveRef.current?.focus();
   }
 
+  function limpiarErrores() {
+    setErrores({});
+    if (aviso !== "limite") setAviso(null);
+  }
+
   async function enviar(e) {
     e.preventDefault();
+    if (enviando || segundos > 0) return;
+
+    setAnuncio("");
+    limpiarErrores();
 
     const faltantes = {};
     if (!correo.trim()) faltantes.correo = tr(te?.correoObligatorio, "Escribe tu correo electrónico.", "Enter your email.");
     if (!clave) faltantes.clave = tr(te?.claveObligatoria, "Escribe tu contraseña.", "Enter your password.");
-    marcarErrores(faltantes);
-    if (faltantes.correo || faltantes.clave) return;
+    if (faltantes.correo || faltantes.clave) {
+      marcarErrores(faltantes);
+      return;
+    }
+
+    setEnviando(true);
 
     try {
       const datos = await enviarJSON(API, { correo: correo.trim(), clave });
       onIngresar(datos.usuario);
     } catch (err) {
-      if (err.codigo === "validacion" && err.campos) marcarErrores(err.campos);
+      setEnviando(false);
+
+      if (err.codigo === "validacion" && err.campos) {
+        marcarErrores(err.campos);
+        return;
+      }
+
+      if (err.codigo === "credenciales_invalidas") {
+        setAviso("credenciales");
+        setClave("");
+      } else if (err.codigo === "demasiadas_peticiones") {
+        setEspera(err.reintentarEn);
+        setSegundos(err.reintentarEn);
+        setAviso("limite");
+      } else {
+        setAviso("conexion");
+      }
+
+      claveRef.current?.focus();
     }
   }
+
+  const tConexion = te?.conexion;
+  const tLimite = te?.demasiadosIntentos;
+
+  const avisos = {
+    campos: {
+      titulo: tr(te?.camposObligatorios?.titulo, "Revisa los campos marcados", "Check the highlighted fields"),
+      texto: tr(te?.camposObligatorios?.texto, "Para ingresar escribe tu correo y tu contraseña.", "To log in, enter your email and password."),
+    },
+    credenciales: {
+      titulo: tr(te?.credenciales?.titulo, "Correo o contraseña incorrectos", "Incorrect email or password"),
+      texto: tr(te?.credenciales?.texto, "Revisa los datos e inténtalo de nuevo. Si no recuerdas tu contraseña, puedes restablecerla.", "Check your details and try again. If you don't remember your password, you can reset it."),
+    },
+    limite: {
+      titulo: tr(tLimite?.titulo, "Demasiados intentos", "Too many attempts"),
+      texto: tr(tLimite?.texto, "Espera {segundos} segundos antes de volver a intentarlo.", "Wait {segundos} seconds before trying again.").replace("{segundos}", segundos),
+      textoLector: tr(tLimite?.texto, "Espera {segundos} segundos antes de volver a intentarlo.", "Wait {segundos} seconds before trying again.").replace("{segundos}", espera),
+    },
+    conexion: {
+      titulo: tr(tConexion?.titulo, "No pudimos conectarnos", "We couldn't connect"),
+      texto: tr(tConexion?.texto, "Revisa tu conexión a internet e inténtalo de nuevo. Lo que escribiste se conserva.", "Check your internet connection and try again. What you typed is kept."),
+    },
+  };
+
+  const textoBoton = aviso === "conexion"
+    ? tr(tConexion?.botones?.reintentar, "Reintentar", "Try again")
+    : tr(tf?.botones?.ingresar, "Ingresar", "Log in");
 
   function irA(e, ruta) {
     e.preventDefault();
@@ -84,7 +165,9 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
         <h1 id="ingresar-titulo" className="ingresar__titulo">{tr(tf?.titulo, "Ingresa a tu cuenta", "Log in to your account")}</h1>
         <p className="ingresar__subtitulo">{tr(tf?.subtitulo, "Ingresa con el correo y la contraseña de tu cuenta.", "Log in with the email and password of your account.")}</p>
 
-        <form className="ingresar__formulario" noValidate onSubmit={enviar}>
+        <form className="ingresar__formulario" noValidate aria-busy={enviando} onSubmit={enviar}>
+          {aviso && <Aviso {...avisos[aviso]} />}
+
           <Input
             ref={correoRef}
             id="ingresar-correo"
@@ -94,7 +177,10 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
             label={tr(tf?.etiquetas?.correo, "Correo electrónico", "Email")}
             placeholder={tr(tf?.placeholders?.correo, "nombre@correo.com", "name@email.com")}
             value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
+            onChange={(e) => {
+              setCorreo(e.target.value);
+              limpiarErrores();
+            }}
             error={errores.correo}
           />
 
@@ -106,7 +192,10 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
             autoComplete="current-password"
             label={tr(tf?.etiquetas?.clave, "Contraseña", "Password")}
             value={clave}
-            onChange={(e) => setClave(e.target.value)}
+            onChange={(e) => {
+              setClave(e.target.value);
+              limpiarErrores();
+            }}
             error={errores.clave}
             accion={
               <button
@@ -141,9 +230,20 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
             </a>
           </div>
 
-          <Boton type="submit" clase="ingresar__boton">
-            {tr(tf?.botones?.ingresar, "Ingresar", "Log in")}
+          <Boton
+            type="submit"
+            clase={`ingresar__boton ${enviando ? "ingresar__boton--enviando" : ""}`}
+            disabled={enviando || segundos > 0}
+          >
+            {enviando ? (
+              <>
+                <span className="ingresar__spinner" aria-hidden="true" />
+                {tr(tf?.mensajes?.ingresando, "Ingresando…", "Logging in…")}
+              </>
+            ) : textoBoton}
           </Boton>
+
+          <p className="solo-lectores" role="status">{anuncio}</p>
         </form>
 
         <p className="ingresar__registro">

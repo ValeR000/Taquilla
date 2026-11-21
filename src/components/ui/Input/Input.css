@@ -78,9 +78,13 @@
    ========================================= */
 
 /* Hace que el borde del input se vuelva rojo */
-.campo__input--error {
-  border-color: var(--color-error);
+/* SPRINT 2: El borde rojo de 2px se mantiene también con el mouse encima y con el foco */
+.campo__input--error,
+.campo__input--error:hover:not(:disabled),
+.campo__input--error:focus-visible {
+  border: 2px solid var(--color-error);
 }
+/* SPRINT 2 */
 
 /* SPRINT 2: Hace que el campo y su botón de acción (el ojo de la contraseña) queden en una fila */
 .campo__control {
@@ -96,7 +100,8 @@
 
 /* Hace que el mensaje de error sea pequeño y rojo */
 .campo__error-msg {
-  font-size: var(--texto-xs);
+  font-size: var(--texto-pequeno); /* Sprint 2: mensaje de 14px de Figma */
+  line-height: 20px; /* Sprint 2 */
   color: var(--color-error);
   margin: 0;
 }
