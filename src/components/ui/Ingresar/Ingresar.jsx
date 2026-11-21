@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import { useMetadatos } from "../../../hooks/useMetadatos.js";
 import { enviarJSON } from "../../../services/api.js";
 import { crearTraductor } from "../../../utils/traductor.js";
-import logo from "../../../assets/logo-taquilla.svg";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono.jsx";
 import Input from "../Input/Input.jsx";
@@ -18,7 +17,6 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
   const tf = t?.formulario;
   const te = t?.errores;
   const beneficios = t?.presentacion?.beneficios;
-  const tLogo = textos?.navbar?.logo;
 
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
@@ -65,13 +63,6 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
   return (
     <main className="ingresar">
       <aside className="ingresar__panel">
-        <a href="/" className="ingresar__logo" aria-label={tLogo?.aria} onClick={(e) => irA(e, "inicio")}>
-          <span className="ingresar__logo-icono">
-            <img src={logo} alt="" width="24" height="24" />
-          </span>
-          <span>{tr(tLogo?.texto, "Taquilla", "Taquilla")}</span>
-        </a>
-
         <div className="ingresar__presentacion">
           <p className="ingresar__lema">{tr(t?.presentacion?.lema, "Tu próxima noche empieza aquí.", "Your next night out starts here.")}</p>
           <ul className="ingresar__beneficios">
