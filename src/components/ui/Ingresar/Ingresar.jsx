@@ -115,6 +115,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
   const avisos = {
     /* SPRINT 2: Aviso de la sesión que venció, con los textos de textos.estados */
     sesionVencida: {
+      tipo: "info",
       titulo: tr(textos?.estados?.sesionVencida?.titulo, "Tu sesión terminó", "Your session ended"),
       texto: tr(textos?.estados?.sesionVencida?.texto, "Vuelve a ingresar para continuar donde ibas.", "Log in again to pick up where you left off."),
     },
