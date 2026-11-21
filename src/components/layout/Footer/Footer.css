@@ -115,6 +115,7 @@
 .footer__enlace--boton {
   padding: 0;
   font: inherit;
+  font-size: var(--texto-pequeno); /* Sprint 2: mismo tamaño que los demás enlaces; font: inherit lo dejaba en 16px */
   text-align: left;
   background: none;
   border: 0;
