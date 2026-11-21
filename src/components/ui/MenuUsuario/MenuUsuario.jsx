@@ -9,8 +9,7 @@ import "./MenuUsuario.css";
 function iniciales(usuario) {
   const palabras = (usuario.nombre || "").trim().split(/\s+/).filter(Boolean);
   if (palabras.length === 0) return (usuario.correo || "").charAt(0).toUpperCase();
-  if (palabras.length === 1) return palabras[0].charAt(0).toUpperCase();
-  return (palabras[0].charAt(0) + palabras[palabras.length - 1].charAt(0)).toUpperCase();
+  return palabras.slice(0, 2).map((palabra) => palabra.charAt(0)).join("").toUpperCase();
 }
 
 export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, variante = "menu" }) {
@@ -76,7 +75,7 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
         ref={botonRef}
         type="button"
         className="menu-usuario__iniciales menu-usuario__boton"
-        aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo)}
+        aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo || "")}
         aria-expanded={abierto}
         aria-controls={idLista}
         onClick={() => setAbierto(!abierto)}
