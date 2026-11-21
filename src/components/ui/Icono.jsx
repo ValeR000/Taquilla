@@ -120,6 +120,19 @@ const ICONOS = {
     trazos: <path d="M20 6 9 17l-5-5" />,
   },
   /* SPRINT 2 */
+
+  /* SPRINT 2: Hace que el Aviso de error tenga su ícono de alerta en círculo */
+  alerta: {
+    caja: 24,
+    tamano: 20,
+    trazos: (
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 8v4M12 16h.01" />
+      </>
+    ),
+  },
+  /* SPRINT 2 */
 };
 
 // ##########
