@@ -63,6 +63,13 @@
   background-color: var(--color-fondo);
 }
 
+/* SPRINT 2: Tamaño G de Figma: 52px de alto */
+.boton--grande {
+  height: 52px;
+  padding: 14px 26px;
+}
+/* SPRINT 2 */
+
 /* ########## */
 .boton--contorno {
   background-color: transparent;

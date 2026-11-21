@@ -239,6 +239,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
 
           <Boton
             type="submit"
+            tamano="grande"
             clase={`ingresar__boton ${enviando ? "ingresar__boton--enviando" : ""}`}
             disabled={enviando || segundos > 0}
           >
