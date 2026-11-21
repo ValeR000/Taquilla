@@ -39,9 +39,9 @@
     }
     /* SPRINT 2 */
 
-    /* SPRINT 2: Hace que en móvil /ingresar reserve el alto del formulario mientras se comprueba la sesión */
+    /* SPRINT 2: Hace que en móvil /ingresar reserve el alto del formulario con el aviso de sesión vencida mientras se comprueba la sesión */
     .ingresar-espera {
-        min-height: 504px;
+        min-height: 587px;
     }
     /* SPRINT 2 */
 }
