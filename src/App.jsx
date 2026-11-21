@@ -402,7 +402,7 @@ function App() {
               <EstadoMensaje
                 /* SPRINT 2: Hace que el error sea compacto, con el mismo alto que la fila de categorías, y su mensaje salga del codigo */
                 compacto
-                rol="alert"
+                rol="status"
                 clase="inicio__estado inicio__estado--categorias"
                 texto={mensajeCategorias.texto}
                 boton={mensajeCategorias.boton}
