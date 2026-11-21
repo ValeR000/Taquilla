@@ -95,3 +95,29 @@ export async function enviarJSON(url, cuerpo) {
   return datos;
 }
 /* SPRINT 2 */
+
+/* SPRINT 2: Hace que se consulte o se cierre la sesión (GET o DELETE) con la cookie y sin caché; el error lleva estado y codigo */
+export async function pedirConSesion(url, metodo = "GET") {
+  const respuesta = await fetch(url, {
+    method: metodo,
+    credentials: "include",
+    cache: "no-store",
+  });
+
+  let datos = null;
+  try {
+    datos = await respuesta.json();
+  } catch {
+    datos = null;
+  }
+
+  if (!respuesta.ok) {
+    const fallo = new Error(`HTTP ${respuesta.status}`);
+    fallo.estado = respuesta.status;
+    fallo.codigo = datos?.error?.codigo;
+    throw fallo;
+  }
+
+  return datos;
+}
+/* SPRINT 2 */
