@@ -13,7 +13,7 @@ import "./Ingresar.css";
 
 const API = `${import.meta.env.VITE_API_URL}/sesion`;
 
-export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVencida, onAvisoMostrado }) { // Sprint 2: sesionVencida muestra el aviso de sesión terminada
+export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVencida, onAvisoMostrado }) {
   const tr = crearTraductor(en);
   const t = textos?.paginas?.ingresar;
   const tf = t?.formulario;
@@ -26,7 +26,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
   const [verClave, setVerClave] = useState(false);
   const [mantenerSesion, setMantenerSesion] = useState(false);
   const [errores, setErrores] = useState({});
-  const [aviso, setAviso] = useState(sesionVencida ? "sesionVencida" : null); // Sprint 2: empieza con el aviso si la sesión venció
+  const [aviso, setAviso] = useState(sesionVencida ? "sesionVencida" : null);
   const [enviando, setEnviando] = useState(false);
   const [espera, setEspera] = useState(0);
   const [segundos, setSegundos] = useState(0);
@@ -113,13 +113,11 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
   const tLimite = te?.demasiadosIntentos;
 
   const avisos = {
-    /* SPRINT 2: Aviso de la sesión que venció, con los textos de textos.estados */
     sesionVencida: {
       tipo: "info",
       titulo: tr(textos?.estados?.sesionVencida?.titulo, "Tu sesión terminó", "Your session ended"),
       texto: tr(textos?.estados?.sesionVencida?.texto, "Vuelve a ingresar para continuar donde ibas.", "Log in again to pick up where you left off."),
     },
-    /* SPRINT 2 */
     campos: {
       titulo: tr(te?.camposObligatorios?.titulo, "Revisa los campos marcados", "Check the highlighted fields"),
       texto: tr(te?.camposObligatorios?.texto, "Para ingresar escribe tu correo y tu contraseña.", "To log in, enter your email and password."),

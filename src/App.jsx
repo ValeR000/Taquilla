@@ -338,10 +338,12 @@ function App() {
           key={busquedaId}
           en={en}
           categorias={categorias}
-          cargandoCategorias={cargandoCategorias} // Sprint 2: para los esqueletos del filtro de categoría
-          errorCategorias={errorCategorias} // Sprint 2: para el error del filtro de categoría
-          codigoCategorias={codigoCategorias} // Sprint 2: para el mensaje del error según su codigo
-          recargarCategorias={recargarCategorias} // Sprint 2: para reintentar solo las categorías
+          /* SPRINT 2: Hace que el filtro de categoría tenga sus esqueletos, su error según el codigo y Reintentar solo para las categorías */
+          cargandoCategorias={cargandoCategorias}
+          errorCategorias={errorCategorias}
+          codigoCategorias={codigoCategorias}
+          recargarCategorias={recargarCategorias}
+          /* SPRINT 2 */
           ciudades={ciudades}
           onAbrir={abrirEvento}
           onNavegar={navegar}

@@ -50,10 +50,12 @@ function guardarFiltros(filtros) {
 export default function Explorar({
   en,                       // [LOCAL] Indica si el idioma es inglés.
   categorias = [],          // [API] Categorías para el filtro.
-  cargandoCategorias = false, // Sprint 2: indica si las categorías del filtro siguen cargando
-  errorCategorias = false,  // Sprint 2: indica si fallaron las categorías del filtro
-  codigoCategorias = "",    // Sprint 2: codigo del error de las categorías
-  recargarCategorias,       // Sprint 2: vuelve a pedir solo las categorías
+  /* SPRINT 2: Carga, error y codigo de las categorías del filtro, y la función que vuelve a pedir solo las categorías */
+  cargandoCategorias = false,
+  errorCategorias = false,
+  codigoCategorias = "",
+  recargarCategorias,
+  /* SPRINT 2 */
   ciudades = [],            // [API] Ciudades para el filtro.
   textos,                   // [API] Textos de la interfaz.
   onAbrir,                  // [LOCAL] Función para abrir el detalle de un evento.

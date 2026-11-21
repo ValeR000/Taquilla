@@ -109,14 +109,14 @@
 }
 .footer__inferior p {
   margin: 0; /* Hace que los textos no tengan margen extra por defecto */
-  font-size: inherit; /* Sprint 2: usa los 12px de .footer__inferior en lugar de los 16px de la regla global p */
+  font-size: inherit; /* Sprint 2 */
 }
 
 
 .footer__enlace--boton {
   padding: 0;
   font: inherit;
-  font-size: var(--texto-pequeno); /* Sprint 2: mismo tamaño que los demás enlaces; font: inherit lo dejaba en 16px */
+  font-size: var(--texto-pequeno); /* Sprint 2 */
   text-align: left;
   background: none;
   border: 0;

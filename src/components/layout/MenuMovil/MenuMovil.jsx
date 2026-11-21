@@ -22,8 +22,10 @@ export default function MenuMovil({
   idioma,            // [LOCAL] Idioma actual.
   cambiarIdioma,     // [LOCAL] Función para cambiar el idioma.
   abrirAccesibilidad, // [LOCAL] Función para abrir el panel de accesibilidad.
-  usuario,           // Sprint 2: persona con la sesión iniciada (null si es visitante)
-  onCerrarSesion     // Sprint 2: función para cerrar la sesión
+  /* SPRINT 2: Persona con la sesión iniciada (null si es visitante) y función para cerrar la sesión */
+  usuario,
+  onCerrarSesion
+  /* SPRINT 2 */
 }) {
   // ==========================================
   // BLOQUE A: IDIOMA Y NAVEGACIÓN

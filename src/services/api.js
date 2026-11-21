@@ -1,4 +1,5 @@
 // RESPONSABILIDAD: Sistema de caché y deduplicación de peticiones HTTP para evitar llamadas repetitivas a la API.
+// Sprint 2: también envía datos (POST) y consulta o cierra la sesión (GET y DELETE) con la cookie, sin caché.
 
 // [LOCAL] Hace que se guarden las peticiones que están en curso para evitar duplicados en la red.
 const enCurso = new Map();

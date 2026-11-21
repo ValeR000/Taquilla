@@ -29,9 +29,9 @@
   height: 44px;
   padding: 0 10px;
   border: 1px solid var(--color-borde);
-  border-radius: var(--radio-md); /* Sprint 2: radio de 8px de Figma */
+  border-radius: var(--radio-md); /* Sprint 2 */
   font-family: var(--fuente-texto);
-  font-size: var(--texto-pequeno); /* Sprint 2: texto de 14px de Figma */
+  font-size: var(--texto-pequeno); /* Sprint 2 */
   color: var(--color-texto);
   background-color: var(--color-superficie);
   transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Hace que el borde cambie suavemente */
@@ -100,7 +100,7 @@
 
 /* Hace que el mensaje de error sea pequeño y rojo */
 .campo__error-msg {
-  font-size: var(--texto-pequeno); /* Sprint 2: mensaje de 14px de Figma */
+  font-size: var(--texto-pequeno); /* Sprint 2 */
   line-height: 20px; /* Sprint 2 */
   color: var(--color-error);
   margin: 0;
