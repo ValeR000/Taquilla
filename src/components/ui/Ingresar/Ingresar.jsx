@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useMetadatos } from "../../../hooks/useMetadatos.js";
 import { enviarJSON } from "../../../services/api.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import logo from "../../../assets/logo-taquilla.svg";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono.jsx";
 import Input from "../Input/Input.jsx";
@@ -17,6 +18,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
   const tf = t?.formulario;
   const te = t?.errores;
   const beneficios = t?.presentacion?.beneficios;
+  const tLogo = textos?.navbar?.logo;
 
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
@@ -63,12 +65,28 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
   return (
     <main className="ingresar">
       <aside className="ingresar__panel">
-        <p className="ingresar__lema">{tr(t?.presentacion?.lema, "Tu próxima noche empieza aquí.", "Your next night out starts here.")}</p>
-        <ul className="ingresar__beneficios">
-          <li>{tr(beneficios?.descubre, "Descubre conciertos, teatro y deportes", "Discover concerts, theater and sports")}</li>
-          <li>{tr(beneficios?.filtra, "Filtra por categoría, fecha y ciudad", "Filter by category, date and city")}</li>
-          <li>{tr(beneficios?.consulta, "Consulta horario, lugar y cómo llegar", "Check the time, venue and how to get there")}</li>
-        </ul>
+        <a href="/" className="ingresar__logo" aria-label={tLogo?.aria} onClick={(e) => irA(e, "inicio")}>
+          <span className="ingresar__logo-icono">
+            <img src={logo} alt="" width="24" height="24" />
+          </span>
+          <span>{tr(tLogo?.texto, "Taquilla", "Taquilla")}</span>
+        </a>
+
+        <div className="ingresar__presentacion">
+          <p className="ingresar__lema">{tr(t?.presentacion?.lema, "Tu próxima noche empieza aquí.", "Your next night out starts here.")}</p>
+          <ul className="ingresar__beneficios">
+            {[
+              tr(beneficios?.descubre, "Descubre conciertos, teatro y deportes", "Discover concerts, theater and sports"),
+              tr(beneficios?.filtra, "Filtra por categoría, fecha y ciudad", "Filter by category, date and city"),
+              tr(beneficios?.consulta, "Consulta horario, lugar y cómo llegar", "Check the time, venue and how to get there"),
+            ].map((beneficio) => (
+              <li key={beneficio} className="ingresar__beneficio">
+                <span className="ingresar__check"><Icono nombre="check" /></span>
+                {beneficio}
+              </li>
+            ))}
+          </ul>
+        </div>
       </aside>
 
       <section className="ingresar__contenido" aria-labelledby="ingresar-titulo">
@@ -115,16 +133,19 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
 
           <div className="ingresar__opciones">
             <label className="ingresar__mantener">
-              <input
-                type="checkbox"
-                name="mantenerSesion"
-                checked={mantenerSesion}
-                onChange={(e) => setMantenerSesion(e.target.checked)}
-              />
+              <span className="ingresar__casilla">
+                <input
+                  type="checkbox"
+                  name="mantenerSesion"
+                  checked={mantenerSesion}
+                  onChange={(e) => setMantenerSesion(e.target.checked)}
+                />
+                <Icono nombre="check" />
+              </span>
               {tr(tf?.etiquetas?.mantenerSesion, "Mantener la sesión iniciada", "Keep me logged in")}
             </label>
 
-            <a href="/recuperar-clave" onClick={(e) => irA(e, "recuperar-clave")}>
+            <a href="/recuperar-clave" className="ingresar__enlace" onClick={(e) => irA(e, "recuperar-clave")}>
               {tr(tf?.enlaces?.olvidasteClave, "¿Olvidaste tu contraseña?", "Forgot your password?")}
             </a>
           </div>
@@ -136,7 +157,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar }) {
 
         <p className="ingresar__registro">
           {tr(tf?.mensajes?.sinCuenta, "¿No tienes cuenta?", "Don't have an account?")}{" "}
-          <a href="/registro" onClick={(e) => irA(e, "registro")}>
+          <a href="/registro" className="ingresar__enlace" onClick={(e) => irA(e, "registro")}>
             {tr(tf?.enlaces?.crearCuenta, "Crea una cuenta", "Create an account")}
           </a>
         </p>

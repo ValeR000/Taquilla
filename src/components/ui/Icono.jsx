@@ -112,6 +112,14 @@ const ICONOS = {
     ),
   },
   /* SPRINT 2 */
+
+  /* SPRINT 2: Hace que los beneficios del ingreso y la casilla marcada tengan su check */
+  check: {
+    caja: 24,
+    tamano: 12,
+    trazos: <path d="M20 6 9 17l-5-5" />,
+  },
+  /* SPRINT 2 */
 };
 
 // ##########
