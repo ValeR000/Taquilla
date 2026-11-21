@@ -13,6 +13,7 @@ import SelectorIdioma from "../../ui/SelectorIdioma/SelectorIdioma.jsx";
 import iconoAccesibilidad from "../../../assets/accesibilidad.svg";
 import logo from "../../../assets/logo-taquilla.svg";
 import MenuMovil from "../MenuMovil/MenuMovil.jsx";
+import MenuUsuario from "../../ui/MenuUsuario/MenuUsuario.jsx"; // Sprint 2
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
 
@@ -32,6 +33,11 @@ export default function Navbar({
   onAbrirBusqueda,        // [LOCAL] Función para abrir el buscador en móvil.
   abrirAccesibilidad,     // [LOCAL] Función para abrir el panel de accesibilidad.
   accesibilidadAbierta,   // [LOCAL] Indica si el panel de accesibilidad está abierto.
+  /* SPRINT 2: Datos de la sesión: la persona que ingresó, si se está comprobando la sesión y cómo cerrarla */
+  usuario,
+  comprobandoSesion,
+  onCerrarSesion,
+  /* SPRINT 2 */
 }) {
   // [API] Hace que los textos del navbar estén a mano.
   const t = textos?.navbar;
@@ -157,15 +163,25 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
           {/* [LOCAL] Hace que se pueda cambiar entre ES y EN. */}
           <SelectorIdioma idioma={idioma} cambiarIdioma={cambiarIdioma} etiqueta={t?.aria.idioma} />
 
-          {/* [LOCAL] Hace que "Ingresar" lleve a la vista de login. */}
-          <Boton variante="secundario" onClick={() => onNavegar("ingresar")}>
-            {t?.botones.ingresar}
-          </Boton>
+          {/* SPRINT 2: Hace que con sesión se vea el menú de la cuenta y que, mientras se comprueba, los botones reserven su espacio sin verse */}
+          <div className={comprobandoSesion ? "navbar__sesion navbar__sesion--comprobando" : "navbar__sesion"} aria-hidden={comprobandoSesion || undefined}>
+            {usuario ? (
+              <MenuUsuario usuario={usuario} en={en} textos={textos} onCerrarSesion={onCerrarSesion} />
+            ) : (
+              <>
+                {/* [LOCAL] Hace que "Ingresar" lleve a la vista de login. */}
+                <Boton variante="secundario" onClick={() => onNavegar("ingresar")}>
+                  {t?.botones.ingresar}
+                </Boton>
 
-          {/* [LOCAL] Hace que "Crear cuenta" lleve a la vista de registro. */}
-          <Boton variante="primario" onClick={() => onNavegar("registro")}>
-            {t?.botones.crearCuenta}
-          </Boton>
+                {/* [LOCAL] Hace que "Crear cuenta" lleve a la vista de registro. */}
+                <Boton variante="primario" onClick={() => onNavegar("registro")}>
+                  {t?.botones.crearCuenta}
+                </Boton>
+              </>
+            )}
+          </div>
+          {/* SPRINT 2 */}
         </div>
 
         {/* ========================================== */}
@@ -185,9 +201,13 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
           </button>
 
           {/* [LOCAL] Hace que "Ingresar" lleve a la vista de login. */}
-          <button type="button" className="navbar__movil-ingresar" onClick={() => onNavegar("ingresar")}>
-            {t?.botones.ingresar}
-          </button>
+          {/* SPRINT 2: Hace que no aparezca con sesión (la cuenta está en el menú móvil) ni mientras se comprueba, para que la lupa no salte */}
+          {!usuario && !comprobandoSesion && (
+            <button type="button" className="navbar__movil-ingresar" onClick={() => onNavegar("ingresar")}>
+              {t?.botones.ingresar}
+            </button>
+          )}
+          {/* SPRINT 2 */}
 
           {/* [ACCESIBILIDAD] Hace que el botón abra el menú y anuncie si está abierto. */}
           <button
@@ -211,6 +231,10 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
         idioma={idioma}
         cambiarIdioma={cambiarIdioma}
         abrirAccesibilidad={abrirAccesibilidad}
+        /* SPRINT 2: Hace que el menú móvil muestre la cuenta si hay sesión */
+        usuario={usuario}
+        onCerrarSesion={onCerrarSesion}
+        /* SPRINT 2 */
       />
     </header>
   );

@@ -15,6 +15,7 @@ import { useEventosDestacados } from "./hooks/useEventosDestacados.js";
 import { useCategorias } from "./hooks/useCategorias.js";
 import { useCiudades } from "./hooks/useCiudades.js";
 import { useReintento } from "./hooks/useReintento.js"; // Sprint 2
+import { useSesion } from "./hooks/useSesion.js"; // Sprint 2
 import "./App.css";
 
 import Footer from "./components/layout/Footer/Footer.jsx";
@@ -81,7 +82,7 @@ function App() {
   const [subrayarEnlaces, setSubrayarEnlaces] = useState(false);
   const [espaciadoLectura, setEspaciadoLectura] = useState(false);
 
-  const [usuario, setUsuario] = useState(null); // Sprint 2: persona con la sesión iniciada (null si es visitante)
+  const sesion = useSesion(); // Sprint 2: persona con la sesión iniciada (null si es visitante), recuperada con GET /sesion
 
   // [LOCAL] Hace que el panel de accesibilidad se abra o se cierre.
   const abrirAccesibilidad = () => setPanelAbierto(!panelAbierto);
@@ -196,6 +197,14 @@ function App() {
     };
   }, [tamanoTexto, altoContraste, reducirMovimiento, subrayarEnlaces, espaciadoLectura]);
 
+  /* SPRINT 2: Hace que con sesión /ingresar lleve al Inicio, sin dejar /ingresar en el historial */
+  useEffect(() => {
+    if (!sesion.usuario || activo !== "ingresar") return;
+    window.history.replaceState({ interna: true }, "", "/");
+    setActivo("inicio");
+  }, [sesion.usuario, activo]);
+  /* SPRINT 2 */
+
   // ==========================================
   // BLOQUE D: FUNCIONES DEL COMPONENTE
   // ==========================================
@@ -270,7 +279,14 @@ function App() {
 
   /* SPRINT 2: Hace que al ingresar se guarde la persona y se vuelva al Inicio */
   function iniciarSesion(nuevoUsuario) {
-    setUsuario(nuevoUsuario);
+    sesion.iniciar(nuevoUsuario);
+    navegar("inicio");
+  }
+  /* SPRINT 2 */
+
+  /* SPRINT 2: Hace que al cerrar sesión la persona quede como visitante y vuelva al Inicio */
+  function cerrarSesion() {
+    sesion.cerrar();
     navegar("inicio");
   }
   /* SPRINT 2 */
@@ -294,6 +310,11 @@ function App() {
         onAbrirBusqueda={abrirBusqueda}
         abrirAccesibilidad={abrirAccesibilidad}
         accesibilidadAbierta={panelAbierto}
+        /* SPRINT 2: Hace que el Navbar muestre la cuenta o los botones de visitante según la sesión */
+        usuario={sesion.usuario}
+        comprobandoSesion={sesion.comprobando}
+        onCerrarSesion={cerrarSesion}
+        /* SPRINT 2 */
       />
 
       {/* ========================================== */}
@@ -328,13 +349,15 @@ function App() {
         />
         /* SPRINT 2 */
       ) : activo === "ingresar" ? (
-        /* SPRINT 2: Hace que /ingresar muestre el formulario de iniciar sesión */
-        <Ingresar
-          en={en}
-          textos={datos.textos}
-          onIngresar={iniciarSesion}
-          onNavegar={navegar}
-        />
+        /* SPRINT 2: Hace que /ingresar muestre el formulario de iniciar sesión solo a visitantes, después de comprobar la sesión */
+        !sesion.usuario && !sesion.comprobando && (
+          <Ingresar
+            en={en}
+            textos={datos.textos}
+            onIngresar={iniciarSesion}
+            onNavegar={navegar}
+          />
+        )
         /* SPRINT 2 */
       ) : (
         <>
