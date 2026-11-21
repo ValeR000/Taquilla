@@ -159,6 +159,32 @@
 
 .ingresar__boton {
   width: 100%;
+  height: 52px;
+  padding: 14px 26px;
+}
+
+.ingresar__boton--enviando {
+  gap: 8px;
+}
+
+.ingresar__boton--enviando:disabled {
+  opacity: 0.8;
+  cursor: progress;
+}
+
+.ingresar__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid var(--color-sobre-primario);
+  border-right-color: transparent;
+  border-radius: var(--radio-completo);
+  animation: ingresar-girar 0.8s linear infinite;
+}
+
+@keyframes ingresar-girar {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ingresar__registro {

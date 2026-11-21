@@ -1,0 +1,45 @@
+/* SPRINT 2: Estilos del Aviso: mensaje de estado con ícono, título y texto */
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 60px;
+  padding: 12px 16px;
+  border: 1px solid;
+  border-radius: var(--radio-md);
+}
+
+.aviso--error {
+  border-color: var(--color-error);
+  background: var(--fondo-error);
+}
+
+.aviso__icono {
+  display: grid;
+  flex-shrink: 0;
+}
+
+.aviso--error .aviso__icono {
+  color: var(--color-error);
+}
+
+.aviso__contenido {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.aviso__titulo {
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-texto);
+}
+
+.aviso__texto {
+  font-size: var(--texto-pequeno);
+  line-height: 20px;
+  color: var(--color-texto-suave);
+}

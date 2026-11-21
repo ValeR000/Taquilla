@@ -27,6 +27,7 @@ export const textosLocales = {
     localidades: "Localidades",
     leerMenos: "Leer menos",
     /* SPRINT 2 */
+    ingresoDisponible: "Ya puedes volver a intentarlo.", // Sprint 2: anuncio al terminar la espera del 429 (No en /textos)
   },
   en: {
     titulo: "Explore events",
@@ -51,6 +52,7 @@ export const textosLocales = {
     localidades: "Sections",
     leerMenos: "Read less",
     /* SPRINT 2 */
+    ingresoDisponible: "You can try again now.", // Sprint 2: anuncio al terminar la espera del 429 (No en /textos)
   },
 };
 
