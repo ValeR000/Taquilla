@@ -1,0 +1,83 @@
+/* SPRINT 2: Estilos del botón con el nombre de la persona y del menú de su cuenta */
+
+.menu-usuario {
+  position: relative;
+}
+
+.menu-usuario__boton {
+  gap: 8px;
+  max-width: 220px;
+}
+
+.menu-usuario__nombre {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.menu-usuario__boton svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.menu-usuario__boton[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.menu-usuario__lista {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  min-width: 180px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-flotante);
+}
+
+.menu-usuario__lista[hidden] {
+  display: none;
+}
+
+.menu-usuario__opcion {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radio-sm);
+  background: transparent;
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-usuario__opcion:hover {
+  background: var(--color-fondo);
+}
+
+.menu-usuario__opcion:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* Hace que en el menú móvil el botón ocupe todo el ancho y la lista quede debajo, dentro del panel */
+.menu-usuario--bloque .menu-usuario__boton {
+  justify-content: space-between;
+  width: 100%;
+  max-width: none;
+}
+
+.menu-usuario--bloque .menu-usuario__lista {
+  position: static;
+  margin-top: 8px;
+  box-shadow: none;
+}
