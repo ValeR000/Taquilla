@@ -33,15 +33,23 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
       if (!contenedorRef.current?.contains(evento.target)) setAbierto(false);
     }
 
+    function cerrarConEscape(evento) {
+      if (evento.key !== "Escape") return;
+      setAbierto(false);
+      botonRef.current?.focus();
+    }
+
     document.addEventListener("mousedown", cerrarConClic);
-    return () => document.removeEventListener("mousedown", cerrarConClic);
+    document.addEventListener("keydown", cerrarConEscape);
+    return () => {
+      document.removeEventListener("mousedown", cerrarConClic);
+      document.removeEventListener("keydown", cerrarConEscape);
+    };
   }, [abierto]);
 
-  function manejarTecla(evento) {
-    if (evento.key !== "Escape" || !abierto) return;
-    evento.stopPropagation();
-    setAbierto(false);
-    botonRef.current?.focus();
+  function cerrarAlSalir(evento) {
+    const destino = evento.relatedTarget;
+    if (destino && !contenedorRef.current?.contains(destino)) setAbierto(false);
   }
 
   if (variante === "panel") {
@@ -65,7 +73,7 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
   }
 
   return (
-    <div ref={contenedorRef} className="menu-usuario" onKeyDown={manejarTecla}>
+    <div ref={contenedorRef} className="menu-usuario" onBlur={cerrarAlSalir}>
       <button
         ref={botonRef}
         type="button"
