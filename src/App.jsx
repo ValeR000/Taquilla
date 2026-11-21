@@ -28,6 +28,7 @@ import SeccionFinDeSemana from "./components/ui/SeccionFinDeSemana/SeccionFinDeS
 import Explorar from "./components/ui/Explorar/Explorar.jsx";
 import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
 import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // Sprint 2
+import Ingresar from "./components/ui/Ingresar/Ingresar.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
@@ -79,6 +80,8 @@ function App() {
   const [reducirMovimiento, setReducirMovimiento] = useState(false);
   const [subrayarEnlaces, setSubrayarEnlaces] = useState(false);
   const [espaciadoLectura, setEspaciadoLectura] = useState(false);
+
+  const [usuario, setUsuario] = useState(null); // Sprint 2: persona con la sesión iniciada (null si es visitante)
 
   // [LOCAL] Hace que el panel de accesibilidad se abra o se cierre.
   const abrirAccesibilidad = () => setPanelAbierto(!panelAbierto);
@@ -265,6 +268,13 @@ function App() {
     setConsentimiento("rechazado");
   }
 
+  /* SPRINT 2: Hace que al ingresar se guarde la persona y se vuelva al Inicio */
+  function iniciarSesion(nuevoUsuario) {
+    setUsuario(nuevoUsuario);
+    navegar("inicio");
+  }
+  /* SPRINT 2 */
+
   // ==========================================
   // BLOQUE E: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
@@ -314,6 +324,15 @@ function App() {
           textos={datos.textos}
           categorias={categorias}
           onAbrir={abrirEvento}
+          onNavegar={navegar}
+        />
+        /* SPRINT 2 */
+      ) : activo === "ingresar" ? (
+        /* SPRINT 2: Hace que /ingresar muestre el formulario de iniciar sesión */
+        <Ingresar
+          en={en}
+          textos={datos.textos}
+          onIngresar={iniciarSesion}
           onNavegar={navegar}
         />
         /* SPRINT 2 */

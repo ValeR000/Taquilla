@@ -1,0 +1,86 @@
+/* SPRINT 2: Estilos mínimos de la vista de iniciar sesión (los de Figma van en el siguiente paso) */
+
+.ingresar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100svh;
+}
+
+.ingresar__panel {
+  padding: 48px;
+  color: var(--texto-inverso);
+  background: var(--fondo-inverso);
+}
+
+.ingresar__beneficios {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.ingresar__contenido {
+  width: 100%;
+  max-width: 440px;
+  margin-inline: auto;
+  padding: 48px 20px;
+}
+
+.ingresar__subtitulo {
+  margin-top: 8px;
+  color: var(--color-texto-gris);
+}
+
+.ingresar__formulario {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.ingresar__ver-clave {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-texto);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.ingresar__opciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: var(--texto-pequeno);
+}
+
+.ingresar__mantener {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ingresar__boton {
+  width: 100%;
+}
+
+.ingresar__registro {
+  margin-top: 24px;
+  font-size: var(--texto-pequeno);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .ingresar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ingresar__panel {
+    display: none;
+  }
+}
