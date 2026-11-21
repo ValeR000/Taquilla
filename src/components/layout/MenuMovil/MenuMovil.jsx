@@ -173,7 +173,7 @@ export default function MenuMovil({
               usuario={usuario}
               en={en}
               textos={textos}
-              clase="menu-usuario--bloque"
+              variante="panel"
               onCerrarSesion={() => {
                 onCerrar();
                 onCerrarSesion();

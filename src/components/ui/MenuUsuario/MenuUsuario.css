@@ -1,27 +1,38 @@
-/* SPRINT 2: Estilos del botón con el nombre de la persona y del menú de su cuenta */
+/* SPRINT 2: Estilos del círculo de iniciales, del menú de la cuenta en la web y de la cuenta en el menú móvil */
 
 .menu-usuario {
   position: relative;
 }
 
-.menu-usuario__boton {
-  gap: 8px;
-  max-width: 220px;
-}
-
-.menu-usuario__nombre {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.menu-usuario__boton svg {
+.menu-usuario__iniciales {
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
-  transition: transform 0.2s ease;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fondo-sutil);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
 }
 
-.menu-usuario__boton[aria-expanded="true"] svg {
-  transform: rotate(180deg);
+.menu-usuario__iniciales--pequenas {
+  width: 32px;
+  height: 32px;
+  font-size: var(--texto-xs);
+}
+
+.menu-usuario__boton {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.menu-usuario__boton:hover,
+.menu-usuario__boton[aria-expanded="true"] {
+  background: var(--borde-sutil);
 }
 
 .menu-usuario__lista {
@@ -69,15 +80,34 @@
   outline-offset: 2px;
 }
 
-/* Hace que en el menú móvil el botón ocupe todo el ancho y la lista quede debajo, dentro del panel */
-.menu-usuario--bloque .menu-usuario__boton {
-  justify-content: space-between;
-  width: 100%;
-  max-width: none;
+.menu-usuario-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.menu-usuario--bloque .menu-usuario__lista {
-  position: static;
-  margin-top: 8px;
-  box-shadow: none;
+.menu-usuario-panel__cuenta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-usuario-panel__datos {
+  min-width: 0;
+}
+
+.menu-usuario-panel__nombre {
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-texto);
+}
+
+.menu-usuario-panel__correo {
+  overflow: hidden;
+  font-size: var(--texto-xs);
+  line-height: 16px;
+  color: var(--color-texto-suave);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

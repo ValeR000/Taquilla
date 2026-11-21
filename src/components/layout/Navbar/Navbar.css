@@ -174,17 +174,16 @@
   border-color: var(--color-primario);
 }
 
-/* SPRINT 2: Botones de visitante o menú de la cuenta; el ancho mínimo es el de Ingresar y Crear cuenta para que el buscador no salte al aparecer el nombre */
+/* SPRINT 2: Botones de visitante o círculo de la cuenta; mientras se comprueba la sesión, el hueco mide lo mismo que el círculo */
 .navbar__sesion {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 16px;
-  min-width: 255px;
 }
 
-.navbar__sesion--comprobando {
-  visibility: hidden;
+.navbar__sesion-reserva {
+  width: 44px;
+  height: 44px;
 }
 /* SPRINT 2 */
 

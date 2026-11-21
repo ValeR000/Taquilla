@@ -22,12 +22,7 @@ function Boton({
   onClick,
   href,
   clase = '',
-  etiqueta,
-  /* SPRINT 2: Props para un botón que abre un menú: ref para devolverle el foco, si el menú está abierto y qué menú controla */
-  ref,
-  expandido,
-  controla
-  /* SPRINT 2 */
+  etiqueta
 }) {
   // ##########
   const clases = `boton boton--${variante} ${clase}`.trim();
@@ -44,11 +39,6 @@ function Boton({
   return (
     // [STATIC] Etiqueta <button> estándar de HTML.
     <button
-      /* SPRINT 2: Hace que el botón pueda recibir el foco y anunciar si su menú está abierto */
-      ref={ref}
-      aria-expanded={expandido}
-      aria-controls={controla}
-      /* SPRINT 2 */
       type={type}
       // [STATIC] Aplica la clase base y añade la clase de la variante (ej. boton--primario).
       className={clases}

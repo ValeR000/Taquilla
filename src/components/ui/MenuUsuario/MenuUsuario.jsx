@@ -1,14 +1,24 @@
-/* SPRINT 2: Botón con el nombre de la persona que abre el menú de su cuenta con «Cerrar sesión»; se cierra con Escape o con un clic afuera */
+/* SPRINT 2: Cuenta de la persona con sesión: en la web, un círculo con sus iniciales que abre el menú con «Cerrar sesión» (se cierra con Escape o con un clic afuera); en el menú móvil, una fila con iniciales, nombre y correo y el botón «Cerrar sesión» */
 
 import { useEffect, useId, useRef, useState } from "react";
 import { crearTraductor } from "../../../utils/traductor.js";
 import Boton from "../Boton/Boton.jsx";
-import Icono from "../Icono.jsx";
 import "./MenuUsuario.css";
 
-export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, clase = "" }) {
+function iniciales(nombre) {
+  return nombre
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((palabra) => palabra[0])
+    .join("")
+    .toUpperCase();
+}
+
+export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, variante = "menu" }) {
   const tr = crearTraductor(en);
   const t = textos?.navbar?.usuario;
+  const textoCerrar = tr(t?.cerrarSesion, "Cerrar sesión", "Log out");
 
   const [abierto, setAbierto] = useState(false);
 
@@ -34,25 +44,44 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, clase
     botonRef.current?.focus();
   }
 
+  if (variante === "panel") {
+    return (
+      <div className="menu-usuario-panel">
+        <div className="menu-usuario-panel__cuenta">
+          <span className="menu-usuario__iniciales menu-usuario__iniciales--pequenas" aria-hidden="true">
+            {iniciales(usuario.nombre)}
+          </span>
+          <div className="menu-usuario-panel__datos">
+            <p className="menu-usuario-panel__nombre">{usuario.nombre}</p>
+            <p className="menu-usuario-panel__correo">{usuario.correo}</p>
+          </div>
+        </div>
+
+        <Boton variante="contorno" onClick={onCerrarSesion}>
+          {textoCerrar}
+        </Boton>
+      </div>
+    );
+  }
+
   return (
-    <div ref={contenedorRef} className={`menu-usuario ${clase}`.trim()} onKeyDown={manejarTecla}>
-      <Boton
+    <div ref={contenedorRef} className="menu-usuario" onKeyDown={manejarTecla}>
+      <button
         ref={botonRef}
-        variante="secundario"
-        clase="menu-usuario__boton"
-        etiqueta={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre)}
-        expandido={abierto}
-        controla={idLista}
+        type="button"
+        className="menu-usuario__iniciales menu-usuario__boton"
+        aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre)}
+        aria-expanded={abierto}
+        aria-controls={idLista}
         onClick={() => setAbierto(!abierto)}
       >
-        <span className="menu-usuario__nombre">{usuario.nombre}</span>
-        <Icono nombre="flechaAbajo" />
-      </Boton>
+        {iniciales(usuario.nombre)}
+      </button>
 
       <ul id={idLista} className="menu-usuario__lista" hidden={!abierto}>
         <li>
           <button type="button" className="menu-usuario__opcion" onClick={onCerrarSesion}>
-            {tr(t?.cerrarSesion, "Cerrar sesión", "Log out")}
+            {textoCerrar}
           </button>
         </li>
       </ul>

@@ -163,10 +163,12 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
           {/* [LOCAL] Hace que se pueda cambiar entre ES y EN. */}
           <SelectorIdioma idioma={idioma} cambiarIdioma={cambiarIdioma} etiqueta={t?.aria.idioma} />
 
-          {/* SPRINT 2: Hace que con sesión se vea el menú de la cuenta y que, mientras se comprueba, los botones reserven su espacio sin verse */}
-          <div className={comprobandoSesion ? "navbar__sesion navbar__sesion--comprobando" : "navbar__sesion"} aria-hidden={comprobandoSesion || undefined}>
+          {/* SPRINT 2: Hace que con sesión se vea el círculo de la cuenta y que, mientras se comprueba, un hueco invisible del mismo tamaño le reserve el espacio */}
+          <div className="navbar__sesion">
             {usuario ? (
               <MenuUsuario usuario={usuario} en={en} textos={textos} onCerrarSesion={onCerrarSesion} />
+            ) : comprobandoSesion ? (
+              <span className="navbar__sesion-reserva" aria-hidden="true" />
             ) : (
               <>
                 {/* [LOCAL] Hace que "Ingresar" lleve a la vista de login. */}
