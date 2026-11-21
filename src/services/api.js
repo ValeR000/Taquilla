@@ -6,6 +6,28 @@ const enCurso = new Map();
 // [LOCAL] Hace que se guarden los resultados exitosos en caché para no volver a descargar la misma información.
 const resultados = new Map();
 
+/* SPRINT 2: Hace que se lea el cuerpo de la respuesta y, si falló, se lance un error con el estado HTTP, el codigo, los campos y Retry-After de la API */
+async function leerRespuesta(respuesta) {
+  let datos = null;
+  try {
+    datos = await respuesta.json();
+  } catch {
+    datos = null;
+  }
+
+  if (!respuesta.ok) {
+    const fallo = new Error(`HTTP ${respuesta.status}`);
+    fallo.estado = respuesta.status;
+    fallo.codigo = datos?.error?.codigo;
+    fallo.campos = datos?.error?.campos;
+    fallo.reintentarEn = Number(respuesta.headers.get("Retry-After")) || datos?.error?.detalles?.reintentarEnSegundos || 0;
+    throw fallo;
+  }
+
+  return datos;
+}
+/* SPRINT 2 */
+
 // [LOCAL] Función interna que realiza la petición real a la API.
 async function descargar(url) {
   try {
@@ -14,22 +36,9 @@ async function descargar(url) {
     
     // [LOCAL] Hace que se valide si la respuesta es correcta, si no, lanza un error.
     /* SPRINT 2: Hace que el error lleve el estado HTTP y el codigo de la API para distinguir un 404 */
-    if (!respuesta.ok) {
-      let cuerpo = null;
-      try {
-        cuerpo = await respuesta.json();
-      } catch {
-        cuerpo = null;
-      }
-      const fallo = new Error(`HTTP ${respuesta.status}`);
-      fallo.estado = respuesta.status;
-      fallo.codigo = cuerpo?.error?.codigo;
-      throw fallo;
-    }
-    /* SPRINT 2 */
-    
     // [API] Hace que se convierta la respuesta cruda en un objeto JSON.
-    const datos = await respuesta.json();
+    const datos = await leerRespuesta(respuesta);
+    /* SPRINT 2 */
     
     // [LOCAL] Hace que el resultado exitoso se guarde en el Map de caché.
     resultados.set(url, datos);
@@ -76,23 +85,7 @@ export async function enviarJSON(url, cuerpo) {
     body: JSON.stringify(cuerpo),
   });
 
-  let datos = null;
-  try {
-    datos = await respuesta.json();
-  } catch {
-    datos = null;
-  }
-
-  if (!respuesta.ok) {
-    const fallo = new Error(`HTTP ${respuesta.status}`);
-    fallo.estado = respuesta.status;
-    fallo.codigo = datos?.error?.codigo;
-    fallo.campos = datos?.error?.campos;
-    fallo.reintentarEn = Number(respuesta.headers.get("Retry-After")) || datos?.error?.detalles?.reintentarEnSegundos || 0;
-    throw fallo;
-  }
-
-  return datos;
+  return leerRespuesta(respuesta);
 }
 /* SPRINT 2 */
 
@@ -104,20 +97,6 @@ export async function pedirConSesion(url, metodo = "GET") {
     cache: "no-store",
   });
 
-  let datos = null;
-  try {
-    datos = await respuesta.json();
-  } catch {
-    datos = null;
-  }
-
-  if (!respuesta.ok) {
-    const fallo = new Error(`HTTP ${respuesta.status}`);
-    fallo.estado = respuesta.status;
-    fallo.codigo = datos?.error?.codigo;
-    throw fallo;
-  }
-
-  return datos;
+  return leerRespuesta(respuesta);
 }
 /* SPRINT 2 */
