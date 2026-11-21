@@ -3,16 +3,14 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { crearTraductor } from "../../../utils/traductor.js";
 import Boton from "../Boton/Boton.jsx";
+import Icono from "../Icono.jsx";
 import "./MenuUsuario.css";
 
-function iniciales(nombre) {
-  return nombre
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((palabra) => palabra[0])
-    .join("")
-    .toUpperCase();
+function iniciales(usuario) {
+  const palabras = (usuario.nombre || "").trim().split(/\s+/).filter(Boolean);
+  if (palabras.length === 0) return (usuario.correo || "").charAt(0).toUpperCase();
+  if (palabras.length === 1) return palabras[0].charAt(0).toUpperCase();
+  return (palabras[0].charAt(0) + palabras[palabras.length - 1].charAt(0)).toUpperCase();
 }
 
 export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, variante = "menu" }) {
@@ -57,7 +55,7 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
       <div className="menu-usuario-panel">
         <div className="menu-usuario-panel__cuenta">
           <span className="menu-usuario__iniciales menu-usuario__iniciales--pequenas" aria-hidden="true">
-            {iniciales(usuario.nombre)}
+            {iniciales(usuario)}
           </span>
           <div className="menu-usuario-panel__datos">
             <p className="menu-usuario-panel__nombre">{usuario.nombre}</p>
@@ -78,21 +76,32 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
         ref={botonRef}
         type="button"
         className="menu-usuario__iniciales menu-usuario__boton"
-        aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre)}
+        aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo)}
         aria-expanded={abierto}
         aria-controls={idLista}
         onClick={() => setAbierto(!abierto)}
       >
-        {iniciales(usuario.nombre)}
+        {iniciales(usuario)}
       </button>
 
-      <ul id={idLista} className="menu-usuario__lista" hidden={!abierto}>
-        <li>
-          <button type="button" className="menu-usuario__opcion" onClick={onCerrarSesion}>
-            {textoCerrar}
-          </button>
-        </li>
-      </ul>
+      <div id={idLista} className="menu-usuario__lista" hidden={!abierto}>
+        <div className="menu-usuario-panel__cuenta menu-usuario__cuenta">
+          <span className="menu-usuario__iniciales menu-usuario__iniciales--oscuras" aria-hidden="true">
+            {iniciales(usuario)}
+          </span>
+          <div className="menu-usuario-panel__datos">
+            <p className="menu-usuario-panel__nombre">{usuario.nombre}</p>
+            <p className="menu-usuario-panel__correo">{usuario.correo}</p>
+          </div>
+        </div>
+
+        <hr className="menu-usuario__divisor" />
+
+        <button type="button" className="menu-usuario__opcion" onClick={onCerrarSesion}>
+          <Icono nombre="salir" />
+          {textoCerrar}
+        </button>
+      </div>
     </div>
   );
 }

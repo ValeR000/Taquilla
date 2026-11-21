@@ -40,10 +40,8 @@
   top: calc(100% + 8px);
   right: 0;
   z-index: 20;
-  min-width: 180px;
-  margin: 0;
+  width: 280px;
   padding: 6px;
-  list-style: none;
   border: 1px solid var(--color-borde-suave);
   border-radius: var(--radio-md);
   background: var(--color-superficie);
@@ -54,9 +52,27 @@
   display: none;
 }
 
+.menu-usuario__cuenta {
+  padding: 10px 12px;
+}
+
+.menu-usuario__iniciales--oscuras {
+  width: 40px;
+  height: 40px;
+  background: var(--color-primario);
+  color: var(--color-sobre-primario);
+}
+
+.menu-usuario__divisor {
+  margin: 6px 0;
+  border: 0;
+  border-top: 1px solid var(--color-borde-suave);
+}
+
 .menu-usuario__opcion {
   display: flex;
   align-items: center;
+  gap: 10px;
   width: 100%;
   min-height: 44px;
   padding: 0 12px;
