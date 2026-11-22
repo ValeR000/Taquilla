@@ -16,6 +16,11 @@
   background: var(--fondo-error);
 }
 
+.aviso--info {
+  border-color: var(--color-borde-suave);
+  background: var(--fondo-sutil);
+}
+
 .aviso__icono {
   display: grid;
   flex-shrink: 0;

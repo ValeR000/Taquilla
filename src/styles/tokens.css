@@ -140,4 +140,8 @@
    
   --color-error: #dc2626;
   --fondo-error: #fce8e6; /* Sprint 2: fondo del Aviso de error (Figma) */
+  /* SPRINT 2: fondos con el mismo color que --borde-sutil y --borde-inverso */
+  --fondo-sutil-activo: #e5e5e5;
+  --fondo-inverso-3: #3a3a3a;
+  /* SPRINT 2 */
 }

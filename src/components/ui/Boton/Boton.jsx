@@ -22,10 +22,11 @@ function Boton({
   onClick,
   href,
   clase = '',
+  tamano = '', // Sprint 2: "grande" es el tamaño G de Figma
   etiqueta
 }) {
   // ##########
-  const clases = `boton boton--${variante} ${clase}`.trim();
+  const clases = `boton boton--${variante} ${tamano ? `boton--${tamano}` : ''} ${clase}`.trim(); // Sprint 2
 
   if (href) {
     return (

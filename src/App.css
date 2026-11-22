@@ -17,6 +17,12 @@
 }
 /* SPRINT 2 */
 
+/* SPRINT 2: Hace que /ingresar reserve su alto mientras se comprueba la sesión, para que el footer no salte */
+.ingresar-espera {
+    min-height: calc(100svh - 76px);
+}
+/* SPRINT 2 */
+
 @media (max-width: 640px) {
     .demo-contenido {
         width: calc(100% - 40px);
@@ -30,6 +36,12 @@
 
     .inicio__estado--destacados {
         min-height: 474px;
+    }
+    /* SPRINT 2 */
+
+    /* SPRINT 2: Hace que en móvil /ingresar reserve el alto del formulario con el aviso de sesión vencida mientras se comprueba la sesión */
+    .ingresar-espera {
+        min-height: 587px;
     }
     /* SPRINT 2 */
 }

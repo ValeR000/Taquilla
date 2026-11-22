@@ -9,6 +9,7 @@ import './MenuMovil.css';
 import Boton from '../../ui/Boton/Boton.jsx';
 import Icono from '../../ui/Icono.jsx';
 import SelectorIdioma from '../../ui/SelectorIdioma/SelectorIdioma.jsx';
+import MenuUsuario from '../../ui/MenuUsuario/MenuUsuario.jsx'; // Sprint 2
 import iconoAccesibilidad from '../../../assets/accesibilidad.svg';
 import { textosLocales } from '../../../utils/textosLocales.js';
 import { crearTraductor } from '../../../utils/traductor.js';
@@ -20,7 +21,11 @@ export default function MenuMovil({
   textos,            // [API] Textos de la interfaz.
   idioma,            // [LOCAL] Idioma actual.
   cambiarIdioma,     // [LOCAL] Función para cambiar el idioma.
-  abrirAccesibilidad // [LOCAL] Función para abrir el panel de accesibilidad.
+  abrirAccesibilidad, // [LOCAL] Función para abrir el panel de accesibilidad.
+  /* SPRINT 2: Persona con la sesión iniciada (null si es visitante) y función para cerrar la sesión */
+  usuario,
+  onCerrarSesion
+  /* SPRINT 2 */
 }) {
   // ==========================================
   // BLOQUE A: IDIOMA Y NAVEGACIÓN
@@ -164,15 +169,32 @@ export default function MenuMovil({
         {/* SECCIÓN: Botones de Sesión                 */}
         {/* ========================================== */}
         <div className="menu-movil__acciones">
-          {/* [LOCAL] Hace que se cierre el menú y se vaya a la vista de login. */}
-          <Boton variante="primario" onClick={() => ir(null, 'ingresar')}>
-            {tr(m?.botones?.ingresar, 'Ingresar', 'Log in')}
-          </Boton>
+          {/* SPRINT 2: Hace que con sesión aparezca el menú de la cuenta en lugar de Ingresar y Crear cuenta */}
+          {usuario ? (
+            <MenuUsuario
+              usuario={usuario}
+              en={en}
+              textos={textos}
+              variante="panel"
+              onCerrarSesion={() => {
+                onCerrar();
+                onCerrarSesion();
+              }}
+            />
+          ) : (
+            <>
+              {/* [LOCAL] Hace que se cierre el menú y se vaya a la vista de login. */}
+              <Boton variante="primario" onClick={() => ir(null, 'ingresar')}>
+                {tr(m?.botones?.ingresar, 'Ingresar', 'Log in')}
+              </Boton>
 
-          {/* [LOCAL] Hace que se cierre el menú y se vaya a la vista de registro. */}
-          <Boton variante="secundario" onClick={() => ir(null, 'registro')}>
-            {tr(m?.botones?.crearCuenta, 'Crear cuenta', 'Sign up')}
-          </Boton>
+              {/* [LOCAL] Hace que se cierre el menú y se vaya a la vista de registro. */}
+              <Boton variante="secundario" onClick={() => ir(null, 'registro')}>
+                {tr(m?.botones?.crearCuenta, 'Crear cuenta', 'Sign up')}
+              </Boton>
+            </>
+          )}
+          {/* SPRINT 2 */}
         </div>
       </aside>
     </div>

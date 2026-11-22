@@ -49,7 +49,7 @@
   height: 20px;
   border-radius: var(--radio-completo);
   color: var(--texto-inverso);
-  background: var(--borde-inverso);
+  background: var(--fondo-inverso-3);
 }
 
 .ingresar__contenido {
@@ -159,8 +159,6 @@
 
 .ingresar__boton {
   width: 100%;
-  height: 52px;
-  padding: 14px 26px;
 }
 
 .ingresar__boton--enviando {
@@ -168,7 +166,6 @@
 }
 
 .ingresar__boton--enviando:disabled {
-  opacity: 0.8;
   cursor: progress;
 }
 

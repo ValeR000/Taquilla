@@ -91,9 +91,13 @@
   font-size: var(--texto-pequeno);
   text-decoration: none;
 }
-.footer__enlace:hover {
+/* SPRINT 2: Hace que todos los enlaces del pie queden blancos y subrayados al pasar el mouse y con el foco */
+.footer__enlace:hover,
+.footer__enlace:focus-visible {
+  color: var(--color-footer-texto);
   text-decoration: underline; /* Hace que aparezca una línea debajo al pasar el mouse */
 }
+/* SPRINT 2 */
 
 /* =========================================
    SECCIÓN: Parte Inferior (Créditos)
@@ -109,12 +113,14 @@
 }
 .footer__inferior p {
   margin: 0; /* Hace que los textos no tengan margen extra por defecto */
+  font-size: inherit; /* Sprint 2 */
 }
 
 
 .footer__enlace--boton {
   padding: 0;
   font: inherit;
+  font-size: var(--texto-pequeno); /* Sprint 2 */
   text-align: left;
   background: none;
   border: 0;

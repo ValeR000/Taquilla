@@ -1,0 +1,136 @@
+/* SPRINT 2: Estilos del círculo de iniciales, del menú de la cuenta en la web y de la cuenta en el menú móvil */
+
+.menu-usuario {
+  position: relative;
+}
+
+.menu-usuario__iniciales {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--fondo-sutil);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+}
+
+.menu-usuario__iniciales--pequenas {
+  width: 32px;
+  height: 32px;
+  font-size: var(--texto-xs);
+}
+
+.menu-usuario__boton {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.menu-usuario__boton:hover,
+.menu-usuario__boton[aria-expanded="true"] {
+  background: var(--fondo-sutil-activo);
+}
+
+.menu-usuario__lista {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 272px;
+  padding: 8px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-flotante);
+}
+
+.menu-usuario__lista[hidden] {
+  display: none;
+}
+
+.menu-usuario__cuenta {
+  padding: 10px 12px;
+}
+
+.menu-usuario__cuenta .menu-usuario-panel__correo {
+  color: var(--texto-secundario);
+}
+
+.menu-usuario__iniciales--oscuras {
+  width: 40px;
+  height: 40px;
+  background: var(--color-primario);
+  color: var(--color-sobre-primario);
+}
+
+.menu-usuario__divisor {
+  margin: 6px 0;
+  border: 0;
+  border-top: 1px solid var(--color-borde-suave);
+}
+
+.menu-usuario__opcion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 40px;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: var(--radio-md);
+  background: transparent;
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-usuario__opcion:hover {
+  background: var(--color-fondo);
+}
+
+.menu-usuario__opcion:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.menu-usuario-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-usuario-panel__cuenta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-usuario-panel__datos {
+  min-width: 0;
+}
+
+.menu-usuario-panel__nombre {
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-texto);
+}
+
+.menu-usuario-panel__correo {
+  overflow: hidden;
+  font-size: var(--texto-xs);
+  line-height: 16px;
+  color: var(--color-texto-suave);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -50,10 +50,12 @@ function guardarFiltros(filtros) {
 export default function Explorar({
   en,                       // [LOCAL] Indica si el idioma es inglés.
   categorias = [],          // [API] Categorías para el filtro.
-  cargandoCategorias = false, // Sprint 2: indica si las categorías del filtro siguen cargando
-  errorCategorias = false,  // Sprint 2: indica si fallaron las categorías del filtro
-  codigoCategorias = "",    // Sprint 2: codigo del error de las categorías
-  recargarCategorias,       // Sprint 2: vuelve a pedir solo las categorías
+  /* SPRINT 2: Carga, error y codigo de las categorías del filtro, y la función que vuelve a pedir solo las categorías */
+  cargandoCategorias = false,
+  errorCategorias = false,
+  codigoCategorias = "",
+  recargarCategorias,
+  /* SPRINT 2 */
   ciudades = [],            // [API] Ciudades para el filtro.
   textos,                   // [API] Textos de la interfaz.
   onAbrir,                  // [LOCAL] Función para abrir el detalle de un evento.
@@ -343,8 +345,10 @@ export default function Explorar({
           {!cargando && !error && eventos.length === 0 && (
             <EstadoMensaje
               clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
-              titulo={tr(t?.vacio?.titulo, "No encontramos eventos con esos filtros", "We couldn't find events with those filters")}
-              texto={tr(t?.vacio?.texto, "Prueba con otra fecha, otra ciudad o limpia los filtros.", "Try another date, another city or clear the filters.")}
+              /* SPRINT 2: Hace que el título y el texto del estado vacío salgan de textos.estados.vacio */
+              titulo={tr(tEstado?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
+              texto={tr(tEstado?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you will see it here.")}
+              /* SPRINT 2 */
               boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
               onBoton={limpiar}
             />

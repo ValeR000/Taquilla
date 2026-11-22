@@ -15,6 +15,7 @@ import { useEventosDestacados } from "./hooks/useEventosDestacados.js";
 import { useCategorias } from "./hooks/useCategorias.js";
 import { useCiudades } from "./hooks/useCiudades.js";
 import { useReintento } from "./hooks/useReintento.js"; // Sprint 2
+import { useSesion } from "./hooks/useSesion.js"; // Sprint 2
 import "./App.css";
 
 import Footer from "./components/layout/Footer/Footer.jsx";
@@ -29,6 +30,7 @@ import Explorar from "./components/ui/Explorar/Explorar.jsx";
 import EstadoMensaje from "./components/ui/EstadoMensaje/EstadoMensaje.jsx";
 import DetalleEvento from "./components/ui/DetalleEvento/DetalleEvento.jsx"; // Sprint 2
 import Ingresar from "./components/ui/Ingresar/Ingresar.jsx"; // Sprint 2
+import NoEncontrado from "./components/ui/NoEncontrado/NoEncontrado.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
 import { textosRespaldo } from "./utils/textosLocales.js";
@@ -49,6 +51,8 @@ function leerSeccion() {
 
 // [STATIC] Hace que "Próximamente" use Manizales como ciudad inicial, porque la API no define una.
 const CIUDAD_INICIAL = "Manizales";
+
+const RUTAS_INICIO = ["inicio", "registro", "recuperar-clave"]; // Sprint 2: rutas que muestran el Inicio (registro y recuperar-clave son pantallas del Sprint 3)
 
 function App() {
 
@@ -81,7 +85,7 @@ function App() {
   const [subrayarEnlaces, setSubrayarEnlaces] = useState(false);
   const [espaciadoLectura, setEspaciadoLectura] = useState(false);
 
-  const [usuario, setUsuario] = useState(null); // Sprint 2: persona con la sesión iniciada (null si es visitante)
+  const sesion = useSesion(); // Sprint 2: persona con la sesión iniciada (null si es visitante), recuperada con GET /sesion
 
   // [LOCAL] Hace que el panel de accesibilidad se abra o se cierre.
   const abrirAccesibilidad = () => setPanelAbierto(!panelAbierto);
@@ -196,6 +200,21 @@ function App() {
     };
   }, [tamanoTexto, altoContraste, reducirMovimiento, subrayarEnlaces, espaciadoLectura]);
 
+  /* SPRINT 2: Hace que con sesión /ingresar lleve al Inicio, sin dejar /ingresar en el historial */
+  useEffect(() => {
+    if (!sesion.usuario || activo !== "ingresar") return;
+    window.history.replaceState({ interna: true }, "", "/");
+    setActivo("inicio");
+  }, [sesion.usuario, activo]);
+  /* SPRINT 2 */
+
+  /* SPRINT 2: Hace que si la sesión venció (401 no_autenticado) la persona vaya a ingresar */
+  useEffect(() => {
+    if (!sesion.vencida || leerSeccion() === "ingresar") return;
+    cambiarRuta("/ingresar", "ingresar");
+  }, [sesion.vencida]);
+  /* SPRINT 2 */
+
   // ==========================================
   // BLOQUE D: FUNCIONES DEL COMPONENTE
   // ==========================================
@@ -270,7 +289,14 @@ function App() {
 
   /* SPRINT 2: Hace que al ingresar se guarde la persona y se vuelva al Inicio */
   function iniciarSesion(nuevoUsuario) {
-    setUsuario(nuevoUsuario);
+    sesion.iniciar(nuevoUsuario);
+    navegar("inicio");
+  }
+  /* SPRINT 2 */
+
+  /* SPRINT 2: Hace que al cerrar sesión la persona quede como visitante y vuelva al Inicio */
+  function cerrarSesion() {
+    sesion.cerrar();
     navegar("inicio");
   }
   /* SPRINT 2 */
@@ -294,6 +320,11 @@ function App() {
         onAbrirBusqueda={abrirBusqueda}
         abrirAccesibilidad={abrirAccesibilidad}
         accesibilidadAbierta={panelAbierto}
+        /* SPRINT 2: Hace que el Navbar muestre la cuenta o los botones de visitante según la sesión */
+        usuario={sesion.usuario}
+        comprobandoSesion={sesion.comprobando}
+        onCerrarSesion={cerrarSesion}
+        /* SPRINT 2 */
       />
 
       {/* ========================================== */}
@@ -301,15 +332,18 @@ function App() {
       {/* ========================================== */}
 
       {/* [LOCAL] Hace que se muestre Explorar en /explorar y el Inicio en cualquier otra ruta. */}
+      {/* Sprint 2: el Inicio solo se muestra en /, /registro y /recuperar-clave; las rutas desconocidas muestran la página de no encontrado */}
       {activo === "explorar" ? (
         <Explorar
           key={busquedaId}
           en={en}
           categorias={categorias}
-          cargandoCategorias={cargandoCategorias} // Sprint 2: para los esqueletos del filtro de categoría
-          errorCategorias={errorCategorias} // Sprint 2: para el error del filtro de categoría
-          codigoCategorias={codigoCategorias} // Sprint 2: para el mensaje del error según su codigo
-          recargarCategorias={recargarCategorias} // Sprint 2: para reintentar solo las categorías
+          /* SPRINT 2: Hace que el filtro de categoría tenga sus esqueletos, su error según el codigo y Reintentar solo para las categorías */
+          cargandoCategorias={cargandoCategorias}
+          errorCategorias={errorCategorias}
+          codigoCategorias={codigoCategorias}
+          recargarCategorias={recargarCategorias}
+          /* SPRINT 2 */
           ciudades={ciudades}
           onAbrir={abrirEvento}
           onNavegar={navegar}
@@ -328,13 +362,23 @@ function App() {
         />
         /* SPRINT 2 */
       ) : activo === "ingresar" ? (
-        /* SPRINT 2: Hace que /ingresar muestre el formulario de iniciar sesión */
-        <Ingresar
-          en={en}
-          textos={datos.textos}
-          onIngresar={iniciarSesion}
-          onNavegar={navegar}
-        />
+        /* SPRINT 2: Hace que /ingresar muestre el formulario de iniciar sesión solo a visitantes, después de comprobar la sesión */
+        !sesion.usuario && (sesion.comprobando ? (
+          <main className="ingresar-espera" aria-busy="true" />
+        ) : (
+          <Ingresar
+            en={en}
+            textos={datos.textos}
+            onIngresar={iniciarSesion}
+            onNavegar={navegar}
+            sesionVencida={sesion.vencida}
+            onAvisoMostrado={sesion.apagarVencida}
+          />
+        ))
+        /* SPRINT 2 */
+      ) : !RUTAS_INICIO.includes(activo) ? (
+        /* SPRINT 2: Hace que una ruta desconocida muestre la página de no encontrado */
+        <NoEncontrado en={en} textos={datos.textos} onNavegar={navegar} />
         /* SPRINT 2 */
       ) : (
         <>
@@ -371,7 +415,7 @@ function App() {
               <EstadoMensaje
                 /* SPRINT 2: Hace que el error sea compacto, con el mismo alto que la fila de categorías, y su mensaje salga del codigo */
                 compacto
-                rol="alert"
+                rol="status"
                 clase="inicio__estado inicio__estado--categorias"
                 texto={mensajeCategorias.texto}
                 boton={mensajeCategorias.boton}
