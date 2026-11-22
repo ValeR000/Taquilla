@@ -288,7 +288,7 @@ export default function DetalleEvento({
               className="detalle__leer-mas"
               aria-expanded={expandida}
               aria-controls="detalle-descripcion-texto"
-              onClick={() => setExpandida(!expandida)}
+              onClick={() => setExpandida((actual) => !actual)}
             >
               {expandida ? local.leerMenos : leerMas}
             </button>

@@ -78,7 +78,7 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
         aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo || "")}
         aria-expanded={abierto}
         aria-controls={idLista}
-        onClick={() => setAbierto(!abierto)}
+        onClick={() => setAbierto((actual) => !actual)}
       >
         {iniciales(usuario)}
       </button>

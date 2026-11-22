@@ -44,7 +44,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
     if (segundos <= 0) return;
 
     const temporizador = setTimeout(() => {
-      setSegundos(segundos - 1);
+      setSegundos((actuales) => actuales - 1);
       if (segundos === 1) {
         setAviso(null);
         setAnuncio(local.ingresoDisponible);
@@ -215,7 +215,7 @@ export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVenc
                 aria-label={tr(tf?.botones?.mostrarClave, "Mostrar contraseña", "Show password")}
                 aria-pressed={verClave}
                 aria-controls="ingresar-clave"
-                onClick={() => setVerClave(!verClave)}
+                onClick={() => setVerClave((actual) => !actual)}
               >
                 <Icono nombre={verClave ? "ojoTachado" : "ojo"} />
               </button>

@@ -88,7 +88,7 @@ function App() {
   const sesion = useSesion(); // Sprint 2: persona con la sesión iniciada (null si es visitante), recuperada con GET /sesion
 
   // [LOCAL] Hace que el panel de accesibilidad se abra o se cierre.
-  const abrirAccesibilidad = () => setPanelAbierto(!panelAbierto);
+  const abrirAccesibilidad = () => setPanelAbierto((abierto) => !abierto);
 
   // [ACCESIBILIDAD] Hace que el panel se cierre sin mover el foco en cada render.
   const cerrarAccesibilidad = useCallback(() => setPanelAbierto(false), []);

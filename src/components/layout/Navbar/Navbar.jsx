@@ -217,7 +217,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
             className="navbar__movil-boton"
             aria-label={textos?.menuMovil?.abrir}
             aria-expanded={menuAbierto}
-            onClick={() => setMenuAbierto(!menuAbierto)}
+            onClick={() => setMenuAbierto((abierto) => !abierto)}
           >
             <Icono nombre="menu" />
           </button>
