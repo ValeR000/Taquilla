@@ -9,6 +9,7 @@ import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import "./SeccionEventos.css";
 
 export default function SeccionEventos({
@@ -38,12 +39,6 @@ export default function SeccionEventos({
   const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
   const desde = tr(tTarjeta?.desde, "Desde", "From");
 
-  // [LOCAL] Busca el nombre de la categoría por su ID para pasarlo a las tarjetas.
-  const obtenerNombreCategoria = (idCategoria) => {
-    const cat = categorias.find((c) => c.id === idCategoria);
-    return cat ? cat.nombre : idCategoria;
-  };
-
   // ==========================================
   // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
@@ -71,7 +66,7 @@ export default function SeccionEventos({
             en={en}
             textoAccion={verEvento}
             textoDesde={desde}
-            nombreCategoria={obtenerNombreCategoria(evento.categoria)}
+            nombreCategoria={nombreCategoria(categorias, evento.categoria)}
             onAccion={onAbrir}
           />
         ))}

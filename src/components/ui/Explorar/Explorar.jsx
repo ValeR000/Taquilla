@@ -13,6 +13,7 @@ import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
 import TarjetasEsqueleto from "../../ui/TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import { textosError } from "../../../utils/textosError.js"; // Sprint 2
 import "./Explorar.css";
 
@@ -167,14 +168,9 @@ export default function Explorar({
     botonFiltrosRef.current?.focus();
   }, []);
 
-  // [API] Hace que aparezca el nombre de la categoría tal como lo trae la API.
-  function nombreCategoria(id) {
-    return categorias.find((c) => c.id === id)?.nombre || id;
-  }
-
   // [LOCAL] Hace que los filtros activos se muestren como chips.
   const chips = [
-    filtros.categoria && { clave: "categoria", texto: nombreCategoria(filtros.categoria) },
+    filtros.categoria && { clave: "categoria", texto: nombreCategoria(categorias, filtros.categoria) },
     filtros.ciudad && { clave: "ciudad", texto: filtros.ciudad },
     filtros.q && { clave: "q", texto: `"${filtros.q}"` },
   ].filter(Boolean);
@@ -265,7 +261,6 @@ export default function Explorar({
           onCambiar={actualizar}
           onLimpiar={limpiar}
           total={total}
-          nombreCategoria={nombreCategoria}
         />
 
         <section className="explorar__contenido" aria-busy={cargando}>{/* Sprint 2: avisa que los resultados están cargando */}
@@ -361,7 +356,7 @@ export default function Explorar({
                     en={en}
                     textoAccion={verEvento}
                     textoDesde={desde}
-                    nombreCategoria={nombreCategoria(evento.categoria)}
+                    nombreCategoria={nombreCategoria(categorias, evento.categoria)}
                     onAccion={onAbrir}
                   />
                 ))}

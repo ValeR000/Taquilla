@@ -19,6 +19,7 @@ import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { formatoDinero, formatoFecha, formatoFechaConAnio, formatoHora } from "../../../utils/formato.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import { textosError } from "../../../utils/textosError.js";
 import "./DetalleEvento.css";
 
@@ -69,10 +70,6 @@ export default function DetalleEvento({
       : "";
 
   useMetadatos(tituloPagina, descripcionPagina);
-
-  function nombreCategoria(id) {
-    return categorias.find((c) => c.id === id)?.nombre || id;
-  }
 
   function quedan(cantidad) {
     return tr(tDisponibilidad?.quedan, "Quedan {cantidad}", "{cantidad} left").replace("{cantidad}", cantidad);
@@ -195,7 +192,7 @@ export default function DetalleEvento({
 
           <header className="detalle__encabezado">
             <div className="detalle__etiquetas">
-              <Etiqueta>{tGeneral?.categorias?.singular?.[evento?.categoria] || nombreCategoria(evento?.categoria)}</Etiqueta>
+              <Etiqueta>{tGeneral?.categorias?.singular?.[evento?.categoria] || nombreCategoria(categorias, evento?.categoria)}</Etiqueta>
               <Etiqueta clase="detalle__edad">{edad}</Etiqueta>
             </div>
 
@@ -371,7 +368,7 @@ export default function DetalleEvento({
                   <TarjetaEvento
                     key={relacionado.id}
                     evento={relacionado}
-                    nombreCategoria={nombreCategoria(relacionado.categoria)}
+                    nombreCategoria={nombreCategoria(categorias, relacionado.categoria)}
                     en={en}
                     textoAccion={verEvento}
                     textoDesde={desde}
