@@ -397,6 +397,7 @@ function App() {
             <BuscadorEventos
               en={en}
               ciudades={ciudades || []}
+              ciudadInicial={CIUDAD_INICIAL}
               eventos={eventos || []}
               onBuscar={buscar}
               textos={datos.textos}

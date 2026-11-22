@@ -4,7 +4,7 @@
 // CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
 // ============================================================================
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
@@ -18,7 +18,7 @@ export default function BuscadorEventos({
   eventos = [],               // [API] Lista de eventos para extraer las fechas disponibles.
   ciudades = [],              // [API] Lista de ciudades para el selector.
   onBuscar,                   // [LOCAL] Función que envía los filtros al componente padre.
-  filtrosAplicados = null,    // [LOCAL] Filtros externos (ej. desde la URL) para sincronizar el formulario.
+  ciudadInicial = "",
   textos                      // [API] Los textos de la interfaz desde la API.
 }) {
   // ==========================================
@@ -29,21 +29,10 @@ export default function BuscadorEventos({
   const [consulta, setConsulta] = useState("");
   
   // [LOCAL] Guarda la ciudad seleccionada. Inicia en "Manizales".
-  const [ciudad, setCiudad] = useState("Manizales");
+  const [ciudad, setCiudad] = useState(ciudadInicial);
   
   // [LOCAL] Guarda la fecha seleccionada.
   const [fecha, setFecha] = useState("");
-
-  // ==========================================
-  // BLOQUE B: EFECTO DE SINCRONIZACIÓN
-  // ==========================================
-  
-  // [LOCAL] Sincroniza los estados locales con los filtros aplicados desde fuera (ej. al recargar la página).
-  useEffect(() => {
-    setConsulta(filtrosAplicados?.consulta ?? "");
-    setCiudad(filtrosAplicados === null ? "Manizales" : (filtrosAplicados?.ciudad ?? ""));
-    setFecha(filtrosAplicados?.fecha ?? "");
-  }, [filtrosAplicados]);
 
   // ==========================================
   // BLOQUE C: FUNCIONES
