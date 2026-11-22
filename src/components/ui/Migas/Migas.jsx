@@ -3,6 +3,7 @@
 import "./Migas.css";
 
 export default function Migas({ items = [], onNavegar, clase = "", etiqueta = "" }) {
+  // Hace que cada miga cambie de vista sin recargar la página.
   function ir(evento, ruta) {
     evento.preventDefault();
     onNavegar(ruta);

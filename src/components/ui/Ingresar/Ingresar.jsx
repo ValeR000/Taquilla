@@ -5,7 +5,7 @@ import { useMetadatos } from "../../../hooks/useMetadatos.js";
 import { enviarJSON } from "../../../services/api.js";
 import { crearTraductor } from "../../../utils/traductor.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
-import { textosError } from "../../../utils/textosError.js"; // Sprint 2
+import { textosError } from "../../../utils/textosError.js";
 import Aviso from "../Aviso/Aviso.jsx";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono.jsx";
@@ -28,7 +28,7 @@ export default function Ingresar({ en = false, textos, onIngresar, onNavegar, se
   const [mantenerSesion, setMantenerSesion] = useState(false);
   const [errores, setErrores] = useState({});
   const [aviso, setAviso] = useState(sesionVencida ? "sesionVencida" : null);
-  const [codigoError, setCodigoError] = useState(""); // Sprint 2: codigo del error de la API para elegir su mensaje
+  const [codigoError, setCodigoError] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [espera, setEspera] = useState(0);
   const [segundos, setSegundos] = useState(0);
@@ -103,11 +103,9 @@ export default function Ingresar({ en = false, textos, onIngresar, onNavegar, se
         setEspera(err.reintentarEn);
         setSegundos(err.reintentarEn);
         setAviso("limite");
-        /* SPRINT 2: Hace que un error de la API (500, 503, 504…) muestre su mensaje; el de conexión queda solo para cuando no hay red */
-      } else if (err.estado) {
+      } else if (err.estado) { // Un error de la API (500, 503, 504…) muestra su mensaje; el de conexión queda solo para cuando no hay red.
         setCodigoError(err.codigo || "");
         setAviso("error");
-        /* SPRINT 2 */
       } else {
         setAviso("conexion");
       }
@@ -118,7 +116,7 @@ export default function Ingresar({ en = false, textos, onIngresar, onNavegar, se
 
   const tConexion = te?.conexion;
   const tLimite = te?.demasiadosIntentos;
-  const errorApi = textosError(textos, codigoError, en); // Sprint 2: título, mensaje según el codigo y botón Reintentar
+  const errorApi = textosError(textos, codigoError, en);
 
   const avisos = {
     sesionVencida: {
@@ -143,7 +141,7 @@ export default function Ingresar({ en = false, textos, onIngresar, onNavegar, se
       titulo: tr(tConexion?.titulo, "No pudimos conectarnos", "We couldn't connect"),
       texto: tr(tConexion?.texto, "Revisa tu conexión a internet e inténtalo de nuevo. Lo que escribiste se conserva.", "Check your internet connection and try again. What you typed is kept."),
     },
-    error: { titulo: errorApi.titulo, texto: errorApi.texto }, // Sprint 2
+    error: { titulo: errorApi.titulo, texto: errorApi.texto },
   };
 
   useEffect(() => {
@@ -154,7 +152,7 @@ export default function Ingresar({ en = false, textos, onIngresar, onNavegar, se
 
   const textoBoton = aviso === "conexion"
     ? tr(tConexion?.botones?.reintentar, "Reintentar", "Try again")
-    : aviso === "error" ? errorApi.textoAccion // Sprint 2: el mismo botón Reintentar después de un error de la API
+    : aviso === "error" ? errorApi.textoAccion
     : tr(tf?.botones?.ingresar, "Ingresar", "Log in");
 
   function irA(e, ruta) {

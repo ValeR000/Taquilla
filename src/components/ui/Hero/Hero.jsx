@@ -1,6 +1,6 @@
 // ============================================================================
 // ARCHIVO: Hero.jsx
-// RESPONSABILIDAD: Estructura principal del Hero (encabezado) con textos estáticos, buscador y evento destacado.
+// RESPONSABILIDAD: Estructura principal del Hero (encabezado) con los textos que llegan listos desde App, el buscador (children) y la tarjeta destacada (tarjetaDestacada).
 // CONVENCIÓN: [API], [LOCAL], [STATIC].
 // ============================================================================
 
@@ -8,6 +8,7 @@ import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import "./Hero.css";
 
 export default function Hero({
+  /* SPRINT 2: Textos listos y tarjeta destacada desde App */
   etiqueta = "",
   titulo = "",
   subtitulo = "",
@@ -15,6 +16,7 @@ export default function Hero({
   populares = [],
   children,           // [LOCAL] El componente del buscador que se inyecta desde App.jsx.
   tarjetaDestacada,
+  /* SPRINT 2 */
   onBuscar
 }) {
   return (
@@ -22,24 +24,24 @@ export default function Hero({
     <section className="hero-taquilla">
       <div className="ancho-home interior-taquilla">
         <div>
-          {/* [STATIC] Etiqueta de temporada con texto condicional según el idioma. */}
+          {/* [API] Hace que aparezca la etiqueta de temporada, que llega lista desde App. */}
           <Etiqueta clase="etiqueta-evento">
-            {etiqueta}
+            {etiqueta}{/* Sprint 2 */}
           </Etiqueta>
 
-          {/* [STATIC] Título principal con texto condicional según el idioma. */}
-          <h1>{titulo}</h1>
+          {/* [API] Hace que aparezca el título principal, que llega listo desde App. */}
+          <h1>{titulo}</h1>{/* Sprint 2 */}
 
-          {/* [STATIC] Párrafo descriptivo con texto condicional según el idioma. */}
-          <p>{subtitulo}</p>
+          {/* [API] Hace que aparezca el párrafo descriptivo, que llega listo desde App. */}
+          <p>{subtitulo}</p>{/* Sprint 2 */}
           
           {/* [LOCAL] Aquí se inyecta el BuscadorEventos desde App.jsx. */}
           {children}
           
           {/* [STATIC] Sección de enlaces populares. */}
           <div className="populares">
-            {/* [STATIC] Título de populares con texto condicional. */}
-            <span>{textoPopulares}</span>
+            {/* [API] Hace que aparezca «Populares:», que llega listo desde App. */}
+            <span>{textoPopulares}</span>{/* Sprint 2 */}
 
             {/* [STATIC] Recorre la lista de términos populares y dibuja un botón por cada uno. */}
             {/* ########## */}
@@ -52,9 +54,8 @@ export default function Hero({
           </div>
         </div>
 
-        {/* [STATIC] Componente de la tarjeta derecha. */}
-        {/* [API] Le pasa el evento destacado desde la API. */}
-        {tarjetaDestacada}
+        {/* [LOCAL] Hace que aparezca la tarjeta del evento destacado que arma App.jsx. */}
+        {tarjetaDestacada}{/* Sprint 2 */}
       </div>
     </section>
   );

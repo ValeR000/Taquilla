@@ -27,12 +27,14 @@ function numeros(actual, total) {
   return resultado;
 }
 
+/* SPRINT 2: Valores por defecto de las props */
 export default function Paginacion({
   pagina = 1,
   paginas = 1,
   onCambiar,
   etiquetas = { nav: "", pagina: "", anterior: "", siguiente: "" },
 }) {
+  /* SPRINT 2 */
   // [LOCAL] Si no hay páginas o solo hay 1, no dibuja nada en pantalla.
   if (!paginas || paginas <= 1) return null;
 

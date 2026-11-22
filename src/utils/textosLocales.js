@@ -1,4 +1,4 @@
-// RESPONSABILIDAD: Almacena textos locales y traducciones estáticas para la vista de Explorar.
+// RESPONSABILIDAD: Textos que la API no trae (títulos y aria-label), en ES y EN, para toda la app.
 // CONVENCIÓN: [STATIC] (Datos fijos que no dependen de peticiones a la API).
 
 // [STATIC] Salvedad: La API no provee estos textos específicos (como los formatos de paginación o el botón de abrir filtros).

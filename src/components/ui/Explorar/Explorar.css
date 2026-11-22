@@ -14,9 +14,11 @@
 /* =========================================
    SECCIÓN: Migas de Pan (Breadcrumbs)
    ========================================= */
+/* SPRINT 2: margen propio de las migas de Explorar */
 .explorar__migas .migas__lista {
   margin: 0 0 16px;
 }
+/* SPRINT 2 */
 
 /* =========================================
    SECCIÓN: Título y Resultados

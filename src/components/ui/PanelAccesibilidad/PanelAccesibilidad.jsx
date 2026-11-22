@@ -18,11 +18,13 @@ export default function PanelAccesibilidad({
   textos,                 // [API] Textos de la interfaz desde la API.
   aumentarTexto,          // [LOCAL] Función para aumentar el tamaño del texto.
   reducirTexto,           // [LOCAL] Función para reducir el tamaño del texto.
+  /* SPRINT 2: Valores por defecto de los switches y un solo onCambiar en lugar de los setters */
   altoContraste = false,  // [LOCAL] Estado del switch de alto contraste.
   reducirMovimiento = false, // [LOCAL] Estado del switch de reducir movimiento.
   subrayarEnlaces = false, // [LOCAL] Estado del switch de subrayar enlaces.
   espaciadoLectura = false, // [LOCAL] Estado del switch de espaciado de lectura.
-  onCambiar,
+  onCambiar,              // [LOCAL] Avisa a App qué opción cambió (clave y valor).
+  /* SPRINT 2 */
   restablecer,            // [LOCAL] Función para restablecer todos los valores.
 }) {
   // ==========================================
@@ -174,7 +176,7 @@ export default function PanelAccesibilidad({
         {/* ========================================== */}
         <div className="panel-accesibilidad__toggles">
           {/* [LOCAL] Recorre las opciones y dibuja un switch por cada una. */}
-          {opciones.map(({ clave, valor, nombre, descripcion }) => (
+          {opciones.map(({ clave, valor, nombre, descripcion }) => ( // Sprint 2
             <div className="toggle-item" key={clave}>
               <div className="toggle-texto">
                 {/* [API] Hace que aparezca el nombre del switch. */}
@@ -189,7 +191,7 @@ export default function PanelAccesibilidad({
                   type="checkbox"
                   role="switch"
                   checked={valor}
-                  onChange={(e) => onCambiar(clave, e.target.checked)}
+                  onChange={(e) => onCambiar(clave, e.target.checked)} // Sprint 2
                   aria-labelledby={`a11y-${clave}`}
                   aria-describedby={`a11y-${clave}-desc`}
                 />

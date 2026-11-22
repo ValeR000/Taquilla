@@ -3,17 +3,17 @@ import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
 import { useReintento } from "../../../hooks/useReintento.js"; // Sprint 2
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
-import Migas from "../../ui/Migas/Migas.jsx";
+import Migas from "../../ui/Migas/Migas.jsx"; // Sprint 2
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import Icono from "../../ui/Icono.jsx";
 import Input from "../../ui/Input/Input.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
-import TarjetasEsqueleto from "../../ui/TarjetasEsqueleto/TarjetasEsqueleto.jsx";
+import TarjetasEsqueleto from "../../ui/TarjetasEsqueleto/TarjetasEsqueleto.jsx"; // Sprint 2
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
-import { nombreCategoria } from "../../../utils/categorias.js";
+import { nombreCategoria } from "../../../utils/categorias.js"; // Sprint 2
 import { textosError } from "../../../utils/textosError.js"; // Sprint 2
 import "./Explorar.css";
 
@@ -119,9 +119,11 @@ export default function Explorar({
       : tr(t?.resultadosCorto?.otro, "{cantidad} eventos", "{cantidad} events")
   ).replace("{cantidad}", total);
 
+  /* SPRINT 2: Hace que las tarjetas reciban sus textos ya resueltos */
   const tTarjeta = textos?.paginas?.inicio?.tarjeta;
   const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
   const desde = tr(tTarjeta?.desde, "Desde", "From");
+  /* SPRINT 2 */
 
   const placeholderBusqueda = tr(
     textos?.paginas?.inicio?.hero?.buscador?.placeholders?.movil,
@@ -170,7 +172,7 @@ export default function Explorar({
 
   // [LOCAL] Hace que los filtros activos se muestren como chips.
   const chips = [
-    filtros.categoria && { clave: "categoria", texto: nombreCategoria(categorias, filtros.categoria) },
+    filtros.categoria && { clave: "categoria", texto: nombreCategoria(categorias, filtros.categoria) }, // Sprint 2
     filtros.ciudad && { clave: "ciudad", texto: filtros.ciudad },
     filtros.q && { clave: "q", texto: `"${filtros.q}"` },
   ].filter(Boolean);
@@ -189,6 +191,7 @@ export default function Explorar({
     <main className="contenedor explorar">
 
       {/* [ACCESIBILIDAD] Hace que aparezca la ruta de navegación (Inicio › Explorar). */}
+      {/* SPRINT 2: Migas compartidas con el Detalle */}
       <Migas
         clase="explorar__migas"
         etiqueta={local.migas}
@@ -198,6 +201,7 @@ export default function Explorar({
           { id: "explorar", texto: tr(textos?.componentes?.migas?.explorar, "Explorar", "Explore") },
         ]}
       />
+      {/* SPRINT 2 */}
 
       {/* [STATIC] Hace que aparezca el título de la vista. */}
       <h1 id="explorar-titulo" tabIndex={-1} className="explorar__titulo">{local.titulo}</h1>{/* Sprint 2: puede recibir el foco después de Reintentar */}
@@ -354,10 +358,12 @@ export default function Explorar({
                     key={evento.id}
                     evento={evento}
                     en={en}
+                    /* SPRINT 2: Textos listos y nombre de la categoría para la tarjeta */
                     textoAccion={verEvento}
                     textoDesde={desde}
                     nombreCategoria={nombreCategoria(categorias, evento.categoria)}
                     onAccion={onAbrir}
+                    /* SPRINT 2 */
                   />
                 ))}
               </div>
