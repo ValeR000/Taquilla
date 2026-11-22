@@ -173,8 +173,7 @@ export default function MenuMovil({
           {usuario ? (
             <MenuUsuario
               usuario={usuario}
-              en={en}
-              textos={textos}
+              textoCerrar={tr(t?.usuario?.cerrarSesion, "Cerrar sesión", "Log out")}
               variante="panel"
               onCerrarSesion={() => {
                 onCerrar();

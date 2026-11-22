@@ -166,7 +166,12 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
           {/* SPRINT 2: Hace que con sesión se vea el círculo de la cuenta y que, mientras se comprueba, un hueco invisible del mismo tamaño le reserve el espacio */}
           <div className="navbar__sesion">
             {usuario ? (
-              <MenuUsuario usuario={usuario} en={en} textos={textos} onCerrarSesion={onCerrarSesion} />
+              <MenuUsuario
+                usuario={usuario}
+                textoCerrar={tr(t?.usuario?.cerrarSesion, "Cerrar sesión", "Log out")}
+                etiquetaMenu={tr(t?.usuario?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo || "")}
+                onCerrarSesion={onCerrarSesion}
+              />
             ) : comprobandoSesion ? (
               <span className="navbar__sesion-reserva" aria-hidden="true" />
             ) : (
