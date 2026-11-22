@@ -2,6 +2,7 @@
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import "./CategoriasEventos.css";
 
+/* SPRINT 2: Firma en varias líneas con los textos listos desde App */
 export default function CategoriasEventos({
   categorias = [],
   filtros,
@@ -12,13 +13,14 @@ export default function CategoriasEventos({
   textoVariosEventos = "",
   etiqueta = "",
 }) {
+  /* SPRINT 2 */
   // ==========================================
-  // BLOQUE A: TEXTOS Y TRADUCCIONES
+  // BLOQUE A: CONTEO DE EVENTOS
   // ==========================================
   
   // [LOCAL] Función que formatea el conteo de eventos (singular o plural).
   const contar = (n) =>
-    (n === 1 ? textoUnEvento : textoVariosEventos).replace("{cantidad}", n);
+    (n === 1 ? textoUnEvento : textoVariosEventos).replace("{cantidad}", n); // Sprint 2
 
   // ==========================================
   // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
@@ -36,7 +38,7 @@ export default function CategoriasEventos({
         onClick={() => filtrarCategoria(null)}
       >
         {/* [API] Hace que aparezca el texto "Todos" desde la API o como respaldo. */}
-        {textoTodos}
+        {textoTodos}{/* Sprint 2 */}
       </button>
 
       {cargando && Array.from({ length: 6 }, (_, i) => (

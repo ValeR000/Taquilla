@@ -10,6 +10,7 @@
   color: var(--texto-secundario);
 }
 
+/* [STATIC] Añade el símbolo '›' entre los elementos de las migas. */
 .migas__item + .migas__item::before {
   content: "›";
   margin-right: 8px;

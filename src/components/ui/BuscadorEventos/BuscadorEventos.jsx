@@ -4,7 +4,7 @@
 // CONVENCIÓN: [API], [LOCAL], [STATIC], [ACCESIBILIDAD].
 // ============================================================================
 
-import { useState } from "react";
+import { useState } from "react"; // Sprint 2
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
@@ -16,6 +16,7 @@ export default function BuscadorEventos({
   eventos = [],               // [API] Lista de eventos para extraer las fechas disponibles.
   ciudades = [],              // [API] Lista de ciudades para el selector.
   onBuscar,                   // [LOCAL] Función que envía los filtros al componente padre.
+  /* SPRINT 2: Ciudad inicial y textos listos desde App */
   ciudadInicial = "",
   textoQue = "",
   textoDonde = "",
@@ -26,6 +27,7 @@ export default function BuscadorEventos({
   textoTodasCiudades = "",
   textoBuscar = "",
   textoResumenMovil = "",
+  /* SPRINT 2 */
 }) {
   // ==========================================
   // BLOQUE A: ESTADOS LOCALES
@@ -34,8 +36,8 @@ export default function BuscadorEventos({
   // [LOCAL] Guarda el texto que el usuario escribe.
   const [consulta, setConsulta] = useState("");
   
-  // [LOCAL] Guarda la ciudad seleccionada. Inicia en "Manizales".
-  const [ciudad, setCiudad] = useState(ciudadInicial);
+  // [LOCAL] Guarda la ciudad seleccionada. Inicia en la ciudad que llega de App (ciudadInicial).
+  const [ciudad, setCiudad] = useState(ciudadInicial); // Sprint 2
   
   // [LOCAL] Guarda la fecha seleccionada.
   const [fecha, setFecha] = useState("");
@@ -51,13 +53,15 @@ export default function BuscadorEventos({
   }
 
   // ==========================================
-  // BLOQUE C: TEXTOS Y TRADUCCIONES
+  // BLOQUE C: RESUMEN MÓVIL
   // ==========================================
   
   // [API] Hace que aparezca el resumen de ciudad y fecha en la versión móvil.
+  /* SPRINT 2: el resumen sale de la plantilla que llega lista */
   const resumenMovil = textoResumenMovil
     .replace("{ciudad}", ciudad || textoTodasCiudades)
     .replace("{fecha}", textoCualquierFecha);
+  /* SPRINT 2 */
 
   // ==========================================
   // BLOQUE D: LO QUE SE DIBUJA EN PANTALLA (JSX)
@@ -77,7 +81,7 @@ export default function BuscadorEventos({
           <IconoEvento tipo="buscar" />
           <span>
             {/* [API] Hace que aparezca la etiqueta "Qué" desde la API. */}
-            <span>{textoQue}</span>
+            <span>{textoQue}</span>{/* Sprint 2 */}
             <Input
               type="search"
               variante="busqueda"
@@ -85,7 +89,7 @@ export default function BuscadorEventos({
               // [LOCAL] Hace que el input se actualice al escribir.
               onChange={(e) => setConsulta(e.target.value)}
               // [API] Hace que aparezca el placeholder desde la API.
-              placeholder={placeholderQue}
+              placeholder={placeholderQue} // Sprint 2
             />
           </span>
         </label>
@@ -95,10 +99,10 @@ export default function BuscadorEventos({
           <IconoEvento tipo="lugar" />
           <span>
             {/* [API] Hace que aparezca la etiqueta "Dónde" desde la API. */}
-            <span>{textoDonde}</span>
+            <span>{textoDonde}</span>{/* Sprint 2 */}
             <select value={ciudad} onChange={(e) => setCiudad(e.target.value)}>
               {/* [STATIC] Hace que aparezca la opción "Todas las ciudades". */}
-              <option value="">{textoTodasCiudades}</option>
+              <option value="">{textoTodasCiudades}</option>{/* Sprint 2 */}
               {/* [API] Recorre las ciudades y las dibuja como opciones. */}
               {ciudades.map((c) => (
                 <option key={c.nombre} value={c.nombre}>{c.nombre}</option>
@@ -112,9 +116,9 @@ export default function BuscadorEventos({
           <IconoEvento tipo="fecha" />
           <span>
             {/* [API] Hace que aparezca la etiqueta "Cuándo" desde la API. */}
-            <span>{textoCuando}</span>
+            <span>{textoCuando}</span>{/* Sprint 2 */}
             <select value={fecha} onChange={(e) => setFecha(e.target.value)}>
-              <option value="">{textoCualquierFecha}</option>
+              <option value="">{textoCualquierFecha}</option>{/* Sprint 2 */}
               {/* [API] Recorre los eventos para extraer las fechas disponibles. */}
               {eventos.map((ev) => {
                 if (!ev.fecha) return null;
@@ -148,7 +152,7 @@ export default function BuscadorEventos({
         <div className="buscador-movil__texto">
           {/* [API] Hace que aparezca el texto principal (ej. "Evento, artista o lugar"). */}
           <span className="buscador-movil__principal">
-            {placeholderMovil}
+            {placeholderMovil}{/* Sprint 2 */}
           </span>
           {/* [API] Hace que aparezca el resumen de ciudad y fecha. */}
           <span className="buscador-movil__secundario">{resumenMovil}</span>

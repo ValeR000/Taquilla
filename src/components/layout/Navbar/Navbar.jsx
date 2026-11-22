@@ -24,15 +24,15 @@ const ENLACES = [
 ];
 
 export default function Navbar({
-  idioma = "es",          // [LOCAL] Idioma actual.
+  idioma = "es",          // [LOCAL] Idioma actual. // Sprint 2
   cambiarIdioma,          // [LOCAL] Función para cambiar el idioma.
   textos,                 // [API] Textos de la interfaz.
-  activo = "inicio",      // [LOCAL] Vista activa actual.
+  activo = "inicio",      // [LOCAL] Vista activa actual. // Sprint 2
   onBuscar,               // [LOCAL] Función para ejecutar la búsqueda.
   onNavegar,              // [LOCAL] Función para cambiar de vista.
   onAbrirBusqueda,        // [LOCAL] Función para abrir el buscador en móvil.
   abrirAccesibilidad,     // [LOCAL] Función para abrir el panel de accesibilidad.
-  accesibilidadAbierta = false, // [LOCAL] Indica si el panel de accesibilidad está abierto.
+  accesibilidadAbierta = false, // [LOCAL] Indica si el panel de accesibilidad está abierto. // Sprint 2
   /* SPRINT 2: Datos de la sesión: la persona que ingresó, si se está comprobando la sesión y cómo cerrarla */
   usuario = null,
   comprobandoSesion = false,
@@ -222,7 +222,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
             className="navbar__movil-boton"
             aria-label={textos?.menuMovil?.abrir}
             aria-expanded={menuAbierto}
-            onClick={() => setMenuAbierto((abierto) => !abierto)}
+            onClick={() => setMenuAbierto((abierto) => !abierto)} // Sprint 2
           >
             <Icono nombre="menu" />
           </button>

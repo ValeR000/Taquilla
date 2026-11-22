@@ -13,11 +13,13 @@ import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({
   evento,             // [API] Datos del evento.
+  /* SPRINT 2: Props listas desde el padre */
   nombreCategoria = "", // [API] Nombre de la categoría, tal como lo trae la API.
   en = false,         // [LOCAL] Indica si el idioma es inglés.
   textoAccion = "",
   textoDesde = "",
   onAccion            // [LOCAL] Función para abrir el detalle del evento.
+  /* SPRINT 2 */
 }) {
   return (
     <article className="tarjeta-evento">
@@ -48,7 +50,7 @@ export default function TarjetaEvento({
         <div className="precio-evento">
           <div>
             {/* [API] Hace que aparezca "Desde". */}
-            <small>{textoDesde}</small>
+            <small>{textoDesde}</small>{/* Sprint 2 */}
             {/* [API] Hace que aparezca el precio en pesos. */}
             <strong>{formatoDinero(evento.precioDesde)}</strong>
           </div>
@@ -59,13 +61,13 @@ export default function TarjetaEvento({
             variante="contorno"
             clase="boton-evento"
             // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
-            etiqueta={`${textoAccion}: ${evento.titulo}`}
+            etiqueta={`${textoAccion}: ${evento.titulo}`} // Sprint 2
             onClick={(e) => {
               e.preventDefault();
-              onAccion(evento);
+              onAccion(evento); // Sprint 2
             }}
           >
-            {textoAccion}
+            {textoAccion}{/* Sprint 2 */}
           </Boton>
         </div>
       </div>

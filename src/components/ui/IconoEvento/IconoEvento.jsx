@@ -4,8 +4,6 @@
 // CONVENCIÓN: [API], [STATIC].
 // ============================================================================
 
-import "./IconoEvento.css";
-
 export default function IconoEvento({ tipo }) {
   // [STATIC] Diccionario con los trazos SVG de cada categoría.
   // Las claves están en minúscula para que coincidan con los IDs de la API.

@@ -1,3 +1,4 @@
+// RESPONSABILIDAD: Catálogo de íconos SVG de la interfaz.
 const ICONOS = {
   buscar: {
     caja: 24,

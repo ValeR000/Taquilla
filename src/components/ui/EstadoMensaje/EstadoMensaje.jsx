@@ -1,14 +1,17 @@
+// RESPONSABILIDAD: Estado de carga, vacío o error con título, texto y un botón de acción.
 import { useEffect, useRef } from "react"; // Sprint 2
 import Boton from "../Boton/Boton.jsx";
 import "./EstadoMensaje.css";
 
 // ##########
 export default function EstadoMensaje({
+  /* SPRINT 2: Valores por defecto y acción con textoAccion, onAccion y deshabilitada */
   titulo = "",
   texto = "",
   textoAccion = "",
   onAccion,
   deshabilitada = false,
+  /* SPRINT 2 */
   rol,
   clase = "",
   nivel = 3, // Sprint 2: nivel del título, para usar el estado como página completa con su h1
@@ -31,11 +34,13 @@ export default function EstadoMensaje({
 
       {texto && <p>{texto}</p>}
 
+      {/* SPRINT 2: Hace que el botón use textoAccion, onAccion y deshabilitada */}
       {textoAccion && (
         <Boton clase="estado-mensaje__boton" onClick={onAccion} disabled={deshabilitada}>
           {textoAccion}
         </Boton>
       )}
+      {/* SPRINT 2 */}
     </div>
   );
 }

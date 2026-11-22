@@ -7,8 +7,10 @@
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
+/* SPRINT 2: Esqueletos y nombre de la categoría compartidos */
 import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { nombreCategoria } from "../../../utils/categorias.js";
+/* SPRINT 2 */
 import "./SeccionEventos.css";
 
 export default function SeccionEventos({
@@ -19,12 +21,14 @@ export default function SeccionEventos({
   eventos = [],       // [API] Lista de eventos a mostrar.
   cargando = false,
   categorias = [],    // [API] Lista de categorías para traducir los IDs.
+  /* SPRINT 2: Valor por defecto del idioma y textos listos desde App */
   en = false,         // [LOCAL] Booleano para saber si el idioma es inglés.
   textoVerTodos = "",
   textoAccion = "",
   textoDesde = "",
   textoVacioTitulo = "",
   textoVacioTexto = "",
+  /* SPRINT 2 */
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
   onVerTodos,         // [LOCAL] Función para navegar a la vista de Explorar.
 }) {
@@ -45,7 +49,7 @@ export default function SeccionEventos({
       />
 
       <div className="eventos-grid">
-        {cargando && <TarjetasEsqueleto cantidad={4} />}
+        {cargando && <TarjetasEsqueleto cantidad={4} />}{/* Sprint 2 */}
 
         {/* [API] Recorre los eventos y pinta una TarjetaEvento por cada uno. */}
         {eventos.map((evento) => (
@@ -53,10 +57,12 @@ export default function SeccionEventos({
             key={evento.id}
             evento={evento}
             en={en}
+            /* SPRINT 2: Textos listos y nombre de la categoría para la tarjeta */
             textoAccion={textoAccion}
             textoDesde={textoDesde}
             nombreCategoria={nombreCategoria(categorias, evento.categoria)}
             onAccion={onAbrir}
+            /* SPRINT 2 */
           />
         ))}
       </div>
@@ -64,10 +70,12 @@ export default function SeccionEventos({
       {/* [LOCAL] Si no hay eventos, muestra un mensaje de estado vacío. */}
       {!cargando && !eventos.length && (
         <EstadoMensaje
+          /* SPRINT 2: Estado vacío con sus textos listos */
           titulo={textoVacioTitulo}
           texto={textoVacioTexto}
           textoAccion={textoVerTodos}
           onAccion={onVerTodos}
+          /* SPRINT 2 */
         />
       )}
     </section>

@@ -1,8 +1,9 @@
 // ============================================================================
 // ARCHIVO: App.jsx
 // RESPONSABILIDAD: Componente principal. Une el Navbar, el Footer, la vista de
-// inicio (Hero, categorías y eventos), la vista de explorar, maneja la lógica
-// de idiomas, cookies, filtros y la conexión a la API.
+// inicio (Hero, categorías y eventos), la vista de explorar, el Detalle, Ingresar,
+// la sesión y la página de no encontrado; maneja la lógica de idiomas, cookies,
+// filtros, los textos del Inicio (textosDelInicio) y la conexión a la API.
 //
 // CONVENCIÓN DE ETIQUETAS (Origen del dato):
 // [API]    = Dato que viene de internet (peticiones al servidor).
@@ -22,7 +23,7 @@ import Footer from "./components/layout/Footer/Footer.jsx";
 import Navbar from "./components/layout/Navbar/Navbar.jsx";
 import BannerCookies from "./components/ui/BannerCookies/BannerCookies.jsx";
 import Hero from "./components/ui/Hero/Hero.jsx";
-import EventoDestacado from "./components/ui/EventoDestacado/EventoDestacado.jsx";
+import EventoDestacado from "./components/ui/EventoDestacado/EventoDestacado.jsx"; // Sprint 2
 import CategoriasEventos from "./components/ui/CategoriasEventos/CategoriasEventos.jsx";
 import BuscadorEventos from "./components/ui/BuscadorEventos/BuscadorEventos.jsx";
 import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
@@ -34,7 +35,7 @@ import Ingresar from "./components/ui/Ingresar/Ingresar.jsx"; // Sprint 2
 import NoEncontrado from "./components/ui/NoEncontrado/NoEncontrado.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
-import { textosLocales, textosRespaldo } from "./utils/textosLocales.js";
+import { textosLocales, textosRespaldo } from "./utils/textosLocales.js"; // Sprint 2
 import { crearTraductor } from "./utils/traductor.js";
 import { textosError } from "./utils/textosError.js"; // Sprint 2
 import { useCallback, useEffect, useState } from "react";
@@ -50,9 +51,10 @@ function leerSeccion() {
   return window.location.pathname.replace(/^\/+|\/+$/g, "") || "inicio";
 }
 
-// [STATIC] Hace que "Próximamente" use Manizales como ciudad inicial, porque la API no define una.
+// [STATIC] Hace que "Próximamente" use Manizales como ciudad inicial, porque la API no define una, y que el buscador del Hero empiece en esa ciudad.
 const CIUDAD_INICIAL = "Manizales";
 
+/* SPRINT 2: Valores iniciales de las preferencias de accesibilidad */
 const PREFERENCIAS_INICIALES = {
   tamanoTexto: 100,
   altoContraste: false,
@@ -60,9 +62,11 @@ const PREFERENCIAS_INICIALES = {
   subrayarEnlaces: false,
   espaciadoLectura: false,
 };
+/* SPRINT 2 */
 
 const RUTAS_INICIO = ["inicio", "registro", "recuperar-clave"]; // Sprint 2: rutas que muestran el Inicio (registro y recuperar-clave son pantallas del Sprint 3)
 
+/* SPRINT 2: Hace que los textos del Inicio se resuelvan en un solo lugar y lleguen listos a sus componentes */
 function textosDelInicio(textos, en) {
   const tr = crearTraductor(en);
   const inicio = textos?.paginas?.inicio;
@@ -70,6 +74,7 @@ function textosDelInicio(textos, en) {
   const local = textosLocales[en ? "en" : "es"];
 
   return {
+    // Hero y evento destacado
     temporada: tr(hero?.etiquetas?.temporada, "Temporada nov – dic 2026", "November – December 2026 season"),
     titulo: tr(hero?.titulo, "Tu próxima noche empieza aquí", "Your next night starts here"),
     subtitulo: tr(hero?.subtitulo, "Conciertos, teatro, deportes y festivales. Busca por categoría, fecha o ciudad y consulta todos los detalles de cada evento.", "Concerts, theatre, sports and festivals. Search by category, date or city and discover all the details of each event."),
@@ -77,17 +82,20 @@ function textosDelInicio(textos, en) {
     destacado: tr(hero?.destacado?.etiqueta, "Destacado", "Featured"),
     destacadoDesde: tr(hero?.destacado?.desde, "Desde {precio}", "From {precio}"),
     destacadoVerEvento: tr(hero?.destacado?.botones?.verEvento, "Ver evento", "View event"),
+    // Categorías
     todos: tr(inicio?.filtrosMovil?.todos, "Todos", "All"),
     unEvento: tr(inicio?.categorias?.eventos?.uno, "{cantidad} evento", "{cantidad} event"),
     variosEventos: tr(inicio?.categorias?.eventos?.otro, "{cantidad} eventos", "{cantidad} events"),
+    // Tarjetas y secciones
     verTodos: tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all"),
     verEvento: tr(inicio?.tarjeta?.botones?.verEvento, "Ver evento", "View event"),
     desde: tr(inicio?.tarjeta?.desde, "Desde", "From"),
     vacioTitulo: tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet"),
     vacioTexto: tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here."),
     finDeSemana: tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend"),
-    listaPopulares: local.populares,
-    etiquetaCategorias: local.categoriasAria,
+    listaPopulares: local.populares, // Hero
+    etiquetaCategorias: local.categoriasAria, // Categorías
+    // Buscador
     buscador: {
       que: tr(hero?.buscador?.etiquetas?.que, "Qué", "What"),
       donde: tr(hero?.buscador?.etiquetas?.donde, "Dónde", "Where"),
@@ -101,6 +109,7 @@ function textosDelInicio(textos, en) {
     },
   };
 }
+/* SPRINT 2 */
 
 function App() {
 
@@ -127,27 +136,29 @@ function App() {
 
   // [LOCAL] Hace que se guarden las opciones del panel de accesibilidad.
   const [panelAbierto, setPanelAbierto] = useState(false);
+  /* SPRINT 2: Hace que las 5 opciones de accesibilidad vivan en un solo estado */
   const [preferencias, setPreferencias] = useState(PREFERENCIAS_INICIALES);
   const { tamanoTexto, altoContraste, reducirMovimiento, subrayarEnlaces, espaciadoLectura } = preferencias;
+  /* SPRINT 2 */
 
   const sesion = useSesion(); // Sprint 2: persona con la sesión iniciada (null si es visitante), recuperada con GET /sesion
 
   // [LOCAL] Hace que el panel de accesibilidad se abra o se cierre.
-  const abrirAccesibilidad = () => setPanelAbierto((abierto) => !abierto);
+  const abrirAccesibilidad = () => setPanelAbierto((abierto) => !abierto); // Sprint 2
 
   // [ACCESIBILIDAD] Hace que el panel se cierre sin mover el foco en cada render.
   const cerrarAccesibilidad = useCallback(() => setPanelAbierto(false), []);
 
   // [LOCAL] Hace que el texto crezca hasta un máximo del 150%.
-  const aumentarTexto = () => setPreferencias((actuales) => ({ ...actuales, tamanoTexto: Math.min(actuales.tamanoTexto + 10, 150) }));
+  const aumentarTexto = () => setPreferencias((actuales) => ({ ...actuales, tamanoTexto: Math.min(actuales.tamanoTexto + 10, 150) })); // Sprint 2
 
   // [LOCAL] Hace que el texto se reduzca hasta un mínimo del 80%.
-  const reducirTexto = () => setPreferencias((actuales) => ({ ...actuales, tamanoTexto: Math.max(actuales.tamanoTexto - 10, 80) }));
+  const reducirTexto = () => setPreferencias((actuales) => ({ ...actuales, tamanoTexto: Math.max(actuales.tamanoTexto - 10, 80) })); // Sprint 2
 
-  const cambiarPreferencia = (clave, valor) => setPreferencias((actuales) => ({ ...actuales, [clave]: valor }));
+  const cambiarPreferencia = (clave, valor) => setPreferencias((actuales) => ({ ...actuales, [clave]: valor })); // Sprint 2: Hace que PanelAccesibilidad cambie una opción por su clave
 
   // [LOCAL] Hace que todas las opciones de accesibilidad vuelvan a sus valores iniciales.
-  const restablecerAccesibilidad = () => setPreferencias(PREFERENCIAS_INICIALES);
+  const restablecerAccesibilidad = () => setPreferencias(PREFERENCIAS_INICIALES); // Sprint 2
 
   // ==========================================
   // BLOQUE B: CONEXIÓN CON LA API Y VARIABLES
@@ -190,7 +201,7 @@ function App() {
 
   const tr = crearTraductor(en);
 
-  const textosInicio = textosDelInicio(datos.textos, en);
+  const textosInicio = textosDelInicio(datos.textos, en); // Sprint 2
 
   const slugEvento = activo.startsWith("eventos/") ? activo.replace("eventos/", "") : ""; // Sprint 2: slug del evento leído de la ruta /eventos/{slug}
 
@@ -428,8 +439,9 @@ function App() {
           {/* SECCIÓN: HERO CON BUSCADOR                 */}
           {/* ========================================== */}
 
-          {/* [STATIC] Hace que aparezca el Hero con el buscador dentro. */}
+          {/* [STATIC] Hace que aparezca el Hero con el buscador y la tarjeta del evento destacado. */}
           <Hero
+            /* SPRINT 2: Hace que el Hero reciba sus textos listos y la tarjeta destacada armada */
             etiqueta={textosInicio.temporada}
             titulo={textosInicio.titulo}
             subtitulo={textosInicio.subtitulo}
@@ -447,13 +459,15 @@ function App() {
                 onAbrir={abrirEvento}
               />
             }
+            /* SPRINT 2 */
           >
             <BuscadorEventos
               en={en}
               ciudades={ciudades || []}
-              ciudadInicial={CIUDAD_INICIAL}
+              ciudadInicial={CIUDAD_INICIAL} // Sprint 2
               eventos={eventos || []}
               onBuscar={buscar}
+              /* SPRINT 2: textos listos del buscador */
               textoQue={textosInicio.buscador.que}
               textoDonde={textosInicio.buscador.donde}
               textoCuando={textosInicio.buscador.cuando}
@@ -463,6 +477,7 @@ function App() {
               textoTodasCiudades={textosInicio.buscador.todasCiudades}
               textoBuscar={textosInicio.buscador.buscar}
               textoResumenMovil={textosInicio.buscador.resumenMovil}
+              /* SPRINT 2 */
             />
           </Hero>
 
@@ -496,10 +511,12 @@ function App() {
                 categorias={categorias}
                 filtros={null}
                 filtrarCategoria={filtrarCategoria}
+                /* SPRINT 2: textos listos de las categorías */
                 textoTodos={textosInicio.todos}
                 textoUnEvento={textosInicio.unEvento}
                 textoVariosEventos={textosInicio.variosEventos}
                 etiqueta={textosInicio.etiquetaCategorias}
+                /* SPRINT 2 */
               />
             )}
 
@@ -544,11 +561,13 @@ function App() {
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
+                  /* SPRINT 2: textos listos de la sección y sus tarjetas */
                   textoVerTodos={textosInicio.verTodos}
                   textoAccion={textosInicio.verEvento}
                   textoDesde={textosInicio.desde}
                   textoVacioTitulo={textosInicio.vacioTitulo}
                   textoVacioTexto={textosInicio.vacioTexto}
+                  /* SPRINT 2 */
                 />
 
                 {/* [API] Hace que aparezcan los siguientes 4 eventos (solo escritorio). */}
@@ -563,11 +582,13 @@ function App() {
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
+                  /* SPRINT 2: textos listos de la sección y sus tarjetas */
                   textoVerTodos={textosInicio.verTodos}
                   textoAccion={textosInicio.verEvento}
                   textoDesde={textosInicio.desde}
                   textoVacioTitulo={textosInicio.vacioTitulo}
                   textoVacioTexto={textosInicio.vacioTexto}
+                  /* SPRINT 2 */
                 />
 
                 {/* [API] Hace que aparezca la lista "Este fin de semana" (solo móvil). */}
@@ -602,7 +623,7 @@ function App() {
         reducirMovimiento={reducirMovimiento}
         subrayarEnlaces={subrayarEnlaces}
         espaciadoLectura={espaciadoLectura}
-        onCambiar={cambiarPreferencia}
+        onCambiar={cambiarPreferencia} // Sprint 2
         restablecer={restablecerAccesibilidad}
       />
 

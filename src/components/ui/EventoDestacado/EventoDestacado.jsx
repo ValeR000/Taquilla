@@ -8,11 +8,13 @@ import "./EventoDestacado.css";
 
 export default function EventoDestacado({
   evento,         // [API] Evento destacado.
+  /* SPRINT 2: Valor por defecto del idioma y textos listos desde App */
   en = false,     // [LOCAL] Indica si el idioma es inglés.
   textoEtiqueta = "",
   textoDesde = "",
   textoAccion = "",
   onAbrir,        // [LOCAL] Función para abrir el detalle del evento.
+  /* SPRINT 2 */
   cargando = false // Sprint 2: indica si el evento destacado sigue cargando
 }) {
   /* SPRINT 2: Hace que mientras carga se vea la tarjeta esqueleto en lugar de un hueco */
@@ -33,7 +35,7 @@ export default function EventoDestacado({
       <div className="ficha-destacado">
 
         {/* [API] Hace que aparezca la etiqueta "Destacado". */}
-        <Etiqueta>{textoEtiqueta}</Etiqueta>
+        <Etiqueta>{textoEtiqueta}</Etiqueta>{/* Sprint 2 */}
 
         {/* [API] Hace que aparezca el título del evento. */}
         <h2>{evento.titulo}</h2>
@@ -46,7 +48,7 @@ export default function EventoDestacado({
         <div>
           {/* [API] Hace que aparezca el precio con "Desde". */}
           <strong>
-            {textoDesde.replace("{precio}", formatoDinero(evento.precioDesde))}
+            {textoDesde.replace("{precio}", formatoDinero(evento.precioDesde))}{/* Sprint 2 */}
           </strong>
 
           {/* [LOCAL] Hace que "Ver evento" lleve a /eventos/slug sin recargar la página. */}
@@ -58,7 +60,7 @@ export default function EventoDestacado({
               onAbrir(evento);
             }}
           >
-            {textoAccion}
+            {textoAccion}{/* Sprint 2 */}
           </Boton>
         </div>
       </div>

@@ -11,11 +11,13 @@ import "./SeccionFinDeSemana.css";
 
 export default function SeccionFinDeSemana({
   eventos = [],       // [API] Eventos que se muestran.
+  /* SPRINT 2: Valor por defecto del idioma y textos listos desde App */
   en = false,         // [LOCAL] Indica si el idioma es inglés.
   titulo = "",
   textoVerTodos = "",
   textoAccion = "",
   textoDesde = "",
+  /* SPRINT 2 */
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
   onVerTodos,         // [LOCAL] Función para ir a Explorar.
   cargando = false    // Sprint 2: indica si los eventos siguen cargando
@@ -31,9 +33,9 @@ export default function SeccionFinDeSemana({
       <EncabezadoSeccion
         idTitulo="fin-de-semana-titulo"
         // [API] Hace que aparezca el título "Este fin de semana".
-        titulo={titulo}
+        titulo={titulo} // Sprint 2
         // [LOCAL] Hace que "Ver todos" lleve a Explorar.
-        textoAccion={textoVerTodos}
+        textoAccion={textoVerTodos} // Sprint 2
         onAccion={onVerTodos}
       />
 
@@ -59,7 +61,7 @@ export default function SeccionFinDeSemana({
               href={`/eventos/${evento.slug}`}
               className="fin-de-semana__item"
               // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
-              aria-label={`${textoAccion}: ${evento.titulo}`}
+              aria-label={`${textoAccion}: ${evento.titulo}`} // Sprint 2
               onClick={(e) => {
                 e.preventDefault();
                 onAbrir(evento);
@@ -77,7 +79,7 @@ export default function SeccionFinDeSemana({
                 <small>{formatoFecha(evento.fecha, en)}</small>
                 {/* [API] Hace que aparezca el precio. */}
                 <span className="fin-de-semana__precio">
-                  {textoDesde} {formatoDinero(evento.precioDesde)}
+                  {textoDesde} {formatoDinero(evento.precioDesde)}{/* Sprint 2 */}
                 </span>
               </span>
             </a>
