@@ -310,7 +310,6 @@ function App() {
 
       {/* [STATIC] Hace que aparezca la barra de navegación. */}
       <Navbar
-        {...datos}
         textos={datos.textos || textosRespaldo[idioma]}
         idioma={idioma}
         cambiarIdioma={cambiarIdioma}
