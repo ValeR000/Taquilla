@@ -7,6 +7,7 @@
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
+import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { crearTraductor } from "../../../utils/traductor.js";
 import "./SeccionEventos.css";
 
@@ -60,9 +61,7 @@ export default function SeccionEventos({
       />
 
       <div className="eventos-grid">
-        {cargando && Array.from({ length: 4 }, (_, i) => (
-          <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-        ))}
+        {cargando && <TarjetasEsqueleto cantidad={4} />}
 
         {/* [API] Recorre los eventos y pinta una TarjetaEvento por cada uno. */}
         {eventos.map((evento) => (

@@ -9,6 +9,7 @@ import Input from "../../ui/Input/Input.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
+import TarjetasEsqueleto from "../../ui/TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
 import { textosError } from "../../../utils/textosError.js"; // Sprint 2
@@ -324,9 +325,7 @@ export default function Explorar({
                 {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
               </p>
               <div className="explorar__grid">
-                {Array.from({ length: 9 }, (_, i) => (
-                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-                ))}
+                <TarjetasEsqueleto cantidad={9} />
               </div>
             </>
           )}

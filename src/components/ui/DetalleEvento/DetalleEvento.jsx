@@ -13,6 +13,7 @@ import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import Icono from "../Icono.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
+import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { formatoDinero, formatoFecha, formatoFechaConAnio, formatoHora } from "../../../utils/formato.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
@@ -380,9 +381,7 @@ export default function DetalleEvento({
           ) : (
             <div className="detalle__relacionados-lista">
               {cargandoRelacionados
-                ? Array.from({ length: 4 }, (_, i) => (
-                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-                ))
+                ? <TarjetasEsqueleto cantidad={4} />
                 : relacionados.map((relacionado) => (
                   <TarjetaEvento
                     key={relacionado.id}
