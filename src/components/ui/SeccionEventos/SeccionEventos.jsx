@@ -33,6 +33,10 @@ export default function SeccionEventos({
   // [API] Hace que aparezca el texto del enlace "Ver todos" o "View all".
   const verTodos = tr(textos?.paginas?.inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all");
 
+  const tTarjeta = textos?.paginas?.inicio?.tarjeta;
+  const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
+  const desde = tr(tTarjeta?.desde, "Desde", "From");
+
   // [LOCAL] Busca el nombre de la categoría por su ID para pasarlo a las tarjetas.
   const obtenerNombreCategoria = (idCategoria) => {
     const cat = categorias.find((c) => c.id === idCategoria);
@@ -66,9 +70,10 @@ export default function SeccionEventos({
             key={evento.id}
             evento={evento}
             en={en}
-            textos={textos}
+            textoAccion={verEvento}
+            textoDesde={desde}
             nombreCategoria={obtenerNombreCategoria(evento.categoria)}
-            onAbrir={onAbrir}
+            onAccion={onAbrir}
           />
         ))}
       </div>

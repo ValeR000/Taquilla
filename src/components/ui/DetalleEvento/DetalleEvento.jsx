@@ -34,6 +34,7 @@ export default function DetalleEvento({
   const tMigas = textos?.componentes?.migas;
   const tDisponibilidad = textos?.componentes?.etiquetas?.disponibilidad;
   const local = textosLocales[en ? "en" : "es"];
+  const tTarjeta = textos?.paginas?.inicio?.tarjeta;
 
   const { evento, cargando, error, codigo, noEncontrado, recargar } = useEvento(slug);
   const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, codigo: codigoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
@@ -138,6 +139,9 @@ export default function DetalleEvento({
   const horaValor = tr(t?.info?.horaValor, "{hora} · Puertas {puertas}", "{hora} · Doors {puertas}")
     .replace("{hora}", hora)
     .replace("{puertas}", puertas);
+
+  const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
+  const desde = tr(tTarjeta?.desde, "Desde", "From");
 
   const leerMas = tr(t?.descripcion?.botones?.leerMas, "Leer más", "Read more");
 
@@ -385,8 +389,9 @@ export default function DetalleEvento({
                     evento={relacionado}
                     nombreCategoria={nombreCategoria(relacionado.categoria)}
                     en={en}
-                    textos={textos}
-                    onAbrir={onAbrir}
+                    textoAccion={verEvento}
+                    textoDesde={desde}
+                    onAccion={onAbrir}
                   />
                 ))}
             </div>

@@ -9,28 +9,16 @@ import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import Boton from "../Boton/Boton.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
-import { crearTraductor } from "../../../utils/traductor.js";
 import "./TarjetaEvento.css";
 
 export default function TarjetaEvento({
   evento,             // [API] Datos del evento.
-  onAbrir,            // [LOCAL] Función para abrir el detalle del evento.
-  nombreCategoria,    // [API] Nombre de la categoría, tal como lo trae la API.
-  en,                 // [LOCAL] Indica si el idioma es inglés.
-  textos              // [API] Textos de la interfaz.
+  nombreCategoria = "", // [API] Nombre de la categoría, tal como lo trae la API.
+  en = false,         // [LOCAL] Indica si el idioma es inglés.
+  textoAccion = "",
+  textoDesde = "",
+  onAccion            // [LOCAL] Función para abrir el detalle del evento.
 }) {
-  // ==========================================
-  // BLOQUE A: TEXTOS
-  // ==========================================
-
-  // [API] Hace que los textos de la tarjeta estén a mano.
-  const t = textos?.paginas?.inicio?.tarjeta;
-
-  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = crearTraductor(en);
-
-  const verEvento = tr(t?.botones?.verEvento, "Ver evento", "View event");
-
   return (
     <article className="tarjeta-evento">
 
@@ -60,7 +48,7 @@ export default function TarjetaEvento({
         <div className="precio-evento">
           <div>
             {/* [API] Hace que aparezca "Desde". */}
-            <small>{tr(t?.desde, "Desde", "From")}</small>
+            <small>{textoDesde}</small>
             {/* [API] Hace que aparezca el precio en pesos. */}
             <strong>{formatoDinero(evento.precioDesde)}</strong>
           </div>
@@ -71,13 +59,13 @@ export default function TarjetaEvento({
             variante="contorno"
             clase="boton-evento"
             // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
-            etiqueta={`${verEvento}: ${evento.titulo}`}
+            etiqueta={`${textoAccion}: ${evento.titulo}`}
             onClick={(e) => {
               e.preventDefault();
-              onAbrir(evento);
+              onAccion(evento);
             }}
           >
-            {verEvento}
+            {textoAccion}
           </Boton>
         </div>
       </div>

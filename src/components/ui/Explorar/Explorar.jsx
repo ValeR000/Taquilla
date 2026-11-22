@@ -116,6 +116,10 @@ export default function Explorar({
       : tr(t?.resultadosCorto?.otro, "{cantidad} eventos", "{cantidad} events")
   ).replace("{cantidad}", total);
 
+  const tTarjeta = textos?.paginas?.inicio?.tarjeta;
+  const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
+  const desde = tr(tTarjeta?.desde, "Desde", "From");
+
   const placeholderBusqueda = tr(
     textos?.paginas?.inicio?.hero?.buscador?.placeholders?.movil,
     "Evento, artista o lugar",
@@ -363,9 +367,10 @@ export default function Explorar({
                     key={evento.id}
                     evento={evento}
                     en={en}
-                    textos={textos}
+                    textoAccion={verEvento}
+                    textoDesde={desde}
                     nombreCategoria={nombreCategoria(evento.categoria)}
-                    onAbrir={onAbrir}
+                    onAccion={onAbrir}
                   />
                 ))}
               </div>
