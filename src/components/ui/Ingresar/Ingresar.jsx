@@ -13,7 +13,7 @@ import "./Ingresar.css";
 
 const API = `${import.meta.env.VITE_API_URL}/sesion`;
 
-export default function Ingresar({ en, textos, onIngresar, onNavegar, sesionVencida, onAvisoMostrado }) {
+export default function Ingresar({ en = false, textos, onIngresar, onNavegar, sesionVencida = false, onAvisoMostrado }) {
   const tr = crearTraductor(en);
   const t = textos?.paginas?.ingresar;
   const tf = t?.formulario;

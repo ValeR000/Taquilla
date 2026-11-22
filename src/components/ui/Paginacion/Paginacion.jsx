@@ -27,7 +27,12 @@ function numeros(actual, total) {
   return resultado;
 }
 
-export default function Paginacion({ pagina, paginas, onCambiar, etiquetas }) {
+export default function Paginacion({
+  pagina = 1,
+  paginas = 1,
+  onCambiar,
+  etiquetas = { nav: "", pagina: "", anterior: "", siguiente: "" },
+}) {
   // [LOCAL] Si no hay páginas o solo hay 1, no dibuja nada en pantalla.
   if (!paginas || paginas <= 1) return null;
 

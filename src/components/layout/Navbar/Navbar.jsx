@@ -24,18 +24,18 @@ const ENLACES = [
 ];
 
 export default function Navbar({
-  idioma,                 // [LOCAL] Idioma actual.
+  idioma = "es",          // [LOCAL] Idioma actual.
   cambiarIdioma,          // [LOCAL] Función para cambiar el idioma.
   textos,                 // [API] Textos de la interfaz.
-  activo,                 // [LOCAL] Vista activa actual.
+  activo = "inicio",      // [LOCAL] Vista activa actual.
   onBuscar,               // [LOCAL] Función para ejecutar la búsqueda.
   onNavegar,              // [LOCAL] Función para cambiar de vista.
   onAbrirBusqueda,        // [LOCAL] Función para abrir el buscador en móvil.
   abrirAccesibilidad,     // [LOCAL] Función para abrir el panel de accesibilidad.
-  accesibilidadAbierta,   // [LOCAL] Indica si el panel de accesibilidad está abierto.
+  accesibilidadAbierta = false, // [LOCAL] Indica si el panel de accesibilidad está abierto.
   /* SPRINT 2: Datos de la sesión: la persona que ingresó, si se está comprobando la sesión y cómo cerrarla */
-  usuario,
-  comprobandoSesion,
+  usuario = null,
+  comprobandoSesion = false,
   onCerrarSesion,
   /* SPRINT 2 */
 }) {
