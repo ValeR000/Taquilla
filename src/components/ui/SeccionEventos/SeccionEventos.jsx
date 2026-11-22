@@ -8,7 +8,6 @@ import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
-import { crearTraductor } from "../../../utils/traductor.js";
 import { nombreCategoria } from "../../../utils/categorias.js";
 import "./SeccionEventos.css";
 
@@ -20,25 +19,15 @@ export default function SeccionEventos({
   eventos = [],       // [API] Lista de eventos a mostrar.
   cargando = false,
   categorias = [],    // [API] Lista de categorías para traducir los IDs.
-  en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
-  textos,             // [API] Los textos de la interfaz desde la API.
+  en = false,         // [LOCAL] Booleano para saber si el idioma es inglés.
+  textoVerTodos = "",
+  textoAccion = "",
+  textoDesde = "",
+  textoVacioTitulo = "",
+  textoVacioTexto = "",
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
   onVerTodos,         // [LOCAL] Función para navegar a la vista de Explorar.
 }) {
-  // ==========================================
-  // BLOQUE A: TEXTOS Y TRADUCCIONES
-  // ==========================================
-  
-  // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = crearTraductor(en);
-  
-  // [API] Hace que aparezca el texto del enlace "Ver todos" o "View all".
-  const verTodos = tr(textos?.paginas?.inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all");
-
-  const tTarjeta = textos?.paginas?.inicio?.tarjeta;
-  const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
-  const desde = tr(tTarjeta?.desde, "Desde", "From");
-
   // ==========================================
   // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
@@ -51,7 +40,7 @@ export default function SeccionEventos({
         idTitulo={`${id}-titulo`}
         titulo={titulo}
         descripcion={descripcion}
-        textoAccion={verTodos}
+        textoAccion={textoVerTodos}
         onAccion={onVerTodos}
       />
 
@@ -64,8 +53,8 @@ export default function SeccionEventos({
             key={evento.id}
             evento={evento}
             en={en}
-            textoAccion={verEvento}
-            textoDesde={desde}
+            textoAccion={textoAccion}
+            textoDesde={textoDesde}
             nombreCategoria={nombreCategoria(categorias, evento.categoria)}
             onAccion={onAbrir}
           />
@@ -75,9 +64,9 @@ export default function SeccionEventos({
       {/* [LOCAL] Si no hay eventos, muestra un mensaje de estado vacío. */}
       {!cargando && !eventos.length && (
         <EstadoMensaje
-          titulo={tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
-          texto={tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}
-          textoAccion={verTodos}
+          titulo={textoVacioTitulo}
+          texto={textoVacioTexto}
+          textoAccion={textoVerTodos}
           onAccion={onVerTodos}
         />
       )}

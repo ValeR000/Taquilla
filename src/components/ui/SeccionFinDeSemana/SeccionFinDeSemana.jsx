@@ -7,30 +7,19 @@
 import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
-import { crearTraductor } from "../../../utils/traductor.js";
 import "./SeccionFinDeSemana.css";
 
 export default function SeccionFinDeSemana({
   eventos = [],       // [API] Eventos que se muestran.
-  en,                 // [LOCAL] Indica si el idioma es inglés.
-  textos,             // [API] Textos de la interfaz.
+  en = false,         // [LOCAL] Indica si el idioma es inglés.
+  titulo = "",
+  textoVerTodos = "",
+  textoAccion = "",
+  textoDesde = "",
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
   onVerTodos,         // [LOCAL] Función para ir a Explorar.
   cargando = false    // Sprint 2: indica si los eventos siguen cargando
 }) {
-  // ==========================================
-  // BLOQUE A: TEXTOS
-  // ==========================================
-
-  // [API] Hace que los textos del Inicio estén a mano.
-  const inicio = textos?.paginas?.inicio;
-
-  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = crearTraductor(en);
-
-  const verEvento = tr(inicio?.tarjeta?.botones?.verEvento, "Ver evento", "View event");
-  const desde = tr(inicio?.tarjeta?.desde, "Desde", "From");
-
   // ==========================================
   // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
@@ -42,9 +31,9 @@ export default function SeccionFinDeSemana({
       <EncabezadoSeccion
         idTitulo="fin-de-semana-titulo"
         // [API] Hace que aparezca el título "Este fin de semana".
-        titulo={tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend")}
+        titulo={titulo}
         // [LOCAL] Hace que "Ver todos" lleve a Explorar.
-        textoAccion={tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all")}
+        textoAccion={textoVerTodos}
         onAccion={onVerTodos}
       />
 
@@ -70,7 +59,7 @@ export default function SeccionFinDeSemana({
               href={`/eventos/${evento.slug}`}
               className="fin-de-semana__item"
               // [ACCESIBILIDAD] Hace que el lector anuncie qué evento se va a abrir.
-              aria-label={`${verEvento}: ${evento.titulo}`}
+              aria-label={`${textoAccion}: ${evento.titulo}`}
               onClick={(e) => {
                 e.preventDefault();
                 onAbrir(evento);
@@ -88,7 +77,7 @@ export default function SeccionFinDeSemana({
                 <small>{formatoFecha(evento.fecha, en)}</small>
                 {/* [API] Hace que aparezca el precio. */}
                 <span className="fin-de-semana__precio">
-                  {desde} {formatoDinero(evento.precioDesde)}
+                  {textoDesde} {formatoDinero(evento.precioDesde)}
                 </span>
               </span>
             </a>

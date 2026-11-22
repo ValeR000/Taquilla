@@ -94,7 +94,7 @@ export default function DetalleEvento({
     return (
       <>
         <span id="detalle-espera" tabIndex={-1} className="solo-lectores" />
-        <DetalleEsqueleto en={en} textos={textos} />
+        <DetalleEsqueleto textoCargando={tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")} />
       </>
     );
   }

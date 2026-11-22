@@ -4,13 +4,14 @@ import AficheEvento from "../AficheEvento/AficheEvento.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import Boton from "../Boton/Boton.jsx";
 import { formatoDinero, formatoFecha } from "../../../utils/formato.js";
-import { crearTraductor } from "../../../utils/traductor.js";
 import "./EventoDestacado.css";
 
 export default function EventoDestacado({
   evento,         // [API] Evento destacado.
-  en,             // [LOCAL] Indica si el idioma es inglés.
-  textos,         // [API] Textos de la interfaz.
+  en = false,     // [LOCAL] Indica si el idioma es inglés.
+  textoEtiqueta = "",
+  textoDesde = "",
+  textoAccion = "",
   onAbrir,        // [LOCAL] Función para abrir el detalle del evento.
   cargando = false // Sprint 2: indica si el evento destacado sigue cargando
 }) {
@@ -23,12 +24,6 @@ export default function EventoDestacado({
   // [LOCAL] Hace que no se dibuje nada mientras no haya evento.
   if (!evento) return null;
 
-  // [API] Hace que los textos del destacado estén a mano.
-  const d = textos?.paginas?.inicio?.hero?.destacado;
-
-  // [LOCAL] Hace que se use el texto de la API o, si falta, el de respaldo en el idioma actual.
-  const tr = crearTraductor(en);
-
   return (
     <div className="destacado-taquilla">
 
@@ -38,7 +33,7 @@ export default function EventoDestacado({
       <div className="ficha-destacado">
 
         {/* [API] Hace que aparezca la etiqueta "Destacado". */}
-        <Etiqueta>{tr(d?.etiqueta, "Destacado", "Featured")}</Etiqueta>
+        <Etiqueta>{textoEtiqueta}</Etiqueta>
 
         {/* [API] Hace que aparezca el título del evento. */}
         <h2>{evento.titulo}</h2>
@@ -51,7 +46,7 @@ export default function EventoDestacado({
         <div>
           {/* [API] Hace que aparezca el precio con "Desde". */}
           <strong>
-            {tr(d?.desde, "Desde {precio}", "From {precio}").replace("{precio}", formatoDinero(evento.precioDesde))}
+            {textoDesde.replace("{precio}", formatoDinero(evento.precioDesde))}
           </strong>
 
           {/* [LOCAL] Hace que "Ver evento" lleve a /eventos/slug sin recargar la página. */}
@@ -63,7 +58,7 @@ export default function EventoDestacado({
               onAbrir(evento);
             }}
           >
-            {tr(d?.botones?.verEvento, "Ver evento", "View event")}
+            {textoAccion}
           </Boton>
         </div>
       </div>

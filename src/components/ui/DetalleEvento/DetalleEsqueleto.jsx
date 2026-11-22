@@ -1,17 +1,14 @@
 /* SPRINT 2: Esqueleto de la vista de detalle con la misma forma y medidas mientras carga el evento */
 
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
-import { crearTraductor } from "../../../utils/traductor.js";
 
 const VACIO = " ";
 
-export default function DetalleEsqueleto({ en, textos }) {
-  const tr = crearTraductor(en);
-
+export default function DetalleEsqueleto({ textoCargando = "" }) {
   return (
     <main className="detalle" aria-busy="true">
       <p className="solo-lectores" role="status">
-        {tr(textos?.estados?.cargando?.titulo, "Cargando…", "Loading…")}
+        {textoCargando}
       </p>
 
       <div className="detalle__portada" aria-hidden="true">

@@ -22,6 +22,7 @@ import Footer from "./components/layout/Footer/Footer.jsx";
 import Navbar from "./components/layout/Navbar/Navbar.jsx";
 import BannerCookies from "./components/ui/BannerCookies/BannerCookies.jsx";
 import Hero from "./components/ui/Hero/Hero.jsx";
+import EventoDestacado from "./components/ui/EventoDestacado/EventoDestacado.jsx";
 import CategoriasEventos from "./components/ui/CategoriasEventos/CategoriasEventos.jsx";
 import BuscadorEventos from "./components/ui/BuscadorEventos/BuscadorEventos.jsx";
 import SeccionEventos from "./components/ui/SeccionEventos/SeccionEventos.jsx";
@@ -33,7 +34,7 @@ import Ingresar from "./components/ui/Ingresar/Ingresar.jsx"; // Sprint 2
 import NoEncontrado from "./components/ui/NoEncontrado/NoEncontrado.jsx"; // Sprint 2
 
 import { leerCookie, guardarCookie, borrarCookie } from "./services/cookies.js";
-import { textosRespaldo } from "./utils/textosLocales.js";
+import { textosLocales, textosRespaldo } from "./utils/textosLocales.js";
 import { crearTraductor } from "./utils/traductor.js";
 import { textosError } from "./utils/textosError.js"; // Sprint 2
 import { useCallback, useEffect, useState } from "react";
@@ -61,6 +62,34 @@ const PREFERENCIAS_INICIALES = {
 };
 
 const RUTAS_INICIO = ["inicio", "registro", "recuperar-clave"]; // Sprint 2: rutas que muestran el Inicio (registro y recuperar-clave son pantallas del Sprint 3)
+
+function textosDelInicio(textos, en) {
+  const tr = crearTraductor(en);
+  const inicio = textos?.paginas?.inicio;
+  const hero = inicio?.hero;
+  const local = textosLocales[en ? "en" : "es"];
+
+  return {
+    temporada: tr(hero?.etiquetas?.temporada, "Temporada nov – dic 2026", "November – December 2026 season"),
+    titulo: tr(hero?.titulo, "Tu próxima noche empieza aquí", "Your next night starts here"),
+    subtitulo: tr(hero?.subtitulo, "Conciertos, teatro, deportes y festivales. Busca por categoría, fecha o ciudad y consulta todos los detalles de cada evento.", "Concerts, theatre, sports and festivals. Search by category, date or city and discover all the details of each event."),
+    populares: tr(hero?.buscador?.populares, "Populares:", "Popular:"),
+    destacado: tr(hero?.destacado?.etiqueta, "Destacado", "Featured"),
+    destacadoDesde: tr(hero?.destacado?.desde, "Desde {precio}", "From {precio}"),
+    destacadoVerEvento: tr(hero?.destacado?.botones?.verEvento, "Ver evento", "View event"),
+    todos: tr(inicio?.filtrosMovil?.todos, "Todos", "All"),
+    unEvento: tr(inicio?.categorias?.eventos?.uno, "{cantidad} evento", "{cantidad} event"),
+    variosEventos: tr(inicio?.categorias?.eventos?.otro, "{cantidad} eventos", "{cantidad} events"),
+    verTodos: tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all"),
+    verEvento: tr(inicio?.tarjeta?.botones?.verEvento, "Ver evento", "View event"),
+    desde: tr(inicio?.tarjeta?.desde, "Desde", "From"),
+    vacioTitulo: tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet"),
+    vacioTexto: tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here."),
+    finDeSemana: tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend"),
+    listaPopulares: local.populares,
+    etiquetaCategorias: local.categoriasAria,
+  };
+}
 
 function App() {
 
@@ -149,6 +178,8 @@ function App() {
   const en = idioma === "en";
 
   const tr = crearTraductor(en);
+
+  const textosInicio = textosDelInicio(datos.textos, en);
 
   const slugEvento = activo.startsWith("eventos/") ? activo.replace("eventos/", "") : ""; // Sprint 2: slug del evento leído de la ruta /eventos/{slug}
 
@@ -388,12 +419,23 @@ function App() {
 
           {/* [STATIC] Hace que aparezca el Hero con el buscador dentro. */}
           <Hero
-            en={en}
-            textos={datos.textos}
-            destacado={eventoDestacado}
-            cargandoDestacado={cargandoEventos} // Sprint 2: para la tarjeta esqueleto del Hero
-            abrirEvento={abrirEvento}
+            etiqueta={textosInicio.temporada}
+            titulo={textosInicio.titulo}
+            subtitulo={textosInicio.subtitulo}
+            textoPopulares={textosInicio.populares}
+            populares={textosInicio.listaPopulares}
             onBuscar={buscar}
+            tarjetaDestacada={
+              <EventoDestacado
+                evento={eventoDestacado}
+                en={en}
+                textoEtiqueta={textosInicio.destacado}
+                textoDesde={textosInicio.destacadoDesde}
+                textoAccion={textosInicio.destacadoVerEvento}
+                cargando={cargandoEventos} // Sprint 2: para la tarjeta esqueleto del Hero
+                onAbrir={abrirEvento}
+              />
+            }
           >
             <BuscadorEventos
               en={en}
@@ -435,8 +477,10 @@ function App() {
                 categorias={categorias}
                 filtros={null}
                 filtrarCategoria={filtrarCategoria}
-                en={en}
-                textos={datos.textos}
+                textoTodos={textosInicio.todos}
+                textoUnEvento={textosInicio.unEvento}
+                textoVariosEventos={textosInicio.variosEventos}
+                etiqueta={textosInicio.etiquetaCategorias}
               />
             )}
 
@@ -481,7 +525,11 @@ function App() {
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
-                  textos={datos.textos}
+                  textoVerTodos={textosInicio.verTodos}
+                  textoAccion={textosInicio.verEvento}
+                  textoDesde={textosInicio.desde}
+                  textoVacioTitulo={textosInicio.vacioTitulo}
+                  textoVacioTexto={textosInicio.vacioTexto}
                 />
 
                 {/* [API] Hace que aparezcan los siguientes 4 eventos (solo escritorio). */}
@@ -496,7 +544,11 @@ function App() {
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
-                  textos={datos.textos}
+                  textoVerTodos={textosInicio.verTodos}
+                  textoAccion={textosInicio.verEvento}
+                  textoDesde={textosInicio.desde}
+                  textoVacioTitulo={textosInicio.vacioTitulo}
+                  textoVacioTexto={textosInicio.vacioTexto}
                 />
 
                 {/* [API] Hace que aparezca la lista "Este fin de semana" (solo móvil). */}
@@ -507,7 +559,10 @@ function App() {
                   en={en}
                   onAbrir={abrirEvento}
                   onVerTodos={irAExplorar}
-                  textos={datos.textos}
+                  titulo={textosInicio.finDeSemana}
+                  textoVerTodos={textosInicio.verTodos}
+                  textoAccion={textosInicio.verEvento}
+                  textoDesde={textosInicio.desde}
                 />
                 {/* SPRINT 2 */}
               </>
