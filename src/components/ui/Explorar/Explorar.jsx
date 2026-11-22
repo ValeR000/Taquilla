@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
 import { useReintento } from "../../../hooks/useReintento.js"; // Sprint 2
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
+import Migas from "../../ui/Migas/Migas.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import Icono from "../../ui/Icono.jsx";
 import Input from "../../ui/Input/Input.jsx";
@@ -192,23 +193,15 @@ export default function Explorar({
     <main className="contenedor explorar">
 
       {/* [ACCESIBILIDAD] Hace que aparezca la ruta de navegación (Inicio › Explorar). */}
-      <nav className="explorar__migas" aria-label={local.migas}>
-        <ol>
-          <li>
-            {/* [LOCAL] Hace que "Inicio" vuelva al Inicio sin recargar. */}
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavegar("inicio");
-              }}
-            >
-              {tr(textos?.componentes?.migas?.inicio, "Inicio", "Home")}
-            </a>
-          </li>
-          <li aria-current="page">{tr(textos?.componentes?.migas?.explorar, "Explorar", "Explore")}</li>
-        </ol>
-      </nav>
+      <Migas
+        clase="explorar__migas"
+        etiqueta={local.migas}
+        onNavegar={onNavegar}
+        items={[
+          { id: "inicio", texto: tr(textos?.componentes?.migas?.inicio, "Inicio", "Home"), ruta: "inicio" },
+          { id: "explorar", texto: tr(textos?.componentes?.migas?.explorar, "Explorar", "Explore") },
+        ]}
+      />
 
       {/* [STATIC] Hace que aparezca el título de la vista. */}
       <h1 id="explorar-titulo" tabIndex={-1} className="explorar__titulo">{local.titulo}</h1>{/* Sprint 2: puede recibir el foco después de Reintentar */}

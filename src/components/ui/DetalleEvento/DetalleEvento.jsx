@@ -11,6 +11,7 @@ import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import Icono from "../Icono.jsx";
+import Migas from "../Migas/Migas.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
@@ -150,33 +151,16 @@ export default function DetalleEvento({
     <main className="detalle">
 
       <div className="detalle__portada">
-        <nav className="detalle__migas" aria-label={local.migas}>
-          <ol>
-            <li>
-              <a
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavegar("inicio");
-                }}
-              >
-                {tr(tMigas?.inicio, "Inicio", "Home")}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/explorar"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavegar("explorar");
-                }}
-              >
-                {tr(tMigas?.explorar, "Explorar", "Explore")}
-              </a>
-            </li>
-            <li aria-current="page">{evento?.titulo}</li>
-          </ol>
-        </nav>
+        <Migas
+          clase="detalle__migas"
+          etiqueta={local.migas}
+          onNavegar={onNavegar}
+          items={[
+            { id: "inicio", texto: tr(tMigas?.inicio, "Inicio", "Home"), ruta: "inicio" },
+            { id: "explorar", texto: tr(tMigas?.explorar, "Explorar", "Explore"), ruta: "explorar" },
+            { id: "evento", texto: evento?.titulo },
+          ]}
+        />
 
         <div className="detalle__imagen">
           <AficheEvento afiche={evento?.afiche} clase="detalle__afiche" />
