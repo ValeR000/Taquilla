@@ -41,7 +41,7 @@ export default function BuscadorEventos({
   const [fecha, setFecha] = useState("");
 
   // ==========================================
-  // BLOQUE C: FUNCIONES
+  // BLOQUE B: FUNCIONES
   // ==========================================
   
   // [LOCAL] Hace que al enviar el formulario se envíen los 3 filtros al padre sin recargar la página.
@@ -51,7 +51,7 @@ export default function BuscadorEventos({
   }
 
   // ==========================================
-  // BLOQUE D: TEXTOS Y TRADUCCIONES
+  // BLOQUE C: TEXTOS Y TRADUCCIONES
   // ==========================================
   
   // [API] Hace que aparezca el resumen de ciudad y fecha en la versión móvil.
@@ -60,7 +60,7 @@ export default function BuscadorEventos({
     .replace("{fecha}", textoCualquierFecha);
 
   // ==========================================
-  // BLOQUE E: LO QUE SE DIBUJA EN PANTALLA (JSX)
+  // BLOQUE D: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
 
   return (

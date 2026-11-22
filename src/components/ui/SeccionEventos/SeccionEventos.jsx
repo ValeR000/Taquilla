@@ -29,7 +29,7 @@ export default function SeccionEventos({
   onVerTodos,         // [LOCAL] Función para navegar a la vista de Explorar.
 }) {
   // ==========================================
-  // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
+  // BLOQUE A: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
 
   return (

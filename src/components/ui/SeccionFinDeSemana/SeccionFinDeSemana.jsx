@@ -21,7 +21,7 @@ export default function SeccionFinDeSemana({
   cargando = false    // Sprint 2: indica si los eventos siguen cargando
 }) {
   // ==========================================
-  // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
+  // BLOQUE A: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
 
   return (
