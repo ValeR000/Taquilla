@@ -12,6 +12,7 @@ import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import Icono from "../Icono.jsx";
 import Migas from "../Migas/Migas.jsx";
+import FilaDisponibilidad from "../FilaDisponibilidad/FilaDisponibilidad.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
@@ -144,6 +145,8 @@ export default function DetalleEvento({
 
   const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
   const desde = tr(tTarjeta?.desde, "Desde", "From");
+
+  const agotada = tr(tDisponibilidad?.agotada, "Agotada", "Sold out");
 
   const leerMas = tr(t?.descripcion?.botones?.leerMas, "Leer más", "Read more");
 
@@ -304,14 +307,13 @@ export default function DetalleEvento({
 
             <ul className="detalle__lista">
               {evento?.funciones?.map((funcion) => (
-                <li key={funcion.id} className="detalle__lista-item">
-                  <span className="detalle__lista-nombre">{formatoFecha(funcion.fecha, en)}</span>
-                  {funcion.agotada ? (
-                    <Etiqueta>{tr(tDisponibilidad?.agotada, "Agotada", "Sold out")}</Etiqueta>
-                  ) : (
-                    <span className="detalle__lista-disponibles">{quedan(funcion.disponibles)}</span>
-                  )}
-                </li>
+                <FilaDisponibilidad
+                  key={funcion.id}
+                  nombre={formatoFecha(funcion.fecha, en)}
+                  agotada={funcion.agotada}
+                  textoAgotada={agotada}
+                  textoQuedan={quedan(funcion.disponibles)}
+                />
               ))}
             </ul>
           </section>
@@ -321,15 +323,14 @@ export default function DetalleEvento({
 
             <ul className="detalle__lista">
               {evento?.localidades?.map((localidad) => (
-                <li key={localidad.id} className="detalle__lista-item">
-                  <span className="detalle__lista-nombre">{localidad.nombre}</span>
-                  <strong className="detalle__lista-precio">{formatoDinero(localidad.precio)}</strong>
-                  {localidad.agotada ? (
-                    <Etiqueta>{tr(tDisponibilidad?.agotada, "Agotada", "Sold out")}</Etiqueta>
-                  ) : (
-                    <span className="detalle__lista-disponibles">{quedan(localidad.disponibles)}</span>
-                  )}
-                </li>
+                <FilaDisponibilidad
+                  key={localidad.id}
+                  nombre={localidad.nombre}
+                  precio={formatoDinero(localidad.precio)}
+                  agotada={localidad.agotada}
+                  textoAgotada={agotada}
+                  textoQuedan={quedan(localidad.disponibles)}
+                />
               ))}
             </ul>
           </section>
