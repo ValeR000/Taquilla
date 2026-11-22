@@ -8,6 +8,6 @@ export function textosError(textos, codigo, en) {
   return {
     titulo: tr(error?.titulo, "Algo salió mal", "Something went wrong"),
     texto: textos?.errores?.[codigo] || tr(error?.texto, "Revisa tu conexión e inténtalo de nuevo.", "Check your connection and try again."),
-    boton: tr(error?.botones?.reintentar, "Reintentar", "Try again"),
+    textoAccion: tr(error?.botones?.reintentar, "Reintentar", "Try again"),
   };
 }

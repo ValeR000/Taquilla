@@ -3,14 +3,17 @@ import { useCallback, useRef, useState } from "react";
 import { useEventos } from "../../../hooks/useEventos.js";
 import { useReintento } from "../../../hooks/useReintento.js"; // Sprint 2
 import TarjetaEvento from "../../ui/TarjetaEvento/TarjetaEvento.jsx";
+import Migas from "../../ui/Migas/Migas.jsx";
 import IconoEvento from "../../ui/IconoEvento/IconoEvento.jsx";
 import Icono from "../../ui/Icono.jsx";
 import Input from "../../ui/Input/Input.jsx";
 import PanelFiltros from "../../ui/PanelFiltros/PanelFiltros.jsx";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import EstadoMensaje from "../../ui/EstadoMensaje/EstadoMensaje.jsx";
+import TarjetasEsqueleto from "../../ui/TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import { textosError } from "../../../utils/textosError.js"; // Sprint 2
 import "./Explorar.css";
 
@@ -116,6 +119,10 @@ export default function Explorar({
       : tr(t?.resultadosCorto?.otro, "{cantidad} eventos", "{cantidad} events")
   ).replace("{cantidad}", total);
 
+  const tTarjeta = textos?.paginas?.inicio?.tarjeta;
+  const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
+  const desde = tr(tTarjeta?.desde, "Desde", "From");
+
   const placeholderBusqueda = tr(
     textos?.paginas?.inicio?.hero?.buscador?.placeholders?.movil,
     "Evento, artista o lugar",
@@ -161,14 +168,9 @@ export default function Explorar({
     botonFiltrosRef.current?.focus();
   }, []);
 
-  // [API] Hace que aparezca el nombre de la categoría tal como lo trae la API.
-  function nombreCategoria(id) {
-    return categorias.find((c) => c.id === id)?.nombre || id;
-  }
-
   // [LOCAL] Hace que los filtros activos se muestren como chips.
   const chips = [
-    filtros.categoria && { clave: "categoria", texto: nombreCategoria(filtros.categoria) },
+    filtros.categoria && { clave: "categoria", texto: nombreCategoria(categorias, filtros.categoria) },
     filtros.ciudad && { clave: "ciudad", texto: filtros.ciudad },
     filtros.q && { clave: "q", texto: `"${filtros.q}"` },
   ].filter(Boolean);
@@ -187,23 +189,15 @@ export default function Explorar({
     <main className="contenedor explorar">
 
       {/* [ACCESIBILIDAD] Hace que aparezca la ruta de navegación (Inicio › Explorar). */}
-      <nav className="explorar__migas" aria-label={local.migas}>
-        <ol>
-          <li>
-            {/* [LOCAL] Hace que "Inicio" vuelva al Inicio sin recargar. */}
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavegar("inicio");
-              }}
-            >
-              {tr(textos?.componentes?.migas?.inicio, "Inicio", "Home")}
-            </a>
-          </li>
-          <li aria-current="page">{tr(textos?.componentes?.migas?.explorar, "Explorar", "Explore")}</li>
-        </ol>
-      </nav>
+      <Migas
+        clase="explorar__migas"
+        etiqueta={local.migas}
+        onNavegar={onNavegar}
+        items={[
+          { id: "inicio", texto: tr(textos?.componentes?.migas?.inicio, "Inicio", "Home"), ruta: "inicio" },
+          { id: "explorar", texto: tr(textos?.componentes?.migas?.explorar, "Explorar", "Explore") },
+        ]}
+      />
 
       {/* [STATIC] Hace que aparezca el título de la vista. */}
       <h1 id="explorar-titulo" tabIndex={-1} className="explorar__titulo">{local.titulo}</h1>{/* Sprint 2: puede recibir el foco después de Reintentar */}
@@ -267,7 +261,6 @@ export default function Explorar({
           onCambiar={actualizar}
           onLimpiar={limpiar}
           total={total}
-          nombreCategoria={nombreCategoria}
         />
 
         <section className="explorar__contenido" aria-busy={cargando}>{/* Sprint 2: avisa que los resultados están cargando */}
@@ -320,9 +313,7 @@ export default function Explorar({
                 {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
               </p>
               <div className="explorar__grid">
-                {Array.from({ length: 9 }, (_, i) => (
-                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-                ))}
+                <TarjetasEsqueleto cantidad={9} />
               </div>
             </>
           )}
@@ -335,7 +326,7 @@ export default function Explorar({
               clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
               {...textosError(textos, codigo, en)} // Sprint 2: título, mensaje según el codigo y botón
               /* SPRINT 2: Hace que Reintentar maneje el foco */
-              onBoton={reintentoLista.reintentar}
+              onAccion={reintentoLista.reintentar}
               enfocarBoton={reintentoLista.enfocarBoton}
               /* SPRINT 2 */
             />
@@ -349,8 +340,8 @@ export default function Explorar({
               titulo={tr(tEstado?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
               texto={tr(tEstado?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you will see it here.")}
               /* SPRINT 2 */
-              boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
-              onBoton={limpiar}
+              textoAccion={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
+              onAccion={limpiar}
             />
           )}
 
@@ -363,9 +354,10 @@ export default function Explorar({
                     key={evento.id}
                     evento={evento}
                     en={en}
-                    textos={textos}
-                    nombreCategoria={nombreCategoria(evento.categoria)}
-                    onAbrir={onAbrir}
+                    textoAccion={verEvento}
+                    textoDesde={desde}
+                    nombreCategoria={nombreCategoria(categorias, evento.categoria)}
+                    onAccion={onAbrir}
                   />
                 ))}
               </div>

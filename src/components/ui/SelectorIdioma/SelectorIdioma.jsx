@@ -1,7 +1,7 @@
 // RESPONSABILIDAD: Componente selector de idioma (ES/EN) con accesibilidad.
 import "./SelectorIdioma.css";
 
-export default function SelectorIdioma({ idioma, cambiarIdioma, etiqueta }) {
+export default function SelectorIdioma({ idioma = "es", cambiarIdioma, etiqueta }) {
   return (
     // [STATIC] Contenedor con role="group" para agrupar los botones.
     <div className="selector-idioma" role="group" aria-label={etiqueta}>

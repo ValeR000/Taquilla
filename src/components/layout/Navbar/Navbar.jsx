@@ -24,18 +24,18 @@ const ENLACES = [
 ];
 
 export default function Navbar({
-  idioma,                 // [LOCAL] Idioma actual.
+  idioma = "es",          // [LOCAL] Idioma actual.
   cambiarIdioma,          // [LOCAL] Función para cambiar el idioma.
   textos,                 // [API] Textos de la interfaz.
-  activo,                 // [LOCAL] Vista activa actual.
+  activo = "inicio",      // [LOCAL] Vista activa actual.
   onBuscar,               // [LOCAL] Función para ejecutar la búsqueda.
   onNavegar,              // [LOCAL] Función para cambiar de vista.
   onAbrirBusqueda,        // [LOCAL] Función para abrir el buscador en móvil.
   abrirAccesibilidad,     // [LOCAL] Función para abrir el panel de accesibilidad.
-  accesibilidadAbierta,   // [LOCAL] Indica si el panel de accesibilidad está abierto.
+  accesibilidadAbierta = false, // [LOCAL] Indica si el panel de accesibilidad está abierto.
   /* SPRINT 2: Datos de la sesión: la persona que ingresó, si se está comprobando la sesión y cómo cerrarla */
-  usuario,
-  comprobandoSesion,
+  usuario = null,
+  comprobandoSesion = false,
   onCerrarSesion,
   /* SPRINT 2 */
 }) {
@@ -166,7 +166,12 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
           {/* SPRINT 2: Hace que con sesión se vea el círculo de la cuenta y que, mientras se comprueba, un hueco invisible del mismo tamaño le reserve el espacio */}
           <div className="navbar__sesion">
             {usuario ? (
-              <MenuUsuario usuario={usuario} en={en} textos={textos} onCerrarSesion={onCerrarSesion} />
+              <MenuUsuario
+                usuario={usuario}
+                textoCerrar={tr(t?.usuario?.cerrarSesion, "Cerrar sesión", "Log out")}
+                etiquetaMenu={tr(t?.usuario?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo || "")}
+                onCerrarSesion={onCerrarSesion}
+              />
             ) : comprobandoSesion ? (
               <span className="navbar__sesion-reserva" aria-hidden="true" />
             ) : (
@@ -217,7 +222,7 @@ const cerrarMenu = useCallback(() => setMenuAbierto(false), []);
             className="navbar__movil-boton"
             aria-label={textos?.menuMovil?.abrir}
             aria-expanded={menuAbierto}
-            onClick={() => setMenuAbierto(!menuAbierto)}
+            onClick={() => setMenuAbierto((abierto) => !abierto)}
           >
             <Icono nombre="menu" />
           </button>

@@ -7,7 +7,8 @@
 import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
-import { crearTraductor } from "../../../utils/traductor.js";
+import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import "./SeccionEventos.css";
 
 export default function SeccionEventos({
@@ -18,29 +19,17 @@ export default function SeccionEventos({
   eventos = [],       // [API] Lista de eventos a mostrar.
   cargando = false,
   categorias = [],    // [API] Lista de categorías para traducir los IDs.
-  en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
-  textos,             // [API] Los textos de la interfaz desde la API.
+  en = false,         // [LOCAL] Booleano para saber si el idioma es inglés.
+  textoVerTodos = "",
+  textoAccion = "",
+  textoDesde = "",
+  textoVacioTitulo = "",
+  textoVacioTexto = "",
   onAbrir,            // [LOCAL] Función para abrir el detalle de un evento.
   onVerTodos,         // [LOCAL] Función para navegar a la vista de Explorar.
 }) {
   // ==========================================
-  // BLOQUE A: TEXTOS Y TRADUCCIONES
-  // ==========================================
-  
-  // [LOCAL] Función auxiliar para elegir texto de la API o un respaldo local.
-  const tr = crearTraductor(en);
-  
-  // [API] Hace que aparezca el texto del enlace "Ver todos" o "View all".
-  const verTodos = tr(textos?.paginas?.inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all");
-
-  // [LOCAL] Busca el nombre de la categoría por su ID para pasarlo a las tarjetas.
-  const obtenerNombreCategoria = (idCategoria) => {
-    const cat = categorias.find((c) => c.id === idCategoria);
-    return cat ? cat.nombre : idCategoria;
-  };
-
-  // ==========================================
-  // BLOQUE B: LO QUE SE DIBUJA EN PANTALLA (JSX)
+  // BLOQUE A: LO QUE SE DIBUJA EN PANTALLA (JSX)
   // ==========================================
 
   return (
@@ -51,14 +40,12 @@ export default function SeccionEventos({
         idTitulo={`${id}-titulo`}
         titulo={titulo}
         descripcion={descripcion}
-        textoBoton={verTodos}
-        onBoton={onVerTodos}
+        textoAccion={textoVerTodos}
+        onAccion={onVerTodos}
       />
 
       <div className="eventos-grid">
-        {cargando && Array.from({ length: 4 }, (_, i) => (
-          <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-        ))}
+        {cargando && <TarjetasEsqueleto cantidad={4} />}
 
         {/* [API] Recorre los eventos y pinta una TarjetaEvento por cada uno. */}
         {eventos.map((evento) => (
@@ -66,9 +53,10 @@ export default function SeccionEventos({
             key={evento.id}
             evento={evento}
             en={en}
-            textos={textos}
-            nombreCategoria={obtenerNombreCategoria(evento.categoria)}
-            onAbrir={onAbrir}
+            textoAccion={textoAccion}
+            textoDesde={textoDesde}
+            nombreCategoria={nombreCategoria(categorias, evento.categoria)}
+            onAccion={onAbrir}
           />
         ))}
       </div>
@@ -76,10 +64,10 @@ export default function SeccionEventos({
       {/* [LOCAL] Si no hay eventos, muestra un mensaje de estado vacío. */}
       {!cargando && !eventos.length && (
         <EstadoMensaje
-          titulo={tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
-          texto={tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}
-          boton={verTodos}
-          onBoton={onVerTodos}
+          titulo={textoVacioTitulo}
+          texto={textoVacioTexto}
+          textoAccion={textoVerTodos}
+          onAccion={onVerTodos}
         />
       )}
     </section>

@@ -14,29 +14,8 @@
 /* =========================================
    SECCIÓN: Migas de Pan (Breadcrumbs)
    ========================================= */
-.explorar__migas ol {
-  display: flex;
-  gap: var(--espacio-2);
-  list-style: none;
-  margin: 0 0 var(--espacio-4);
-  padding: 0;
-  font-size: var(--texto-pequeno);
-  color: var(--color-texto-gris);
-}
-
-/* [STATIC] Añade el símbolo '›' entre los elementos de las migas. */
-.explorar__migas li + li::before {
-  content: "›";
-  margin-right: var(--espacio-2);
-}
-
-.explorar__migas a {
-  color: inherit;
-}
-
-.explorar__migas [aria-current="page"] {
-  color: var(--color-texto);
-  font-weight: 500;
+.explorar__migas .migas__lista {
+  margin: 0 0 16px;
 }
 
 /* =========================================

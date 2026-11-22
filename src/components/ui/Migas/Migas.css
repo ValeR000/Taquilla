@@ -1,0 +1,26 @@
+/* SPRINT 2: estilos de las migas */
+
+.migas__lista {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--texto-pequeno);
+  color: var(--texto-secundario);
+}
+
+.migas__item + .migas__item::before {
+  content: "›";
+  margin-right: 8px;
+}
+
+.migas__enlace,
+.migas__enlace:hover {
+  color: inherit;
+}
+
+.migas__item[aria-current="page"] {
+  color: var(--color-texto);
+  font-weight: 500;
+}

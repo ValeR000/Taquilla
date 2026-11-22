@@ -20,8 +20,8 @@ export default function NoEncontrado({ en, textos, onNavegar }) {
         nivel={1}
         titulo={tr(t?.contenido?.titulo, "No encontramos esta página", "We couldn't find this page")}
         texto={tr(t?.contenido?.texto, "Puede que el evento ya no exista o que la dirección esté mal escrita.", "The event may no longer exist or the address may be misspelled.")}
-        boton={tr(t?.contenido?.botones?.volverInicio, "Volver al inicio", "Back to home")}
-        onBoton={() => onNavegar("inicio")}
+        textoAccion={tr(t?.contenido?.botones?.volverInicio, "Volver al inicio", "Back to home")}
+        onAccion={() => onNavegar("inicio")}
       />
     </main>
   );

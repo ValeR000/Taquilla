@@ -1,7 +1,6 @@
 /* SPRINT 2: Cuenta de la persona con sesión: en la web, un círculo con sus iniciales que abre el menú con «Cerrar sesión» (se cierra con Escape o con un clic afuera); en el menú móvil, una fila con iniciales, nombre y correo y el botón «Cerrar sesión» */
 
 import { useEffect, useId, useRef, useState } from "react";
-import { crearTraductor } from "../../../utils/traductor.js";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono.jsx";
 import "./MenuUsuario.css";
@@ -12,11 +11,7 @@ function iniciales(usuario) {
   return palabras.slice(0, 2).map((palabra) => palabra.charAt(0)).join("").toUpperCase();
 }
 
-export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, variante = "menu" }) {
-  const tr = crearTraductor(en);
-  const t = textos?.navbar?.usuario;
-  const textoCerrar = tr(t?.cerrarSesion, "Cerrar sesión", "Log out");
-
+export default function MenuUsuario({ usuario, textoCerrar = "", etiquetaMenu = "", onCerrarSesion, variante = "menu" }) {
   const [abierto, setAbierto] = useState(false);
 
   const contenedorRef = useRef(null);
@@ -49,18 +44,25 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
     if (destino && !contenedorRef.current?.contains(destino)) setAbierto(false);
   }
 
-  if (variante === "panel") {
+  const panel = variante === "panel";
+  const textoIniciales = iniciales(usuario);
+
+  const cuenta = (
+    <div className={panel ? "menu-usuario-panel__cuenta" : "menu-usuario-panel__cuenta menu-usuario__cuenta"}>
+      <span className={`menu-usuario__iniciales ${panel ? "menu-usuario__iniciales--pequenas" : "menu-usuario__iniciales--oscuras"}`} aria-hidden="true">
+        {textoIniciales}
+      </span>
+      <div className="menu-usuario-panel__datos">
+        <p className="menu-usuario-panel__nombre">{usuario.nombre}</p>
+        <p className="menu-usuario-panel__correo">{usuario.correo}</p>
+      </div>
+    </div>
+  );
+
+  if (panel) {
     return (
       <div className="menu-usuario-panel">
-        <div className="menu-usuario-panel__cuenta">
-          <span className="menu-usuario__iniciales menu-usuario__iniciales--pequenas" aria-hidden="true">
-            {iniciales(usuario)}
-          </span>
-          <div className="menu-usuario-panel__datos">
-            <p className="menu-usuario-panel__nombre">{usuario.nombre}</p>
-            <p className="menu-usuario-panel__correo">{usuario.correo}</p>
-          </div>
-        </div>
+        {cuenta}
 
         <Boton variante="contorno" onClick={onCerrarSesion}>
           {textoCerrar}
@@ -75,24 +77,16 @@ export default function MenuUsuario({ usuario, en, textos, onCerrarSesion, varia
         ref={botonRef}
         type="button"
         className="menu-usuario__iniciales menu-usuario__boton"
-        aria-label={tr(t?.menu, "Menú de la cuenta de {nombre}", "Account menu for {nombre}").replace("{nombre}", usuario.nombre || usuario.correo || "")}
+        aria-label={etiquetaMenu}
         aria-expanded={abierto}
         aria-controls={idLista}
-        onClick={() => setAbierto(!abierto)}
+        onClick={() => setAbierto((actual) => !actual)}
       >
-        {iniciales(usuario)}
+        {textoIniciales}
       </button>
 
       <div id={idLista} className="menu-usuario__lista" hidden={!abierto}>
-        <div className="menu-usuario-panel__cuenta menu-usuario__cuenta">
-          <span className="menu-usuario__iniciales menu-usuario__iniciales--oscuras" aria-hidden="true">
-            {iniciales(usuario)}
-          </span>
-          <div className="menu-usuario-panel__datos">
-            <p className="menu-usuario-panel__nombre">{usuario.nombre}</p>
-            <p className="menu-usuario-panel__correo">{usuario.correo}</p>
-          </div>
-        </div>
+        {cuenta}
 
         <hr className="menu-usuario__divisor" />
 

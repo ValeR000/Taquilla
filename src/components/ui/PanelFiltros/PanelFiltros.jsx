@@ -5,6 +5,7 @@ import Icono from "../Icono.jsx";
 import Boton from "../Boton/Boton.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx"; // Sprint 2
 import { crearTraductor } from "../../../utils/traductor.js";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import "./PanelFiltros.css";
 
 // [STATIC] Opciones de fecha locales (visuales, ya que la API no filtra por fecha).
@@ -35,7 +36,6 @@ export default function PanelFiltros({
   onCambiar,
   onLimpiar,
   total,
-  nombreCategoria,
 }) {
   // ==========================================
   // BLOQUE A: REFERENCIAS Y TEXTOS
@@ -139,8 +139,8 @@ export default function PanelFiltros({
               rol="status"
               clase="panel-filtros__error"
               texto={mensajeError?.texto}
-              boton={mensajeError?.boton}
-              onBoton={onReintentarCategorias}
+              textoAccion={mensajeError?.textoAccion}
+              onAccion={onReintentarCategorias}
               enfocarBoton={enfocarBotonCategorias}
             />
           )}
@@ -165,7 +165,7 @@ export default function PanelFiltros({
                   // [LOCAL] Permite desmarcar la categoría si se vuelve a hacer clic en ella
                   onClick={() => filtros.categoria === cat.id && onCambiar({ categoria: "" })}
                 />
-                <span>{nombreCategoria(cat.id)}</span>
+                <span>{nombreCategoria(categorias, cat.id)}</span>
                 {/* [API] Conteo de eventos que tiene esa categoría */}
                 <small>{cat.eventos}</small>
               </label>

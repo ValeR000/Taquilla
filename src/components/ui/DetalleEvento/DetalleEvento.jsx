@@ -11,11 +11,15 @@ import EncabezadoSeccion from "../EncabezadoSeccion/EncabezadoSeccion.jsx";
 import EstadoMensaje from "../EstadoMensaje/EstadoMensaje.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
 import Icono from "../Icono.jsx";
+import Migas from "../Migas/Migas.jsx";
+import FilaDisponibilidad from "../FilaDisponibilidad/FilaDisponibilidad.jsx";
 import IconoEvento from "../IconoEvento/IconoEvento.jsx";
 import TarjetaEvento from "../TarjetaEvento/TarjetaEvento.jsx";
+import TarjetasEsqueleto from "../TarjetasEsqueleto/TarjetasEsqueleto.jsx";
 import { formatoDinero, formatoFecha, formatoFechaConAnio, formatoHora } from "../../../utils/formato.js";
 import { textosLocales } from "../../../utils/textosLocales.js";
 import { crearTraductor } from "../../../utils/traductor.js";
+import { nombreCategoria } from "../../../utils/categorias.js";
 import { textosError } from "../../../utils/textosError.js";
 import "./DetalleEvento.css";
 
@@ -34,6 +38,7 @@ export default function DetalleEvento({
   const tMigas = textos?.componentes?.migas;
   const tDisponibilidad = textos?.componentes?.etiquetas?.disponibilidad;
   const local = textosLocales[en ? "en" : "es"];
+  const tTarjeta = textos?.paginas?.inicio?.tarjeta;
 
   const { evento, cargando, error, codigo, noEncontrado, recargar } = useEvento(slug);
   const { relacionados, cargando: cargandoRelacionados, error: errorRelacionados, codigo: codigoRelacionados, recargar: recargarRelacionados } = useRelacionados(evento?.slug === slug ? slug : "");
@@ -66,10 +71,6 @@ export default function DetalleEvento({
 
   useMetadatos(tituloPagina, descripcionPagina);
 
-  function nombreCategoria(id) {
-    return categorias.find((c) => c.id === id)?.nombre || id;
-  }
-
   function quedan(cantidad) {
     return tr(tDisponibilidad?.quedan, "Quedan {cantidad}", "{cantidad} left").replace("{cantidad}", cantidad);
   }
@@ -93,7 +94,7 @@ export default function DetalleEvento({
     return (
       <>
         <span id="detalle-espera" tabIndex={-1} className="solo-lectores" />
-        <DetalleEsqueleto en={en} textos={textos} />
+        <DetalleEsqueleto textoCargando={tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")} />
       </>
     );
   }
@@ -104,7 +105,7 @@ export default function DetalleEvento({
         <EstadoMensaje
           rol="alert"
           {...textosError(textos, codigo, en)}
-          onBoton={reintentoEvento.reintentar}
+          onAccion={reintentoEvento.reintentar}
           enfocarBoton={reintentoEvento.enfocarBoton}
         />
       </main>
@@ -118,8 +119,8 @@ export default function DetalleEvento({
           nivel={1}
           titulo={tr(t?.noEncontrado?.titulo, "No encontramos este evento", "We couldn't find this event")}
           texto={tr(t?.noEncontrado?.texto, "Puede que haya terminado o que el enlace esté mal escrito.", "It may have ended or the link may be mistyped.")}
-          boton={tr(t?.noEncontrado?.botones?.volver, "Volver a explorar", "Back to explore")}
-          onBoton={() => onNavegar("explorar")}
+          textoAccion={tr(t?.noEncontrado?.botones?.volver, "Volver a explorar", "Back to explore")}
+          onAccion={() => onNavegar("explorar")}
         />
       </main>
     );
@@ -139,39 +140,27 @@ export default function DetalleEvento({
     .replace("{hora}", hora)
     .replace("{puertas}", puertas);
 
+  const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
+  const desde = tr(tTarjeta?.desde, "Desde", "From");
+
+  const agotada = tr(tDisponibilidad?.agotada, "Agotada", "Sold out");
+
   const leerMas = tr(t?.descripcion?.botones?.leerMas, "Leer más", "Read more");
 
   return (
     <main className="detalle">
 
       <div className="detalle__portada">
-        <nav className="detalle__migas" aria-label={local.migas}>
-          <ol>
-            <li>
-              <a
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavegar("inicio");
-                }}
-              >
-                {tr(tMigas?.inicio, "Inicio", "Home")}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/explorar"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavegar("explorar");
-                }}
-              >
-                {tr(tMigas?.explorar, "Explorar", "Explore")}
-              </a>
-            </li>
-            <li aria-current="page">{evento?.titulo}</li>
-          </ol>
-        </nav>
+        <Migas
+          clase="detalle__migas"
+          etiqueta={local.migas}
+          onNavegar={onNavegar}
+          items={[
+            { id: "inicio", texto: tr(tMigas?.inicio, "Inicio", "Home"), ruta: "inicio" },
+            { id: "explorar", texto: tr(tMigas?.explorar, "Explorar", "Explore"), ruta: "explorar" },
+            { id: "evento", texto: evento?.titulo },
+          ]}
+        />
 
         <div className="detalle__imagen">
           <AficheEvento afiche={evento?.afiche} clase="detalle__afiche" />
@@ -203,7 +192,7 @@ export default function DetalleEvento({
 
           <header className="detalle__encabezado">
             <div className="detalle__etiquetas">
-              <Etiqueta>{tGeneral?.categorias?.singular?.[evento?.categoria] || nombreCategoria(evento?.categoria)}</Etiqueta>
+              <Etiqueta>{tGeneral?.categorias?.singular?.[evento?.categoria] || nombreCategoria(categorias, evento?.categoria)}</Etiqueta>
               <Etiqueta clase="detalle__edad">{edad}</Etiqueta>
             </div>
 
@@ -284,7 +273,7 @@ export default function DetalleEvento({
               className="detalle__leer-mas"
               aria-expanded={expandida}
               aria-controls="detalle-descripcion-texto"
-              onClick={() => setExpandida(!expandida)}
+              onClick={() => setExpandida((actual) => !actual)}
             >
               {expandida ? local.leerMenos : leerMas}
             </button>
@@ -315,14 +304,13 @@ export default function DetalleEvento({
 
             <ul className="detalle__lista">
               {evento?.funciones?.map((funcion) => (
-                <li key={funcion.id} className="detalle__lista-item">
-                  <span className="detalle__lista-nombre">{formatoFecha(funcion.fecha, en)}</span>
-                  {funcion.agotada ? (
-                    <Etiqueta>{tr(tDisponibilidad?.agotada, "Agotada", "Sold out")}</Etiqueta>
-                  ) : (
-                    <span className="detalle__lista-disponibles">{quedan(funcion.disponibles)}</span>
-                  )}
-                </li>
+                <FilaDisponibilidad
+                  key={funcion.id}
+                  nombre={formatoFecha(funcion.fecha, en)}
+                  agotada={funcion.agotada}
+                  textoAgotada={agotada}
+                  textoQuedan={quedan(funcion.disponibles)}
+                />
               ))}
             </ul>
           </section>
@@ -332,15 +320,14 @@ export default function DetalleEvento({
 
             <ul className="detalle__lista">
               {evento?.localidades?.map((localidad) => (
-                <li key={localidad.id} className="detalle__lista-item">
-                  <span className="detalle__lista-nombre">{localidad.nombre}</span>
-                  <strong className="detalle__lista-precio">{formatoDinero(localidad.precio)}</strong>
-                  {localidad.agotada ? (
-                    <Etiqueta>{tr(tDisponibilidad?.agotada, "Agotada", "Sold out")}</Etiqueta>
-                  ) : (
-                    <span className="detalle__lista-disponibles">{quedan(localidad.disponibles)}</span>
-                  )}
-                </li>
+                <FilaDisponibilidad
+                  key={localidad.id}
+                  nombre={localidad.nombre}
+                  precio={formatoDinero(localidad.precio)}
+                  agotada={localidad.agotada}
+                  textoAgotada={agotada}
+                  textoQuedan={quedan(localidad.disponibles)}
+                />
               ))}
             </ul>
           </section>
@@ -369,24 +356,23 @@ export default function DetalleEvento({
               compacto
               rol="alert"
               texto={mensajeRelacionados.texto}
-              boton={mensajeRelacionados.boton}
-              onBoton={reintentoRelacionados.reintentar}
+              textoAccion={mensajeRelacionados.textoAccion}
+              onAccion={reintentoRelacionados.reintentar}
               enfocarBoton={reintentoRelacionados.enfocarBoton}
             />
           ) : (
             <div className="detalle__relacionados-lista">
               {cargandoRelacionados
-                ? Array.from({ length: 4 }, (_, i) => (
-                  <div key={i} className="tarjeta-evento tarjeta-esqueleto" aria-hidden="true" />
-                ))
+                ? <TarjetasEsqueleto cantidad={4} />
                 : relacionados.map((relacionado) => (
                   <TarjetaEvento
                     key={relacionado.id}
                     evento={relacionado}
-                    nombreCategoria={nombreCategoria(relacionado.categoria)}
+                    nombreCategoria={nombreCategoria(categorias, relacionado.categoria)}
                     en={en}
-                    textos={textos}
-                    onAbrir={onAbrir}
+                    textoAccion={verEvento}
+                    textoDesde={desde}
+                    onAccion={onAbrir}
                   />
                 ))}
             </div>

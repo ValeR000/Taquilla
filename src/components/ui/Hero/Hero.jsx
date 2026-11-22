@@ -4,27 +4,19 @@
 // CONVENCIÓN: [API], [LOCAL], [STATIC].
 // ============================================================================
 
-import EventoDestacado from "../EventoDestacado/EventoDestacado.jsx";
 import Etiqueta from "../Etiqueta/Etiqueta.jsx";
-import { textosLocales } from "../../../utils/textosLocales.js";
-import { crearTraductor } from "../../../utils/traductor.js";
 import "./Hero.css";
 
 export default function Hero({
-  en,                 // [LOCAL] Booleano para saber si el idioma es inglés.
-  textos,
+  etiqueta = "",
+  titulo = "",
+  subtitulo = "",
+  textoPopulares = "",
+  populares = [],
   children,           // [LOCAL] El componente del buscador que se inyecta desde App.jsx.
-  destacado,          // [API] El evento destacado que viene de la API.
-  cargandoDestacado = false, // Sprint 2: indica si el evento destacado sigue cargando
-  abrirEvento,        // [LOCAL] Función para abrir el detalle del evento.
+  tarjetaDestacada,
   onBuscar
 }) {
-  // ##########
-  const hero = textos?.paginas?.inicio?.hero;
-  const tr = crearTraductor(en);
-  const populares = textosLocales[en ? "en" : "es"].populares;
-  // ##########
-
   return (
     // [STATIC] Sección principal con fondo oscuro.
     <section className="hero-taquilla">
@@ -32,20 +24,14 @@ export default function Hero({
         <div>
           {/* [STATIC] Etiqueta de temporada con texto condicional según el idioma. */}
           <Etiqueta clase="etiqueta-evento">
-            {tr(hero?.etiquetas?.temporada, "Temporada nov – dic 2026", "November – December 2026 season")}
+            {etiqueta}
           </Etiqueta>
 
           {/* [STATIC] Título principal con texto condicional según el idioma. */}
-          <h1>{tr(hero?.titulo, "Tu próxima noche empieza aquí", "Your next night starts here")}</h1>
+          <h1>{titulo}</h1>
 
           {/* [STATIC] Párrafo descriptivo con texto condicional según el idioma. */}
-          <p>
-            {tr(
-              hero?.subtitulo,
-              "Conciertos, teatro, deportes y festivales. Busca por categoría, fecha o ciudad y consulta todos los detalles de cada evento.",
-              "Concerts, theatre, sports and festivals. Search by category, date or city and discover all the details of each event."
-            )}
-          </p>
+          <p>{subtitulo}</p>
           
           {/* [LOCAL] Aquí se inyecta el BuscadorEventos desde App.jsx. */}
           {children}
@@ -53,7 +39,7 @@ export default function Hero({
           {/* [STATIC] Sección de enlaces populares. */}
           <div className="populares">
             {/* [STATIC] Título de populares con texto condicional. */}
-            <span>{tr(hero?.buscador?.populares, "Populares:", "Popular:")}</span>
+            <span>{textoPopulares}</span>
 
             {/* [STATIC] Recorre la lista de términos populares y dibuja un botón por cada uno. */}
             {/* ########## */}
@@ -68,7 +54,7 @@ export default function Hero({
 
         {/* [STATIC] Componente de la tarjeta derecha. */}
         {/* [API] Le pasa el evento destacado desde la API. */}
-        <EventoDestacado evento={destacado} en={en} textos={textos} onAbrir={abrirEvento} cargando={cargandoDestacado} />{/* Sprint 2 */}
+        {tarjetaDestacada}
       </div>
     </section>
   );
