@@ -52,6 +52,14 @@ function leerSeccion() {
 // [STATIC] Hace que "Próximamente" use Manizales como ciudad inicial, porque la API no define una.
 const CIUDAD_INICIAL = "Manizales";
 
+const PREFERENCIAS_INICIALES = {
+  tamanoTexto: 100,
+  altoContraste: false,
+  reducirMovimiento: false,
+  subrayarEnlaces: false,
+  espaciadoLectura: false,
+};
+
 const RUTAS_INICIO = ["inicio", "registro", "recuperar-clave"]; // Sprint 2: rutas que muestran el Inicio (registro y recuperar-clave son pantallas del Sprint 3)
 
 function App() {
@@ -79,11 +87,8 @@ function App() {
 
   // [LOCAL] Hace que se guarden las opciones del panel de accesibilidad.
   const [panelAbierto, setPanelAbierto] = useState(false);
-  const [tamanoTexto, setTamanoTexto] = useState(100);
-  const [altoContraste, setAltoContraste] = useState(false);
-  const [reducirMovimiento, setReducirMovimiento] = useState(false);
-  const [subrayarEnlaces, setSubrayarEnlaces] = useState(false);
-  const [espaciadoLectura, setEspaciadoLectura] = useState(false);
+  const [preferencias, setPreferencias] = useState(PREFERENCIAS_INICIALES);
+  const { tamanoTexto, altoContraste, reducirMovimiento, subrayarEnlaces, espaciadoLectura } = preferencias;
 
   const sesion = useSesion(); // Sprint 2: persona con la sesión iniciada (null si es visitante), recuperada con GET /sesion
 
@@ -94,19 +99,15 @@ function App() {
   const cerrarAccesibilidad = useCallback(() => setPanelAbierto(false), []);
 
   // [LOCAL] Hace que el texto crezca hasta un máximo del 150%.
-  const aumentarTexto = () => setTamanoTexto((prev) => Math.min(prev + 10, 150));
+  const aumentarTexto = () => setPreferencias((actuales) => ({ ...actuales, tamanoTexto: Math.min(actuales.tamanoTexto + 10, 150) }));
 
   // [LOCAL] Hace que el texto se reduzca hasta un mínimo del 80%.
-  const reducirTexto = () => setTamanoTexto((prev) => Math.max(prev - 10, 80));
+  const reducirTexto = () => setPreferencias((actuales) => ({ ...actuales, tamanoTexto: Math.max(actuales.tamanoTexto - 10, 80) }));
+
+  const cambiarPreferencia = (clave, valor) => setPreferencias((actuales) => ({ ...actuales, [clave]: valor }));
 
   // [LOCAL] Hace que todas las opciones de accesibilidad vuelvan a sus valores iniciales.
-  const restablecerAccesibilidad = () => {
-    setTamanoTexto(100);
-    setAltoContraste(false);
-    setReducirMovimiento(false);
-    setSubrayarEnlaces(false);
-    setEspaciadoLectura(false);
-  };
+  const restablecerAccesibilidad = () => setPreferencias(PREFERENCIAS_INICIALES);
 
   // ==========================================
   // BLOQUE B: CONEXIÓN CON LA API Y VARIABLES
@@ -524,13 +525,10 @@ function App() {
         aumentarTexto={aumentarTexto}
         reducirTexto={reducirTexto}
         altoContraste={altoContraste}
-        setAltoContraste={setAltoContraste}
         reducirMovimiento={reducirMovimiento}
-        setReducirMovimiento={setReducirMovimiento}
         subrayarEnlaces={subrayarEnlaces}
-        setSubrayarEnlaces={setSubrayarEnlaces}
         espaciadoLectura={espaciadoLectura}
-        setEspaciadoLectura={setEspaciadoLectura}
+        onCambiar={cambiarPreferencia}
         restablecer={restablecerAccesibilidad}
       />
 

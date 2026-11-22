@@ -18,14 +18,11 @@ export default function PanelAccesibilidad({
   textos,                 // [API] Textos de la interfaz desde la API.
   aumentarTexto,          // [LOCAL] Función para aumentar el tamaño del texto.
   reducirTexto,           // [LOCAL] Función para reducir el tamaño del texto.
-  altoContraste,          // [LOCAL] Estado del switch de alto contraste.
-  setAltoContraste,       // [LOCAL] Función para cambiar el alto contraste.
-  reducirMovimiento,      // [LOCAL] Estado del switch de reducir movimiento.
-  setReducirMovimiento,   // [LOCAL] Función para cambiar reducir movimiento.
-  subrayarEnlaces,        // [LOCAL] Estado del switch de subrayar enlaces.
-  setSubrayarEnlaces,     // [LOCAL] Función para cambiar subrayar enlaces.
-  espaciadoLectura,       // [LOCAL] Estado del switch de espaciado de lectura.
-  setEspaciadoLectura,    // [LOCAL] Función para cambiar espaciado de lectura.
+  altoContraste = false,  // [LOCAL] Estado del switch de alto contraste.
+  reducirMovimiento = false, // [LOCAL] Estado del switch de reducir movimiento.
+  subrayarEnlaces = false, // [LOCAL] Estado del switch de subrayar enlaces.
+  espaciadoLectura = false, // [LOCAL] Estado del switch de espaciado de lectura.
+  onCambiar,
   restablecer,            // [LOCAL] Función para restablecer todos los valores.
 }) {
   // ==========================================
@@ -76,28 +73,24 @@ export default function PanelAccesibilidad({
     {
       clave: "altoContraste",
       valor: altoContraste,
-      cambiar: setAltoContraste,
       nombre: ["Alto contraste", "High contrast"],
       descripcion: ["Más diferencia entre el texto y el fondo", "More difference between text and background"],
     },
     {
       clave: "reducirMovimiento",
       valor: reducirMovimiento,
-      cambiar: setReducirMovimiento,
       nombre: ["Reducir movimiento", "Reduce motion"],
       descripcion: ["Sin animaciones ni transiciones", "No animations or transitions"],
     },
     {
       clave: "subrayarEnlaces",
       valor: subrayarEnlaces,
-      cambiar: setSubrayarEnlaces,
       nombre: ["Subrayar enlaces", "Underline links"],
       descripcion: ["Los enlaces se distinguen sin depender del color", "Links stand out without relying on color"],
     },
     {
       clave: "espaciadoLectura",
       valor: espaciadoLectura,
-      cambiar: setEspaciadoLectura,
       nombre: ["Espaciado de lectura", "Reading spacing"],
       descripcion: ["Más espacio entre líneas y entre letras", "More space between lines and letters"],
     },
@@ -181,7 +174,7 @@ export default function PanelAccesibilidad({
         {/* ========================================== */}
         <div className="panel-accesibilidad__toggles">
           {/* [LOCAL] Recorre las opciones y dibuja un switch por cada una. */}
-          {opciones.map(({ clave, valor, cambiar, nombre, descripcion }) => (
+          {opciones.map(({ clave, valor, nombre, descripcion }) => (
             <div className="toggle-item" key={clave}>
               <div className="toggle-texto">
                 {/* [API] Hace que aparezca el nombre del switch. */}
@@ -196,7 +189,7 @@ export default function PanelAccesibilidad({
                   type="checkbox"
                   role="switch"
                   checked={valor}
-                  onChange={(e) => cambiar(e.target.checked)}
+                  onChange={(e) => onCambiar(clave, e.target.checked)}
                   aria-labelledby={`a11y-${clave}`}
                   aria-describedby={`a11y-${clave}-desc`}
                 />
