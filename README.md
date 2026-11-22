@@ -355,7 +355,7 @@ Cada historia de usuario se trabajó en una rama y se integró a `main` con un P
 | `feature/errores-ingreso-2` | #16 | US-TAQ-S2-04 | Componente `Aviso`, estado «Ingresando…», errores y espera del 429; `reintentarEn` también desde `detalles.reintentarEnSegundos` |
 | `feature/sesion-2` | #17 | US-TAQ-S2-05 | `GET` y `DELETE /sesion`, `MenuUsuario`, cuenta en Navbar y menú móvil, sesión vencida, `leerRespuesta` compartida, rutas desconocidas a no encontrado, `Boton` grande y ajustes del footer |
 | `refactor/componentes-2` | #18 | Calidad del código | Props listas en `TarjetaEvento`, `EstadoMensaje`, `MenuUsuario`, `BuscadorEventos` y las del Inicio; componentes `TarjetasEsqueleto`, `Migas` y `FilaDisponibilidad`; `nombreCategoria` en `utils`; un solo estado de preferencias |
-| `fix/errores-servidor-2` | #19 | US-TAQ-S2-04 | Los errores 500, 503 y 504 muestran el mensaje de `textos.errores`; el de conexión queda solo para cuando no hay red. Marcas de comentarios del Sprint 2 |
+| `fix/errores-servidor-2` | #19 | US-TAQ-S2-04 y calidad del código | Los errores 500, 503 y 504 muestran el mensaje de `textos.errores`; el de conexión queda solo para cuando no hay red. Marcas de comentarios del Sprint 2 |
 
 **Commits convencionales:** `feat:` (funcionalidad nueva), `fix:` (corrección), `docs:` (documentación), `style:` (solo formato), `refactor:` (reorganizar sin cambiar el funcionamiento) y `chore:` (tareas de mantenimiento).
 
@@ -378,7 +378,7 @@ El proyecto se despliega en **Vercel**: cada cambio que se integra a `main` gene
 | Entorno | `VITE_API_URL` |
 |---|---|
 | `.env` local | `https://yanethm-taquilla-sustentacion.fly.dev/api/v1` (API de sustentación) |
-| Vercel | La API normal, configurada en *Settings → Environment Variables* |
+| Vercel | `https://yanethm-taquilla-api.fly.dev/api/v1` (API normal), configurada en *Settings → Environment Variables* |
 
 - `vercel.json` redirige todas las rutas a `index.html`. Sin él, recargar en `/explorar` o en `/eventos/{slug}` daría 404.
   ```json
@@ -398,7 +398,7 @@ El proyecto se despliega en **Vercel**: cada cambio que se integra a `main` gene
 - **El catálogo no se traduce:** nombres de eventos, recintos y categorías se muestran tal como vienen de la API.
 - **Tokens:** `tokens.css` solo tiene colores, familia tipográfica y tamaños de letra. Las distancias van en px directo, por indicación de la profesora.
 
-El documento completo de decisiones del Sprint 1 está en `Taquilla_Decisiones_Sprint1.docx`.
+El detalle completo está en el documento de decisiones del Sprint 1, entregado aparte.
 
 ### Sprint 2
 
