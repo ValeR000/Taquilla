@@ -12,6 +12,7 @@
   .fin-de-semana {
     display: block;
     margin-top: var(--espacio-8);
+    padding-bottom: 24px;
   }
 
   /* [STATIC] Hace que el título y "Ver todos" queden en la misma fila. */
