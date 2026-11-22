@@ -12,9 +12,9 @@ export default function DetalleEsqueleto({ textoCargando = "" }) {
       </p>
 
       <div className="detalle__portada" aria-hidden="true">
-        <div className="detalle__migas">
-          <ol>
-            <li className="detalle__esqueleto detalle__esqueleto--migas">{VACIO}</li>
+        <div className="migas detalle__migas">
+          <ol className="migas__lista">
+            <li className="migas__item detalle__esqueleto detalle__esqueleto--migas">{VACIO}</li>
           </ol>
         </div>
 
