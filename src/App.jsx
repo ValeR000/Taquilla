@@ -88,6 +88,17 @@ function textosDelInicio(textos, en) {
     finDeSemana: tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend"),
     listaPopulares: local.populares,
     etiquetaCategorias: local.categoriasAria,
+    buscador: {
+      que: tr(hero?.buscador?.etiquetas?.que, "Qué", "What"),
+      donde: tr(hero?.buscador?.etiquetas?.donde, "Dónde", "Where"),
+      cuando: tr(hero?.buscador?.etiquetas?.cuando, "Cuándo", "When"),
+      placeholderQue: tr(hero?.buscador?.placeholders?.que, "Evento o artista", "Event or artist"),
+      placeholderMovil: tr(hero?.buscador?.placeholders?.movil, "Evento, artista o lugar", "Event, artist or place"),
+      cualquierFecha: tr(hero?.buscador?.placeholders?.cuando, "Cualquier fecha", "Any date"),
+      todasCiudades: local.todasCiudades,
+      buscar: tr(hero?.buscador?.botones?.buscar, "Buscar", "Search"),
+      resumenMovil: tr(hero?.buscador?.resumenMovil, "{ciudad} · {fecha}", "{ciudad} · {fecha}"),
+    },
   };
 }
 
@@ -443,7 +454,15 @@ function App() {
               ciudadInicial={CIUDAD_INICIAL}
               eventos={eventos || []}
               onBuscar={buscar}
-              textos={datos.textos}
+              textoQue={textosInicio.buscador.que}
+              textoDonde={textosInicio.buscador.donde}
+              textoCuando={textosInicio.buscador.cuando}
+              placeholderQue={textosInicio.buscador.placeholderQue}
+              placeholderMovil={textosInicio.buscador.placeholderMovil}
+              textoCualquierFecha={textosInicio.buscador.cualquierFecha}
+              textoTodasCiudades={textosInicio.buscador.todasCiudades}
+              textoBuscar={textosInicio.buscador.buscar}
+              textoResumenMovil={textosInicio.buscador.resumenMovil}
             />
           </Hero>
 
