@@ -4,10 +4,11 @@ import "./EncabezadoSeccion.css";
 // ##########
 export default function EncabezadoSeccion({
   idTitulo,
-  titulo,
-  descripcion,
-  textoBoton,
-  onBoton,
+  titulo = "",
+  descripcion = "",
+  textoAccion = "",
+  onAccion,
+  deshabilitada = false,
 }) {
   return (
     <div className="titulo-seccion">
@@ -21,10 +22,10 @@ export default function EncabezadoSeccion({
 
       {/* [LOCAL] Botón para ver todos los eventos. */}
       {/* SPRINT 2: Hace que el botón solo aparezca si tiene texto, para usar el encabezado sin "Ver todos" */}
-      {textoBoton && (
-        <button className="enlace-home" onClick={onBoton}>
+      {textoAccion && (
+        <button className="enlace-home" onClick={onAccion} disabled={deshabilitada}>
           {/* [API] Hace que aparezca el texto "Ver todos". */}
-          {textoBoton}
+          {textoAccion}
           <Flecha />
         </button>
       )}

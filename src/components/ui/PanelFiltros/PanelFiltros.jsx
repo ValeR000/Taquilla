@@ -139,8 +139,8 @@ export default function PanelFiltros({
               rol="status"
               clase="panel-filtros__error"
               texto={mensajeError?.texto}
-              boton={mensajeError?.boton}
-              onBoton={onReintentarCategorias}
+              textoAccion={mensajeError?.textoAccion}
+              onAccion={onReintentarCategorias}
               enfocarBoton={enfocarBotonCategorias}
             />
           )}

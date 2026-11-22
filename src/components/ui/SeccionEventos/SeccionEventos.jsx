@@ -55,8 +55,8 @@ export default function SeccionEventos({
         idTitulo={`${id}-titulo`}
         titulo={titulo}
         descripcion={descripcion}
-        textoBoton={verTodos}
-        onBoton={onVerTodos}
+        textoAccion={verTodos}
+        onAccion={onVerTodos}
       />
 
       <div className="eventos-grid">
@@ -83,8 +83,8 @@ export default function SeccionEventos({
         <EstadoMensaje
           titulo={tr(textos?.estados?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
           texto={tr(textos?.estados?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you'll see it here.")}
-          boton={verTodos}
-          onBoton={onVerTodos}
+          textoAccion={verTodos}
+          onAccion={onVerTodos}
         />
       )}
     </section>

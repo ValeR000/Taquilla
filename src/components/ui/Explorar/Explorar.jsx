@@ -339,7 +339,7 @@ export default function Explorar({
               clase="explorar__estado" // Sprint 2: reserva el alto en móvil para que el footer no suba
               {...textosError(textos, codigo, en)} // Sprint 2: título, mensaje según el codigo y botón
               /* SPRINT 2: Hace que Reintentar maneje el foco */
-              onBoton={reintentoLista.reintentar}
+              onAccion={reintentoLista.reintentar}
               enfocarBoton={reintentoLista.enfocarBoton}
               /* SPRINT 2 */
             />
@@ -353,8 +353,8 @@ export default function Explorar({
               titulo={tr(tEstado?.vacio?.titulo, "No hay nada por aquí", "Nothing here yet")}
               texto={tr(tEstado?.vacio?.texto, "Cuando haya información la verás en este lugar.", "When there is information you will see it here.")}
               /* SPRINT 2 */
-              boton={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
-              onBoton={limpiar}
+              textoAccion={tr(t?.vacio?.botones?.limpiar, "Limpiar filtros", "Clear filters")}
+              onAccion={limpiar}
             />
           )}
 

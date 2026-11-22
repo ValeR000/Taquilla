@@ -105,7 +105,7 @@ export default function DetalleEvento({
         <EstadoMensaje
           rol="alert"
           {...textosError(textos, codigo, en)}
-          onBoton={reintentoEvento.reintentar}
+          onAccion={reintentoEvento.reintentar}
           enfocarBoton={reintentoEvento.enfocarBoton}
         />
       </main>
@@ -119,8 +119,8 @@ export default function DetalleEvento({
           nivel={1}
           titulo={tr(t?.noEncontrado?.titulo, "No encontramos este evento", "We couldn't find this event")}
           texto={tr(t?.noEncontrado?.texto, "Puede que haya terminado o que el enlace esté mal escrito.", "It may have ended or the link may be mistyped.")}
-          boton={tr(t?.noEncontrado?.botones?.volver, "Volver a explorar", "Back to explore")}
-          onBoton={() => onNavegar("explorar")}
+          textoAccion={tr(t?.noEncontrado?.botones?.volver, "Volver a explorar", "Back to explore")}
+          onAccion={() => onNavegar("explorar")}
         />
       </main>
     );
@@ -373,8 +373,8 @@ export default function DetalleEvento({
               compacto
               rol="alert"
               texto={mensajeRelacionados.texto}
-              boton={mensajeRelacionados.boton}
-              onBoton={reintentoRelacionados.reintentar}
+              textoAccion={mensajeRelacionados.textoAccion}
+              onAccion={reintentoRelacionados.reintentar}
               enfocarBoton={reintentoRelacionados.enfocarBoton}
             />
           ) : (

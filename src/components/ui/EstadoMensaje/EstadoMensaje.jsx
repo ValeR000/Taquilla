@@ -4,10 +4,11 @@ import "./EstadoMensaje.css";
 
 // ##########
 export default function EstadoMensaje({
-  titulo,
-  texto,
-  boton,
-  onBoton,
+  titulo = "",
+  texto = "",
+  textoAccion = "",
+  onAccion,
+  deshabilitada = false,
   rol,
   clase = "",
   nivel = 3, // Sprint 2: nivel del título, para usar el estado como página completa con su h1
@@ -30,9 +31,9 @@ export default function EstadoMensaje({
 
       {texto && <p>{texto}</p>}
 
-      {boton && (
-        <Boton clase="estado-mensaje__boton" onClick={onBoton}>
-          {boton}
+      {textoAccion && (
+        <Boton clase="estado-mensaje__boton" onClick={onAccion} disabled={deshabilitada}>
+          {textoAccion}
         </Boton>
       )}
     </div>

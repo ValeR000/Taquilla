@@ -44,8 +44,8 @@ export default function SeccionFinDeSemana({
         // [API] Hace que aparezca el título "Este fin de semana".
         titulo={tr(inicio?.filtrosMovil?.finDeSemana, "Este fin de semana", "This weekend")}
         // [LOCAL] Hace que "Ver todos" lleve a Explorar.
-        textoBoton={tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all")}
-        onBoton={onVerTodos}
+        textoAccion={tr(inicio?.destacados?.enlaces?.verTodos, "Ver todos", "View all")}
+        onAccion={onVerTodos}
       />
 
       <ul className="fin-de-semana__lista" aria-busy={cargando}>{/* Sprint 2 */}

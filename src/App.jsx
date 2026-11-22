@@ -418,10 +418,10 @@ function App() {
                 rol="status"
                 clase="inicio__estado inicio__estado--categorias"
                 texto={mensajeCategorias.texto}
-                boton={mensajeCategorias.boton}
+                textoAccion={mensajeCategorias.textoAccion}
                 /* SPRINT 2 */
                 /* SPRINT 2: Hace que Reintentar maneje el foco */
-                onBoton={reintentoCategorias.reintentar}
+                onAccion={reintentoCategorias.reintentar}
                 enfocarBoton={reintentoCategorias.enfocarBoton}
                 /* SPRINT 2 */
               />
@@ -457,7 +457,7 @@ function App() {
                 clase="inicio__estado inicio__estado--destacados" // Sprint 2: reserva el alto del carrusel en móvil
                 {...textosError(datos.textos, codigoEventos, en)} // Sprint 2: título, mensaje según el codigo y botón
                 /* SPRINT 2: Hace que Reintentar maneje el foco */
-                onBoton={reintentoEventos.reintentar}
+                onAccion={reintentoEventos.reintentar}
                 enfocarBoton={reintentoEventos.enfocarBoton}
                 /* SPRINT 2 */
               />
