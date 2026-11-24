@@ -51,7 +51,9 @@ Plataforma web para descubrir conciertos, teatro, deportes y festivales. Proyect
 
 **Detalle de un evento (`/eventos/{slug}`)**
 - Encabezado con el afiche (degradado de `afiche.color1` a `afiche.color2`), información, descripción y cómo llegar.
+- Hora de puertas del evento y de cada función, desde `puertas` de la API. Si no viene, solo se muestra la hora.
 - Funciones y localidades con su precio y disponibilidad (agotada o cuántas quedan).
+- En Cómo llegar: mapa de OpenStreetMap con `recinto.ubicacion` y enlace «Ver en Google Maps» (abre en otra pestaña), y el parqueadero si existe. Sin `ubicacion`, se ve un recuadro con el nombre del mapa.
 - Hasta 4 eventos relacionados.
 - La página toma el título y la descripción del evento, y los restaura al salir.
 - Si el evento no existe (404 `no_encontrado`), se muestra la página de no encontrado.
@@ -118,7 +120,7 @@ Plataforma web para descubrir conciertos, teatro, deportes y festivales. Proyect
 
 3. Crea un archivo `.env` en la raíz con la dirección de la API:
    ```env
-   VITE_API_URL=https://yanethm-taquilla-sustentacion.fly.dev/api/v1
+   VITE_API_URL=https://yanethm-taquilla-api.fly.dev/api/v1
    ```
    En Vite, las variables que lee el navegador deben empezar por `VITE_`.
 
@@ -377,8 +379,10 @@ El proyecto se despliega en **Vercel**: cada cambio que se integra a `main` gene
 
 | Entorno | `VITE_API_URL` |
 |---|---|
-| `.env` local | `https://yanethm-taquilla-sustentacion.fly.dev/api/v1` (API de sustentación) |
+| `.env` local | `https://yanethm-taquilla-api.fly.dev/api/v1` (API normal) |
 | Vercel | `https://yanethm-taquilla-api.fly.dev/api/v1` (API normal), configurada en *Settings → Environment Variables* |
+
+> La API de sustentación (`https://yanethm-taquilla-sustentacion.fly.dev/api/v1`) no trae `puertas`, `recinto.parqueadero` ni `recinto.ubicacion`. Con ella el Detalle no muestra puertas, parqueadero ni mapa.
 
 - `vercel.json` redirige todas las rutas a `index.html`. Sin él, recargar en `/explorar` o en `/eventos/{slug}` daría 404.
   ```json
@@ -421,11 +425,14 @@ El detalle completo está en el documento de decisiones del Sprint 1, entregado 
 | `error.tsx` | `EstadoMensaje` con Reintentar |
 
 **Datos de Figma que no están en la API**
-- **Puertas:** la hora de apertura de puertas se calcula 1 hora antes del evento.
 - **Invitada:** la etiqueta «Invitada:» de Figma no se muestra; se muestran los `artistas` de la API.
 - **Pestaña Políticas:** no se incluye. El detalle solo tiene las pestañas Descripción y Cómo llegar.
 
-**Textos:** los que no están en `/textos` (secciones del detalle, funciones, localidades, leer menos y el aviso al terminar la espera del 429) van en `textosLocales.js`.
+**Cómo llegar**
+- La hora de puertas, el parqueadero y la ubicación vienen de la API (`puertas`, `recinto.parqueadero` y `recinto.ubicacion`). Si un evento no los trae, esa parte no se muestra.
+- El mapa es un `iframe` de OpenStreetMap (`export/embed.html` con `bbox` alrededor del punto y `marker`), sin librerías.
+
+**Textos:** los que no están en `/textos` (secciones del detalle, funciones, localidades, leer menos, parqueadero, «Ver en Google Maps», «se abre en otra pestaña» y el aviso al terminar la espera del 429) van en `textosLocales.js`.
 
 **Fuera del Sprint 2:** crear cuenta, verificación de correo y recuperación de contraseña son del Sprint 3. Compra y selección de asientos no se implementan.
 
