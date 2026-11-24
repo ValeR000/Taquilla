@@ -232,6 +232,34 @@
   color: var(--color-texto);
 }
 
+.detalle__mapa-real {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.detalle__mapa-marco {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: 0;
+  border-radius: var(--radio-md);
+  background: var(--fondo-sutil);
+}
+
+.detalle__mapa-enlace {
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+  color: var(--color-texto);
+  text-decoration: underline;
+}
+
+.detalle__parqueadero {
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
 .detalle__direccion {
   font-size: var(--texto-base);
   font-weight: 400;
