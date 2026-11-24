@@ -314,7 +314,7 @@ export default function Explorar({
           {cargando && (
             <>
               <p className="solo-lectores" role="status">
-                {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+                {tr(tEstado?.cargando?.indicador, "Cargando…", "Loading…")}
               </p>
               <div className="explorar__grid">
                 <TarjetasEsqueleto cantidad={9} />
