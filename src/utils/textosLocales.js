@@ -28,6 +28,11 @@ export const textosLocales = {
     leerMenos: "Leer menos",
     /* SPRINT 2 */
     ingresoDisponible: "Ya puedes volver a intentarlo.", // Sprint 2: anuncio al terminar la espera del 429 (No en /textos)
+    /* SPRINT 2: Textos de Cómo llegar que no vienen en /textos */
+    parqueadero: "Parqueadero",
+    verEnMapa: "Ver en Google Maps",
+    nuevaPestana: "(se abre en otra pestaña)",
+    /* SPRINT 2 */
   },
   en: {
     titulo: "Explore events",
@@ -53,6 +58,11 @@ export const textosLocales = {
     leerMenos: "Read less",
     /* SPRINT 2 */
     ingresoDisponible: "You can try again now.", // Sprint 2: anuncio al terminar la espera del 429 (No en /textos)
+    /* SPRINT 2: Textos de Cómo llegar que no vienen en /textos */
+    parqueadero: "Parking",
+    verEnMapa: "View on Google Maps",
+    nuevaPestana: "(opens in a new tab)",
+    /* SPRINT 2 */
   },
 };
 

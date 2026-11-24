@@ -75,6 +75,13 @@ export default function DetalleEvento({
     return tr(tDisponibilidad?.quedan, "Quedan {cantidad}", "{cantidad} left").replace("{cantidad}", cantidad);
   }
 
+  function conPuertas(hora, puertas) {
+    if (!puertas) return hora;
+    return tr(t?.info?.horaValor, "{hora} · Puertas {puertas}", "{hora} · Doors {puertas}")
+      .replace("{hora}", hora)
+      .replace("{puertas}", formatoHora(puertas, en));
+  }
+
   function volver() {
     if (window.history.state?.interna) window.history.back();
     else onNavegar("explorar");
@@ -134,11 +141,10 @@ export default function DetalleEvento({
 
   const artistas = evento?.artistas?.join(" · "); // Sprint 2: "Invitada:" de Figma (No en la API)
 
-  const hora = formatoHora(evento?.fecha, en);
-  const puertas = formatoHora(new Date(new Date(evento?.fecha) - 60 * 60 * 1000).toISOString(), en); // Sprint 2: puertas 1 hora antes del evento (No en la API)
-  const horaValor = tr(t?.info?.horaValor, "{hora} · Puertas {puertas}", "{hora} · Doors {puertas}")
-    .replace("{hora}", hora)
-    .replace("{puertas}", puertas);
+  const horaValor = conPuertas(formatoHora(evento?.fecha, en), evento?.puertas);
+
+  const ubicacion = recinto?.ubicacion;
+  const mapaTitulo = tr(t?.mapa?.titulo, "Mapa del lugar", "Venue map");
 
   const verEvento = tr(tTarjeta?.botones?.verEvento, "Ver evento", "View event");
   const desde = tr(tTarjeta?.desde, "Desde", "From");
@@ -282,14 +288,40 @@ export default function DetalleEvento({
           <section id="detalle-como-llegar" className="detalle__como-llegar" aria-labelledby="detalle-como-llegar-titulo">
             <h2 id="detalle-como-llegar-titulo">{tr(t?.pestanas?.comoLlegar, "Cómo llegar", "How to get there")}</h2>
 
-            <div className="detalle__mapa">
-              <IconoEvento tipo="lugar" />
-              <span>{tr(t?.mapa?.titulo, "Mapa del lugar", "Venue map")}</span>
-            </div>
+            {ubicacion ? (
+              <div className="detalle__mapa-real">
+                <iframe
+                  className="detalle__mapa-marco"
+                  title={`${mapaTitulo}: ${recinto.nombre}`}
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${ubicacion.lng - 0.005},${ubicacion.lat - 0.003},${ubicacion.lng + 0.005},${ubicacion.lat + 0.003}&layer=mapnik&marker=${ubicacion.lat},${ubicacion.lng}`}
+                  loading="lazy"
+                />
+                <a
+                  className="detalle__mapa-enlace"
+                  href={`https://www.google.com/maps?q=${ubicacion.lat},${ubicacion.lng}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {local.verEnMapa}
+                  <span className="solo-lectores"> {local.nuevaPestana}</span>
+                </a>
+              </div>
+            ) : (
+              <div className="detalle__mapa">
+                <IconoEvento tipo="lugar" />
+                <span>{mapaTitulo}</span>
+              </div>
+            )}
 
             <p className="detalle__direccion">
               {recinto?.nombre} · {recinto?.direccion}, {recinto?.ciudad}
             </p>
+
+            {recinto?.parqueadero && (
+              <p className="detalle__direccion">
+                <strong className="detalle__parqueadero">{local.parqueadero}:</strong> {recinto.parqueadero}
+              </p>
+            )}
           </section>
         </article>
 
@@ -306,7 +338,7 @@ export default function DetalleEvento({
               {evento?.funciones?.map((funcion) => (
                 <FilaDisponibilidad
                   key={funcion.id}
-                  nombre={formatoFecha(funcion.fecha, en)}
+                  nombre={conPuertas(formatoFecha(funcion.fecha, en), funcion.puertas)}
                   agotada={funcion.agotada}
                   textoAgotada={agotada}
                   textoQuedan={quedan(funcion.disponibles)}
