@@ -94,7 +94,7 @@ export default function DetalleEvento({
     return (
       <>
         <span id="detalle-espera" tabIndex={-1} className="solo-lectores" />
-        <DetalleEsqueleto textoCargando={tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")} />
+        <DetalleEsqueleto textoCargando={tr(tEstado?.cargando?.indicador, "Cargando…", "Loading…")} />
       </>
     );
   }
@@ -347,7 +347,7 @@ export default function DetalleEvento({
 
           {cargandoRelacionados && (
             <p className="solo-lectores" role="status">
-              {tr(tEstado?.cargando?.titulo, "Cargando…", "Loading…")}
+              {tr(tEstado?.cargando?.indicador, "Cargando…", "Loading…")}
             </p>
           )}
 

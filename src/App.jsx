@@ -527,7 +527,7 @@ function App() {
             {/* [API] Hace que aparezca el estado de carga de los eventos. */}
             {cargandoEventos && (
               <p className="solo-lectores" role="status">
-                {tr(estados?.cargando?.titulo, "Cargando…", "Loading…")}
+                {tr(estados?.cargando?.indicador, "Cargando…", "Loading…")}{/* Sprint 2: texto del indicador de carga */}
               </p>
             )}
 
